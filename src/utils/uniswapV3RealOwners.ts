@@ -125,6 +125,27 @@ export async function getPoolInfo() {
   }
 }
 
+// Debug function to test specific token IDs
+async function debugSpecificPosition(tokenId: string, positionManager: any) {
+  console.log(`\n🔬 DEBUG: Testing specific token ID ${tokenId}`);
+  try {
+    const owner = await positionManager.ownerOf(tokenId);
+    const position = await positionManager.positions(tokenId);
+    
+    console.log(`  Owner: ${owner}`);
+    console.log(`  Token0: ${position.token0}`);
+    console.log(`  Token1: ${position.token1}`);
+    console.log(`  Liquidity: ${position.liquidity.toString()}`);
+    console.log(`  tokensOwed0: ${position.tokensOwed0.toString()}`);
+    console.log(`  tokensOwed1: ${position.tokensOwed1.toString()}`);
+    
+    return { owner, position };
+  } catch (error) {
+    console.log(`  Error fetching position: ${error}`);
+    return null;
+  }
+}
+
 export async function fetchLPPositionsFromEvents(): Promise<SimpleLPPosition[]> {
   const provider = getProvider();
   const poolContract = new ethers.Contract(POOL_ADDRESS, POOL_ABI, provider);
@@ -135,6 +156,12 @@ export async function fetchLPPositionsFromEvents(): Promise<SimpleLPPosition[]> 
     console.log('Provider:', provider);
     console.log('Pool Address:', POOL_ADDRESS);
     console.log('Position Manager:', NFT_POSITION_MANAGER);
+    
+    // Test some known token IDs first
+    console.log('\n🧪 Testing known TORUS LP positions...');
+    await debugSpecificPosition('780889', positionManager);
+    await debugSpecificPosition('797216', positionManager);
+    await debugSpecificPosition('798833', positionManager);
     
     console.log('📡 Testing provider network connection...');
     try {
@@ -245,10 +272,20 @@ export async function fetchLPPositionsFromEvents(): Promise<SimpleLPPosition[]> 
               // Get the REAL owner of the NFT
               const realOwner = await positionManager.ownerOf(tokenId);
               
+              // Special debug for the address with known claimable yield
+              if (realOwner.toLowerCase() === '0xce32e10b205fbf49f3bb7132f7378751af1832b6') {
+                console.log(`  🎯 FOUND TARGET ADDRESS 0xCe32...32b6!`);
+              }
+              
               console.log(`  ✅ FOUND INDIVIDUAL LP HOLDER!`);
               console.log(`    Token ID: ${tokenId}`);
               console.log(`    Real Owner: ${realOwner}`);
               console.log(`    Liquidity: ${positionData.liquidity.toString()}`);
+              console.log(`    🔍 DEBUG Position Data:`);
+              console.log(`    tokensOwed0: ${positionData.tokensOwed0.toString()}`);
+              console.log(`    tokensOwed1: ${positionData.tokensOwed1.toString()}`);
+              console.log(`    feeGrowthInside0LastX128: ${positionData.feeGrowthInside0LastX128.toString()}`);
+              console.log(`    feeGrowthInside1LastX128: ${positionData.feeGrowthInside1LastX128.toString()}`);
               
               // Calculate actual token amounts
               try {
