@@ -307,17 +307,47 @@ export async function fetchLPPositionsFromEvents(): Promise<SimpleLPPosition[]> 
                 console.log(`    ✅ TORUS Amount: ${amounts.amount0.toFixed(4)}`);
                 console.log(`    ✅ TitanX Amount: ${amounts.amount1.toFixed(4)}`);
                 
-                // Calculate claimable fees from tokensOwed with proper precision
-                // Convert to string first to avoid precision loss with large numbers
-                const tokensOwed0Str = positionData.tokensOwed0.toString();
-                const tokensOwed1Str = positionData.tokensOwed1.toString();
+                // Calculate claimable fees by simulating a collect call
+                // This is what Uniswap interface does to show accurate fees
+                let claimableTorus = 0;
+                let claimableTitanX = 0;
                 
-                // Handle decimal conversion more carefully
-                const claimableTorus = parseFloat(tokensOwed0Str) / 1e18;
-                const claimableTitanX = parseFloat(tokensOwed1Str) / 1e18;
+                try {
+                  // Simulate collect to get actual claimable amounts
+                  const collectInterface = new ethers.utils.Interface([
+                    'function collect(tuple(uint256 tokenId, address recipient, uint128 amount0Max, uint128 amount1Max)) returns (uint256 amount0, uint256 amount1)'
+                  ]);
+                  
+                  const collectParams = {
+                    tokenId: tokenId,
+                    recipient: realOwner,
+                    amount0Max: ethers.constants.MaxUint256,
+                    amount1Max: ethers.constants.MaxUint256
+                  };
+                  
+                  const collectData = collectInterface.encodeFunctionData('collect', [collectParams]);
+                  
+                  const result = await provider.call({
+                    to: NFT_POSITION_MANAGER,
+                    data: collectData,
+                    from: realOwner
+                  });
+                  
+                  const decoded = collectInterface.decodeFunctionResult('collect', result);
+                  claimableTorus = Number(ethers.utils.formatUnits(decoded.amount0, 18));
+                  claimableTitanX = Number(ethers.utils.formatUnits(decoded.amount1, 18));
+                  
+                  console.log(`    💰 Simulated collect - TORUS: ${claimableTorus.toFixed(6)}, TitanX: ${claimableTitanX.toFixed(2)}`);
+                  
+                } catch (err) {
+                  // Fallback to tokensOwed if simulation fails
+                  console.log(`    ⚠️  Collect simulation failed, using tokensOwed`);
+                  const tokensOwed0Str = positionData.tokensOwed0.toString();
+                  const tokensOwed1Str = positionData.tokensOwed1.toString();
+                  claimableTorus = parseFloat(tokensOwed0Str) / 1e18;
+                  claimableTitanX = parseFloat(tokensOwed1Str) / 1e18;
+                }
                 
-                console.log(`    🔍 Raw tokensOwed0: ${tokensOwed0Str}`);
-                console.log(`    🔍 Raw tokensOwed1: ${tokensOwed1Str}`);
                 console.log(`    🔍 Calculated claimableTorus: ${claimableTorus}`);
                 console.log(`    🔍 Calculated claimableTitanX: ${claimableTitanX}`);
                 
