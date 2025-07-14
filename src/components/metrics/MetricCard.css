@@ -1,0 +1,84 @@
+.metric-card {
+  background: rgba(26, 26, 26, 0.6);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  padding: 20px;
+  min-height: 120px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+  position: relative;
+  transition: all 0.3s ease;
+}
+
+.metric-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, 
+    transparent 0%, 
+    rgba(79, 70, 229, 0.5) 50%, 
+    transparent 100%
+  );
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.metric-card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(79, 70, 229, 0.3);
+  box-shadow: 0 8px 32px rgba(79, 70, 229, 0.1);
+}
+
+.metric-card:hover::before {
+  opacity: 1;
+}
+
+.metric-title {
+  color: #888;
+  font-size: 14px;
+  font-weight: 400;
+  margin: 0 0 12px 0;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.metric-value {
+  color: #fff;
+  font-size: 24px;
+  font-weight: 600;
+  margin: 0;
+  display: flex;
+  align-items: baseline;
+  flex-wrap: nowrap;
+  word-break: break-word;
+  overflow: hidden;
+}
+
+/* Responsive font sizes based on content length */
+.metric-value.long-number {
+  font-size: 20px;
+}
+
+.metric-value.very-long-number {
+  font-size: 16px;
+}
+
+.metric-prefix,
+.metric-suffix {
+  font-size: 16px;
+  color: #ccc;
+  margin: 0 4px;
+  flex-shrink: 0;
+}
+
+.metric-subtitle {
+  color: #666;
+  font-size: 12px;
+  margin-top: 8px;
+}
