@@ -20,6 +20,11 @@ const tryNextRpc = () => {
   provider = new ethers.JsonRpcProvider(RPC_ENDPOINTS[currentRpcIndex]);
 };
 
+// Export provider getter
+export function getProvider() {
+  return provider;
+}
+
 export interface StakeTorus {
   principal: string;
   power: string;

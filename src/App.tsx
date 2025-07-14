@@ -5,7 +5,9 @@ import BarChart from './components/charts/BarChart';
 import LoadingBar from './components/loading/LoadingBar';
 import SkeletonCard from './components/loading/SkeletonCard';
 import SkeletonChart from './components/loading/SkeletonChart';
+import LPPositionsTable from './components/lp/LPPositionsTable';
 import { fetchStakeEvents, fetchCreateEvents, getContractInfo, fetchRewardPoolData, getCurrentProtocolDay, RewardPoolData, getTorusSupplyData } from './utils/ethersWeb3';
+import { fetchLPPositionsFromEvents, getTokenInfo, SimpleLPPosition } from './utils/uniswapV3RealOwners';
 import { DataCache } from './utils/cache';
 import './App.css';
 
@@ -24,10 +26,38 @@ function App() {
   const [currentProtocolDay, setCurrentProtocolDay] = useState<number>(0);
   const [totalSupply, setTotalSupply] = useState<number>(0);
   const [burnedSupply, setBurnedSupply] = useState<number>(0);
+  const [lpPositions, setLpPositions] = useState<SimpleLPPosition[]>([]);
+  const [lpTokenInfo, setLpTokenInfo] = useState<any>(null);
+  const [lpLoading, setLpLoading] = useState(false);
 
   useEffect(() => {
     loadData();
   }, []);
+
+  const loadLPPositions = async () => {
+    setLpLoading(true);
+    try {
+      console.log('🔍 Starting LP positions fetch...');
+      const [positions, tokenInfo] = await Promise.all([
+        fetchLPPositionsFromEvents(),
+        getTokenInfo()
+      ]);
+      
+      console.log(`✅ Fetched ${positions.length} LP positions`);
+      if (positions.length > 0) {
+        console.log('First LP position:', positions[0]);
+      }
+      setLpPositions(positions);
+      setLpTokenInfo(tokenInfo);
+      console.log('Token info:', tokenInfo);
+    } catch (error) {
+      console.error('❌ Error loading LP positions:', error);
+      console.error('Stack trace:', error instanceof Error ? error.stack : 'No stack trace available');
+      setLpPositions([]);
+    } finally {
+      setLpLoading(false);
+    }
+  };
 
   const loadData = async (forceFullRefresh: boolean = false) => {
     console.log('🔄 LOADDATA CALLED - forceFullRefresh:', forceFullRefresh);
@@ -126,6 +156,13 @@ function App() {
       if (creates.length > 0) {
         console.log('Sample create event:', creates[0]);
       }
+      
+      setLoadingProgress(90);
+      setLoadingMessage('Fetching LP positions...');
+      setLoadingDetails(prev => [...prev, 'Loading Uniswap V3 liquidity positions...']);
+      
+      // Load LP positions separately (non-blocking)
+      loadLPPositions();
       
       setLoadingProgress(95);
       setLoadingMessage('Calculating projections...');
@@ -1196,6 +1233,16 @@ function App() {
             minBarHeight={2}
           />
         )}
+      </div>
+
+      {/* LP Positions Section */}
+      <div className="chart-section">
+        <h2 className="section-title">Uniswap V3 Liquidity Providers</h2>
+        <LPPositionsTable 
+          positions={lpPositions} 
+          loading={lpLoading}
+          tokenInfo={lpTokenInfo || { token0IsTorus: true, token0IsTitanX: false }}
+        />
       </div>
 
       
