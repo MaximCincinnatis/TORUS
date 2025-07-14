@@ -321,8 +321,8 @@ export async function fetchLPPositionsFromEvents(): Promise<SimpleLPPosition[]> 
                   const collectParams = {
                     tokenId: tokenId,
                     recipient: realOwner,
-                    amount0Max: ethers.constants.MaxUint256,
-                    amount1Max: ethers.constants.MaxUint256
+                    amount0Max: '0xffffffffffffffffffffffffffffffff', // MaxUint128
+                    amount1Max: '0xffffffffffffffffffffffffffffffff'  // MaxUint128
                   };
                   
                   const collectData = collectInterface.encodeFunctionData('collect', [collectParams]);

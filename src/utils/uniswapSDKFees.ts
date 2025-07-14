@@ -26,7 +26,7 @@ const TORUS = new Token(1, '0xB47f575807fC5466285e1277Ef8aCFBB5c6686E8', 18, 'TO
 const TITANX = new Token(1, '0xF19308F923582A6f7c465e5CE7a9Dc1BEC6665B1', 18, 'TITANX', 'TitanX');
 
 export async function calculateFeesWithUniswapSDK(tokenId: string) {
-  const provider = getProvider() as ethers.providers.JsonRpcProvider;
+  const provider = getProvider();
   const poolContract = new ethers.Contract(POOL_ADDRESS, POOL_ABI, provider);
   const positionManager = new ethers.Contract(NFT_POSITION_MANAGER, POSITION_MANAGER_ABI, provider);
   
