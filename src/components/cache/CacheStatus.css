@@ -1,0 +1,48 @@
+.cache-status {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 4px 8px;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 6px;
+  font-size: 0.75rem;
+  color: #94a3b8;
+}
+
+.cache-status-indicator {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.cache-icon {
+  font-size: 0.875rem;
+}
+
+.cache-text {
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.cache-details {
+  padding-left: 8px;
+  border-left: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.cache-detail {
+  font-size: 0.6875rem;
+  opacity: 0.8;
+  white-space: nowrap;
+}
+
+@media (max-width: 768px) {
+  .cache-status {
+    font-size: 0.6875rem;
+    padding: 2px 6px;
+  }
+  
+  .cache-details {
+    display: none; /* Hide details on mobile */
+  }
+}

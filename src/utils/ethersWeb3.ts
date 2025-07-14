@@ -11,13 +11,13 @@ const RPC_ENDPOINTS = [
 ];
 
 let currentRpcIndex = 0;
-let provider = new ethers.JsonRpcProvider(RPC_ENDPOINTS[currentRpcIndex]);
+let provider = new ethers.providers.JsonRpcProvider(RPC_ENDPOINTS[currentRpcIndex]);
 
 // Function to try next RPC endpoint
 const tryNextRpc = () => {
   currentRpcIndex = (currentRpcIndex + 1) % RPC_ENDPOINTS.length;
   console.log(`Switching to RPC endpoint: ${RPC_ENDPOINTS[currentRpcIndex]}`);
-  provider = new ethers.JsonRpcProvider(RPC_ENDPOINTS[currentRpcIndex]);
+  provider = new ethers.providers.JsonRpcProvider(RPC_ENDPOINTS[currentRpcIndex]);
 };
 
 // Export provider getter
@@ -662,7 +662,7 @@ export const fetchCreateEvents = async (forceFullRefresh: boolean = false): Prom
       
       // The correct signature for the event with indexed user
       const eventSignature = 'Created(address,uint256,uint256,uint256)';
-      const computedHash = ethers.id(eventSignature);
+      const computedHash = ethers.utils.id(eventSignature);
       console.log('Expected Created event signature:', eventSignature);
       console.log('Expected topic hash:', computedHash);
       
@@ -1137,7 +1137,7 @@ export const getContractInfo = async () => {
     const blockNumber = await provider.getBlockNumber();
     
     return {
-      balance: ethers.formatEther(balance),
+      balance: ethers.utils.formatEther(balance),
       hasCode: code !== '0x',
       currentBlock: blockNumber,
     };
@@ -1233,7 +1233,7 @@ export const getTorusSupplyData = async (): Promise<{totalSupply: number, burned
   
   while (attempts < maxAttempts) {
     try {
-      const currentProvider = new ethers.JsonRpcProvider(RPC_ENDPOINTS[currentRpcIndex]);
+      const currentProvider = new ethers.providers.JsonRpcProvider(RPC_ENDPOINTS[currentRpcIndex]);
       const contract = new ethers.Contract(CONTRACTS.TORUS_TOKEN, TORUS_TOKEN_ABI, currentProvider);
       
       console.log(`Fetching TORUS supply data from ${RPC_ENDPOINTS[currentRpcIndex]}...`);

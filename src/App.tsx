@@ -9,6 +9,7 @@ import LPPositionsTable from './components/lp/LPPositionsTable';
 import { fetchStakeEvents, fetchCreateEvents, getContractInfo, fetchRewardPoolData, getCurrentProtocolDay, RewardPoolData, getTorusSupplyData } from './utils/ethersWeb3';
 import { fetchLPPositionsFromEvents, getTokenInfo, SimpleLPPosition } from './utils/uniswapV3RealOwners';
 import { DataCache } from './utils/cache';
+import { getMainDashboardDataWithCache, getLPPositionsWithCache } from './utils/cacheDataLoader';
 import './App.css';
 
 // Contract launch date - Day 1
@@ -37,17 +38,19 @@ function App() {
   const loadLPPositions = async () => {
     setLpLoading(true);
     try {
-      console.log('🔍 Starting LP positions fetch...');
-      const [positions, tokenInfo] = await Promise.all([
-        fetchLPPositionsFromEvents(),
+      console.log('🔍 Starting LP positions fetch with cache...');
+      
+      // Use cache-first approach for LP positions
+      const [lpResult, tokenInfo] = await Promise.all([
+        getLPPositionsWithCache(() => fetchLPPositionsFromEvents()),
         getTokenInfo()
       ]);
       
-      console.log(`✅ Fetched ${positions.length} LP positions`);
-      if (positions.length > 0) {
-        console.log('First LP position:', positions[0]);
+      console.log(`✅ Fetched ${lpResult.positions.length} LP positions from ${lpResult.source}`);
+      if (lpResult.positions.length > 0) {
+        console.log('First LP position:', lpResult.positions[0]);
       }
-      setLpPositions(positions);
+      setLpPositions(lpResult.positions);
       setLpTokenInfo(tokenInfo);
       console.log('Token info:', tokenInfo);
     } catch (error) {
@@ -90,71 +93,63 @@ function App() {
         setLoadingDetails(prev => [...prev.slice(-3), `Processing stake events... ${Math.floor(Math.random() * 100)}%`]);
       }, 300);
       
-      console.log('📊 About to fetch stake events...');
-      const stakes = await fetchStakeEvents(forceFullRefresh);
+      console.log('📊 About to fetch dashboard data with cache...');
+      
+      // Use cache-first approach for all main dashboard data
+      const dashboardResult = await getMainDashboardDataWithCache(async () => {
+        console.log('🔄 Cache miss - fetching from blockchain...');
+        const stakes = await fetchStakeEvents(forceFullRefresh);
+        const creates = await fetchCreateEvents(forceFullRefresh);
+        const protocolDay = await getCurrentProtocolDay();
+        const poolData = await fetchRewardPoolData(protocolDay, protocolDay + 88);
+        const supplyData = await getTorusSupplyData();
+        
+        return {
+          stakeEvents: stakes,
+          createEvents: creates,
+          rewardPoolData: poolData,
+          currentProtocolDay: protocolDay,
+          totalSupply: supplyData.totalSupply,
+          burnedSupply: supplyData.burnedSupply || 0
+        };
+      });
+      
       clearInterval(stakeProgressInterval);
-      console.log('✅ Stake events fetched:', stakes.length);
-      setLoadingDetails(prev => [...prev, `Found ${stakes.length} stake events`]);
       
-      setLoadingProgress(50);
-      setLoadingMessage('Fetching create events from blockchain...');
-      console.log('📊 About to fetch create events...');
-      setLoadingDetails(prev => [...prev, 'Scanning blockchain for Created events...']);
+      console.log(`✅ Dashboard data loaded from ${dashboardResult.source}:`, {
+        stakes: dashboardResult.data.stakeEvents?.length || 0,
+        creates: dashboardResult.data.createEvents?.length || 0,
+        rewardPool: dashboardResult.data.rewardPoolData?.length || 0
+      });
       
-      // Simulate progress updates during create fetch
-      const createProgressInterval = setInterval(() => {
-        setLoadingProgress(prev => Math.min(prev + 2, 75));
-        setLoadingDetails(prev => [...prev.slice(-3), `Processing create events... ${Math.floor(Math.random() * 100)}%`]);
-      }, 300);
+      setLoadingDetails(prev => [...prev, `Found ${dashboardResult.data.stakeEvents?.length || 0} stake events from ${dashboardResult.source}`]);
+      setLoadingDetails(prev => [...prev, `Found ${dashboardResult.data.createEvents?.length || 0} create events from ${dashboardResult.source}`]);
       
-      console.log('🎯 FETCHING CREATE EVENTS...');
-      const creates = await fetchCreateEvents(forceFullRefresh);
-      clearInterval(createProgressInterval);
-      console.log('📊 CREATE EVENTS RESULT:', creates);
-      console.log(`  Total creates fetched: ${creates.length}`);
-      if (creates.length > 0) {
-        console.log('  First create:', creates[0]);
-        console.log('  Last create:', creates[creates.length - 1]);
-      } else {
-        console.log('  ❌ NO CREATES FOUND!');
-      }
-      setLoadingDetails(prev => [...prev, `Found ${creates.length} create events`]);
+      // Set all the data from cache or RPC
+      setStakeData(dashboardResult.data.stakeEvents || []);
+      setCreateData(dashboardResult.data.createEvents || []);
+      setRewardPoolData(dashboardResult.data.rewardPoolData || []);
+      setCurrentProtocolDay(dashboardResult.data.currentProtocolDay || 0);
+      setTotalSupply(dashboardResult.data.totalSupply || 0);
+      setBurnedSupply(dashboardResult.data.burnedSupply || 0);
       
       setLoadingProgress(55);
-      setLoadingMessage('Fetching token supply data...');
-      const supplyData = await getTorusSupplyData();
-      console.log('Supply data fetched:', supplyData);
-      setTotalSupply(supplyData.totalSupply);
-      setBurnedSupply(supplyData.burnedSupply);
-      setLoadingDetails(prev => [...prev, `Total supply: ${supplyData.totalSupply.toLocaleString()} TORUS`]);
-      
-      setLoadingProgress(60);
-      setLoadingMessage('Fetching current protocol day...');
-      const protocolDay = await getCurrentProtocolDay();
-      setCurrentProtocolDay(protocolDay);
-      console.log('Current protocol day:', protocolDay);
-      
-      setLoadingProgress(70);
-      setLoadingMessage('Fetching reward pool data...');
-      setLoadingDetails(prev => [...prev, 'Loading reward pool information for next 88 days...']);
-      // Fetch reward pool data for next 88 days
-      const poolData = await fetchRewardPoolData(protocolDay, protocolDay + 88);
-      setRewardPoolData(poolData);
-      setLoadingDetails(prev => [...prev, `Loaded ${poolData.length} days of reward data`]);
-      console.log('Fetched reward pool data for', poolData.length, 'days');
+      setLoadingDetails(prev => [...prev, `Total supply: ${dashboardResult.data.totalSupply?.toLocaleString() || 0} TORUS`]);
+      setLoadingDetails(prev => [...prev, `Current protocol day: ${dashboardResult.data.currentProtocolDay || 0}`]);
+      setLoadingDetails(prev => [...prev, `Loaded ${dashboardResult.data.rewardPoolData?.length || 0} days of reward data`]);
       
       setLoadingProgress(85);
       setLoadingMessage('Processing data...');
       setLoadingDetails(prev => [...prev, 'Calculating maturity schedules and projections...']);
       
-      console.log(`Fetched ${stakes.length} stake events and ${creates.length} create events`);
+      console.log(`Fetched ${dashboardResult.data.stakeEvents?.length || 0} stake events and ${dashboardResult.data.createEvents?.length || 0} create events`);
       
       // DEBUG: Log first few events to see their structure
-      if (stakes.length > 0) {
-        console.log('Sample stake event:', stakes[0]);
+      if (dashboardResult.data.stakeEvents?.length > 0) {
+        console.log('Sample stake event:', dashboardResult.data.stakeEvents[0]);
       }
-      if (creates.length > 0) {
-        console.log('Sample create event:', creates[0]);
+      if (dashboardResult.data.createEvents?.length > 0) {
+        console.log('Sample create event:', dashboardResult.data.createEvents[0]);
       }
       
       setLoadingProgress(90);
@@ -167,10 +162,8 @@ function App() {
       setLoadingProgress(95);
       setLoadingMessage('Calculating projections...');
       
-      // Only use live blockchain data
-      console.log('Live data - Stakes:', stakes.length, 'Creates:', creates.length);
-      setStakeData(stakes);
-      setCreateData(creates);
+      // Data already set from cache above
+      console.log('Data loaded - Stakes:', dashboardResult.data.stakeEvents?.length || 0, 'Creates:', dashboardResult.data.createEvents?.length || 0);
       
       setLoadingProgress(100);
       setLoadingMessage('Complete!');
@@ -871,7 +864,7 @@ function App() {
                 <span className="torus-text">TORUS</span>
                 <span style={{ fontWeight: 700 }}>Dashboard</span>
               </h1>
-              <p className="dashboard-subtitle">
+              <div className="dashboard-subtitle">
                 ANALYTICS & INSIGHTS
                 <div className="info-icon-container" title="">
                   <svg 
@@ -896,7 +889,7 @@ function App() {
                     </div>
                   </div>
                 </div>
-              </p>
+              </div>
             </div>
           </div>
         </div>

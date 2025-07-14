@@ -1,0 +1,247 @@
+{
+  "lastUpdated": "2025-07-14T23:57:35.837Z",
+  "version": "1.0.0",
+  "poolData": {
+    "sqrtPriceX96": "454866591328074035908165441767517",
+    "currentTick": 173117,
+    "token0": "0xB47f575807fC5466285e1277Ef8aCFBB5c6686E8",
+    "token1": "0xF19308F923582A6f7c465e5CE7a9Dc1BEC6665B1",
+    "liquidity": "72038127163357528379469605",
+    "feeGrowthGlobal0X128": "942403226647641062640744773414756",
+    "feeGrowthGlobal1X128": "36332800299312921509780325991651001740607"
+  },
+  "lpPositions": [],
+  "historicalData": {
+    "sevenDay": [
+      {
+        "date": "2025-07-14",
+        "volumeUSD": "4406951",
+        "volumeToken0": "88139023",
+        "volumeToken1": "22034755791072730",
+        "feesUSD": "13220",
+        "tvlUSD": "5544703",
+        "liquidity": "72038127163357528379469605",
+        "txCount": "467"
+      }
+    ],
+    "thirtyDay": []
+  },
+  "tokenPrices": {
+    "torus": {
+      "usd": 0.00005,
+      "lastUpdated": "2025-07-14T23:57:35.837Z"
+    },
+    "titanx": {
+      "usd": 1e-9,
+      "lastUpdated": "2025-07-14T23:57:35.837Z"
+    }
+  },
+  "stakingData": {
+    "stakeEvents": [
+      {
+        "user": "0xC202d94CbD66Fb7Ec7cd3216b1422F40c31e8aF4",
+        "id": "5",
+        "principal": "15000000000000000000",
+        "shares": "88",
+        "duration": "3650",
+        "timestamp": "1752491111",
+        "maturityDate": "2035-07-12T11:05:11.000Z",
+        "blockNumber": 22917003,
+        "stakingDays": 3650
+      },
+      {
+        "user": "0xD868506cBF8fCa58Ed9b834F3DA5a3efC2Ce6cc5",
+        "id": "1",
+        "principal": "58000000000000000000",
+        "shares": "88",
+        "duration": "3650",
+        "timestamp": "1752505043",
+        "maturityDate": "2035-07-12T14:57:23.000Z",
+        "blockNumber": 22918155,
+        "stakingDays": 3650
+      },
+      {
+        "user": "0xd95C19519E01ce7F54768066F627C1FAFc28F8c6",
+        "id": "7",
+        "principal": "147000000000000000000",
+        "shares": "80",
+        "duration": "3650",
+        "timestamp": "1752505091",
+        "maturityDate": "2035-07-12T14:58:11.000Z",
+        "blockNumber": 22918159,
+        "stakingDays": 3650
+      },
+      {
+        "user": "0x79c640B83E95135c2578A1e1e0D48b637fC2EaD7",
+        "id": "10",
+        "principal": "25000000000000000000",
+        "shares": "88",
+        "duration": "3650",
+        "timestamp": "1752532235",
+        "maturityDate": "2035-07-12T22:30:35.000Z",
+        "blockNumber": 22920412,
+        "stakingDays": 3650
+      },
+      {
+        "user": "0xb5Ae1F08622cE508d2CdF86F3C7D86894278C4fD",
+        "id": "0",
+        "principal": "135000000000000000000",
+        "shares": "88",
+        "duration": "3650",
+        "timestamp": "1752535835",
+        "maturityDate": "2035-07-12T23:30:35.000Z",
+        "blockNumber": 22920711,
+        "stakingDays": 3650
+      }
+    ],
+    "createEvents": [
+      {
+        "user": "0xA88bb9B3e0CaE70314aB66bc0bE4F486f4C726C7",
+        "stakeIndex": "0",
+        "torusAmount": "5781543124265568952",
+        "titanAmount": "0",
+        "endTime": "2067837959",
+        "timestamp": "1752477959",
+        "maturityDate": "2035-07-12T07:25:59.000Z",
+        "blockNumber": 22915913,
+        "shares": "5781543124265568952",
+        "stakingDays": 3650
+      },
+      {
+        "user": "0xA88bb9B3e0CaE70314aB66bc0bE4F486f4C726C7",
+        "stakeIndex": "1",
+        "torusAmount": "21149111475744794979",
+        "titanAmount": "0",
+        "endTime": "2067838187",
+        "timestamp": "1752478187",
+        "maturityDate": "2035-07-12T07:29:47.000Z",
+        "blockNumber": 22915932,
+        "shares": "21149111475744794979",
+        "stakingDays": 3650
+      },
+      {
+        "user": "0x9c3Dcf5be9a76D3d1cf4152ADCe071D50d30f24e",
+        "stakeIndex": "0",
+        "torusAmount": "99759959791249032921",
+        "titanAmount": "0",
+        "endTime": "2067839999",
+        "timestamp": "1752479999",
+        "maturityDate": "2035-07-12T07:59:59.000Z",
+        "blockNumber": 22916083,
+        "shares": "99759959791249032921",
+        "stakingDays": 3650
+      },
+      {
+        "user": "0x3f043123198d5C7f1A6C58CD3d96dd6970dBD52B",
+        "stakeIndex": "0",
+        "torusAmount": "22956127111054464960",
+        "titanAmount": "0",
+        "endTime": "2067841607",
+        "timestamp": "1752481607",
+        "maturityDate": "2035-07-12T08:26:47.000Z",
+        "blockNumber": 22916217,
+        "shares": "22956127111054464960",
+        "stakingDays": 3650
+      },
+      {
+        "user": "0xC202d94CbD66Fb7Ec7cd3216b1422F40c31e8aF4",
+        "stakeIndex": "4",
+        "torusAmount": "50877579493537006789",
+        "titanAmount": "0",
+        "endTime": "2067842615",
+        "timestamp": "1752482615",
+        "maturityDate": "2035-07-12T08:43:35.000Z",
+        "blockNumber": 22916301,
+        "shares": "50877579493537006789",
+        "stakingDays": 3650
+      },
+      {
+        "user": "0x24D4D43BE13b723ABf0970bBb61681Cb67ECF258",
+        "stakeIndex": "2",
+        "torusAmount": "49879979895624516460",
+        "titanAmount": "0",
+        "endTime": "2067843767",
+        "timestamp": "1752483767",
+        "maturityDate": "2035-07-12T09:02:47.000Z",
+        "blockNumber": 22916397,
+        "shares": "49879979895624516460",
+        "stakingDays": 3650
+      },
+      {
+        "user": "0x241c7809E31ae711805fEB8082A926c708be13D2",
+        "stakeIndex": "3",
+        "torusAmount": "85022693003905425782",
+        "titanAmount": "0",
+        "endTime": "2067844943",
+        "timestamp": "1752484943",
+        "maturityDate": "2035-07-12T09:22:23.000Z",
+        "blockNumber": 22916494,
+        "shares": "85022693003905425782",
+        "stakingDays": 3650
+      },
+      {
+        "user": "0x241c7809E31ae711805fEB8082A926c708be13D2",
+        "stakeIndex": "4",
+        "torusAmount": "45345436268749560418",
+        "titanAmount": "0",
+        "endTime": "2067845651",
+        "timestamp": "1752485651",
+        "maturityDate": "2035-07-12T09:34:11.000Z",
+        "blockNumber": 22916552,
+        "shares": "45345436268749560418",
+        "stakingDays": 3650
+      },
+      {
+        "user": "0x24087AfeABd4966Ec4183B4F5cB67b71eadCfDA9",
+        "stakeIndex": "1",
+        "torusAmount": "893871912447725709736",
+        "titanAmount": "0",
+        "endTime": "2067850127",
+        "timestamp": "1752490127",
+        "maturityDate": "2035-07-12T10:48:47.000Z",
+        "blockNumber": 22916923,
+        "shares": "893871912447725709736",
+        "stakingDays": 3650
+      },
+      {
+        "user": "0x4CFa7eAF2e79ede119Ae5f491ff1594129B01042",
+        "stakeIndex": "1",
+        "torusAmount": "399039839164996131684",
+        "titanAmount": "0",
+        "endTime": "2067851747",
+        "timestamp": "1752491747",
+        "maturityDate": "2035-07-12T11:15:47.000Z",
+        "blockNumber": 22917056,
+        "shares": "399039839164996131684",
+        "stakingDays": 3650
+      }
+    ],
+    "rewardPoolData": [],
+    "currentProtocolDay": 5,
+    "totalSupply": 19754.765929965957,
+    "burnedSupply": 0,
+    "lastUpdated": "2025-07-14T23:57:35.837Z"
+  },
+  "contractData": {
+    "torusToken": {
+      "address": "0xb47f575807fc5466285e1277ef8acfbb5c6686e8",
+      "totalSupply": "19754765929965956528867",
+      "decimals": 18
+    },
+    "titanxToken": {
+      "address": "0xf19308f923582a6f7c465e5ce7a9dc1bec6665b1",
+      "totalSupply": "0",
+      "decimals": 18
+    },
+    "uniswapPool": {
+      "address": "0x7ff1f30F6E7EeC2ff3F0D1b60739115BDF88190F",
+      "feeTier": 3000
+    }
+  },
+  "metadata": {
+    "dataSource": "live-blockchain-rpc",
+    "fallbackToRPC": false,
+    "cacheExpiryMinutes": 30,
+    "description": "Real blockchain data fetched directly from contracts"
+  }
+}
