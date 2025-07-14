@@ -80,19 +80,27 @@ const LPPositionsTable: React.FC<LPPositionsTableProps> = ({ positions, loading,
     const priceLower = tickToTitanXPrice(tickLower);
     const priceUpper = tickToTitanXPrice(tickUpper);
     
+    // Handle edge cases where prices are 0 or invalid
+    if (priceLower === 0 && priceUpper === 0) {
+      return "Invalid Range";
+    }
+    
     // Convert to billions and format
     const lowerBillions = priceLower / 1000000000;
     const upperBillions = priceUpper / 1000000000;
     
-    // Format with commas
-    const lowerFormatted = lowerBillions.toLocaleString('en-US', { 
-      minimumFractionDigits: 2, 
-      maximumFractionDigits: 2 
-    });
-    const upperFormatted = upperBillions.toLocaleString('en-US', { 
-      minimumFractionDigits: 2, 
-      maximumFractionDigits: 2 
-    });
+    // Format with commas, handling very small numbers
+    const formatBillions = (value: number) => {
+      if (value === 0) return "0.00";
+      if (value < 0.01) return value.toFixed(6);
+      return value.toLocaleString('en-US', { 
+        minimumFractionDigits: 2, 
+        maximumFractionDigits: 2 
+      });
+    };
+    
+    const lowerFormatted = formatBillions(lowerBillions);
+    const upperFormatted = formatBillions(upperBillions);
     
     return `${lowerFormatted}B - ${upperFormatted}B`;
   };

@@ -1,80 +1,97 @@
 # TORUS Dashboard Todo List
 
-## Current Issue: Stakes Not Showing on Dashboard
+## Current Issue: Claimable Yield and TitanX Price Range Debug
 
-### Analysis
-Based on research of the TORUS Create & Stake contract:
+### Problem Analysis
+1. **Claimable Yield Showing 0**: User mentioned address 0xCe32E10b205FBf49F3bB7132f7378751Af1832b6 has yield on Etherscan but shows 0 in dashboard
+2. **TitanX Price Range Issue**: Non-full-range positions showing "0.00-0.00" for TitanX price ranges
 
-1. **Two Types of Positions**:
-   - **Creates**: Users deposit TitanX/ETH to mint new TORUS (emits `Created` events)
-   - **Stakes**: Users stake existing TORUS tokens (emits `Staked` events)
+### Identified Issues
 
-2. **Current Status**:
-   - We're successfully tracking Created events (203 creates showing)
-   - We're seeing 0 Staked events in our dashboard
-   - The protocol appears to be in "create phase" where users are minting new tokens
+#### Issue 1: Claimable Yield Calculation Bug
+- **Location**: `uniswapV3RealOwners.ts` lines 269-270
+- **Problem**: Direct division by Math.pow(10, 18) may lose precision for small amounts
+- **Code**: 
+  ```typescript
+  const claimableTorus = Number(positionData.tokensOwed0) / Math.pow(10, 18);
+  const claimableTitanX = Number(positionData.tokensOwed1) / Math.pow(10, 18);
+  ```
 
-3. **Possible Reasons for No Stakes**:
-   - Users may not be staking yet (still accumulating TORUS)
-   - There might be an issue with our stake event fetching
-   - Stakes might exist but our code isn't capturing them correctly
+#### Issue 2: TitanX Price Range Calculation Bug
+- **Location**: `uniswapV3Math.ts` line 13 and `LPPositionsTable.tsx` lines 80-81
+- **Problem**: Inverted price calculation may return infinity or 0 for extreme tick values
+- **Code**:
+  ```typescript
+  export function tickToTitanXPrice(tick: number): number {
+    const price = Math.pow(1.0001, tick);
+    return 1 / price; // This can return infinity for very negative ticks
+  }
+  ```
 
-### Plan to Fix Stakes Display
+### Plan to Fix Issues
 
-#### Phase 1: Verify Stake Events Exist
-1. **Add Debug Logging to fetchStakeEvents**
-   - [ ] Log the exact filter being used
-   - [ ] Log raw event data before mapping
-   - [ ] Log any errors in detail
-   - [ ] Count events per chunk
+#### Phase 1: Fix Claimable Yield Precision Issue
+1. **Replace Division with BigInt Precision**
+   - [ ] Update claimable yield calculation to use BigInt arithmetic
+   - [ ] Convert to Number only at the final step
+   - [ ] Add safety checks for overflow
 
-2. **Test Direct Contract Query**
-   - [ ] Create a test script to query Staked events directly
-   - [ ] Compare with Etherscan events tab
-   - [ ] Verify our deployment block is correct
+2. **Add Debug Logging**
+   - [ ] Log raw tokensOwed0 and tokensOwed1 values before conversion
+   - [ ] Log converted values to identify precision loss
+   - [ ] Add specific logging for the mentioned address
 
-#### Phase 2: Fix Event Fetching (if events exist)
-1. **Check Event Signature**
-   - [ ] Verify the Staked event ABI matches contract
-   - [ ] Ensure event parameters are correct
-   - [ ] Test with different block ranges
+#### Phase 2: Fix TitanX Price Range Calculation
+1. **Handle Extreme Tick Values**
+   - [ ] Add bounds checking for tick values before calculation
+   - [ ] Handle infinity and zero cases gracefully
+   - [ ] Add fallback for invalid price calculations
 
-2. **Debug Event Processing**
-   - [ ] Log raw event args before processing
-   - [ ] Verify timestamp and duration calculations
-   - [ ] Check maturityDate calculation
+2. **Improve Price Calculation Logic**
+   - [ ] Add validation for tick ranges (-887220 to 887220)
+   - [ ] Handle edge cases for very large/small tick values
+   - [ ] Add specific handling for full-range positions
 
-#### Phase 3: Update UI Display
-1. **Separate Stakes from Creates**
-   - [ ] Add clear labels for "Stakes" vs "Creates"
-   - [ ] Show both types in metrics
-   - [ ] Add "No stakes yet" message if zero
+#### Phase 3: Enhanced Error Handling and Testing
+1. **Add Comprehensive Error Handling**
+   - [ ] Wrap price calculations in try-catch blocks
+   - [ ] Add fallback values for failed calculations
+   - [ ] Log specific errors for debugging
 
-2. **Add Stake-specific Charts**
-   - [ ] Stake maturity schedule (if any stakes exist)
-   - [ ] Average stake duration
-   - [ ] Total TORUS staked vs created
+2. **Test with Known Addresses**
+   - [ ] Test specifically with address 0xCe32E10b205FBf49F3bB7132f7378751Af1832b6
+   - [ ] Compare results with Etherscan data
+   - [ ] Validate both claimable yield and price range calculations
 
-#### Phase 4: Testing
-1. **Test with Mock Data**
-   - [ ] Create mock stake events to test display
-   - [ ] Verify charts render correctly
-   - [ ] Test edge cases (0 stakes, 1 stake, many stakes)
+#### Phase 4: UI Improvements
+1. **Better Display of Small Values**
+   - [ ] Improve formatClaimableAmount function precision
+   - [ ] Show more decimal places for very small amounts
+   - [ ] Add scientific notation for extremely small values
 
-2. **Production Testing**
-   - [ ] Deploy and verify with live data
-   - [ ] Monitor console for errors
-   - [ ] Compare with Etherscan data
+2. **Error State Display**
+   - [ ] Show "Error" instead of "0.00-0.00" for invalid price ranges
+   - [ ] Add tooltips explaining calculation issues
+   - [ ] Provide fallback text for failed calculations
 
-### Next Steps
-1. First, we need to verify if ANY Staked events exist on-chain
-2. If they exist, debug why we're not fetching them
-3. If they don't exist, update UI to clearly show this is expected
+### Todo Items
 
-### Questions for User
-- Have you checked Etherscan to see if there are any Staked events?
-- Should we show a message explaining why stakes might be zero?
-- Do you want to display creates and stakes separately or combined?
+- [ ] **Fix claimable yield BigInt precision**: Update uniswapV3RealOwners.ts to use BigInt arithmetic for tokensOwed conversion
+- [ ] **Add claimable yield debug logging**: Log raw and converted values for debugging
+- [ ] **Fix tickToTitanXPrice edge cases**: Handle infinity and zero results from extreme tick values
+- [ ] **Add price range validation**: Validate tick ranges and add bounds checking
+- [ ] **Test with problem address**: Specifically test address 0xCe32E10b205FBf49F3bB7132f7378751Af1832b6
+- [ ] **Improve formatClaimableAmount precision**: Show more decimal places for very small amounts
+- [ ] **Add error state handling**: Display "Error" instead of "0.00-0.00" for invalid calculations
+- [ ] **Enhanced error logging**: Add comprehensive error handling and logging
+
+### Expected Results
+1. Claimable yield should show actual amounts instead of 0 for positions with fees
+2. TitanX price ranges should display correct values instead of "0.00-0.00"
+3. Better error handling for edge cases and invalid calculations
+4. More precise display of very small amounts
+
+## Previous Reviews
 
 ## Review: Bar Size Visibility Issue
 

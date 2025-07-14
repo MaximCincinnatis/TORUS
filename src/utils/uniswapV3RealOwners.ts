@@ -265,9 +265,15 @@ export async function fetchLPPositionsFromEvents(): Promise<SimpleLPPosition[]> 
                 console.log(`    ✅ TORUS Amount: ${amounts.amount0.toFixed(4)}`);
                 console.log(`    ✅ TitanX Amount: ${amounts.amount1.toFixed(4)}`);
                 
-                // Calculate claimable fees from tokensOwed
-                const claimableTorus = Number(positionData.tokensOwed0) / Math.pow(10, 18);
-                const claimableTitanX = Number(positionData.tokensOwed1) / Math.pow(10, 18);
+                // Calculate claimable fees from tokensOwed using proper BigInt arithmetic
+                const decimals18 = BigInt(10) ** BigInt(18);
+                const claimableTorus = Number(positionData.tokensOwed0) / Number(decimals18);
+                const claimableTitanX = Number(positionData.tokensOwed1) / Number(decimals18);
+                
+                console.log(`    🔍 Raw tokensOwed0: ${positionData.tokensOwed0.toString()}`);
+                console.log(`    🔍 Raw tokensOwed1: ${positionData.tokensOwed1.toString()}`);
+                console.log(`    🔍 Calculated claimableTorus: ${claimableTorus}`);
+                console.log(`    🔍 Calculated claimableTitanX: ${claimableTitanX}`);
                 
                 // More accurate APR estimation based on position size and claimable fees
                 // Calculate position value in terms of TORUS equivalent

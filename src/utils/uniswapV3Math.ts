@@ -10,7 +10,14 @@ export function tickToTitanXPrice(tick: number): number {
   // Convert tick to price (how much TitanX per 1 TORUS)
   // Since token1 is TitanX and token0 is TORUS, we need to invert the price
   const price = Math.pow(1.0001, tick);
-  return 1 / price; // This gives us TitanX per TORUS
+  const titanXPrice = 1 / price; // This gives us TitanX per TORUS
+  
+  // Handle edge cases where price becomes infinity or very close to 0
+  if (!isFinite(titanXPrice) || titanXPrice <= 0) {
+    return 0;
+  }
+  
+  return titanXPrice;
 }
 
 export function sqrtPriceX96ToPrice(sqrtPriceX96: string, token0Decimals: number, token1Decimals: number): number {
