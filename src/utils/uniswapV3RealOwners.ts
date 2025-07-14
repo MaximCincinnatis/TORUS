@@ -1,6 +1,7 @@
 import { ethers } from 'ethers';
 import { getProvider } from './ethersWeb3';
 import { calculateTokenAmounts, isPositionInRange } from './uniswapV3Math';
+import { findAllPositionsForAddress } from './findAllPositionsForAddress';
 
 const POOL_ADDRESS = '0x7ff1f30F6E7EeC2ff3F0D1b60739115BDF88190F';
 const NFT_POSITION_MANAGER = '0xC36442b4a4522E871399CD717aBDD847Ab11FE88';
@@ -162,6 +163,10 @@ export async function fetchLPPositionsFromEvents(): Promise<SimpleLPPosition[]> 
     await debugSpecificPosition('780889', positionManager);
     await debugSpecificPosition('797216', positionManager);
     await debugSpecificPosition('798833', positionManager);
+    
+    // Test finding ALL positions for the target address
+    console.log('\n🔍 Searching for ALL positions for 0xCe32...32b6');
+    await findAllPositionsForAddress('0xCe32E10b205FBf49F3bB7132f7378751Af1832b6');
     
     console.log('📡 Testing provider network connection...');
     try {
