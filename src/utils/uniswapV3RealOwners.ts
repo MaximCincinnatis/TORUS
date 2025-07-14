@@ -265,13 +265,17 @@ export async function fetchLPPositionsFromEvents(): Promise<SimpleLPPosition[]> 
                 console.log(`    ✅ TORUS Amount: ${amounts.amount0.toFixed(4)}`);
                 console.log(`    ✅ TitanX Amount: ${amounts.amount1.toFixed(4)}`);
                 
-                // Calculate claimable fees from tokensOwed using proper BigInt arithmetic
-                const decimals18 = BigInt(10) ** BigInt(18);
-                const claimableTorus = Number(positionData.tokensOwed0) / Number(decimals18);
-                const claimableTitanX = Number(positionData.tokensOwed1) / Number(decimals18);
+                // Calculate claimable fees from tokensOwed with proper precision
+                // Convert to string first to avoid precision loss with large numbers
+                const tokensOwed0Str = positionData.tokensOwed0.toString();
+                const tokensOwed1Str = positionData.tokensOwed1.toString();
                 
-                console.log(`    🔍 Raw tokensOwed0: ${positionData.tokensOwed0.toString()}`);
-                console.log(`    🔍 Raw tokensOwed1: ${positionData.tokensOwed1.toString()}`);
+                // Handle decimal conversion more carefully
+                const claimableTorus = parseFloat(tokensOwed0Str) / 1e18;
+                const claimableTitanX = parseFloat(tokensOwed1Str) / 1e18;
+                
+                console.log(`    🔍 Raw tokensOwed0: ${tokensOwed0Str}`);
+                console.log(`    🔍 Raw tokensOwed1: ${tokensOwed1Str}`);
                 console.log(`    🔍 Calculated claimableTorus: ${claimableTorus}`);
                 console.log(`    🔍 Calculated claimableTitanX: ${claimableTitanX}`);
                 

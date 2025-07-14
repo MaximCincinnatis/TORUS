@@ -57,7 +57,12 @@ const LPPositionsTable: React.FC<LPPositionsTableProps> = ({ positions, loading,
     // Always show at least 3 decimals for claimable amounts to show small fees
     if (amount < 0.001) return amount.toFixed(6);
     if (amount < 1) return amount.toFixed(4);
-    return amount.toFixed(3);
+    if (amount < 1000) return amount.toFixed(3);
+    // For large amounts, use locale formatting with commas
+    return amount.toLocaleString('en-US', { 
+      minimumFractionDigits: 3, 
+      maximumFractionDigits: 3 
+    });
   };
 
   const formatTitanXAmount = (amount: number) => {
@@ -158,7 +163,7 @@ const LPPositionsTable: React.FC<LPPositionsTableProps> = ({ positions, loading,
                   <td>{formatAmount(torusAmount)}</td>
                   <td className="claimable-yield">
                     <div>{formatClaimableAmount(position.claimableTorus || 0)} TORUS</div>
-                    <div>{formatClaimableAmount(position.claimableTitanX || 0)} TitanX</div>
+                    <div>{formatTitanXAmount(position.claimableTitanX || 0)} TitanX</div>
                   </td>
                   <td className="apr">
                     {position.estimatedAPR ? `${position.estimatedAPR.toFixed(1)}%` : 'N/A'}

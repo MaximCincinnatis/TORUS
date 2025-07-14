@@ -13,8 +13,15 @@ export function tickToTitanXPrice(tick: number): number {
   const titanXPrice = 1 / price; // This gives us TitanX per TORUS
   
   // Handle edge cases where price becomes infinity or very close to 0
-  if (!isFinite(titanXPrice) || titanXPrice <= 0) {
-    return 0;
+  // For very negative ticks, titanXPrice will be extremely large
+  // For very positive ticks, titanXPrice will be close to 0
+  if (!isFinite(titanXPrice)) {
+    // Return a very large number for negative infinity case
+    return 1e15; // 1 quadrillion TitanX per TORUS
+  }
+  
+  if (titanXPrice <= 0) {
+    return 1e-15; // Very small but not 0
   }
   
   return titanXPrice;
