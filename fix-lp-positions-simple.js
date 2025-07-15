@@ -64,13 +64,15 @@ function formatPriceRange(tickLower, tickUpper) {
     return 'Full Range';
   }
   
-  // Calculate TitanX per TORUS prices
+  // Calculate prices (TORUS per TitanX)
   const priceLower = Math.pow(1.0001, tickLower);
   const priceUpper = Math.pow(1.0001, tickUpper);
   
-  // Invert to get TitanX per TORUS
-  const titanXPerTorusLower = 1 / priceUpper; // Note: inverted because higher tick = lower TitanX price
-  const titanXPerTorusUpper = 1 / priceLower;
+  // For display, we want TitanX per TORUS (how many TitanX you get for 1 TORUS)
+  // This is the reciprocal of the tick price
+  // Higher tick = higher TORUS price = more TitanX per TORUS
+  const titanXPerTorusLower = priceLower;
+  const titanXPerTorusUpper = priceUpper;
   
   // Format with appropriate precision
   const formatPrice = (price) => {
@@ -82,8 +84,13 @@ function formatPriceRange(tickLower, tickUpper) {
       return price.toFixed(2);
     } else if (price >= 0.001) {
       return price.toFixed(6);
+    } else if (price >= 0.000001) {
+      return price.toFixed(8);
+    } else if (price >= 0.000000001) {
+      return price.toFixed(10);
     } else {
-      return price.toExponential(2);
+      // For extremely small values, show in millions
+      return (price * 1000000).toFixed(2) + 'M⁻¹';
     }
   };
   
