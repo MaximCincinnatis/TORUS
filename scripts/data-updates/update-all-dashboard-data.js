@@ -161,92 +161,51 @@ async function calculatePositionAPR(amounts, claimableTorus, claimableTitanX, cu
 }
 
 function calculateTokenAmounts(liquidity, sqrtPriceX96, tickLower, tickUpper) {
-  try {
-    const liquidityBN = ethers.BigNumber.from(liquidity);
-    const sqrtPrice = ethers.BigNumber.from(sqrtPriceX96);
-    const Q96 = ethers.BigNumber.from(2).pow(96);
-    
-    // Handle extreme tick values safely for full range positions
-    let sqrtPriceLower, sqrtPriceUpper;
-    
-    if (tickLower <= -887000) {
-      // Very low tick, use minimum sqrt price (close to 0)
-      sqrtPriceLower = ethers.BigNumber.from("4295128739");
-    } else {
-      const priceLower = Math.pow(1.0001, tickLower);
-      if (!isFinite(priceLower) || priceLower <= 0) {
-        sqrtPriceLower = ethers.BigNumber.from("4295128739");
-      } else {
-        const sqrtPriceLowerFloat = Math.sqrt(priceLower) * Math.pow(2, 96);
-        sqrtPriceLower = ethers.BigNumber.from(Math.floor(sqrtPriceLowerFloat));
-      }
-    }
-    
-    if (tickUpper >= 887000) {
-      // Very high tick, use maximum sqrt price
-      sqrtPriceUpper = ethers.BigNumber.from("1461446703485210103287273052203988822378723970342");
-    } else {
-      const priceUpper = Math.pow(1.0001, tickUpper);
-      if (!isFinite(priceUpper) || priceUpper <= 0) {
-        sqrtPriceUpper = ethers.BigNumber.from("1461446703485210103287273052203988822378723970342");
-      } else {
-        const sqrtPriceUpperFloat = Math.sqrt(priceUpper) * Math.pow(2, 96);
-        sqrtPriceUpper = ethers.BigNumber.from(Math.floor(sqrtPriceUpperFloat));
-      }
-    }
-    
-    let amount0 = ethers.BigNumber.from(0);
-    let amount1 = ethers.BigNumber.from(0);
-    
-    // Calculate based on current price position
-    if (sqrtPrice.lte(sqrtPriceLower)) {
-      // Current price is below the range, all liquidity is in token0
-      try {
-        amount0 = liquidityBN.mul(sqrtPriceUpper.sub(sqrtPriceLower)).mul(Q96)
-          .div(sqrtPriceUpper.mul(sqrtPriceLower));
-      } catch (error) {
-        // Fallback calculation for extreme values
-        amount0 = liquidityBN.div(1000000); // Rough approximation
-      }
-    } else if (sqrtPrice.lt(sqrtPriceUpper)) {
-      // Current price is within the range
-      try {
-        amount0 = liquidityBN.mul(sqrtPriceUpper.sub(sqrtPrice)).mul(Q96)
-          .div(sqrtPriceUpper.mul(sqrtPrice));
-        amount1 = liquidityBN.mul(sqrtPrice.sub(sqrtPriceLower)).div(Q96);
-      } catch (error) {
-        // Fallback calculation
-        const liquidityNum = Number(liquidityBN.toString());
-        amount0 = ethers.BigNumber.from(Math.floor(liquidityNum / 1000000));
-        amount1 = ethers.BigNumber.from(Math.floor(liquidityNum / 100));
-      }
-    } else {
-      // Current price is above the range, all liquidity is in token1
-      try {
-        amount1 = liquidityBN.mul(sqrtPriceUpper.sub(sqrtPriceLower)).div(Q96);
-      } catch (error) {
-        // Fallback calculation
-        amount1 = liquidityBN.div(100); // Rough approximation
-      }
-    }
-    
-    // Convert to decimal values with proper decimals (18 for both tokens)
-    const decimal0 = parseFloat(ethers.utils.formatEther(amount0));
-    const decimal1 = parseFloat(ethers.utils.formatEther(amount1));
-    
-    return {
-      amount0: decimal0,
-      amount1: decimal1
-    };
-  } catch (error) {
-    console.log(`    ⚠️  Token amount calculation failed: ${error.message}`);
-    // Return reasonable defaults based on liquidity
-    const liquidityNum = Number(liquidity);
-    return {
-      amount0: liquidityNum / 1e24, // Rough TORUS amount estimate  
-      amount1: liquidityNum / 1e12  // Rough TitanX amount estimate
-    };
+  // Use the EXACT working frontend calculation logic
+  const liquidityBN = BigInt(liquidity);
+  const sqrtPrice = BigInt(sqrtPriceX96);
+  const Q96 = BigInt(2) ** BigInt(96);
+  
+  // Calculate sqrt prices for the tick range using BigInt-safe arithmetic
+  const priceLower = Math.pow(1.0001, tickLower);
+  const priceUpper = Math.pow(1.0001, tickUpper);
+  
+  // Convert to BigInt sqrt prices (multiply by 2^96 and take sqrt)
+  const sqrtPriceLowerFloat = Math.sqrt(priceLower) * Math.pow(2, 96);
+  const sqrtPriceUpperFloat = Math.sqrt(priceUpper) * Math.pow(2, 96);
+  
+  const sqrtPriceLower = BigInt(Math.floor(sqrtPriceLowerFloat));
+  const sqrtPriceUpper = BigInt(Math.floor(sqrtPriceUpperFloat));
+  
+  let amount0 = BigInt(0);
+  let amount1 = BigInt(0);
+  
+  // Calculate based on current price position
+  if (sqrtPrice <= sqrtPriceLower) {
+    // Current price is below the range, all liquidity is in token0
+    amount0 = (liquidityBN * (sqrtPriceUpper - sqrtPriceLower) * Q96) / 
+      (sqrtPriceUpper * sqrtPriceLower);
+  } else if (sqrtPrice < sqrtPriceUpper) {
+    // Current price is within the range
+    amount0 = (liquidityBN * (sqrtPriceUpper - sqrtPrice) * Q96) / 
+      (sqrtPriceUpper * sqrtPrice);
+    amount1 = (liquidityBN * (sqrtPrice - sqrtPriceLower)) / Q96;
+  } else {
+    // Current price is above the range, all liquidity is in token1
+    amount1 = (liquidityBN * (sqrtPriceUpper - sqrtPriceLower)) / Q96;
   }
+  
+  // Convert to decimal values using BigInt arithmetic for precision
+  const decimals0 = BigInt(10) ** BigInt(18);
+  const decimals1 = BigInt(10) ** BigInt(18);
+  
+  const decimal0 = Number(amount0) / Number(decimals0);
+  const decimal1 = Number(amount1) / Number(decimals1);
+  
+  return {
+    amount0: decimal0,
+    amount1: decimal1
+  };
 }
 
 function aggregateTitanXByEndDate(stakeEvents, createEvents) {
@@ -738,18 +697,13 @@ async function updateAllDashboardData() {
                     console.log(`      ✅ Found valid TORUS position ${tokenId}!`);
                     processedTokenIds.add(tokenId);
                     
-                    // Calculate token amounts using proper math
-                    let amounts = { amount0: 0, amount1: 0 };
-                    try {
-                      amounts = calculateTokenAmounts(
-                        position.liquidity.toString(),
-                        slot0.sqrtPriceX96.toString(),
-                        position.tickLower,
-                        position.tickUpper
-                      );
-                    } catch (calcError) {
-                      console.log(`      ⚠️  Token amount calculation failed for ${tokenId}, using defaults`);
-                    }
+                    // Calculate token amounts using proper math - must succeed or skip position
+                    const amounts = calculateTokenAmounts(
+                      position.liquidity.toString(),
+                      slot0.sqrtPriceX96.toString(),
+                      position.tickLower,
+                      position.tickUpper
+                    );
                     
                     // Calculate claimable fees using collect simulation (working method)
                     let claimableTorus = 0;

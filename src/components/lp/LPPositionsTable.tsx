@@ -142,8 +142,11 @@ const LPPositionsTable: React.FC<LPPositionsTableProps> = ({ positions, loading,
             {sortedPositions.map((position, index) => {
               const titanXAmount = tokenInfo.token0IsTitanX ? position.amount0 : position.amount1;
               const torusAmount = tokenInfo.token0IsTorus ? position.amount0 : position.amount1;
-              // Always use our formatting function to handle "Full Range V3" display
-              const titanXPriceRange = formatTitanXPriceRange(position.tickLower, position.tickUpper);
+              // Use cached priceRange data, but override for full range positions to show "Full Range V3"
+              const isFullRange = position.tickLower === -887200 && position.tickUpper === 887200;
+              const titanXPriceRange = isFullRange 
+                ? "Full Range V3" 
+                : ((position as any).priceRange || formatTitanXPriceRange(position.tickLower, position.tickUpper));
               
               // Calculate share percentage (rough estimate)
               const totalLiquidity = positions.reduce((sum, p) => sum + BigInt(p.liquidity), BigInt(0));
