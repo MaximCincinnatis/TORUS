@@ -78,7 +78,7 @@ const LPPositionsTable: React.FC<LPPositionsTableProps> = ({ positions, loading,
   const formatTitanXPriceRange = (tickLower: number, tickUpper: number) => {
     // Check if this is a full range position (ticks -887200 to 887200)
     if (tickLower === -887200 && tickUpper === 887200) {
-      return "Full Range";
+      return "Full Range V3";
     }
     
     // Convert ticks to TitanX prices (TitanX per 1 TORUS)
@@ -178,7 +178,7 @@ const LPPositionsTable: React.FC<LPPositionsTableProps> = ({ positions, loading,
                     <div>{formatTitanXAmount(position.claimableTitanX || 0)} TitanX</div>
                   </td>
                   <td className="apr">
-                    {position.estimatedAPR ? `${position.estimatedAPR.toFixed(1)}%` : 'N/A'}
+                    {position.estimatedAPR ? `${parseFloat(position.estimatedAPR.toString()).toFixed(1)}%` : 'N/A'}
                   </td>
                   <td className="price-range">{titanXPriceRange}</td>
                   <td>
