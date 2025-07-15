@@ -121,6 +121,7 @@ const LPPositionsTable: React.FC<LPPositionsTableProps> = ({ positions, loading,
         <table className="lp-positions-table">
           <thead>
             <tr>
+              <th>Position ID</th>
               <th>LP Provider</th>
               <th>
                 <img src="https://coin-images.coingecko.com/coins/images/32762/large/TitanXpng_%281%29.png?1704456654" 
@@ -141,7 +142,8 @@ const LPPositionsTable: React.FC<LPPositionsTableProps> = ({ positions, loading,
             {sortedPositions.map((position, index) => {
               const titanXAmount = tokenInfo.token0IsTitanX ? position.amount0 : position.amount1;
               const torusAmount = tokenInfo.token0IsTorus ? position.amount0 : position.amount1;
-              const titanXPriceRange = formatTitanXPriceRange(position.tickLower, position.tickUpper);
+              // Use priceRange from cached data if available, otherwise calculate
+              const titanXPriceRange = (position as any).priceRange || formatTitanXPriceRange(position.tickLower, position.tickUpper);
               
               // Calculate share percentage (rough estimate)
               const totalLiquidity = positions.reduce((sum, p) => sum + BigInt(p.liquidity), BigInt(0));
@@ -151,6 +153,16 @@ const LPPositionsTable: React.FC<LPPositionsTableProps> = ({ positions, loading,
 
               return (
                 <tr key={`${position.owner}-${index}`}>
+                  <td>
+                    {position.tokenId && (
+                      <a href={`https://app.uniswap.org/positions/v3/ethereum/${position.tokenId}`}
+                         target="_blank"
+                         rel="noopener noreferrer"
+                         className="address-link">
+                        {position.tokenId}
+                      </a>
+                    )}
+                  </td>
                   <td>
                     <a href={`https://etherscan.io/address/${position.owner}`} 
                        target="_blank" 

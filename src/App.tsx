@@ -6,6 +6,7 @@ import LoadingBar from './components/loading/LoadingBar';
 import SkeletonCard from './components/loading/SkeletonCard';
 import SkeletonChart from './components/loading/SkeletonChart';
 import LPPositionsTable from './components/lp/LPPositionsTable';
+import { TotalsDisplay } from './components/TotalsDisplay';
 import { fetchStakeEvents, fetchCreateEvents, getContractInfo, fetchRewardPoolData, getCurrentProtocolDay, RewardPoolData, getTorusSupplyData } from './utils/ethersWeb3';
 import { fetchLPPositionsFromEvents, getTokenInfo, SimpleLPPosition } from './utils/uniswapV3RealOwners';
 import { DataCache } from './utils/cache';
@@ -30,6 +31,7 @@ function App() {
   const [lpPositions, setLpPositions] = useState<SimpleLPPosition[]>([]);
   const [lpTokenInfo, setLpTokenInfo] = useState<any>(null);
   const [lpLoading, setLpLoading] = useState(false);
+  const [totals, setTotals] = useState<any>(null);
 
   useEffect(() => {
     loadData();
@@ -132,6 +134,7 @@ function App() {
       setCurrentProtocolDay(dashboardResult.data.currentProtocolDay || 0);
       setTotalSupply(dashboardResult.data.totalSupply || 0);
       setBurnedSupply(dashboardResult.data.burnedSupply || 0);
+      setTotals(dashboardResult.data.totals || null);
       
       setLoadingProgress(55);
       setLoadingDetails(prev => [...prev, `Total supply: ${dashboardResult.data.totalSupply?.toLocaleString() || 0} TORUS`]);
@@ -894,6 +897,9 @@ function App() {
           </div>
         </div>
       </div>
+
+      {/* ETH/TitanX Totals Display */}
+      <TotalsDisplay totals={totals} loading={loading} />
 
       {/* Supply Metrics */}
       <div className="supply-metrics">

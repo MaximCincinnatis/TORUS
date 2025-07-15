@@ -14,3 +14,123 @@
     padding: 0 20px 20px;
   }
 }
+
+/* Totals Display Styles */
+.totals-container {
+  margin-bottom: 32px;
+  animation: fadeIn 0.5s ease-out;
+}
+
+.totals-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 20px;
+}
+
+.total-box {
+  background: linear-gradient(135deg, #1a1a2e 0%, #0f0f23 100%);
+  border-radius: 16px;
+  padding: 24px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.total-box::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(45deg, transparent, rgba(255, 255, 255, 0.03));
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.total-box:hover::before {
+  opacity: 1;
+}
+
+.total-box:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.total-icon {
+  width: 64px;
+  height: 64px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32px;
+  font-weight: bold;
+  flex-shrink: 0;
+}
+
+.total-eth .total-icon {
+  background: linear-gradient(135deg, #627EEA 0%, #3E5BA9 100%);
+  color: white;
+}
+
+.total-titanx .total-icon {
+  background: linear-gradient(135deg, #00ff88 0%, #00cc66 100%);
+  color: #0f0f23;
+}
+
+.total-content {
+  flex: 1;
+}
+
+.total-label {
+  font-size: 14px;
+  color: #a0a0a0;
+  margin-bottom: 4px;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.total-value {
+  font-size: 28px;
+  font-weight: bold;
+  color: #ffffff;
+  margin-bottom: 8px;
+  font-family: 'SF Mono', 'Monaco', monospace;
+}
+
+.total-breakdown {
+  font-size: 13px;
+  color: #808080;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.total-breakdown .separator {
+  color: #404040;
+}
+
+@media (max-width: 768px) {
+  .totals-grid {
+    grid-template-columns: 1fr;
+  }
+  
+  .total-box {
+    padding: 20px;
+  }
+  
+  .total-icon {
+    width: 48px;
+    height: 48px;
+    font-size: 24px;
+  }
+  
+  .total-value {
+    font-size: 24px;
+  }
+}

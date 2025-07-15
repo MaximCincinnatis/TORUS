@@ -59,6 +59,14 @@ export interface CachedData {
     cacheExpiryMinutes: number;
     description: string;
   };
+  totals?: {
+    totalETH: string;
+    totalTitanX: string;
+    totalStakedETH: string;
+    totalCreatedETH: string;
+    totalStakedTitanX: string;
+    totalCreatedTitanX: string;
+  };
 }
 
 /**
@@ -255,7 +263,8 @@ export async function getMainDashboardDataWithCache(
         rewardPoolData: cachedData.stakingData.rewardPoolData || [],
         currentProtocolDay: cachedData.stakingData.currentProtocolDay || 0,
         totalSupply: cachedData.stakingData.totalSupply || 0,
-        burnedSupply: cachedData.stakingData.burnedSupply || 0
+        burnedSupply: cachedData.stakingData.burnedSupply || 0,
+        totals: cachedData.totals
       },
       source: 'cache'
     };

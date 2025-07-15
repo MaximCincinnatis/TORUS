@@ -31,6 +31,7 @@ export interface SimpleLPPosition {
   claimableTorus?: number;
   claimableTitanX?: number;
   estimatedAPR?: number;
+  priceRange?: string;
 }
 
 // Fallback approach: Try checking known NFT token IDs directly
