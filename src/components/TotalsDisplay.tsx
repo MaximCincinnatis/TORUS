@@ -32,7 +32,13 @@ export const TotalsDisplay: React.FC<TotalsDisplayProps> = ({ totals, loading })
     <div className="totals-container">
       <div className="totals-grid">
         <div className="total-box total-eth">
-          <div className="total-icon">Ξ</div>
+          <div className="total-icon">
+            <img 
+              src="/ethereum-logo.png" 
+              alt="Ethereum" 
+              style={{ width: '24px', height: '24px' }} 
+            />
+          </div>
           <div className="total-content">
             <div className="total-label">Total ETH Input</div>
             <div className="total-value">{totals.totalETH || '0.00'} ETH</div>

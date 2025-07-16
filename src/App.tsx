@@ -815,12 +815,14 @@ function App() {
   // Calculate total shares
   const totalShares = [...stakeData, ...createData].reduce((sum, item) => {
     const maturityDate = item.maturityDate instanceof Date ? item.maturityDate : new Date(item.maturityDate);
-    if (maturityDate > new Date()) {
+    if (maturityDate > new Date() && item.shares) {
       // Shares are raw values (amount * days * days), not divided by 1e18
       // Since amount already has 18 decimals, shares have 18 decimals too
       const sharesValue = parseFloat(item.shares) / 1e18;
-      console.log(`Active position - Shares: ${item.shares}, Shares/1e18: ${sharesValue}, Days: ${item.stakingDays}`);
-      return sum + sharesValue;
+      if (!isNaN(sharesValue)) {
+        console.log(`Active position - Shares: ${item.shares}, Shares/1e18: ${sharesValue}, Days: ${item.stakingDays}`);
+        return sum + sharesValue;
+      }
     }
     return sum;
   }, 0);
