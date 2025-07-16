@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import Dashboard from './components/layout/Dashboard';
 import MetricCard from './components/metrics/MetricCard';
 import BarChart from './components/charts/BarChart';
+import LineChart from './components/charts/LineChart';
 import LoadingBar from './components/loading/LoadingBar';
 import SkeletonCard from './components/loading/SkeletonCard';
 import SkeletonChart from './components/loading/SkeletonChart';
@@ -658,6 +659,31 @@ function App() {
   });
   const torusReleasesWithRewards = loading || (stakeData.length === 0 && createData.length === 0) || rewardPoolData.length === 0 ? [] : calculateTorusReleasesWithRewards();
   
+  // Calculate future supply projection
+  const calculateSupplyProjection = () => {
+    // Get current total supply (19,668 TORUS as seen in the UI)
+    const currentSupply = 19668; // This is the total TORUS shown in the dashboard
+    
+    const projection: { date: string; supply: number; released: number }[] = [];
+    let cumulativeSupply = currentSupply;
+    
+    // For each day in the next 88 days
+    torusReleasesWithRewards.forEach((release, index) => {
+      const dailyRelease = release.total; // principal + rewards
+      cumulativeSupply += dailyRelease;
+      
+      projection.push({
+        date: release.date,
+        supply: cumulativeSupply,
+        released: dailyRelease
+      });
+    });
+    
+    return projection;
+  };
+  
+  const supplyProjection = loading || torusReleasesWithRewards.length === 0 ? [] : calculateSupplyProjection();
+  
   // Debug: Log dates with data for both charts
   if (!loading && createData.length > 0) {
     console.log('\n%c=== DAY 84 vs DAY 88 ANALYSIS ===', 'background: #ff0000; color: white; font-weight: bold; font-size: 16px; padding: 10px');
@@ -1026,7 +1052,7 @@ function App() {
                 suffix={totalShares > 1e6 ? "" : "SHARES"}
               />
               <MetricCard
-                title={<><img src="/ethereum-logo.png" alt="Ethereum" style={{ width: '16px', height: '16px', marginRight: '6px', verticalAlign: 'middle' }} />Total ETH Input</>}
+                title={<><img src="/ethereum-logo.png" alt="Ethereum" style={{ width: '16px', height: '16px', marginRight: '6px', verticalAlign: 'middle', backgroundColor: 'transparent' }} />Total ETH Input</>}
                 value={totalETHInput.toFixed(2)}
                 suffix="ETH"
               />
@@ -1037,6 +1063,38 @@ function App() {
               />
             </>
           )}
+        </div>
+      </div>
+
+      <div className="chart-section">
+        <h2 className="section-title">Future <span className="torus-text">TORUS</span> Supply Projection</h2>
+        {loading ? (
+          <SkeletonChart />
+        ) : (
+          <LineChart
+            title="Cumulative TORUS Supply Over Next 88 Days"
+            labels={supplyProjection.slice(0, 88).map(p => {
+              const date = new Date(p.date);
+              return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+            })}
+            datasets={[
+              {
+                label: 'Total TORUS Supply',
+                data: supplyProjection.slice(0, 88).map(p => Math.round(p.supply * 100) / 100),
+                borderColor: '#8b5cf6',
+                backgroundColor: 'rgba(139, 92, 246, 0.1)',
+                fill: true,
+              },
+            ]}
+            height={600}
+            yAxisLabel="Total TORUS Supply"
+            xAxisLabel="Date"
+            formatTooltip={(value: number) => `${value.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} TORUS`}
+            formatYAxis={(value: number) => value.toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}
+          />
+        )}
+        <div className="chart-note">
+          This projection shows how the total TORUS supply will grow as positions mature and release both principal and accrued rewards. Starting from current supply of 19,668 TORUS, the line tracks cumulative supply increases each day. The growth rate depends on the number and size of positions maturing, including both their original principal and the share rewards they've accumulated throughout their staking period. Note: This projection does not account for potential burn token dynamics.
         </div>
       </div>
 
@@ -1067,6 +1125,9 @@ function App() {
             showDataLabels={true}
           />
         )}
+        <div className="chart-note">
+          Shows the number of stakes ending each day over the next 88 days. The numbers on top of each bar indicate the exact count of stakes maturing that day. Stakes can be created for 1-88 days, so the distribution shows when users originally chose to end their staking positions.
+        </div>
       </div>
 
       <div className="chart-section">
@@ -1096,6 +1157,9 @@ function App() {
             showDataLabels={true}
           />
         )}
+        <div className="chart-note">
+          Shows the number of creates ending each day over the next 88 days. The numbers on top of each bar indicate the exact count of creates maturing that day. Creates can be made for 1-88 days, similar to stakes, representing when users originally chose to end their create positions.
+        </div>
       </div>
 
       <div className="chart-section">
@@ -1203,6 +1267,9 @@ function App() {
             enableScaleToggle={true}
           />
         )}
+        <div className="chart-note">
+          Shows the total TitanX amounts that were used for creates ending each day. When users create positions, they pay TitanX as a fee. This chart displays the aggregate TitanX amounts from all creates maturing on each specific day over the next 88 days.
+        </div>
       </div>
 
       <div className="chart-section">
@@ -1243,6 +1310,9 @@ function App() {
             minBarHeight={2}
           />
         )}
+        <div className="chart-note">
+          Shows the total shares ending each day over the next 88 days. Shares represent the user's proportion of the reward pool and are earned from both stakes and creates. When positions mature, these shares are released and converted to TORUS rewards based on the current share-to-TORUS ratio.
+        </div>
       </div>
 
       {/* LP Positions Section */}

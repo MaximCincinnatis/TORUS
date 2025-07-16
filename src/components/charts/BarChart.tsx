@@ -92,13 +92,7 @@ const BarChart: React.FC<BarChartProps> = ({
     },
     plugins: {
       title: {
-        display: true,
-        text: title,
-        color: '#fff',
-        font: {
-          size: 16,
-          weight: 'normal' as const,
-        },
+        display: false,
       },
       legend: {
         display: showLegend,
@@ -428,17 +422,6 @@ const BarChart: React.FC<BarChartProps> = ({
       <div style={{ height: `${height}px` }}>
         <Bar options={options} data={data} plugins={plugins} />
       </div>
-      {showLogWarning && (
-        <div style={{ 
-          marginTop: '8px', 
-          fontSize: '11px', 
-          color: '#f59e0b', 
-          textAlign: 'center',
-          fontStyle: 'italic'
-        }}>
-          Note: Zero values are not displayed on logarithmic scale
-        </div>
-      )}
       {!shouldShowToggle && valueRatio > 100 && (
         <div style={{ 
           marginTop: '8px', 
