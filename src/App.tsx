@@ -1064,6 +1064,7 @@ function App() {
             xAxisLabel="Date / Contract Day"
             enableScaleToggle={true}
             integerOnly={true}
+            showDataLabels={true}
           />
         )}
       </div>
