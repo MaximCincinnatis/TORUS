@@ -380,7 +380,7 @@ async function performSmartUpdate(provider, updateLog, currentBlock, blocksSince
         };
         
         const contractABI = [
-          'event Staked(address indexed user, uint256 indexed id, uint256 amount, uint256 shares, uint16 indexed duration, uint256 timestamp)',
+          'event Staked(address indexed user, uint256 stakeIndex, uint256 principal, uint256 stakingDays, uint256 shares)',
           'event Created(address indexed user, uint256 indexed createId, uint256 amount, uint256 shares, uint16 indexed duration, uint256 rewardDay, uint256 timestamp, address referrer)'
         ];
         
@@ -412,14 +412,14 @@ async function performSmartUpdate(provider, updateLog, currentBlock, blocksSince
           // Process and merge new events
           const processedStakes = newStakeEvents.map(event => ({
             user: event.args.user,
-            id: event.args.id.toString(),
-            principal: ethers.utils.formatEther(event.args.amount),
+            id: event.args.stakeIndex.toString(),
+            principal: ethers.utils.formatEther(event.args.principal),
             shares: event.args.shares.toString(),
-            duration: event.args.duration.toString(),
-            timestamp: event.args.timestamp.toString(),
+            duration: event.args.stakingDays.toString(),
+            timestamp: event.args.startTime.toString(),
             blockNumber: event.blockNumber,
             // Add placeholders for missing fields
-            stakingDays: parseInt(event.args.duration.toString()),
+            stakingDays: parseInt(event.args.stakingDays.toString()),
             power: "0",
             claimedCreate: false,
             claimedStake: false,
