@@ -1,0 +1,16 @@
+[Unit]
+Description=TORUS Dashboard Auto-Updater
+After=network.target
+
+[Service]
+Type=simple
+User=wsl
+WorkingDirectory=/home/wsl/projects/TORUSspecs/torus-dashboard
+ExecStart=/usr/bin/node /home/wsl/projects/TORUSspecs/torus-dashboard/run-updater-service.js
+Restart=always
+RestartSec=60
+StandardOutput=append:/home/wsl/projects/TORUSspecs/torus-dashboard/logs/service.log
+StandardError=append:/home/wsl/projects/TORUSspecs/torus-dashboard/logs/service-error.log
+
+[Install]
+WantedBy=multi-user.target
