@@ -1131,7 +1131,7 @@ function App() {
           <SkeletonChart />
         ) : (
           <BarChart
-            title="Total TORUS Released Each Day (Principal + Accrued Share Rewards)"
+            title="TORUS Released Each Day: Principal vs Accrued Share Rewards"
             labels={torusReleasesWithRewards
               .slice(0, 88)
               .map(r => {
@@ -1158,15 +1158,15 @@ function App() {
             height={600}
             yAxisLabel="TORUS Amount"
             xAxisLabel="Date / Contract Day"
-            enableScaleToggle={false}
-            stacked={true}
+            enableScaleToggle={true}
+            stacked={false}
             showLegend={true}
             formatTooltip={(value: number) => `TORUS: ${value.toLocaleString('en-US', { maximumFractionDigits: 2 })}`}
             minBarHeight={0}
           />
         )}
         <div className="chart-note">
-          Note: Purple bars show principal from stakes/creates ending. Green bars show accrued share rewards that have accumulated daily throughout the position's lifetime. Days with no releases show no bars. Rewards are estimated based on current pool data.
+          Note: Purple bars show principal from stakes/creates ending. Green bars show accrued share rewards that have accumulated daily throughout the position's lifetime. Bars are shown side-by-side for easy comparison. Days with no releases show no bars. Rewards are estimated based on current pool data.
         </div>
       </div>
 
