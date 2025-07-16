@@ -3,13 +3,15 @@ import { ethers } from 'ethers';
 import { CONTRACTS, CREATE_STAKE_ABI } from '../constants/contracts';
 import { RpcRateLimit } from './rpcRateLimit';
 
-// Working RPC endpoints (same as ethersWeb3.ts)
+// Working RPC endpoints (all public, no API keys)
 const WORKING_RPC_ENDPOINTS = [
   'https://eth.drpc.org',
   'https://rpc.payload.de',
   'https://eth-mainnet.public.blastapi.io',
   'https://rpc.flashbots.net',
-  'https://eth-mainnet.nodereal.io/v1/REDACTED_API_KEY'
+  'https://ethereum.publicnode.com',
+  'https://eth.llamarpc.com',
+  'https://rpc.ankr.com/eth'
 ];
 
 let currentRpcIndex = 0;

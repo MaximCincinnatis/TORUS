@@ -2,13 +2,15 @@ import { ethers } from 'ethers';
 import { CONTRACTS, CREATE_STAKE_ABI, TORUS_TOKEN_ABI } from '../constants/contracts';
 import { DataCache } from './cache';
 
-// List of working RPC endpoints (tested and confirmed working)
+// List of working RPC endpoints (all public, no API keys)
 const RPC_ENDPOINTS = [
   'https://eth.drpc.org',
   'https://rpc.payload.de',
   'https://eth-mainnet.public.blastapi.io',
   'https://rpc.flashbots.net',
-  'https://eth-mainnet.nodereal.io/v1/REDACTED_API_KEY'
+  'https://ethereum.publicnode.com',
+  'https://eth.llamarpc.com',
+  'https://rpc.ankr.com/eth'
 ];
 
 let currentRpcIndex = 0;

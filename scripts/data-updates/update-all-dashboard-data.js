@@ -3,13 +3,15 @@ const { ethers } = require('ethers');
 const fs = require('fs');
 const path = require('path');
 
-// Working RPC providers
+// Working RPC providers (all public, no API keys)
 const WORKING_RPC_PROVIDERS = [
   'https://eth.drpc.org',
   'https://rpc.payload.de',
   'https://eth-mainnet.public.blastapi.io',
   'https://rpc.flashbots.net',
-  'https://eth-mainnet.nodereal.io/v1/REDACTED_API_KEY'
+  'https://ethereum.publicnode.com',
+  'https://eth.llamarpc.com',
+  'https://rpc.ankr.com/eth'
 ];
 
 // Contract addresses

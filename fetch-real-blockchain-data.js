@@ -57,33 +57,53 @@ async function fetchRealData() {
     const totalSupply = parseFloat(ethers.utils.formatEther(totalSupplyWei));
     console.log(`Total TORUS supply: ${totalSupply.toLocaleString()}`);
     
-    // Fetch recent stake events (last 1000 blocks to get real data)
-    console.log('📊 Fetching recent Staked events...');
+    // Fetch ALL stake events from deployment
+    console.log('📊 Fetching ALL Staked events from deployment...');
     const deploymentBlock = 22890272;
-    const fromBlock = Math.max(deploymentBlock, currentBlock - 5000); // Last 5000 blocks
+    const fromBlock = deploymentBlock; // Get ALL events from deployment
     
     const stakeFilter = createStakeContract.filters.Staked();
     const stakeEvents = await createStakeContract.queryFilter(stakeFilter, fromBlock, currentBlock);
     
     console.log(`Found ${stakeEvents.length} recent Staked events`);
     
-    // Process stake events to match our interface
+    // Process ALL stake events to match our interface
     const processedStakeEvents = await Promise.all(
-      stakeEvents.slice(0, 10).map(async (event, idx) => { // Take first 10 for cache
+      stakeEvents.map(async (event, idx) => { // Process ALL events
         const args = event.args;
         const block = await provider.getBlock(event.blockNumber);
         const timestamp = block.timestamp;
         const stakingDays = Number(args.stakingDays);
         const maturityDate = new Date((timestamp + stakingDays * 86400) * 1000);
         
-        console.log(`Processing stake ${idx + 1}: ${ethers.utils.formatEther(args.principal)} TORUS, raw stakingDays: ${args.stakingDays}`);
+        if (idx < 5) {
+          console.log(`Processing stake ${idx + 1}: ${ethers.utils.formatEther(args.principal)} TORUS, raw stakingDays: ${args.stakingDays}`);
+        }
         
-        // Fix: stakingDays seems to be already calculated (not in days)
-        // Let's use a reasonable default and calculate from block time
-        const reasonableStakingDays = Math.min(Math.max(Number(args.stakingDays), 30), 3650); // Between 30 days and 10 years
+        // Fix: stakingDays should be between 1-88 days max
+        let reasonableStakingDays = Number(args.stakingDays);
+        
+        // If it's a huge number, it might be seconds or wei
+        if (reasonableStakingDays > 88) {
+          // Try dividing by common factors
+          if (reasonableStakingDays > 86400) {
+            // Might be seconds, convert to days
+            reasonableStakingDays = Math.floor(reasonableStakingDays / 86400);
+          }
+          
+          // Still too big? Cap at 88 days
+          if (reasonableStakingDays > 88) {
+            console.log(`  WARNING: stakingDays ${reasonableStakingDays} > 88, capping at 88`);
+            reasonableStakingDays = 88;
+          }
+        }
+        
+        // Calculate maturity date
         const safeMaturityDate = new Date((timestamp + reasonableStakingDays * 86400) * 1000);
         
-        console.log(`  Using ${reasonableStakingDays} days, maturity: ${safeMaturityDate.toISOString().split('T')[0]}`);
+        if (idx < 5) {
+          console.log(`  Using ${reasonableStakingDays} days, maturity: ${safeMaturityDate.toISOString().split('T')[0]}`);
+        }
         
         return {
           user: args.user,
@@ -106,22 +126,41 @@ async function fetchRealData() {
     
     console.log(`Found ${createEvents.length} recent Created events`);
     
-    // Process create events
+    // Process ALL create events
     const processedCreateEvents = await Promise.all(
-      createEvents.slice(0, 10).map(async (event, idx) => { // Take first 10 for cache
+      createEvents.map(async (event, idx) => { // Process ALL events
         const args = event.args;
         const block = await provider.getBlock(event.blockNumber);
         const timestamp = block.timestamp;
         const stakingDays = Number(args.stakingDays);
         const maturityDate = new Date((timestamp + stakingDays * 86400) * 1000);
         
-        console.log(`Processing create ${idx + 1}: ${ethers.utils.formatEther(args.torusAmount)} TORUS, raw stakingDays: ${args.stakingDays}`);
+        if (idx < 5) {
+          console.log(`Processing create ${idx + 1}: ${ethers.utils.formatEther(args.torusAmount)} TORUS, raw stakingDays: ${args.stakingDays}`);
+        }
         
-        // Fix: Same issue with stakingDays
-        const reasonableStakingDays = Math.min(Math.max(Number(args.stakingDays), 30), 3650); // Between 30 days and 10 years
+        // Fix: stakingDays should be between 1-88 days max
+        let reasonableStakingDays = Number(args.stakingDays);
+        
+        // Creates might encode stakingDays differently
+        if (reasonableStakingDays > 88) {
+          // These look like unix timestamps, not days
+          // Calculate days from timestamp difference
+          const endTime = Number(args.stakingDays);
+          if (endTime > 1000000000) {
+            // This is a unix timestamp
+            reasonableStakingDays = Math.floor((endTime - timestamp) / 86400);
+            reasonableStakingDays = Math.min(Math.max(reasonableStakingDays, 1), 88);
+          } else {
+            reasonableStakingDays = 88; // Cap at max
+          }
+        }
+        
         const safeMaturityDate = new Date((timestamp + reasonableStakingDays * 86400) * 1000);
         
-        console.log(`  Using ${reasonableStakingDays} days, maturity: ${safeMaturityDate.toISOString().split('T')[0]}`);
+        if (idx < 5) {
+          console.log(`  Using ${reasonableStakingDays} days, maturity: ${safeMaturityDate.toISOString().split('T')[0]}`);
+        }
         
         return {
           user: args.user,
