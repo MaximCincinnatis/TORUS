@@ -1,2 +1,8 @@
-Deployment trigger: 2025-07-16T18:05:00Z - UI fixes applied
+Deployment trigger: 2025-07-16T18:10:00Z - UI fixes applied (ETH logo, NaN shares, TORUS spacing)
 This file exists to trigger Vercel rebuilds when only JSON data changes.
+
+Changes included:
+- Purple Ethereum logo added to Total ETH Input
+- Fixed NaN shares calculation with proper validation
+- Removed excessive margin from TORUS text (12px → 0px)
+- Downloaded ethereum-logo.png locally for Vercel deployment
