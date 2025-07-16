@@ -120,17 +120,47 @@ export async function getIncrementalUpdates(
     // Create contract instance
     const contract = new ethers.Contract(CONTRACTS.TORUS_CREATE_STAKE, CREATE_STAKE_ABI, workingProvider);
     
-    // Fetch new stake events
-    const stakeFilter = contract.filters.Staked();
-    const stakeEvents = await RpcRateLimit.execute(async () => {
-      return contract.queryFilter(stakeFilter, lastBlock + 1, currentBlock);
-    }, `Fetch stake events from block ${lastBlock + 1} to ${currentBlock}`);
+    // If block range is too large, fetch in chunks
+    const MAX_BLOCK_RANGE = 9999; // Stay under 10k limit
+    let allStakeEvents: any[] = [];
+    let allCreateEvents: any[] = [];
     
-    // Fetch new create events  
-    const createFilter = contract.filters.Created();
-    const createEvents = await RpcRateLimit.execute(async () => {
-      return contract.queryFilter(createFilter, lastBlock + 1, currentBlock);
-    }, `Fetch create events from block ${lastBlock + 1} to ${currentBlock}`);
+    if (blocksToUpdate > MAX_BLOCK_RANGE) {
+      console.log(`📦 Block range too large (${blocksToUpdate}), fetching in chunks...`);
+      
+      for (let fromBlock = lastBlock + 1; fromBlock <= currentBlock; fromBlock += MAX_BLOCK_RANGE) {
+        const toBlock = Math.min(fromBlock + MAX_BLOCK_RANGE - 1, currentBlock);
+        console.log(`  Fetching blocks ${fromBlock} to ${toBlock}...`);
+        
+        // Fetch stake events for this chunk
+        const stakeFilter = contract.filters.Staked();
+        const stakeChunk = await RpcRateLimit.execute(async () => {
+          return contract.queryFilter(stakeFilter, fromBlock, toBlock);
+        }, `Fetch stake events from block ${fromBlock} to ${toBlock}`);
+        allStakeEvents.push(...stakeChunk);
+        
+        // Fetch create events for this chunk
+        const createFilter = contract.filters.Created();
+        const createChunk = await RpcRateLimit.execute(async () => {
+          return contract.queryFilter(createFilter, fromBlock, toBlock);
+        }, `Fetch create events from block ${fromBlock} to ${toBlock}`);
+        allCreateEvents.push(...createChunk);
+      }
+    } else {
+      // Fetch all at once if within limit
+      const stakeFilter = contract.filters.Staked();
+      allStakeEvents = await RpcRateLimit.execute(async () => {
+        return contract.queryFilter(stakeFilter, lastBlock + 1, currentBlock);
+      }, `Fetch stake events from block ${lastBlock + 1} to ${currentBlock}`);
+      
+      const createFilter = contract.filters.Created();
+      allCreateEvents = await RpcRateLimit.execute(async () => {
+        return contract.queryFilter(createFilter, lastBlock + 1, currentBlock);
+      }, `Fetch create events from block ${lastBlock + 1} to ${currentBlock}`);
+    }
+    
+    const stakeEvents = allStakeEvents;
+    const createEvents = allCreateEvents;
     
     // Process events to match expected format
     const processedStakeEvents = stakeEvents.map(event => {
