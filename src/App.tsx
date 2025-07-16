@@ -1308,17 +1308,6 @@ function App() {
         {/* Main Footer Content */}
         <div className="footer-main-content">
           <div className="footer-content">
-            {/* Brand Section */}
-            <div className="footer-brand">
-              <div className="footer-logo">
-                <img src="/favicon.svg" alt="TORUS" style={{ width: '40px', height: '40px', marginRight: '10px' }} />
-                <span className="footer-logo-text">TORUS</span>
-              </div>
-              <p className="footer-tagline">
-                Comprehensive analytics dashboard for the TORUS ecosystem. Track staking metrics, token creation data, and liquidity positions in real-time.
-              </p>
-              
-            </div>
 
             {/* Contract Addresses */}
             <div className="footer-section">
