@@ -518,7 +518,7 @@ html {
   background: linear-gradient(180deg, rgba(0, 0, 0, 0.4) 0%, rgba(10, 10, 15, 0.9) 100%);
   backdrop-filter: blur(20px);
   border-top: 1px solid rgba(255, 255, 255, 0.1);
-  margin-top: 120px;
+  margin-top: 64px;
   position: relative;
   overflow: hidden;
 }
@@ -601,7 +601,7 @@ html {
 
 /* Main Footer Content */
 .footer-main-content {
-  padding: 60px 0;
+  padding: 48px 0 32px;
   background: linear-gradient(135deg, rgba(139, 92, 246, 0.02) 0%, rgba(34, 197, 94, 0.02) 100%);
 }
 
@@ -610,8 +610,8 @@ html {
   margin: 0 auto;
   padding: 0 32px;
   display: grid;
-  grid-template-columns: 2fr 1fr 1fr 1.5fr;
-  gap: 64px;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 48px;
 }
 
 /* Brand Section */
@@ -816,27 +816,49 @@ html {
 @media (max-width: 1024px) {
   .footer-content {
     grid-template-columns: 1fr 1fr;
-    gap: 48px;
+    gap: 32px;
   }
   
-  .footer-brand {
-    grid-column: 1 / -1;
+  .footer-main-content {
+    padding: 40px 0 24px;
+  }
+  
+  .dashboard-footer {
+    margin-top: 48px;
   }
 }
 
 @media (max-width: 768px) {
   .footer-content {
     grid-template-columns: 1fr;
-    gap: 40px;
+    gap: 24px;
+  }
+  
+  .footer-main-content {
+    padding: 32px 0 20px;
+  }
+  
+  .footer-data-status {
+    padding: 16px 0;
   }
   
   .footer-data-status-content {
     flex-direction: column;
     align-items: flex-start;
+    gap: 16px;
+  }
+  
+  .footer-bottom {
+    padding: 20px 0;
   }
   
   .footer-bottom-content {
     flex-direction: column;
     text-align: center;
+    gap: 16px;
+  }
+  
+  .dashboard-footer {
+    margin-top: 32px;
   }
 }
