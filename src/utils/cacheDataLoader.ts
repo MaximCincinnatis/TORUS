@@ -128,18 +128,42 @@ export interface CachedData {
 export async function loadCachedData(): Promise<CachedData | null> {
   try {
     console.log('📦 Loading cached data from JSON...');
-    console.log('📂 Fetching from: /data/cached-data.json');
     
-    const response = await fetch('/data/cached-data.json', {
-      cache: 'no-cache', // Always get fresh data
-      headers: {
-        'Cache-Control': 'no-cache',
-      },
-    });
+    // Try multiple sources in order
+    const sources = [
+      { url: '/api/data', name: 'Vercel API' },
+      { url: '/data/cached-data.json', name: 'Static File' },
+      { url: 'https://raw.githubusercontent.com/MaximCincinnatis/TORUS/master/public/data/cached-data.json', name: 'GitHub Raw' }
+    ];
     
-    if (!response.ok) {
-      console.warn(`⚠️ Cached data file not found: ${response.status} ${response.statusText}`);
-      console.warn('Will use RPC fallback');
+    let response: Response | null = null;
+    let sourceUsed = '';
+    
+    for (const source of sources) {
+      console.log(`📂 Trying to fetch from ${source.name}: ${source.url}`);
+      
+      try {
+        response = await fetch(source.url, {
+          cache: 'no-cache', // Always get fresh data
+          headers: {
+            'Cache-Control': 'no-cache',
+          },
+        });
+        
+        if (response.ok) {
+          sourceUsed = source.name;
+          console.log(`✅ Successfully loaded from ${source.name}`);
+          break;
+        } else {
+          console.warn(`⚠️ ${source.name} failed: ${response.status} ${response.statusText}`);
+        }
+      } catch (error) {
+        console.warn(`⚠️ ${source.name} error:`, error);
+      }
+    }
+    
+    if (!response || !response.ok) {
+      console.warn('❌ All data sources failed, will use RPC fallback');
       return null;
     }
     
@@ -168,7 +192,7 @@ export async function loadCachedData(): Promise<CachedData | null> {
       return null;
     }
     
-    console.log(`✅ Loaded fresh cached data (${minutesSinceUpdate.toFixed(1)} minutes old)`);
+    console.log(`✅ Loaded fresh cached data from ${sourceUsed} (${minutesSinceUpdate.toFixed(1)} minutes old)`);
     console.log(`📊 Cache contains: ${cachedData.lpPositions.length} LP positions, ${cachedData.historicalData.sevenDay.length} historical days`);
     
     return cachedData;

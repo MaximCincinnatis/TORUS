@@ -7,5 +7,25 @@
   "github": {
     "enabled": true,
     "autoAlias": true
+  },
+  "headers": [
+    {
+      "source": "/data/cached-data.json",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, must-revalidate"
+        },
+        {
+          "key": "CDN-Cache-Control",
+          "value": "public, max-age=300, stale-while-revalidate=600"
+        }
+      ]
+    }
+  ],
+  "functions": {
+    "api/data.js": {
+      "maxDuration": 10
+    }
   }
 }
