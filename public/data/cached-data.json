@@ -1,9 +1,9 @@
 {
-  "lastUpdated": "2025-07-16T15:05:50.381Z",
+  "lastUpdated": "2025-07-16T15:25:13.807Z",
   "version": "1.0.0",
   "poolData": {
-    "sqrtPriceX96": "512781233632068902758460202931223",
-    "currentTick": 175514,
+    "sqrtPriceX96": "513512305284674417905273034666456",
+    "currentTick": 175542,
     "token0": "0xB47f575807fC5466285e1277Ef8aCFBB5c6686E8",
     "token1": "0xF19308F923582A6f7c465e5CE7a9Dc1BEC6665B1",
     "liquidity": "70539748011339879786162512",
@@ -32,7 +32,10 @@
       "tokensOwed0": "0",
       "tokensOwed1": "18810894010260929831860197",
       "fee": 10000,
-      "lastUpdated": "2025-07-16T15:05:36.223Z"
+      "lastUpdated": "2025-07-16T15:05:36.223Z",
+      "customNotes": "This is important custom data that should be preserved",
+      "manualOverride": true,
+      "testTimestamp": "2025-07-16T15:07:25.654Z"
     },
     {
       "tokenId": "1030759",
@@ -144,8 +147,8 @@
   },
   "tokenPrices": {
     "torus": {
-      "usd": 418.8949050847725,
-      "lastUpdated": "2025-07-16T15:05:50.381Z"
+      "usd": 420.09019256804606,
+      "lastUpdated": "2025-07-16T15:25:13.807Z"
     },
     "titanx": {
       "usd": 1e-9,
