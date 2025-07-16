@@ -84,6 +84,15 @@ export class DataCache {
     this.set('last_block_number', blockNumber);
   }
 
+  static getLastUpdated(): string | null {
+    const cached = this.get<string>('last_updated');
+    return cached;
+  }
+
+  static setLastUpdated(timestamp: string): void {
+    this.set('last_updated', timestamp);
+  }
+
   static clearAllData(): void {
     try {
       // Clear all cached data but preserve settings if any

@@ -359,6 +359,12 @@ export async function getMainDashboardDataWithCache(
       sampleCreateDate: createEvents[0]?.maturityDate
     });
 
+    // Set last updated timestamp in cache
+    const { DataCache } = await import('./cache');
+    if (finalData.lastUpdated) {
+      DataCache.setLastUpdated(finalData.lastUpdated);
+    }
+
     return {
       data: {
         stakeEvents,
