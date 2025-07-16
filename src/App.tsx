@@ -1025,7 +1025,7 @@ function App() {
                 suffix={totalShares > 1e6 ? "" : "SHARES"}
               />
               <MetricCard
-                title="Total ETH Input"
+                title={<><img src="/ethereum-logo.png" alt="Ethereum" style={{ width: '16px', height: '16px', marginRight: '6px', verticalAlign: 'middle', opacity: 0.8 }} />Total ETH Input</>}
                 value={totalETHInput.toFixed(2)}
                 suffix="ETH"
               />
