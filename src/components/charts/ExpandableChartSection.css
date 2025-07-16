@@ -1,0 +1,431 @@
+/* Expandable Chart Section - World-Class DeFi UI */
+
+.expandable-chart-section {
+  background: linear-gradient(135deg, rgba(15, 15, 20, 0.15) 0%, rgba(20, 20, 30, 0.25) 100%);
+  border: 1px solid rgba(55, 65, 81, 0.1);
+  border-radius: 16px;
+  margin-bottom: 24px;
+  transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  backdrop-filter: blur(20px);
+  overflow: hidden;
+  position: relative;
+}
+
+.expandable-chart-section::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, rgba(139, 92, 246, 0.1) 50%, transparent 100%);
+  opacity: 0;
+  transition: opacity 300ms ease;
+}
+
+.expandable-chart-section:hover {
+  border-color: rgba(139, 92, 246, 0.18);
+  box-shadow: 
+    0 4px 20px rgba(0, 0, 0, 0.15),
+    0 0 0 1px rgba(139, 92, 246, 0.04);
+  transform: translateY(-1px);
+}
+
+.expandable-chart-section:hover::before {
+  opacity: 1;
+}
+
+.expandable-chart-section.expanded {
+  border-color: rgba(139, 92, 246, 0.22);
+  box-shadow: 
+    0 8px 32px rgba(0, 0, 0, 0.2),
+    0 0 0 1px rgba(139, 92, 246, 0.08);
+}
+
+.expandable-chart-section.expanded::before {
+  opacity: 1;
+}
+
+/* Header Styles */
+.chart-section-header {
+  cursor: pointer;
+  position: relative;
+  z-index: 2;
+  user-select: none;
+  transition: background-color 200ms ease;
+}
+
+.chart-section-header:hover {
+  background: rgba(139, 92, 246, 0.03);
+}
+
+.header-content {
+  padding: 24px 28px;
+}
+
+.header-main {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 20px;
+}
+
+.header-title-area {
+  flex: 1;
+  min-width: 0;
+}
+
+.section-title {
+  margin: 0;
+  font-size: 20px;
+  font-weight: 600;
+  color: #f8fafc;
+  line-height: 1.3;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.section-subtitle {
+  margin: 4px 0 0 0;
+  font-size: 14px;
+  color: #94a3b8;
+  line-height: 1.4;
+}
+
+.header-controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.expand-button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background: rgba(139, 92, 246, 0.06);
+  border: 1px solid rgba(139, 92, 246, 0.15);
+  border-radius: 12px;
+  cursor: pointer;
+  transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1);
+  color: #a78bfa;
+}
+
+.expand-button:hover {
+  background: rgba(139, 92, 246, 0.12);
+  border-color: rgba(139, 92, 246, 0.3);
+  color: #c4b5fd;
+  transform: scale(1.05);
+}
+
+.expand-button:active {
+  transform: scale(0.98);
+}
+
+.expand-icon {
+  transition: transform 300ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.expand-button.expanded .expand-icon {
+  transform: rotate(180deg);
+}
+
+/* Preview Content */
+.header-preview {
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px solid rgba(55, 65, 81, 0.2);
+  display: flex;
+  gap: 24px;
+  align-items: flex-start;
+}
+
+.key-metrics {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 16px;
+  flex: 1;
+}
+
+.metric-item {
+  background: rgba(15, 23, 42, 0.3);
+  border: 1px solid rgba(30, 41, 59, 0.4);
+  border-radius: 12px;
+  padding: 16px;
+  transition: all 200ms ease;
+}
+
+.metric-item:hover {
+  border-color: rgba(139, 92, 246, 0.25);
+  background: rgba(139, 92, 246, 0.04);
+}
+
+.metric-label {
+  display: block;
+  font-size: 12px;
+  font-weight: 500;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 8px;
+}
+
+.metric-value-container {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.metric-value {
+  font-size: 18px;
+  font-weight: 600;
+  color: #f1f5f9;
+  line-height: 1.2;
+}
+
+.metric-change {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  font-size: 12px;
+  font-weight: 500;
+  padding: 2px 6px;
+  border-radius: 6px;
+}
+
+.metric-change.up {
+  color: #10b981;
+  background: rgba(16, 185, 129, 0.1);
+}
+
+.metric-change.down {
+  color: #f59e0b;
+  background: rgba(245, 158, 11, 0.1);
+}
+
+.metric-change.neutral {
+  color: #6b7280;
+  background: rgba(107, 114, 128, 0.1);
+}
+
+.trend-icon {
+  flex-shrink: 0;
+}
+
+.trend-up {
+  color: #10b981;
+}
+
+.trend-down {
+  color: #f59e0b;
+}
+
+/* Mini Chart */
+.mini-chart-container {
+  width: 200px;
+  height: 80px;
+  background: rgba(15, 23, 42, 0.3);
+  border: 1px solid rgba(30, 41, 59, 0.4);
+  border-radius: 12px;
+  padding: 8px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.mini-chart-container::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(45deg, rgba(139, 92, 246, 0.05) 0%, rgba(139, 92, 246, 0.02) 100%);
+  opacity: 0;
+  transition: opacity 200ms ease;
+}
+
+.metric-item:hover .mini-chart-container::before,
+.expandable-chart-section:hover .mini-chart-container::before {
+  opacity: 1;
+}
+
+/* Content Area */
+.chart-section-content {
+  position: relative;
+  background: rgba(5, 10, 20, 0.15);
+  overflow: hidden;
+  max-height: 0;
+  transition: max-height 400ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.chart-section-content.expanded {
+  max-height: 2000px; /* Large enough to accommodate any chart */
+}
+
+.chart-section-content.animating {
+  transition: max-height 400ms cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+.content-inner {
+  padding: 0 28px 32px 28px;
+  opacity: 0;
+  transform: translateY(20px);
+  transition: all 300ms cubic-bezier(0.25, 0.46, 0.45, 0.94) 50ms;
+}
+
+.content-inner.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.content-inner.hidden {
+  opacity: 0;
+  transform: translateY(20px);
+}
+
+.chart-content-wrapper {
+  animation: slideInUp 400ms cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards;
+}
+
+@keyframes slideInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.chart-loading-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 400px;
+}
+
+.chart-skeleton {
+  width: 100%;
+  max-width: 800px;
+}
+
+.skeleton-header {
+  height: 24px;
+  background: linear-gradient(90deg, rgba(55, 65, 81, 0.3) 25%, rgba(75, 85, 99, 0.5) 50%, rgba(55, 65, 81, 0.3) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: 6px;
+  margin-bottom: 20px;
+  width: 60%;
+}
+
+.skeleton-chart {
+  height: 300px;
+  background: linear-gradient(90deg, rgba(55, 65, 81, 0.3) 25%, rgba(75, 85, 99, 0.5) 50%, rgba(55, 65, 81, 0.3) 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite;
+  border-radius: 12px;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+/* Header Border Animation */
+.header-border {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, rgba(139, 92, 246, 0.1) 50%, transparent 100%);
+  opacity: 0;
+  transition: opacity 300ms ease;
+}
+
+.expandable-chart-section:hover .header-border,
+.expandable-chart-section.expanded .header-border {
+  opacity: 1;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .header-content {
+    padding: 20px;
+  }
+  
+  .content-inner {
+    padding: 0 20px 24px 20px;
+  }
+  
+  .header-main {
+    flex-direction: column;
+    gap: 16px;
+  }
+  
+  .header-preview {
+    flex-direction: column;
+    gap: 16px;
+  }
+  
+  .key-metrics {
+    grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+    gap: 12px;
+  }
+  
+  .mini-chart-container {
+    width: 100%;
+    height: 60px;
+  }
+}
+
+/* Focus and Accessibility */
+.expand-button:focus-visible {
+  outline: 2px solid rgba(139, 92, 246, 0.6);
+  outline-offset: 2px;
+}
+
+.chart-section-header:focus-visible {
+  outline: 2px solid rgba(139, 92, 246, 0.6);
+  outline-offset: -2px;
+  border-radius: 16px;
+}
+
+/* Animation Performance */
+.expandable-chart-section.animating {
+  pointer-events: none;
+}
+
+.expandable-chart-section.animating .chart-section-content {
+  will-change: height;
+}
+
+/* Dark Theme Variations */
+@media (prefers-color-scheme: dark) {
+  .expandable-chart-section {
+    background: linear-gradient(135deg, rgba(5, 5, 10, 0.3) 0%, rgba(10, 10, 20, 0.5) 100%);
+  }
+}
+
+/* High Contrast Mode */
+@media (prefers-contrast: high) {
+  .expandable-chart-section {
+    border-color: rgba(139, 92, 246, 0.8);
+  }
+  
+  .expand-button {
+    border-color: rgba(139, 92, 246, 0.6);
+    background: rgba(139, 92, 246, 0.2);
+  }
+}

@@ -15,12 +15,20 @@ body {
   overflow-x: hidden;
 }
 
-/* TORUS official-style gradient background - rich dynamic lighting with pulse */
+/* Dynamic animation variables for world-class background effects */
+:root {
+  --ripple-duration: 8s;
+  --grow-duration: 16s;
+  --color-shift-duration: 24s;
+  --breathing-duration: 12s;
+}
+
+/* TORUS official-style gradient background - enhanced with dynamic animations */
 .dashboard-container {
   position: relative;
   min-height: 100vh;
   background: 
-    /* Original top layer dynamics */
+    /* Animated ripple layers with dynamic scaling */
     radial-gradient(ellipse 1400px 900px at 20% 0%, rgba(79, 70, 229, 0.12) 0%, transparent 50%),
     radial-gradient(ellipse 1200px 800px at 80% 20%, rgba(168, 85, 247, 0.08) 0%, transparent 50%),
     radial-gradient(ellipse 1000px 700px at 50% 100%, rgba(59, 130, 246, 0.06) 0%, transparent 50%),
@@ -82,7 +90,7 @@ body {
   left: 0;
   right: 0;
   bottom: 0;
-  animation: lightingPulse 10s ease-in-out infinite;
+  animation: lightingPulse 15s ease-in-out infinite, backgroundColorShift var(--color-shift-duration) ease-in-out infinite;
   background: 
     /* Original top dynamics */
     radial-gradient(ellipse 1600px 900px at 50% 0%, rgba(168, 85, 247, 0.08), transparent),
@@ -301,25 +309,31 @@ body {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 20px;
-  background: rgba(255, 255, 255, 0.02);
-  border-radius: 20px;
+  background: linear-gradient(135deg, rgba(15, 15, 20, 0.15) 0%, rgba(20, 20, 30, 0.25) 100%);
+  border-radius: 16px;
   padding: 30px;
-  backdrop-filter: blur(10px);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(24px);
+  border: 1px solid rgba(55, 65, 81, 0.1);
+  transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
 }
 
 .supply-metric-card {
-  background: linear-gradient(135deg, rgba(139, 92, 246, 0.1) 0%, rgba(34, 197, 94, 0.05) 100%);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: linear-gradient(135deg, rgba(15, 15, 20, 0.15) 0%, rgba(20, 20, 30, 0.25) 100%);
+  border: 1px solid rgba(55, 65, 81, 0.1);
   border-radius: 16px;
   padding: 24px;
-  transition: all 0.3s ease;
+  backdrop-filter: blur(24px);
+  transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
 }
 
 .supply-metric-card:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 10px 40px rgba(139, 92, 246, 0.2);
-  border-color: rgba(139, 92, 246, 0.3);
+  border-color: rgba(139, 92, 246, 0.18);
+  box-shadow: 
+    0 4px 20px rgba(0, 0, 0, 0.15),
+    0 0 0 1px rgba(139, 92, 246, 0.04);
+  transform: translateY(-1px);
 }
 
 .supply-metric-title {
@@ -356,15 +370,15 @@ body {
 
 /* Chart sections with modern styling */
 .chart-section {
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px solid rgba(255, 255, 255, 0.05);
-  border-radius: 20px;
+  background: linear-gradient(135deg, rgba(15, 15, 20, 0.15) 0%, rgba(20, 20, 30, 0.25) 100%);
+  border: 1px solid rgba(55, 65, 81, 0.1);
+  border-radius: 16px;
   padding: 24px;
   margin-bottom: 24px;
-  backdrop-filter: blur(10px);
+  backdrop-filter: blur(24px);
   animation: fadeIn 0.6s ease-out;
   animation-fill-mode: backwards;
-  transition: all 0.3s ease;
+  transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
   position: relative;
   overflow: hidden;
 }
@@ -376,8 +390,9 @@ body {
   left: 0;
   right: 0;
   height: 1px;
-  background: linear-gradient(90deg, transparent 0%, rgba(139, 92, 246, 0.5) 50%, transparent 100%);
-  animation: shimmer 3s infinite;
+  background: linear-gradient(90deg, transparent 0%, rgba(139, 92, 246, 0.1) 50%, transparent 100%);
+  opacity: 0;
+  transition: opacity 300ms ease;
 }
 
 @keyframes shimmer {
@@ -386,9 +401,15 @@ body {
 }
 
 .chart-section:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 40px rgba(139, 92, 246, 0.1);
-  border-color: rgba(139, 92, 246, 0.2);
+  border-color: rgba(139, 92, 246, 0.18);
+  box-shadow: 
+    0 4px 20px rgba(0, 0, 0, 0.15),
+    0 0 0 1px rgba(139, 92, 246, 0.04);
+  transform: translateY(-1px);
+}
+
+.chart-section:hover::before {
+  opacity: 1;
 }
 
 .section-title {
@@ -957,5 +978,82 @@ html {
   50% {
     opacity: 0.8;
     transform: scale(1.01);
+  }
+}
+
+/* World-class dynamic background animations - bigger and slower */
+@keyframes backgroundMove {
+  0%, 100% {
+    background-position: 0% 0%;
+  }
+  20% {
+    background-position: 40% 20%;
+  }
+  40% {
+    background-position: 80% 60%;
+  }
+  60% {
+    background-position: 60% 100%;
+  }
+  80% {
+    background-position: 20% 80%;
+  }
+}
+
+@keyframes backgroundColorShift {
+  0%, 100% {
+    opacity: 1;
+    filter: hue-rotate(0deg) saturate(1) brightness(1);
+  }
+  16% {
+    opacity: 0.85;
+    filter: hue-rotate(8deg) saturate(1.15) brightness(1.12);
+  }
+  33% {
+    opacity: 1.15;
+    filter: hue-rotate(-5deg) saturate(0.85) brightness(0.92);
+  }
+  50% {
+    opacity: 0.9;
+    filter: hue-rotate(3deg) saturate(1.08) brightness(1.08);
+  }
+  66% {
+    opacity: 1.1;
+    filter: hue-rotate(-2deg) saturate(0.92) brightness(0.96);
+  }
+  83% {
+    opacity: 1.05;
+    filter: hue-rotate(6deg) saturate(1.05) brightness(1.04);
+  }
+}
+
+@keyframes colorShift {
+  0%, 100% {
+    filter: hue-rotate(0deg) saturate(1);
+  }
+  25% {
+    filter: hue-rotate(5deg) saturate(1.1);
+  }
+  50% {
+    filter: hue-rotate(-3deg) saturate(0.9);
+  }
+  75% {
+    filter: hue-rotate(2deg) saturate(1.05);
+  }
+}
+
+/* Enhanced shimmer with ripple effect */
+@keyframes enhancedShimmer {
+  0% { 
+    transform: translateX(-100%) scale(1);
+    opacity: 0.8;
+  }
+  50% {
+    transform: translateX(0%) scale(1.1);
+    opacity: 1;
+  }
+  100% { 
+    transform: translateX(100%) scale(1);
+    opacity: 0.8;
   }
 }

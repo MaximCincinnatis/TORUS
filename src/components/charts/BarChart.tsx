@@ -82,6 +82,18 @@ const BarChart: React.FC<BarChartProps> = ({
     responsive: true,
     maintainAspectRatio: false,
     backgroundColor: 'transparent',
+    animation: {
+      duration: 300,
+      easing: 'linear',
+    },
+    animations: {
+      colors: {
+        duration: 200,
+      },
+      numbers: {
+        duration: 200,
+      },
+    },
     layout: {
       padding: {
         top: showDataLabels ? 25 : 10, // Extra space for data labels
@@ -425,7 +437,7 @@ const BarChart: React.FC<BarChartProps> = ({
 
   const data = {
     labels,
-    datasets: datasets.map(dataset => ({
+    datasets: datasets.map((dataset, datasetIndex) => ({
       ...dataset,
       backgroundColor: (context: any) => {
         const chart = context.chart;

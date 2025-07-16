@@ -169,7 +169,18 @@ export async function loadCachedData(): Promise<CachedData | null> {
       return null;
     }
     
+    // Capture the file's actual last modified time from HTTP headers
+    const lastModified = response.headers.get('last-modified');
+    console.log('🕐 File last modified header:', lastModified);
+    
     const cachedData: CachedData = await response.json();
+    
+    // Override the JSON's lastUpdated with the actual file modification time
+    if (lastModified) {
+      const fileModifiedTime = new Date(lastModified).toISOString();
+      console.log('📅 Using file modification time:', fileModifiedTime, 'instead of JSON lastUpdated:', cachedData.lastUpdated);
+      cachedData.lastUpdated = fileModifiedTime;
+    }
     console.log('📄 JSON loaded successfully, size:', JSON.stringify(cachedData).length, 'chars');
     console.log('📊 Raw cache contains:', {
       stakes: cachedData.stakingData?.stakeEvents?.length || 0,

@@ -58,6 +58,23 @@ const LineChart: React.FC<LineChartProps> = ({
     responsive: true,
     maintainAspectRatio: false,
     backgroundColor: 'transparent',
+    animation: {
+      duration: 1500,
+      easing: 'easeInOutQuart',
+    },
+    animations: {
+      tension: {
+        duration: 1000,
+        easing: 'linear',
+        from: 1,
+        to: 0,
+        loop: false
+      },
+      y: {
+        duration: 1200,
+        easing: 'easeOutQuart',
+      }
+    },
     interaction: {
       mode: 'index' as const,
       intersect: false,

@@ -113,7 +113,6 @@ const LPPositionsTable: React.FC<LPPositionsTableProps> = ({ positions, loading,
   return (
     <div className="lp-positions-container">
       <div className="lp-positions-header">
-        <h3>Active Liquidity Positions</h3>
         <p className="positions-count">{positions.length} positions found</p>
       </div>
       

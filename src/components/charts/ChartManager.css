@@ -1,0 +1,189 @@
+/* Chart Manager - Professional DeFi Controls */
+
+.chart-manager {
+  position: sticky;
+  top: 20px;
+  z-index: 100;
+  margin-bottom: 32px;
+  background: linear-gradient(135deg, rgba(15, 15, 20, 0.15) 0%, rgba(20, 20, 30, 0.25) 100%);
+  border: 1px solid rgba(55, 65, 81, 0.1);
+  border-radius: 16px;
+  backdrop-filter: blur(24px);
+  overflow: hidden;
+  transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.chart-manager::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, transparent 0%, rgba(139, 92, 246, 0.4) 50%, transparent 100%);
+}
+
+.chart-manager:hover {
+  border-color: rgba(139, 92, 246, 0.4);
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+}
+
+.chart-manager-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 24px;
+  gap: 20px;
+}
+
+.chart-stats {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.chart-count {
+  font-size: 14px;
+  font-weight: 500;
+  color: #94a3b8;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.chart-count::before {
+  content: '';
+  width: 8px;
+  height: 8px;
+  background: linear-gradient(45deg, #8b5cf6, #a78bfa);
+  border-radius: 50%;
+  display: inline-block;
+}
+
+.chart-controls {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.control-button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  background: rgba(139, 92, 246, 0.08);
+  border: 1px solid rgba(139, 92, 246, 0.15);
+  border-radius: 10px;
+  color: #a78bfa;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1);
+  white-space: nowrap;
+}
+
+.control-button:hover:not(.disabled) {
+  background: rgba(139, 92, 246, 0.15);
+  border-color: rgba(139, 92, 246, 0.3);
+  color: #c4b5fd;
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(139, 92, 246, 0.15);
+}
+
+.control-button:active:not(.disabled) {
+  transform: translateY(0);
+  box-shadow: 0 2px 8px rgba(139, 92, 246, 0.2);
+}
+
+.control-button.disabled {
+  background: rgba(55, 65, 81, 0.06);
+  border-color: rgba(55, 65, 81, 0.15);
+  color: #475569;
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+
+.control-button svg {
+  flex-shrink: 0;
+  transition: transform 200ms ease;
+}
+
+.control-button:hover:not(.disabled) svg {
+  transform: scale(1.1);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .chart-manager-content {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 16px;
+  }
+  
+  .chart-stats {
+    justify-content: center;
+  }
+  
+  .chart-controls {
+    justify-content: center;
+  }
+  
+  .control-button {
+    flex: 1;
+    justify-content: center;
+  }
+}
+
+@media (max-width: 480px) {
+  .chart-manager-content {
+    padding: 14px 18px;
+  }
+  
+  .control-button {
+    padding: 8px 12px;
+    font-size: 12px;
+  }
+  
+  .chart-count {
+    font-size: 13px;
+  }
+}
+
+/* Focus States */
+.control-button:focus-visible {
+  outline: 2px solid rgba(139, 92, 246, 0.6);
+  outline-offset: 2px;
+}
+
+/* Animation States */
+.chart-manager.updating {
+  pointer-events: none;
+}
+
+.chart-manager.updating .control-button {
+  opacity: 0.7;
+}
+
+/* High Contrast Mode */
+@media (prefers-contrast: high) {
+  .chart-manager {
+    border-color: rgba(139, 92, 246, 0.8);
+  }
+  
+  .control-button {
+    border-color: rgba(139, 92, 246, 0.6);
+    background: rgba(139, 92, 246, 0.2);
+  }
+  
+  .control-button.disabled {
+    border-color: rgba(107, 114, 128, 0.6);
+    background: rgba(107, 114, 128, 0.2);
+  }
+}
+
+/* Dark Theme Variations */
+@media (prefers-color-scheme: dark) {
+  .chart-manager {
+    background: linear-gradient(135deg, rgba(5, 5, 10, 0.3) 0%, rgba(10, 10, 20, 0.5) 100%);
+  }
+}
