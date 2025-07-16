@@ -1303,7 +1303,7 @@ function App() {
           {!loading && (
             <p style={{ fontSize: '12px', color: '#fbbf24', margin: '4px 0 0 0' }}>
               Last updated: {DataCache.getLastUpdated() ? 
-                new Date(DataCache.getLastUpdated()).toLocaleString() : 
+                new Date(DataCache.getLastUpdated()!).toLocaleString() : 
                 'Unknown'}
             </p>
           )}
