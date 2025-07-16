@@ -892,7 +892,7 @@ function App() {
       <div className="dashboard-header">
         <div className="logo-container">
           <div className="header-left">
-            <img src="/torus.svg" alt="TORUS Logo" className="torus-logo" />
+            <img src="https://www.torus.win/torus.svg" alt="TORUS Logo" className="torus-logo" />
             <div className="header-text">
               <h1 className="dashboard-title">
                 <span className="torus-text">TORUS</span>
