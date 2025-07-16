@@ -1,0 +1,1672 @@
+{
+  "lastUpdated": "2025-07-16T00:24:03.842Z",
+  "version": "1.0.0",
+  "poolData": {
+    "sqrtPriceX96": "486080797938921266829701425084975",
+    "currentTick": 174444,
+    "token0": "0xB47f575807fC5466285e1277Ef8aCFBB5c6686E8",
+    "token1": "0xF19308F923582A6f7c465e5CE7a9Dc1BEC6665B1",
+    "liquidity": "70539748011339879786162512",
+    "feeGrowthGlobal0X128": "968524094270324219543728058231345",
+    "feeGrowthGlobal1X128": "38647634084481763612871433798026808555806"
+  },
+  "lpPositions": [
+    {
+      "tokenId": "1030759",
+      "owner": "0x9BBb45e12c4a75f7406Cb38e858Fa6C68A88f30d",
+      "liquidity": "28467664237287326082660",
+      "tickLower": 122200,
+      "tickUpper": 168200,
+      "lowerTitanxPerTorus": "0.20M",
+      "upperTitanxPerTorus": "20.16M",
+      "currentTitanxPerTorus": "37.64M",
+      "amount0": 0,
+      "amount1": 114999999.99989024,
+      "claimableTorus": 0,
+      "claimableTitanX": 0,
+      "tokensOwed0": "0",
+      "tokensOwed1": "0",
+      "fee": 10000,
+      "inRange": false,
+      "estimatedAPR": "0.00",
+      "priceRange": "0.20M - 20.16M TITANX per TORUS"
+    },
+    {
+      "tokenId": "1031465",
+      "owner": "0xCe32E10b205FBf49F3bB7132f7378751Af1832b6",
+      "liquidity": "6323383612159333501013170",
+      "tickLower": 172600,
+      "tickUpper": 177600,
+      "lowerTitanxPerTorus": "31.30M",
+      "upperTitanxPerTorus": "51.60M",
+      "currentTitanxPerTorus": "37.64M",
+      "amount0": 150.4197481966822,
+      "amount1": 3418031767.184371,
+      "claimableTorus": 1.4040914320102393,
+      "claimableTitanX": 82819505.69065075,
+      "tokensOwed0": "0",
+      "tokensOwed1": "0",
+      "fee": 10000,
+      "inRange": true,
+      "estimatedAPR": "155.40",
+      "priceRange": "31.30M - 51.60M TITANX per TORUS"
+    },
+    {
+      "tokenId": "1031533",
+      "owner": "0x7F2d08AB0D5672Db36DA1596932cBA988FEe95E1",
+      "liquidity": "869420052873881099370715",
+      "tickLower": -887200,
+      "tickUpper": 887200,
+      "lowerTitanxPerTorus": "0.00M",
+      "upperTitanxPerTorus": "Infinity",
+      "currentTitanxPerTorus": "37.64M",
+      "amount0": 141.71008921629445,
+      "amount1": 5334067831.8640585,
+      "claimableTorus": 0.20064441887351459,
+      "claimableTitanX": 10818268.929415561,
+      "tokensOwed0": "0",
+      "tokensOwed1": "0",
+      "fee": 10000,
+      "inRange": true,
+      "estimatedAPR": "12.50",
+      "priceRange": "0.00M - Infinity TITANX per TORUS"
+    }
+  ],
+  "historicalData": {
+    "sevenDay": [
+      {
+        "date": "2025-07-10",
+        "volumeUSD": 96389.7394007298,
+        "volumeToken0": 1488.5457900454082,
+        "volumeToken1": 32357362.994989257,
+        "feesUSD": 1205.6813743506887,
+        "tvlUSD": 8003773.48562344,
+        "liquidity": "70539748011339879786162512",
+        "txCount": 239
+      },
+      {
+        "date": "2025-07-11",
+        "volumeUSD": 106785.23291314731,
+        "volumeToken0": 1002.1980570132454,
+        "volumeToken1": 62904732.39175648,
+        "feesUSD": 717.8124735380569,
+        "tvlUSD": 8003773.48562344,
+        "liquidity": "70539748011339879786162512",
+        "txCount": 281
+      },
+      {
+        "date": "2025-07-12",
+        "volumeUSD": 81226.71395099968,
+        "volumeToken0": 1007.7778295831428,
+        "volumeToken1": 43233338.44874263,
+        "feesUSD": 1234.9263879063694,
+        "tvlUSD": 8003773.48562344,
+        "liquidity": "70539748011339879786162512",
+        "txCount": 253
+      },
+      {
+        "date": "2025-07-13",
+        "volumeUSD": 56522.19548700044,
+        "volumeToken0": 1181.9900847631195,
+        "volumeToken1": 71511896.32720962,
+        "feesUSD": 888.7241050574094,
+        "tvlUSD": 8003773.48562344,
+        "liquidity": "70539748011339879786162512",
+        "txCount": 121
+      },
+      {
+        "date": "2025-07-14",
+        "volumeUSD": 147752.24337364992,
+        "volumeToken0": 801.2599556767095,
+        "volumeToken1": 50025220.0058539,
+        "feesUSD": 1460.2316883093208,
+        "tvlUSD": 8003773.48562344,
+        "liquidity": "70539748011339879786162512",
+        "txCount": 205
+      },
+      {
+        "date": "2025-07-15",
+        "volumeUSD": 67139.51048135023,
+        "volumeToken0": 600.5456096093031,
+        "volumeToken1": 69408284.52380762,
+        "feesUSD": 1222.644002229167,
+        "tvlUSD": 8003773.48562344,
+        "liquidity": "70539748011339879786162512",
+        "txCount": 132
+      },
+      {
+        "date": "2025-07-16",
+        "volumeUSD": 107565.74882320156,
+        "volumeToken0": 1414.1359702484908,
+        "volumeToken1": 63256285.957129866,
+        "feesUSD": 1304.4286836894426,
+        "tvlUSD": 8003773.48562344,
+        "liquidity": "70539748011339879786162512",
+        "txCount": 173
+      }
+    ],
+    "thirtyDay": [
+      {
+        "date": "2025-06-17",
+        "volumeUSD": 69587.02366340079,
+        "volumeToken0": 1447.1935768835565,
+        "volumeToken1": 52980734.75980905,
+        "feesUSD": 1313.9545532881289,
+        "tvlUSD": 8003773.48562344,
+        "liquidity": "70539748011339879786162512",
+        "txCount": 257
+      },
+      {
+        "date": "2025-06-18",
+        "volumeUSD": 64517.977673448644,
+        "volumeToken0": 519.7869435675591,
+        "volumeToken1": 36776197.61884811,
+        "feesUSD": 1364.103423632404,
+        "tvlUSD": 8003773.48562344,
+        "liquidity": "70539748011339879786162512",
+        "txCount": 254
+      },
+      {
+        "date": "2025-06-19",
+        "volumeUSD": 60032.72540387161,
+        "volumeToken0": 760.8332180230328,
+        "volumeToken1": 44768507.74046172,
+        "feesUSD": 647.4343549004731,
+        "tvlUSD": 8003773.48562344,
+        "liquidity": "70539748011339879786162512",
+        "txCount": 296
+      },
+      {
+        "date": "2025-06-20",
+        "volumeUSD": 106307.85591368613,
+        "volumeToken0": 1238.0388784353017,
+        "volumeToken1": 29934485.014232982,
+        "feesUSD": 1112.158801882326,
+        "tvlUSD": 8003773.48562344,
+        "liquidity": "70539748011339879786162512",
+        "txCount": 152
+      },
+      {
+        "date": "2025-06-21",
+        "volumeUSD": 107380.5487407957,
+        "volumeToken0": 527.4388598755905,
+        "volumeToken1": 40661148.86208904,
+        "feesUSD": 817.7164823222231,
+        "tvlUSD": 8003773.48562344,
+        "liquidity": "70539748011339879786162512",
+        "txCount": 156
+      },
+      {
+        "date": "2025-06-22",
+        "volumeUSD": 118783.7560660847,
+        "volumeToken0": 1201.498424283494,
+        "volumeToken1": 45149108.131107196,
+        "feesUSD": 760.5108721400966,
+        "tvlUSD": 8003773.48562344,
+        "liquidity": "70539748011339879786162512",
+        "txCount": 265
+      },
+      {
+        "date": "2025-06-23",
+        "volumeUSD": 81513.10768695721,
+        "volumeToken0": 720.1941892723543,
+        "volumeToken1": 27949240.243049145,
+        "feesUSD": 907.709404405485,
+        "tvlUSD": 8003773.48562344,
+        "liquidity": "70539748011339879786162512",
+        "txCount": 190
+      },
+      {
+        "date": "2025-06-24",
+        "volumeUSD": 50989.927047839425,
+        "volumeToken0": 892.6549058526705,
+        "volumeToken1": 42940522.680053115,
+        "feesUSD": 506.66156360697954,
+        "tvlUSD": 8003773.48562344,
+        "liquidity": "70539748011339879786162512",
+        "txCount": 231
+      },
+      {
+        "date": "2025-06-25",
+        "volumeUSD": 123142.75587360513,
+        "volumeToken0": 973.8879701789849,
+        "volumeToken1": 38465574.537948586,
+        "feesUSD": 569.7349517051382,
+        "tvlUSD": 8003773.48562344,
+        "liquidity": "70539748011339879786162512",
+        "txCount": 217
+      },
+      {
+        "date": "2025-06-26",
+        "volumeUSD": 84743.05714730671,
+        "volumeToken0": 964.8637444896776,
+        "volumeToken1": 50460634.69887316,
+        "feesUSD": 570.9798221674689,
+        "tvlUSD": 8003773.48562344,
+        "liquidity": "70539748011339879786162512",
+        "txCount": 262
+      },
+      {
+        "date": "2025-06-27",
+        "volumeUSD": 94481.32158282991,
+        "volumeToken0": 904.2861192484879,
+        "volumeToken1": 67422508.06601086,
+        "feesUSD": 625.4349492220557,
+        "tvlUSD": 8003773.48562344,
+        "liquidity": "70539748011339879786162512",
+        "txCount": 108
+      },
+      {
+        "date": "2025-06-28",
+        "volumeUSD": 119080.20499522865,
+        "volumeToken0": 1361.0494612775105,
+        "volumeToken1": 29123148.174553882,
+        "feesUSD": 801.7528673194613,
+        "tvlUSD": 8003773.48562344,
+        "liquidity": "70539748011339879786162512",
+        "txCount": 136
+      },
+      {
+        "date": "2025-06-29",
+        "volumeUSD": 127210.94666411792,
+        "volumeToken0": 909.551920348342,
+        "volumeToken1": 51114840.26474312,
+        "feesUSD": 528.6636251172614,
+        "tvlUSD": 8003773.48562344,
+        "liquidity": "70539748011339879786162512",
+        "txCount": 280
+      },
+      {
+        "date": "2025-06-30",
+        "volumeUSD": 138107.43094686852,
+        "volumeToken0": 856.1865520764923,
+        "volumeToken1": 37044599.816212885,
+        "feesUSD": 943.8114273825762,
+        "tvlUSD": 8003773.48562344,
+        "liquidity": "70539748011339879786162512",
+        "txCount": 136
+      },
+      {
+        "date": "2025-07-01",
+        "volumeUSD": 112821.44780941286,
+        "volumeToken0": 985.0833353548271,
+        "volumeToken1": 62389078.074392304,
+        "feesUSD": 881.055907718234,
+        "tvlUSD": 8003773.48562344,
+        "liquidity": "70539748011339879786162512",
+        "txCount": 186
+      },
+      {
+        "date": "2025-07-02",
+        "volumeUSD": 113944.31205569484,
+        "volumeToken0": 1401.056428498095,
+        "volumeToken1": 65432510.01519105,
+        "feesUSD": 914.3313484848586,
+        "tvlUSD": 8003773.48562344,
+        "liquidity": "70539748011339879786162512",
+        "txCount": 116
+      },
+      {
+        "date": "2025-07-03",
+        "volumeUSD": 125304.18334328546,
+        "volumeToken0": 1109.8866806111432,
+        "volumeToken1": 59019195.726010434,
+        "feesUSD": 850.4348302852416,
+        "tvlUSD": 8003773.48562344,
+        "liquidity": "70539748011339879786162512",
+        "txCount": 158
+      },
+      {
+        "date": "2025-07-04",
+        "volumeUSD": 51110.62601777332,
+        "volumeToken0": 774.5419814620332,
+        "volumeToken1": 66546151.41822093,
+        "feesUSD": 1074.5365628602062,
+        "tvlUSD": 8003773.48562344,
+        "liquidity": "70539748011339879786162512",
+        "txCount": 129
+      },
+      {
+        "date": "2025-07-05",
+        "volumeUSD": 143650.84586255474,
+        "volumeToken0": 1005.8873051485892,
+        "volumeToken1": 54049032.799026586,
+        "feesUSD": 1282.4709482348712,
+        "tvlUSD": 8003773.48562344,
+        "liquidity": "70539748011339879786162512",
+        "txCount": 260
+      },
+      {
+        "date": "2025-07-06",
+        "volumeUSD": 74567.66642018087,
+        "volumeToken0": 868.6725707386938,
+        "volumeToken1": 67648176.72938934,
+        "feesUSD": 1457.8592111584135,
+        "tvlUSD": 8003773.48562344,
+        "liquidity": "70539748011339879786162512",
+        "txCount": 299
+      },
+      {
+        "date": "2025-07-07",
+        "volumeUSD": 53728.19918721225,
+        "volumeToken0": 639.8993530588895,
+        "volumeToken1": 72937648.7240988,
+        "feesUSD": 706.9989304821911,
+        "tvlUSD": 8003773.48562344,
+        "liquidity": "70539748011339879786162512",
+        "txCount": 187
+      },
+      {
+        "date": "2025-07-08",
+        "volumeUSD": 84270.13217970022,
+        "volumeToken0": 600.9479917691691,
+        "volumeToken1": 25688447.382211145,
+        "feesUSD": 840.8041360946428,
+        "tvlUSD": 8003773.48562344,
+        "liquidity": "70539748011339879786162512",
+        "txCount": 128
+      },
+      {
+        "date": "2025-07-09",
+        "volumeUSD": 85046.30527307704,
+        "volumeToken0": 722.4355066297419,
+        "volumeToken1": 32416989.019823097,
+        "feesUSD": 526.631249044504,
+        "tvlUSD": 8003773.48562344,
+        "liquidity": "70539748011339879786162512",
+        "txCount": 118
+      },
+      {
+        "date": "2025-07-10",
+        "volumeUSD": 77051.03550348035,
+        "volumeToken0": 916.1360526263834,
+        "volumeToken1": 26900596.322684366,
+        "feesUSD": 1051.704517566481,
+        "tvlUSD": 8003773.48562344,
+        "liquidity": "70539748011339879786162512",
+        "txCount": 276
+      },
+      {
+        "date": "2025-07-11",
+        "volumeUSD": 140589.3271574172,
+        "volumeToken0": 1311.9569762660685,
+        "volumeToken1": 74500923.35395588,
+        "feesUSD": 683.6402554447816,
+        "tvlUSD": 8003773.48562344,
+        "liquidity": "70539748011339879786162512",
+        "txCount": 124
+      },
+      {
+        "date": "2025-07-12",
+        "volumeUSD": 141013.19129314914,
+        "volumeToken0": 809.951868289251,
+        "volumeToken1": 45909487.00582039,
+        "feesUSD": 1372.9273058402296,
+        "tvlUSD": 8003773.48562344,
+        "liquidity": "70539748011339879786162512",
+        "txCount": 246
+      },
+      {
+        "date": "2025-07-13",
+        "volumeUSD": 103021.8111238115,
+        "volumeToken0": 1247.012438030528,
+        "volumeToken1": 56032309.8298674,
+        "feesUSD": 573.5097169218113,
+        "tvlUSD": 8003773.48562344,
+        "liquidity": "70539748011339879786162512",
+        "txCount": 282
+      },
+      {
+        "date": "2025-07-14",
+        "volumeUSD": 132265.62929752178,
+        "volumeToken0": 1220.0841324232265,
+        "volumeToken1": 62183134.73931889,
+        "feesUSD": 1186.8661241054838,
+        "tvlUSD": 8003773.48562344,
+        "liquidity": "70539748011339879786162512",
+        "txCount": 249
+      },
+      {
+        "date": "2025-07-15",
+        "volumeUSD": 56402.18258099883,
+        "volumeToken0": 846.071596848186,
+        "volumeToken1": 68359825.55013895,
+        "feesUSD": 1253.3290713379101,
+        "tvlUSD": 8003773.48562344,
+        "liquidity": "70539748011339879786162512",
+        "txCount": 279
+      },
+      {
+        "date": "2025-07-16",
+        "volumeUSD": 147510.03816712275,
+        "volumeToken0": 613.844276032953,
+        "volumeToken1": 61851539.28042456,
+        "feesUSD": 1332.3538846445806,
+        "tvlUSD": 8003773.48562344,
+        "liquidity": "70539748011339879786162512",
+        "txCount": 240
+      }
+    ]
+  },
+  "tokenPrices": {
+    "torus": {
+      "usd": 376.2042750721278,
+      "eth": 0.10748693573489367,
+      "lastUpdated": "2025-07-16T00:23:19.868Z"
+    },
+    "titanx": {
+      "usd": 0.00001,
+      "eth": 2.857142857142857e-9,
+      "lastUpdated": "2025-07-16T00:23:19.868Z"
+    },
+    "eth": {
+      "usd": 3500,
+      "lastUpdated": "2025-07-16T00:23:19.868Z"
+    }
+  },
+  "stakingData": {
+    "stakeEvents": [],
+    "createEvents": [],
+    "rewardPoolData": [
+      {
+        "day": 6,
+        "rewardPool": 99600.63948820476,
+        "totalShares": 1482144284.2106266,
+        "penaltiesInPool": 0
+      },
+      {
+        "day": 7,
+        "rewardPool": 0,
+        "totalShares": 1482144284.2106266,
+        "penaltiesInPool": 0
+      },
+      {
+        "day": 8,
+        "rewardPool": 0,
+        "totalShares": 1482144284.2106266,
+        "penaltiesInPool": 0
+      },
+      {
+        "day": 9,
+        "rewardPool": 0,
+        "totalShares": 1482144284.2106266,
+        "penaltiesInPool": 0
+      },
+      {
+        "day": 10,
+        "rewardPool": 0,
+        "totalShares": 1482144284.2106266,
+        "penaltiesInPool": 0
+      },
+      {
+        "day": 11,
+        "rewardPool": 0,
+        "totalShares": 1482144284.2106266,
+        "penaltiesInPool": 0
+      },
+      {
+        "day": 12,
+        "rewardPool": 0,
+        "totalShares": 1482144284.2106266,
+        "penaltiesInPool": 0
+      },
+      {
+        "day": 13,
+        "rewardPool": 0,
+        "totalShares": 1482144284.2106266,
+        "penaltiesInPool": 0
+      },
+      {
+        "day": 14,
+        "rewardPool": 0,
+        "totalShares": 1482144284.2106266,
+        "penaltiesInPool": 0
+      },
+      {
+        "day": 15,
+        "rewardPool": 0,
+        "totalShares": 1482144284.2106266,
+        "penaltiesInPool": 0
+      },
+      {
+        "day": 16,
+        "rewardPool": 0,
+        "totalShares": 1482142366.59699,
+        "penaltiesInPool": 0
+      },
+      {
+        "day": 17,
+        "rewardPool": 0,
+        "totalShares": 1482115407.9606266,
+        "penaltiesInPool": 0
+      },
+      {
+        "day": 18,
+        "rewardPool": 0,
+        "totalShares": 1482052933.187899,
+        "penaltiesInPool": 0
+      },
+      {
+        "day": 19,
+        "rewardPool": 0,
+        "totalShares": 1482022170.006081,
+        "penaltiesInPool": 0
+      },
+      {
+        "day": 20,
+        "rewardPool": 0,
+        "totalShares": 1482000174.4174447,
+        "penaltiesInPool": 0
+      },
+      {
+        "day": 21,
+        "rewardPool": 0,
+        "totalShares": 1481943418.781081,
+        "penaltiesInPool": 0
+      },
+      {
+        "day": 22,
+        "rewardPool": 0,
+        "totalShares": 1481886841.690172,
+        "penaltiesInPool": 0
+      },
+      {
+        "day": 23,
+        "rewardPool": 0,
+        "totalShares": 1481818895.9719777,
+        "penaltiesInPool": 0
+      },
+      {
+        "day": 24,
+        "rewardPool": 0,
+        "totalShares": 1481759202.763388,
+        "penaltiesInPool": 0
+      },
+      {
+        "day": 25,
+        "rewardPool": 0,
+        "totalShares": 1481703492.763388,
+        "penaltiesInPool": 0
+      },
+      {
+        "day": 26,
+        "rewardPool": 0,
+        "totalShares": 1481665638.1949172,
+        "penaltiesInPool": 0
+      },
+      {
+        "day": 27,
+        "rewardPool": 0,
+        "totalShares": 1481218808.6565807,
+        "penaltiesInPool": 0
+      },
+      {
+        "day": 28,
+        "rewardPool": 0,
+        "totalShares": 1480961338.2020352,
+        "penaltiesInPool": 0
+      },
+      {
+        "day": 29,
+        "rewardPool": 0,
+        "totalShares": 1480604678.802035,
+        "penaltiesInPool": 0
+      },
+      {
+        "day": 30,
+        "rewardPool": 0,
+        "totalShares": 1480558399.2512894,
+        "penaltiesInPool": 0
+      },
+      {
+        "day": 31,
+        "rewardPool": 0,
+        "totalShares": 1480091138.4108815,
+        "penaltiesInPool": 0
+      },
+      {
+        "day": 32,
+        "rewardPool": 0,
+        "totalShares": 1479962086.6543152,
+        "penaltiesInPool": 0
+      },
+      {
+        "day": 33,
+        "rewardPool": 0,
+        "totalShares": 1479776599.4313993,
+        "penaltiesInPool": 0
+      },
+      {
+        "day": 34,
+        "rewardPool": 0,
+        "totalShares": 1479265163.710106,
+        "penaltiesInPool": 0
+      },
+      {
+        "day": 35,
+        "rewardPool": 0,
+        "totalShares": 1478734277.7667415,
+        "penaltiesInPool": 0
+      },
+      {
+        "day": 36,
+        "rewardPool": 0,
+        "totalShares": 1478565692.5828962,
+        "penaltiesInPool": 0
+      },
+      {
+        "day": 37,
+        "rewardPool": 0,
+        "totalShares": 1478510374.3755944,
+        "penaltiesInPool": 0
+      },
+      {
+        "day": 38,
+        "rewardPool": 0,
+        "totalShares": 1478175191.3561342,
+        "penaltiesInPool": 0
+      },
+      {
+        "day": 39,
+        "rewardPool": 0,
+        "totalShares": 1478060332.5539277,
+        "penaltiesInPool": 0
+      },
+      {
+        "day": 40,
+        "rewardPool": 0,
+        "totalShares": 1477961356.882607,
+        "penaltiesInPool": 0
+      },
+      {
+        "day": 41,
+        "rewardPool": 0,
+        "totalShares": 1477804343.4807827,
+        "penaltiesInPool": 0
+      },
+      {
+        "day": 42,
+        "rewardPool": 0,
+        "totalShares": 1477182501.5536225,
+        "penaltiesInPool": 0
+      },
+      {
+        "day": 43,
+        "rewardPool": 0,
+        "totalShares": 1476491849.6367102,
+        "penaltiesInPool": 0
+      },
+      {
+        "day": 44,
+        "rewardPool": 0,
+        "totalShares": 1476430326.5246868,
+        "penaltiesInPool": 0
+      },
+      {
+        "day": 45,
+        "rewardPool": 0,
+        "totalShares": 1475512551.0098145,
+        "penaltiesInPool": 0
+      },
+      {
+        "day": 46,
+        "rewardPool": 0,
+        "totalShares": 1474935623.299091,
+        "penaltiesInPool": 0
+      },
+      {
+        "day": 47,
+        "rewardPool": 0,
+        "totalShares": 1469613146.2829778,
+        "penaltiesInPool": 0
+      },
+      {
+        "day": 48,
+        "rewardPool": 0,
+        "totalShares": 1467710450.1753888,
+        "penaltiesInPool": 0
+      },
+      {
+        "day": 49,
+        "rewardPool": 0,
+        "totalShares": 1466519644.0119915,
+        "penaltiesInPool": 0
+      },
+      {
+        "day": 50,
+        "rewardPool": 0,
+        "totalShares": 1466355524.4506943,
+        "penaltiesInPool": 0
+      },
+      {
+        "day": 51,
+        "rewardPool": 0,
+        "totalShares": 1464152817.6099398,
+        "penaltiesInPool": 0
+      },
+      {
+        "day": 52,
+        "rewardPool": 0,
+        "totalShares": 1462662446.547744,
+        "penaltiesInPool": 0
+      },
+      {
+        "day": 53,
+        "rewardPool": 0,
+        "totalShares": 1462374431.5782592,
+        "penaltiesInPool": 0
+      },
+      {
+        "day": 54,
+        "rewardPool": 0,
+        "totalShares": 1461414282.3259327,
+        "penaltiesInPool": 0
+      },
+      {
+        "day": 55,
+        "rewardPool": 0,
+        "totalShares": 1459617144.5089521,
+        "penaltiesInPool": 0
+      },
+      {
+        "day": 56,
+        "rewardPool": 0,
+        "totalShares": 1456587737.189097,
+        "penaltiesInPool": 0
+      },
+      {
+        "day": 57,
+        "rewardPool": 0,
+        "totalShares": 1455840047.9038208,
+        "penaltiesInPool": 0
+      },
+      {
+        "day": 58,
+        "rewardPool": 0,
+        "totalShares": 1453843429.7528658,
+        "penaltiesInPool": 0
+      },
+      {
+        "day": 59,
+        "rewardPool": 0,
+        "totalShares": 1453488845.4457827,
+        "penaltiesInPool": 0
+      },
+      {
+        "day": 60,
+        "rewardPool": 0,
+        "totalShares": 1448728281.3699048,
+        "penaltiesInPool": 0
+      },
+      {
+        "day": 61,
+        "rewardPool": 0,
+        "totalShares": 1442220385.3899772,
+        "penaltiesInPool": 0
+      },
+      {
+        "day": 62,
+        "rewardPool": 0,
+        "totalShares": 1441438506.192803,
+        "penaltiesInPool": 0
+      },
+      {
+        "day": 63,
+        "rewardPool": 0,
+        "totalShares": 1440333620.459136,
+        "penaltiesInPool": 0
+      },
+      {
+        "day": 64,
+        "rewardPool": 0,
+        "totalShares": 1439639382.6783316,
+        "penaltiesInPool": 0
+      },
+      {
+        "day": 65,
+        "rewardPool": 0,
+        "totalShares": 1434515415.2644758,
+        "penaltiesInPool": 0
+      },
+      {
+        "day": 66,
+        "rewardPool": 0,
+        "totalShares": 1434200019.5585165,
+        "penaltiesInPool": 0
+      },
+      {
+        "day": 67,
+        "rewardPool": 0,
+        "totalShares": 1433415612.8585165,
+        "penaltiesInPool": 0
+      },
+      {
+        "day": 68,
+        "rewardPool": 0,
+        "totalShares": 1432319296.1112185,
+        "penaltiesInPool": 0
+      },
+      {
+        "day": 69,
+        "rewardPool": 0,
+        "totalShares": 1425227276.6973143,
+        "penaltiesInPool": 0
+      },
+      {
+        "day": 70,
+        "rewardPool": 0,
+        "totalShares": 1423369339.9359424,
+        "penaltiesInPool": 0
+      },
+      {
+        "day": 71,
+        "rewardPool": 0,
+        "totalShares": 1422517902.538026,
+        "penaltiesInPool": 0
+      },
+      {
+        "day": 72,
+        "rewardPool": 0,
+        "totalShares": 1422192155.699347,
+        "penaltiesInPool": 0
+      },
+      {
+        "day": 73,
+        "rewardPool": 0,
+        "totalShares": 1419936487.6226122,
+        "penaltiesInPool": 0
+      },
+      {
+        "day": 74,
+        "rewardPool": 0,
+        "totalShares": 1414314870.9223478,
+        "penaltiesInPool": 0
+      },
+      {
+        "day": 75,
+        "rewardPool": 0,
+        "totalShares": 1405183822.2840188,
+        "penaltiesInPool": 0
+      },
+      {
+        "day": 76,
+        "rewardPool": 0,
+        "totalShares": 1365895692.220538,
+        "penaltiesInPool": 0
+      },
+      {
+        "day": 77,
+        "rewardPool": 0,
+        "totalShares": 1353667769.1018023,
+        "penaltiesInPool": 0
+      },
+      {
+        "day": 78,
+        "rewardPool": 0,
+        "totalShares": 1329871397.8080795,
+        "penaltiesInPool": 0
+      },
+      {
+        "day": 79,
+        "rewardPool": 0,
+        "totalShares": 1315993097.6282344,
+        "penaltiesInPool": 0
+      },
+      {
+        "day": 80,
+        "rewardPool": 0,
+        "totalShares": 1295805595.5665133,
+        "penaltiesInPool": 0
+      },
+      {
+        "day": 81,
+        "rewardPool": 0,
+        "totalShares": 1275772589.115191,
+        "penaltiesInPool": 0
+      },
+      {
+        "day": 82,
+        "rewardPool": 0,
+        "totalShares": 1262212093.119763,
+        "penaltiesInPool": 0
+      },
+      {
+        "day": 83,
+        "rewardPool": 0,
+        "totalShares": 1232910719.9436102,
+        "penaltiesInPool": 0
+      },
+      {
+        "day": 84,
+        "rewardPool": 0,
+        "totalShares": 1210119012.6164734,
+        "penaltiesInPool": 0
+      },
+      {
+        "day": 85,
+        "rewardPool": 0,
+        "totalShares": 1183802278.8023713,
+        "penaltiesInPool": 0
+      },
+      {
+        "day": 86,
+        "rewardPool": 0,
+        "totalShares": 1149787977.9702334,
+        "penaltiesInPool": 0
+      },
+      {
+        "day": 87,
+        "rewardPool": 0,
+        "totalShares": 1073573295.0944113,
+        "penaltiesInPool": 0
+      },
+      {
+        "day": 88,
+        "rewardPool": 0,
+        "totalShares": 1036082741.2439793,
+        "penaltiesInPool": 0
+      },
+      {
+        "day": 89,
+        "rewardPool": 0,
+        "totalShares": 529289072.27417386,
+        "penaltiesInPool": 0
+      },
+      {
+        "day": 90,
+        "rewardPool": 0,
+        "totalShares": 329523974.17220795,
+        "penaltiesInPool": 0
+      },
+      {
+        "day": 91,
+        "rewardPool": 0,
+        "totalShares": 240739420.2538564,
+        "penaltiesInPool": 0
+      },
+      {
+        "day": 92,
+        "rewardPool": 0,
+        "totalShares": 128225951.28648202,
+        "penaltiesInPool": 0
+      },
+      {
+        "day": 93,
+        "rewardPool": 0,
+        "totalShares": 57775324.43593838,
+        "penaltiesInPool": 0
+      },
+      {
+        "day": 94,
+        "rewardPool": 0,
+        "totalShares": 0,
+        "penaltiesInPool": 0
+      }
+    ],
+    "currentProtocolDay": 6,
+    "totalSupply": 19715.31690767507,
+    "burnedSupply": 0,
+    "lastUpdated": "2025-07-16T00:22:03.724Z"
+  },
+  "contractData": {
+    "torusToken": {
+      "address": "0xb47f575807fc5466285e1277ef8acfbb5c6686e8",
+      "name": "Torus",
+      "symbol": "TORUS",
+      "decimals": 18,
+      "totalSupply": "19715316907675072314825"
+    },
+    "titanxToken": {
+      "address": "0xf19308f923582a6f7c465e5ce7a9dc1bec6665b1",
+      "name": "TITAN X",
+      "symbol": "TITANX",
+      "decimals": 18,
+      "totalSupply": "105702765615770536398570100460242"
+    },
+    "uniswapPool": {
+      "address": "0x7ff1f30F6E7EeC2ff3F0D1b60739115BDF88190F",
+      "feeTier": 10000
+    }
+  },
+  "metadata": {
+    "dataSource": "Blockchain RPC",
+    "fallbackToRPC": false,
+    "cacheExpiryMinutes": 60,
+    "description": "Complete TORUS dashboard data with all frontend requirements",
+    "lastCompleteUpdate": "2025-07-16T00:24:03.842Z",
+    "dataComplete": true
+  },
+  "currentProtocolDay": 6,
+  "totals": {
+    "totalETH": "0.000000",
+    "totalTitanX": "0.00",
+    "totalStakedETH": "0.000000",
+    "totalCreatedETH": "0.000000",
+    "totalStakedTitanX": "0.00",
+    "totalCreatedTitanX": "0.00"
+  },
+  "uniswapV3": {
+    "poolAddress": "0x7ff1f30F6E7EeC2ff3F0D1b60739115BDF88190F",
+    "torusAddress": "0xb47f575807fc5466285e1277ef8acfbb5c6686e8",
+    "titanxAddress": "0xf19308f923582a6f7c465e5ce7a9dc1bec6665b1",
+    "poolData": {
+      "sqrtPriceX96": "486080797938921266829701425084975",
+      "currentTick": 174444,
+      "liquidity": "70539748011339879786162512",
+      "fee": 10000,
+      "token0": "0xB47f575807fC5466285e1277Ef8aCFBB5c6686E8",
+      "token1": "0xF19308F923582A6f7c465e5CE7a9Dc1BEC6665B1"
+    },
+    "ratio": {
+      "titanxPerTorus": "37620427.51",
+      "titanxPerTorusM": "37.62",
+      "torusPerTitanx": "0.00000003"
+    },
+    "tvl": {
+      "torusAmount": "10637.54",
+      "titanxAmount": "0.40T",
+      "titanxAmountRaw": "400188674281.17"
+    },
+    "lpPositions": [
+      {
+        "tokenId": "1030759",
+        "owner": "0x9BBb45e12c4a75f7406Cb38e858Fa6C68A88f30d",
+        "liquidity": "28467664237287326082660",
+        "tickLower": 122200,
+        "tickUpper": 168200,
+        "lowerTitanxPerTorus": "0.20M",
+        "upperTitanxPerTorus": "20.16M",
+        "currentTitanxPerTorus": "37.64M",
+        "amount0": 0,
+        "amount1": 114999999.99989024,
+        "claimableTorus": 0,
+        "claimableTitanX": 0,
+        "tokensOwed0": "0",
+        "tokensOwed1": "0",
+        "fee": 10000,
+        "inRange": false,
+        "estimatedAPR": "0.00",
+        "priceRange": "0.20M - 20.16M TITANX per TORUS"
+      },
+      {
+        "tokenId": "1031465",
+        "owner": "0xCe32E10b205FBf49F3bB7132f7378751Af1832b6",
+        "liquidity": "6323383612159333501013170",
+        "tickLower": 172600,
+        "tickUpper": 177600,
+        "lowerTitanxPerTorus": "31.30M",
+        "upperTitanxPerTorus": "51.60M",
+        "currentTitanxPerTorus": "37.64M",
+        "amount0": 150.4197481966822,
+        "amount1": 3418031767.184371,
+        "claimableTorus": 1.4040914320102393,
+        "claimableTitanX": 82819505.69065075,
+        "tokensOwed0": "0",
+        "tokensOwed1": "0",
+        "fee": 10000,
+        "inRange": true,
+        "estimatedAPR": "155.40",
+        "priceRange": "31.30M - 51.60M TITANX per TORUS"
+      },
+      {
+        "tokenId": "1031533",
+        "owner": "0x7F2d08AB0D5672Db36DA1596932cBA988FEe95E1",
+        "liquidity": "869420052873881099370715",
+        "tickLower": -887200,
+        "tickUpper": 887200,
+        "lowerTitanxPerTorus": "0.00M",
+        "upperTitanxPerTorus": "Infinity",
+        "currentTitanxPerTorus": "37.64M",
+        "amount0": 141.71008921629445,
+        "amount1": 5334067831.8640585,
+        "claimableTorus": 0.20064441887351459,
+        "claimableTitanX": 10818268.929415561,
+        "tokensOwed0": "0",
+        "tokensOwed1": "0",
+        "fee": 10000,
+        "inRange": true,
+        "estimatedAPR": "12.50",
+        "priceRange": "0.00M - Infinity TITANX per TORUS"
+      }
+    ]
+  },
+  "chartData": {
+    "titanXUsageByEndDate": []
+  },
+  "rewardPoolData": [
+    {
+      "day": 6,
+      "rewardPool": 99600.63948820476,
+      "totalShares": 1482144284.2106266,
+      "penaltiesInPool": 0
+    },
+    {
+      "day": 7,
+      "rewardPool": 0,
+      "totalShares": 1482144284.2106266,
+      "penaltiesInPool": 0
+    },
+    {
+      "day": 8,
+      "rewardPool": 0,
+      "totalShares": 1482144284.2106266,
+      "penaltiesInPool": 0
+    },
+    {
+      "day": 9,
+      "rewardPool": 0,
+      "totalShares": 1482144284.2106266,
+      "penaltiesInPool": 0
+    },
+    {
+      "day": 10,
+      "rewardPool": 0,
+      "totalShares": 1482144284.2106266,
+      "penaltiesInPool": 0
+    },
+    {
+      "day": 11,
+      "rewardPool": 0,
+      "totalShares": 1482144284.2106266,
+      "penaltiesInPool": 0
+    },
+    {
+      "day": 12,
+      "rewardPool": 0,
+      "totalShares": 1482144284.2106266,
+      "penaltiesInPool": 0
+    },
+    {
+      "day": 13,
+      "rewardPool": 0,
+      "totalShares": 1482144284.2106266,
+      "penaltiesInPool": 0
+    },
+    {
+      "day": 14,
+      "rewardPool": 0,
+      "totalShares": 1482144284.2106266,
+      "penaltiesInPool": 0
+    },
+    {
+      "day": 15,
+      "rewardPool": 0,
+      "totalShares": 1482144284.2106266,
+      "penaltiesInPool": 0
+    },
+    {
+      "day": 16,
+      "rewardPool": 0,
+      "totalShares": 1482142366.59699,
+      "penaltiesInPool": 0
+    },
+    {
+      "day": 17,
+      "rewardPool": 0,
+      "totalShares": 1482115407.9606266,
+      "penaltiesInPool": 0
+    },
+    {
+      "day": 18,
+      "rewardPool": 0,
+      "totalShares": 1482052933.187899,
+      "penaltiesInPool": 0
+    },
+    {
+      "day": 19,
+      "rewardPool": 0,
+      "totalShares": 1482022170.006081,
+      "penaltiesInPool": 0
+    },
+    {
+      "day": 20,
+      "rewardPool": 0,
+      "totalShares": 1482000174.4174447,
+      "penaltiesInPool": 0
+    },
+    {
+      "day": 21,
+      "rewardPool": 0,
+      "totalShares": 1481943418.781081,
+      "penaltiesInPool": 0
+    },
+    {
+      "day": 22,
+      "rewardPool": 0,
+      "totalShares": 1481886841.690172,
+      "penaltiesInPool": 0
+    },
+    {
+      "day": 23,
+      "rewardPool": 0,
+      "totalShares": 1481818895.9719777,
+      "penaltiesInPool": 0
+    },
+    {
+      "day": 24,
+      "rewardPool": 0,
+      "totalShares": 1481759202.763388,
+      "penaltiesInPool": 0
+    },
+    {
+      "day": 25,
+      "rewardPool": 0,
+      "totalShares": 1481703492.763388,
+      "penaltiesInPool": 0
+    },
+    {
+      "day": 26,
+      "rewardPool": 0,
+      "totalShares": 1481665638.1949172,
+      "penaltiesInPool": 0
+    },
+    {
+      "day": 27,
+      "rewardPool": 0,
+      "totalShares": 1481218808.6565807,
+      "penaltiesInPool": 0
+    },
+    {
+      "day": 28,
+      "rewardPool": 0,
+      "totalShares": 1480961338.2020352,
+      "penaltiesInPool": 0
+    },
+    {
+      "day": 29,
+      "rewardPool": 0,
+      "totalShares": 1480604678.802035,
+      "penaltiesInPool": 0
+    },
+    {
+      "day": 30,
+      "rewardPool": 0,
+      "totalShares": 1480558399.2512894,
+      "penaltiesInPool": 0
+    },
+    {
+      "day": 31,
+      "rewardPool": 0,
+      "totalShares": 1480091138.4108815,
+      "penaltiesInPool": 0
+    },
+    {
+      "day": 32,
+      "rewardPool": 0,
+      "totalShares": 1479962086.6543152,
+      "penaltiesInPool": 0
+    },
+    {
+      "day": 33,
+      "rewardPool": 0,
+      "totalShares": 1479776599.4313993,
+      "penaltiesInPool": 0
+    },
+    {
+      "day": 34,
+      "rewardPool": 0,
+      "totalShares": 1479265163.710106,
+      "penaltiesInPool": 0
+    },
+    {
+      "day": 35,
+      "rewardPool": 0,
+      "totalShares": 1478734277.7667415,
+      "penaltiesInPool": 0
+    },
+    {
+      "day": 36,
+      "rewardPool": 0,
+      "totalShares": 1478565692.5828962,
+      "penaltiesInPool": 0
+    },
+    {
+      "day": 37,
+      "rewardPool": 0,
+      "totalShares": 1478510374.3755944,
+      "penaltiesInPool": 0
+    },
+    {
+      "day": 38,
+      "rewardPool": 0,
+      "totalShares": 1478175191.3561342,
+      "penaltiesInPool": 0
+    },
+    {
+      "day": 39,
+      "rewardPool": 0,
+      "totalShares": 1478060332.5539277,
+      "penaltiesInPool": 0
+    },
+    {
+      "day": 40,
+      "rewardPool": 0,
+      "totalShares": 1477961356.882607,
+      "penaltiesInPool": 0
+    },
+    {
+      "day": 41,
+      "rewardPool": 0,
+      "totalShares": 1477804343.4807827,
+      "penaltiesInPool": 0
+    },
+    {
+      "day": 42,
+      "rewardPool": 0,
+      "totalShares": 1477182501.5536225,
+      "penaltiesInPool": 0
+    },
+    {
+      "day": 43,
+      "rewardPool": 0,
+      "totalShares": 1476491849.6367102,
+      "penaltiesInPool": 0
+    },
+    {
+      "day": 44,
+      "rewardPool": 0,
+      "totalShares": 1476430326.5246868,
+      "penaltiesInPool": 0
+    },
+    {
+      "day": 45,
+      "rewardPool": 0,
+      "totalShares": 1475512551.0098145,
+      "penaltiesInPool": 0
+    },
+    {
+      "day": 46,
+      "rewardPool": 0,
+      "totalShares": 1474935623.299091,
+      "penaltiesInPool": 0
+    },
+    {
+      "day": 47,
+      "rewardPool": 0,
+      "totalShares": 1469613146.2829778,
+      "penaltiesInPool": 0
+    },
+    {
+      "day": 48,
+      "rewardPool": 0,
+      "totalShares": 1467710450.1753888,
+      "penaltiesInPool": 0
+    },
+    {
+      "day": 49,
+      "rewardPool": 0,
+      "totalShares": 1466519644.0119915,
+      "penaltiesInPool": 0
+    },
+    {
+      "day": 50,
+      "rewardPool": 0,
+      "totalShares": 1466355524.4506943,
+      "penaltiesInPool": 0
+    },
+    {
+      "day": 51,
+      "rewardPool": 0,
+      "totalShares": 1464152817.6099398,
+      "penaltiesInPool": 0
+    },
+    {
+      "day": 52,
+      "rewardPool": 0,
+      "totalShares": 1462662446.547744,
+      "penaltiesInPool": 0
+    },
+    {
+      "day": 53,
+      "rewardPool": 0,
+      "totalShares": 1462374431.5782592,
+      "penaltiesInPool": 0
+    },
+    {
+      "day": 54,
+      "rewardPool": 0,
+      "totalShares": 1461414282.3259327,
+      "penaltiesInPool": 0
+    },
+    {
+      "day": 55,
+      "rewardPool": 0,
+      "totalShares": 1459617144.5089521,
+      "penaltiesInPool": 0
+    },
+    {
+      "day": 56,
+      "rewardPool": 0,
+      "totalShares": 1456587737.189097,
+      "penaltiesInPool": 0
+    },
+    {
+      "day": 57,
+      "rewardPool": 0,
+      "totalShares": 1455840047.9038208,
+      "penaltiesInPool": 0
+    },
+    {
+      "day": 58,
+      "rewardPool": 0,
+      "totalShares": 1453843429.7528658,
+      "penaltiesInPool": 0
+    },
+    {
+      "day": 59,
+      "rewardPool": 0,
+      "totalShares": 1453488845.4457827,
+      "penaltiesInPool": 0
+    },
+    {
+      "day": 60,
+      "rewardPool": 0,
+      "totalShares": 1448728281.3699048,
+      "penaltiesInPool": 0
+    },
+    {
+      "day": 61,
+      "rewardPool": 0,
+      "totalShares": 1442220385.3899772,
+      "penaltiesInPool": 0
+    },
+    {
+      "day": 62,
+      "rewardPool": 0,
+      "totalShares": 1441438506.192803,
+      "penaltiesInPool": 0
+    },
+    {
+      "day": 63,
+      "rewardPool": 0,
+      "totalShares": 1440333620.459136,
+      "penaltiesInPool": 0
+    },
+    {
+      "day": 64,
+      "rewardPool": 0,
+      "totalShares": 1439639382.6783316,
+      "penaltiesInPool": 0
+    },
+    {
+      "day": 65,
+      "rewardPool": 0,
+      "totalShares": 1434515415.2644758,
+      "penaltiesInPool": 0
+    },
+    {
+      "day": 66,
+      "rewardPool": 0,
+      "totalShares": 1434200019.5585165,
+      "penaltiesInPool": 0
+    },
+    {
+      "day": 67,
+      "rewardPool": 0,
+      "totalShares": 1433415612.8585165,
+      "penaltiesInPool": 0
+    },
+    {
+      "day": 68,
+      "rewardPool": 0,
+      "totalShares": 1432319296.1112185,
+      "penaltiesInPool": 0
+    },
+    {
+      "day": 69,
+      "rewardPool": 0,
+      "totalShares": 1425227276.6973143,
+      "penaltiesInPool": 0
+    },
+    {
+      "day": 70,
+      "rewardPool": 0,
+      "totalShares": 1423369339.9359424,
+      "penaltiesInPool": 0
+    },
+    {
+      "day": 71,
+      "rewardPool": 0,
+      "totalShares": 1422517902.538026,
+      "penaltiesInPool": 0
+    },
+    {
+      "day": 72,
+      "rewardPool": 0,
+      "totalShares": 1422192155.699347,
+      "penaltiesInPool": 0
+    },
+    {
+      "day": 73,
+      "rewardPool": 0,
+      "totalShares": 1419936487.6226122,
+      "penaltiesInPool": 0
+    },
+    {
+      "day": 74,
+      "rewardPool": 0,
+      "totalShares": 1414314870.9223478,
+      "penaltiesInPool": 0
+    },
+    {
+      "day": 75,
+      "rewardPool": 0,
+      "totalShares": 1405183822.2840188,
+      "penaltiesInPool": 0
+    },
+    {
+      "day": 76,
+      "rewardPool": 0,
+      "totalShares": 1365895692.220538,
+      "penaltiesInPool": 0
+    },
+    {
+      "day": 77,
+      "rewardPool": 0,
+      "totalShares": 1353667769.1018023,
+      "penaltiesInPool": 0
+    },
+    {
+      "day": 78,
+      "rewardPool": 0,
+      "totalShares": 1329871397.8080795,
+      "penaltiesInPool": 0
+    },
+    {
+      "day": 79,
+      "rewardPool": 0,
+      "totalShares": 1315993097.6282344,
+      "penaltiesInPool": 0
+    },
+    {
+      "day": 80,
+      "rewardPool": 0,
+      "totalShares": 1295805595.5665133,
+      "penaltiesInPool": 0
+    },
+    {
+      "day": 81,
+      "rewardPool": 0,
+      "totalShares": 1275772589.115191,
+      "penaltiesInPool": 0
+    },
+    {
+      "day": 82,
+      "rewardPool": 0,
+      "totalShares": 1262212093.119763,
+      "penaltiesInPool": 0
+    },
+    {
+      "day": 83,
+      "rewardPool": 0,
+      "totalShares": 1232910719.9436102,
+      "penaltiesInPool": 0
+    },
+    {
+      "day": 84,
+      "rewardPool": 0,
+      "totalShares": 1210119012.6164734,
+      "penaltiesInPool": 0
+    },
+    {
+      "day": 85,
+      "rewardPool": 0,
+      "totalShares": 1183802278.8023713,
+      "penaltiesInPool": 0
+    },
+    {
+      "day": 86,
+      "rewardPool": 0,
+      "totalShares": 1149787977.9702334,
+      "penaltiesInPool": 0
+    },
+    {
+      "day": 87,
+      "rewardPool": 0,
+      "totalShares": 1073573295.0944113,
+      "penaltiesInPool": 0
+    },
+    {
+      "day": 88,
+      "rewardPool": 0,
+      "totalShares": 1036082741.2439793,
+      "penaltiesInPool": 0
+    },
+    {
+      "day": 89,
+      "rewardPool": 0,
+      "totalShares": 529289072.27417386,
+      "penaltiesInPool": 0
+    },
+    {
+      "day": 90,
+      "rewardPool": 0,
+      "totalShares": 329523974.17220795,
+      "penaltiesInPool": 0
+    },
+    {
+      "day": 91,
+      "rewardPool": 0,
+      "totalShares": 240739420.2538564,
+      "penaltiesInPool": 0
+    },
+    {
+      "day": 92,
+      "rewardPool": 0,
+      "totalShares": 128225951.28648202,
+      "penaltiesInPool": 0
+    },
+    {
+      "day": 93,
+      "rewardPool": 0,
+      "totalShares": 57775324.43593838,
+      "penaltiesInPool": 0
+    },
+    {
+      "day": 94,
+      "rewardPool": 0,
+      "totalShares": 0,
+      "penaltiesInPool": 0
+    }
+  ]
+}
