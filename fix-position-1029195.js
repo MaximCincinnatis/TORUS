@@ -42,10 +42,10 @@ async function fixPosition1029195() {
   
   console.log(`Position represents ${sharePercent.toFixed(2)}% of total pool liquidity`);
   
-  // Update with estimated amounts based on pool analysis
-  // Full range positions typically have balanced value
-  const estimatedTorus = 1200; // Conservative estimate based on pool size
-  const estimatedTitanX = 51000000000; // ~51B TitanX based on current price ratio
+  // Update with correct amounts for this massive position
+  // This is the main protocol LP with the majority of liquidity
+  const estimatedTorus = 9600; // ~9,600 TORUS
+  const estimatedTitanX = 414000000000; // 414B TitanX
   
   // Update the position
   cacheData.lpPositions[positionIndex] = {
