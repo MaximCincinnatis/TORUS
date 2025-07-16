@@ -18,6 +18,7 @@ CONTRACT_START_DATE.setHours(0, 0, 0, 0);
 
 // Build info for debugging Vercel deployments
 console.log('Build timestamp:', new Date().toISOString());
+console.log('Deployment trigger:', '2025-07-16T18:55:00Z');
 
 function App() {
   const [loading, setLoading] = useState(true);
