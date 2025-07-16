@@ -421,6 +421,26 @@ function App() {
     console.log(`  - Creates: ${createData.length}`);
     console.log(`  - Stakes: ${stakeData.length}`);
     
+    // Debug: Check maturity date distribution
+    const maturityDistribution: { [key: string]: number } = {};
+    allPositions.forEach(position => {
+      const maturityDate = position.maturityDate instanceof Date ? position.maturityDate : new Date(position.maturityDate);
+      if (maturityDate > today) {
+        const dateKey = maturityDate.toISOString().split('T')[0];
+        maturityDistribution[dateKey] = (maturityDistribution[dateKey] || 0) + 1;
+      }
+    });
+    
+    const futureMaturityDates = Object.keys(maturityDistribution).sort();
+    console.log(`Positions mature across ${futureMaturityDates.length} different future dates`);
+    console.log(`First maturity: ${futureMaturityDates[0]}`);
+    console.log(`Last maturity: ${futureMaturityDates[futureMaturityDates.length - 1]}`);
+    
+    // Check how many positions mature in September vs October
+    const septemberMaturities = futureMaturityDates.filter(d => d.includes('2025-09')).length;
+    const octoberMaturities = futureMaturityDates.filter(d => d.includes('2025-10')).length;
+    console.log(`September maturity dates: ${septemberMaturities}, October: ${octoberMaturities}`);
+    
     // For each day in our range
     for (let i = 0; i < 88; i++) {
       const date = new Date(today);
@@ -511,12 +531,21 @@ function App() {
     const sortedByRewards = Object.entries(releases)
       .filter(([_, data]) => data.rewards > 0)
       .sort((a, b) => b[1].rewards - a[1].rewards)
-      .slice(0, 5);
+      .slice(0, 10); // Show top 10 to see the pattern
     
-    console.log('\nTop 5 days by rewards:');
+    console.log('\n⚠️ TOP 10 DAYS BY REWARDS (POTENTIAL CHART OVERFLOW ISSUE):');
     sortedByRewards.forEach(([date, data], i) => {
       console.log(`  ${i+1}. ${date}: Principal=${data.principal.toFixed(2)}, Rewards=${data.rewards.toFixed(2)}, Total=${data.total.toFixed(2)}`);
     });
+    
+    // Check for extremely high values that could break chart
+    const highValueDays = Object.entries(releases).filter(([_, data]) => data.total > 50000);
+    if (highValueDays.length > 0) {
+      console.log('\n🚨 EXTREMELY HIGH VALUE DAYS (>50K TORUS):');
+      highValueDays.forEach(([date, data]) => {
+        console.log(`  ${date}: Total=${data.total.toFixed(2)} TORUS (P=${data.principal.toFixed(2)}, R=${data.rewards.toFixed(2)})`);
+      });
+    }
     
     console.log('\nSample release data with rewards:', Object.entries(releases).slice(0, 3).map(([date, data]) => ({
       date,
@@ -525,12 +554,29 @@ function App() {
       total: data.total.toFixed(2)
     })));
     
-    return Object.entries(releases).map(([date, data]) => ({
+    // Debug: Check for significant releases after September 12
+    const allReleaseDays = Object.entries(releases).map(([date, data]) => ({
       date,
       principal: data.principal,
       rewards: data.rewards,
-      total: data.total,
+      total: data.total
     }));
+    
+    const lateReleases = allReleaseDays.filter(day => {
+      const date = new Date(day.date);
+      return date >= new Date('2025-09-12') && day.total > 0;
+    });
+    
+    console.log(`\n%c=== RELEASES AFTER SEPT 12 (${lateReleases.length} days with releases) ===`, 'background: #f59e0b; color: white; font-weight: bold; padding: 8px');
+    lateReleases.slice(0, 15).forEach(day => {
+      console.log(`${day.date}: ${day.total.toFixed(2)} TORUS total (${day.principal.toFixed(2)} principal + ${day.rewards.toFixed(2)} rewards)`);
+    });
+    
+    const totalLateReleases = lateReleases.reduce((sum, day) => sum + day.total, 0);
+    console.log(`Total releases from Sept 12 onward: ${totalLateReleases.toFixed(2)} TORUS`);
+    console.log('=== END LATE RELEASES DEBUG ===\n');
+    
+    return allReleaseDays;
   };
 
   const calculateTitanXUsage = () => {
@@ -659,18 +705,33 @@ function App() {
   });
   const torusReleasesWithRewards = loading || (stakeData.length === 0 && createData.length === 0) || rewardPoolData.length === 0 ? [] : calculateTorusReleasesWithRewards();
   
-  // Calculate future supply projection
+  // Calculate future supply projection - SIMPLIFIED to match bar chart data exactly
   const calculateSupplyProjection = () => {
-    // Get current total supply (19,668 TORUS as seen in the UI)
-    const currentSupply = 19668; // This is the total TORUS shown in the dashboard
+    console.log('\n%c=== SUPPLY PROJECTION DEBUG ===', 'background: #22c55e; color: white; font-weight: bold; font-size: 16px; padding: 10px');
+    console.log(`Available torusReleasesWithRewards: ${torusReleasesWithRewards.length} entries`);
     
+    // Get current total supply (19,668 TORUS as seen in the UI)
+    const currentSupply = 19668;
     const projection: { date: string; supply: number; released: number }[] = [];
     let cumulativeSupply = currentSupply;
     
-    // For each day in the next 88 days
-    torusReleasesWithRewards.forEach((release, index) => {
-      const dailyRelease = release.total; // principal + rewards
+    // Use the SAME data source as the working bar charts
+    const releaseData = torusReleasesWithRewards.slice(0, 88); // Same as bar charts
+    
+    console.log(`Using ${releaseData.length} release data points`);
+    if (releaseData.length > 0) {
+      console.log(`First release: ${releaseData[0].date} - ${releaseData[0].total} TORUS`);
+      console.log(`Last release: ${releaseData[releaseData.length - 1].date} - ${releaseData[releaseData.length - 1].total} TORUS`);
+    }
+    
+    releaseData.forEach((release, i) => {
+      const dailyRelease = release.total || 0;
       cumulativeSupply += dailyRelease;
+      
+      // Debug significant releases and September dates
+      if (dailyRelease > 100 || release.date.includes('2025-09') || i >= 85) {
+        console.log(`Day ${i+1} (${release.date}): Released=${dailyRelease.toFixed(2)}, Cumulative=${cumulativeSupply.toFixed(2)}`);
+      }
       
       projection.push({
         date: release.date,
@@ -679,10 +740,33 @@ function App() {
       });
     });
     
+    const maxSupply = Math.max(...projection.map(p => p.supply));
+    const maxRelease = Math.max(...projection.map(p => p.released));
+    console.log(`Generated ${projection.length} days of projection`);
+    console.log(`Final cumulative supply: ${projection[projection.length - 1].supply.toLocaleString()}`);
+    console.log(`Maximum daily release: ${maxRelease.toLocaleString()}`);
+    console.log('=== END SUPPLY PROJECTION DEBUG ===\n');
+    
     return projection;
   };
   
-  const supplyProjection = loading || torusReleasesWithRewards.length === 0 ? [] : calculateSupplyProjection();
+  const supplyProjection = loading ? [] : calculateSupplyProjection();
+  
+  // Debug: Log the actual projection array length and last few entries
+  if (!loading && supplyProjection.length > 0) {
+    console.log(`\n%c=== SUPPLY PROJECTION VALIDATION ===`, 'background: #ff6b6b; color: white; font-weight: bold; padding: 8px');
+    console.log(`Total projection entries: ${supplyProjection.length}`);
+    console.log(`Expected: 88 days`);
+    if (supplyProjection.length > 85) {
+      console.log(`Last 3 entries:`);
+      supplyProjection.slice(-3).forEach((entry, i) => {
+        console.log(`  ${85 + i + 1}: ${entry.date} - Supply: ${entry.supply.toFixed(2)}`);
+      });
+    }
+    console.log(`First entry: ${supplyProjection[0].date}`);
+    console.log(`Last entry: ${supplyProjection[supplyProjection.length - 1].date}`);
+    console.log('=== END VALIDATION ===\n');
+  }
   
   // Debug: Log dates with data for both charts
   if (!loading && createData.length > 0) {
@@ -1072,15 +1156,16 @@ function App() {
           <SkeletonChart />
         ) : (
           <LineChart
-            title="Cumulative TORUS Supply Over Next 88 Days"
-            labels={supplyProjection.slice(0, 88).map(p => {
+            key={`supply-projection-chart-${supplyProjection.length}`}
+            title={`Cumulative TORUS Supply Over Next 88 Days (${supplyProjection.length} data points)`}
+            labels={supplyProjection.map(p => {
               const date = new Date(p.date);
               return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
             })}
             datasets={[
               {
                 label: 'Total TORUS Supply',
-                data: supplyProjection.slice(0, 88).map(p => Math.round(p.supply * 100) / 100),
+                data: supplyProjection.map(p => Math.round(p.supply * 100) / 100),
                 borderColor: '#8b5cf6',
                 backgroundColor: 'rgba(139, 92, 246, 0.1)',
                 fill: true,
@@ -1090,11 +1175,15 @@ function App() {
             yAxisLabel="Total TORUS Supply"
             xAxisLabel="Date"
             formatTooltip={(value: number) => `${value.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} TORUS`}
-            formatYAxis={(value: number) => value.toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 })}
+            formatYAxis={(value: number) => {
+              if (value >= 1000000) return `${(value/1000000).toFixed(1)}M`;
+              if (value >= 1000) return `${(value/1000).toFixed(1)}K`;
+              return value.toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
+            }}
           />
         )}
         <div className="chart-note">
-          This projection shows how the total TORUS supply will grow as positions mature and release both principal and accrued rewards. Starting from current supply of 19,668 TORUS, the line tracks cumulative supply increases each day. The growth rate depends on the number and size of positions maturing, including both their original principal and the share rewards they've accumulated throughout their staking period. Note: This projection does not account for potential burn token dynamics.
+          This projection shows how the total TORUS supply will grow as positions mature and release both principal and accrued rewards. Starting from current supply of 19,668 TORUS, the line tracks cumulative supply increases each day. The growth rate depends on the number and size of positions maturing, including both their original principal and the share rewards they've accumulated throughout their staking period. Chart automatically scales to accommodate all values. This projection does not account for potential burn token dynamics.
         </div>
       </div>
 
@@ -1104,6 +1193,7 @@ function App() {
           <SkeletonChart />
         ) : (
           <BarChart
+            key="stakes-maturity-chart"
             title="Number of Stakes Ending Each Day"
             labels={stakeReleases.slice(0, 88).map(r => {
               const date = new Date(r.date);
@@ -1136,6 +1226,7 @@ function App() {
           <SkeletonChart />
         ) : (
           <BarChart
+            key="creates-maturity-chart"
             title="Number of Creates Ending Each Day"
             labels={createReleases.slice(0, 88).map(r => {
               const date = new Date(r.date);
@@ -1163,12 +1254,13 @@ function App() {
       </div>
 
       <div className="chart-section">
-        <h2 className="section-title"><span className="torus-text">TORUS</span> Release Amounts (Next 88 Days)</h2>
+        <h2 className="section-title"><span className="torus-text">TORUS</span> Release Amounts Principal (Next 88 Days)</h2>
         {loading ? (
           <SkeletonChart />
         ) : (
           <BarChart
-            title="Total TORUS Amount Releasing Each Day"
+            key="torus-releases-chart"
+            title="Total TORUS Principal Amount Releasing Each Day"
             labels={torusReleases.slice(0, 88).map(r => {
               const date = new Date(r.date);
               const contractDay = getContractDay(date);
@@ -1195,6 +1287,7 @@ function App() {
           <SkeletonChart />
         ) : (
           <BarChart
+            key="torus-rewards-chart"
             title="TORUS Released Each Day: Principal vs Accrued Share Rewards"
             labels={torusReleasesWithRewards
               .slice(0, 88)
@@ -1247,6 +1340,7 @@ function App() {
           <SkeletonChart />
         ) : (
           <BarChart
+            key="titanx-usage-chart"
             title="Total TitanX Used for Creates Ending Each Day"
             labels={titanXUsage.slice(0, 88).map(r => {
               const date = new Date(r.date);
@@ -1278,6 +1372,7 @@ function App() {
           <SkeletonChart />
         ) : (
           <BarChart
+            key="shares-releases-chart"
             title="Total Shares Ending Each Day"
             labels={sharesReleases.slice(0, 88).map(r => {
               const date = new Date(r.date);

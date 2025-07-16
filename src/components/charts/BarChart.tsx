@@ -81,6 +81,7 @@ const BarChart: React.FC<BarChartProps> = ({
   const baseOptions: ChartOptions<'bar'> = {
     responsive: true,
     maintainAspectRatio: false,
+    backgroundColor: 'transparent',
     layout: {
       padding: {
         top: showDataLabels ? 25 : 10, // Extra space for data labels
@@ -319,7 +320,23 @@ const BarChart: React.FC<BarChartProps> = ({
   // Create gradient function
   const createGradient = (ctx: CanvasRenderingContext2D, color: string) => {
     const gradient = ctx.createLinearGradient(0, 0, 0, height);
-    if (color === '#8b5cf6' || color === '#4f46e5') {
+    
+    // Handle rgba colors (new transparent format)
+    if (color.startsWith('rgba(')) {
+      // Extract rgb values and create gradient with varying alpha
+      const rgbaMatch = color.match(/rgba\((\d+),\s*(\d+),\s*(\d+),\s*([\d.]+)\)/);
+      if (rgbaMatch) {
+        const [, r, g, b, a] = rgbaMatch;
+        const alpha = parseFloat(a);
+        gradient.addColorStop(0, `rgba(${r}, ${g}, ${b}, ${Math.min(alpha + 0.2, 1)})`);
+        gradient.addColorStop(0.5, `rgba(${r}, ${g}, ${b}, ${alpha})`);
+        gradient.addColorStop(1, `rgba(${r}, ${g}, ${b}, ${Math.max(alpha - 0.1, 0.1)})`);
+      } else {
+        // Fallback if parsing fails
+        gradient.addColorStop(0, color);
+        gradient.addColorStop(1, color);
+      }
+    } else if (color === '#8b5cf6' || color === '#4f46e5') {
       // Purple gradient for TORUS
       gradient.addColorStop(0, '#a855f7');
       gradient.addColorStop(0.5, '#8b5cf6');
@@ -335,7 +352,7 @@ const BarChart: React.FC<BarChartProps> = ({
       gradient.addColorStop(0.5, '#22c55e');
       gradient.addColorStop(1, '#16a34a');
     } else {
-      // Default gradient
+      // Default gradient for hex colors
       gradient.addColorStop(0, color);
       gradient.addColorStop(1, color + '99');
     }
@@ -367,7 +384,7 @@ const BarChart: React.FC<BarChartProps> = ({
   const plugins = showDataLabels ? [ChartDataLabels] : [];
 
   return (
-    <div style={{ position: 'relative', background: '#1a1a1a', padding: '20px', borderRadius: '8px', border: '1px solid #333' }}>
+    <div style={{ position: 'relative', background: 'transparent', padding: '20px', borderRadius: '8px', border: '1px solid #333' }}>
       {shouldShowToggle && (
         <div style={{ 
           position: 'absolute', 

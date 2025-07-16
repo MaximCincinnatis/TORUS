@@ -57,6 +57,7 @@ const LineChart: React.FC<LineChartProps> = ({
   const options: ChartOptions<'line'> = {
     responsive: true,
     maintainAspectRatio: false,
+    backgroundColor: 'transparent',
     interaction: {
       mode: 'index' as const,
       intersect: false,
@@ -122,6 +123,8 @@ const LineChart: React.FC<LineChartProps> = ({
       },
       y: {
         display: true,
+        beginAtZero: false,
+        grace: '10%',
         title: {
           display: !!yAxisLabel,
           text: yAxisLabel,

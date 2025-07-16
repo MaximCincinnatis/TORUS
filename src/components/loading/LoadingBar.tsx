@@ -29,8 +29,17 @@ const LoadingBar: React.FC<LoadingBarProps> = ({ progress, message, details }) =
     <div className="loading-bar-container">
       <div className="loading-content">
         <div className="loading-header">
-          <h1 className="loading-title"><span className="torus-text">TORUS</span> Dashboard</h1>
-          <div className="loading-subtitle">Analytics & Insights</div>
+          <div className="loading-logo-container">
+            <img 
+              src="https://www.torus.win/torus.svg" 
+              alt="TORUS Logo" 
+              className="loading-torus-logo"
+            />
+            <div className="loading-title-wrapper">
+              <h1 className="loading-title"><span className="torus-text">TORUS</span> Dashboard</h1>
+              <div className="loading-subtitle">Analytics & Insights</div>
+            </div>
+          </div>
         </div>
         
         <div className="loading-bar-wrapper">
