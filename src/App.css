@@ -446,30 +446,7 @@ html {
   font-size: 14px;
 }
 
-.refresh-button {
-  background: linear-gradient(135deg, #8b5cf6 0%, #22c55e 100%);
-  color: white;
-  border: none;
-  padding: 12px 24px;
-  border-radius: 12px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  text-transform: uppercase;
-  letter-spacing: 1px;
-  font-size: 14px;
-}
-
-.refresh-button:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 10px 30px rgba(139, 92, 246, 0.3);
-}
-
-.refresh-button:disabled {
-  opacity: 0.5;
-  cursor: not-allowed;
-  transform: none;
-}
+/* Refresh buttons removed - using backend auto-updates every 30 minutes */
 
 /* Error state */
 .error-container {

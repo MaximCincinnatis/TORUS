@@ -1,5 +1,58 @@
 import { SimpleLPPosition } from './uniswapV3RealOwners';
 import { PoolHistoricalData } from './enhancedAPRCalculation';
+import { getIncrementalUpdates, mergeIncrementalUpdates, shouldUpdateIncrementally } from './incrementalUpdater';
+import { ethers } from 'ethers';
+import { RpcRateLimit } from './rpcRateLimit';
+
+// Working RPC endpoints (tested and confirmed working)
+const WORKING_RPC_ENDPOINTS = [
+  'https://eth.drpc.org',
+  'https://rpc.payload.de',
+  'https://eth-mainnet.public.blastapi.io',
+  'https://rpc.flashbots.net',
+  'https://eth-mainnet.nodereal.io/v1/REDACTED_API_KEY'
+];
+
+let currentRpcIndex = 0;
+
+async function getWorkingProviderWithRotation(): Promise<ethers.providers.JsonRpcProvider> {
+  const maxRetries = WORKING_RPC_ENDPOINTS.length;
+  
+  for (let i = 0; i < maxRetries; i++) {
+    const rpcUrl = WORKING_RPC_ENDPOINTS[currentRpcIndex];
+    
+    try {
+      console.log(`🔄 Trying RPC provider: ${rpcUrl}`);
+      const provider = new ethers.providers.JsonRpcProvider(rpcUrl);
+      
+      // Quick test with timeout to avoid 429 errors
+      const timeoutPromise = new Promise<never>((_, reject) => {
+        setTimeout(() => reject(new Error('Timeout')), 3000);
+      });
+      
+      await RpcRateLimit.execute(async () => {
+        return Promise.race([
+          provider.getBlockNumber(),
+          timeoutPromise
+        ]);
+      }, `Cache loader RPC test for ${rpcUrl}`);
+      
+      console.log(`✅ Connected to RPC provider: ${rpcUrl}`);
+      return provider;
+      
+    } catch (error) {
+      console.log(`❌ RPC provider ${rpcUrl} failed:`, error instanceof Error ? error.message : 'Unknown error');
+      
+      // Auto-rotate to next provider
+      currentRpcIndex = (currentRpcIndex + 1) % WORKING_RPC_ENDPOINTS.length;
+      
+      // Add delay before trying next provider to avoid rapid requests
+      await new Promise(resolve => setTimeout(resolve, 1000));
+    }
+  }
+  
+  throw new Error('All RPC providers failed');
+}
 
 export interface CachedData {
   lastUpdated: string;
@@ -220,11 +273,11 @@ export async function getPoolDataWithCache(
 }
 
 /**
- * Get main dashboard data from cache or fallback to RPC
+ * Get main dashboard data from cache with incremental updates
  */
 export async function getMainDashboardDataWithCache(
   fallbackFunction: () => Promise<any>
-): Promise<{ data: any; source: 'cache' | 'rpc' }> {
+): Promise<{ data: any; source: 'cache' | 'cache+incremental' | 'rpc' }> {
   const cachedData = await loadCachedData();
   
   if (cachedData && cachedData.stakingData) {
@@ -238,13 +291,37 @@ export async function getMainDashboardDataWithCache(
       burnedSupply: cachedData.stakingData.burnedSupply
     });
     
+    // Check if incremental updates are available
+    let finalData = cachedData;
+    let source: 'cache' | 'cache+incremental' = 'cache';
+    
+    try {
+      // Try to get incremental updates using working RPC providers with auto-rotation
+      const provider = await getWorkingProviderWithRotation();
+      
+      const shouldUpdate = await shouldUpdateIncrementally(cachedData, provider);
+      
+      if (shouldUpdate) {
+        console.log('🔄 Getting incremental updates...');
+        const updates = await getIncrementalUpdates(cachedData, provider);
+        
+        if (updates.updated) {
+          finalData = mergeIncrementalUpdates(cachedData, updates);
+          source = 'cache+incremental';
+          console.log('✅ Applied incremental updates');
+        }
+      }
+    } catch (error) {
+      console.warn('⚠️ Could not get incremental updates, using cached data:', error instanceof Error ? error.message : 'Unknown error');
+    }
+    
     // Convert string dates back to Date objects for cached data
-    const stakeEvents = (cachedData.stakingData.stakeEvents || []).map((event: any) => ({
+    const stakeEvents = (finalData.stakingData.stakeEvents || []).map((event: any) => ({
       ...event,
       maturityDate: new Date(event.maturityDate)
     }));
     
-    const createEvents = (cachedData.stakingData.createEvents || []).map((event: any) => ({
+    const createEvents = (finalData.stakingData.createEvents || []).map((event: any) => ({
       ...event,
       maturityDate: new Date(event.maturityDate)
     }));
@@ -260,13 +337,13 @@ export async function getMainDashboardDataWithCache(
       data: {
         stakeEvents,
         createEvents,
-        rewardPoolData: cachedData.stakingData.rewardPoolData || [],
-        currentProtocolDay: cachedData.stakingData.currentProtocolDay || 0,
-        totalSupply: cachedData.stakingData.totalSupply || 0,
-        burnedSupply: cachedData.stakingData.burnedSupply || 0,
-        totals: cachedData.totals
+        rewardPoolData: finalData.stakingData.rewardPoolData || [],
+        currentProtocolDay: finalData.stakingData.currentProtocolDay || 0,
+        totalSupply: finalData.stakingData.totalSupply || 0,
+        burnedSupply: finalData.stakingData.burnedSupply || 0,
+        totals: finalData.totals
       },
-      source: 'cache'
+      source
     };
   }
   

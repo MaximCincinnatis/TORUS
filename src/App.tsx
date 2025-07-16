@@ -6,15 +6,14 @@ import LoadingBar from './components/loading/LoadingBar';
 import SkeletonCard from './components/loading/SkeletonCard';
 import SkeletonChart from './components/loading/SkeletonChart';
 import LPPositionsTable from './components/lp/LPPositionsTable';
-import { TotalsDisplay } from './components/TotalsDisplay';
-import { fetchStakeEvents, fetchCreateEvents, getContractInfo, fetchRewardPoolData, getCurrentProtocolDay, RewardPoolData, getTorusSupplyData } from './utils/ethersWeb3';
-import { fetchLPPositionsFromEvents, getTokenInfo, SimpleLPPosition } from './utils/uniswapV3RealOwners';
+import { getContractInfo, RewardPoolData } from './utils/ethersWeb3';
+import { getTokenInfo, SimpleLPPosition } from './utils/uniswapV3RealOwners';
 import { DataCache } from './utils/cache';
 import { getMainDashboardDataWithCache, getLPPositionsWithCache } from './utils/cacheDataLoader';
 import './App.css';
 
-// Contract launch date - Day 1
-const CONTRACT_START_DATE = new Date('2025-07-10');
+// Contract launch date - Day 1 (corrected to align with protocol days)
+const CONTRACT_START_DATE = new Date('2025-07-11');
 CONTRACT_START_DATE.setHours(0, 0, 0, 0);
 
 function App() {
@@ -31,10 +30,10 @@ function App() {
   const [lpPositions, setLpPositions] = useState<SimpleLPPosition[]>([]);
   const [lpTokenInfo, setLpTokenInfo] = useState<any>(null);
   const [lpLoading, setLpLoading] = useState(false);
-  const [totals, setTotals] = useState<any>(null);
 
   useEffect(() => {
     loadData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const loadLPPositions = async () => {
@@ -42,9 +41,9 @@ function App() {
     try {
       console.log('🔍 Starting LP positions fetch with cache...');
       
-      // Use cache-first approach for LP positions
+      // Only use cached LP positions - backend handles updates
       const [lpResult, tokenInfo] = await Promise.all([
-        getLPPositionsWithCache(() => fetchLPPositionsFromEvents()),
+        getLPPositionsWithCache(() => Promise.resolve([])),
         getTokenInfo()
       ]);
       
@@ -65,17 +64,12 @@ function App() {
   };
 
   const loadData = async (forceFullRefresh: boolean = false) => {
-    console.log('🔄 LOADDATA CALLED - forceFullRefresh:', forceFullRefresh);
+    console.log('🔄 LOADDATA CALLED - Loading from cached JSON only');
     setLoading(true);
     setLoadingProgress(0);
     
-    if (forceFullRefresh) {
-      console.log('🗑️ Clearing all cache data...');
-      setLoadingMessage('Clearing cache and fetching full blockchain history...');
-      DataCache.clearAllData();
-    } else {
-      setLoadingMessage('Connecting to Ethereum network...');
-    }
+    // Always load from cache only - no more RPC calls
+    setLoadingMessage('Loading dashboard data...');
     
     try {
       console.log('📡 Starting data fetch...');
@@ -97,22 +91,17 @@ function App() {
       
       console.log('📊 About to fetch dashboard data with cache...');
       
-      // Use cache-first approach for all main dashboard data
+      // Only use cached data - backend handles all updates
       const dashboardResult = await getMainDashboardDataWithCache(async () => {
-        console.log('🔄 Cache miss - fetching from blockchain...');
-        const stakes = await fetchStakeEvents(forceFullRefresh);
-        const creates = await fetchCreateEvents(forceFullRefresh);
-        const protocolDay = await getCurrentProtocolDay();
-        const poolData = await fetchRewardPoolData(protocolDay, protocolDay + 88);
-        const supplyData = await getTorusSupplyData();
-        
+        console.log('⚠️ Cache miss - this should not happen with backend updates');
+        // Return empty data if cache miss (shouldn't happen)
         return {
-          stakeEvents: stakes,
-          createEvents: creates,
-          rewardPoolData: poolData,
-          currentProtocolDay: protocolDay,
-          totalSupply: supplyData.totalSupply,
-          burnedSupply: supplyData.burnedSupply || 0
+          stakeEvents: [],
+          createEvents: [],
+          rewardPoolData: [],
+          currentProtocolDay: 0,
+          totalSupply: 0,
+          burnedSupply: 0
         };
       });
       
@@ -134,7 +123,6 @@ function App() {
       setCurrentProtocolDay(dashboardResult.data.currentProtocolDay || 0);
       setTotalSupply(dashboardResult.data.totalSupply || 0);
       setBurnedSupply(dashboardResult.data.burnedSupply || 0);
-      setTotals(dashboardResult.data.totals || null);
       
       setLoadingProgress(55);
       setLoadingDetails(prev => [...prev, `Total supply: ${dashboardResult.data.totalSupply?.toLocaleString() || 0} TORUS`]);
@@ -841,6 +829,17 @@ function App() {
   const percentStaked = totalSupply > 0 ? (totalStaked / totalSupply) * 100 : 0;
   const percentBurned = totalSupply > 0 ? (burnedSupply / totalSupply) * 100 : 0;
   
+  // Calculate ETH and TitanX totals for overall metrics
+  const stakesWithETH = stakeData.filter(stake => stake.rawCostETH && stake.rawCostETH !== "0");
+  const createsWithETH = createData.filter(create => create.rawCostETH && create.rawCostETH !== "0");
+  const totalETHFromStakes = stakesWithETH.reduce((sum, stake) => sum + parseFloat(stake.rawCostETH) / 1e18, 0);
+  const totalETHFromCreates = createsWithETH.reduce((sum, create) => sum + parseFloat(create.rawCostETH) / 1e18, 0);
+  const totalETHInput = totalETHFromStakes + totalETHFromCreates;
+  
+  const stakesWithTitanX = stakeData.filter(stake => stake.rawCostTitanX && stake.rawCostTitanX !== "0");
+  const totalTitanXFromStakes = stakesWithTitanX.reduce((sum, stake) => sum + parseFloat(stake.rawCostTitanX) / 1e18, 0);
+  const totalTitanXInput = totalTitanXFromStakes + totalTitanXUsed;
+  
   console.log('Supply metrics:', { totalSupply, totalStaked, totalTorusLocked, burnedSupply, percentStaked, percentBurned });
   
   console.log(`Total active shares: ${totalShares}`);
@@ -898,8 +897,6 @@ function App() {
         </div>
       </div>
 
-      {/* ETH/TitanX Totals Display */}
-      <TotalsDisplay totals={totals} loading={loading} />
 
       {/* Supply Metrics */}
       <div className="supply-metrics">
@@ -983,11 +980,6 @@ function App() {
                 value={activeCreates.toLocaleString()}
               />
               <MetricCard
-                title={<><img src="https://coin-images.coingecko.com/coins/images/32762/large/TitanXpng_%281%29.png?1704456654" alt="TitanX" style={{ width: '16px', height: '16px', marginRight: '6px', verticalAlign: 'middle', opacity: 0.8 }} />Total TitanX Used</>}
-                value={totalTitanXUsed.toLocaleString('en-US', { maximumFractionDigits: 0 })}
-                suffix="TITANX"
-              />
-              <MetricCard
                 title={<><img src="https://coin-images.coingecko.com/coins/images/32762/large/TitanXpng_%281%29.png?1704456654" alt="TitanX" style={{ width: '16px', height: '16px', marginRight: '6px', verticalAlign: 'middle', opacity: 0.8 }} />Avg TitanX per Create</>}
                 value={avgTitanXPerCreate.toLocaleString('en-US', { maximumFractionDigits: 2 })}
                 suffix="TITANX"
@@ -1003,6 +995,8 @@ function App() {
         <div className="metrics-grid">
           {loading ? (
             <>
+              <SkeletonCard />
+              <SkeletonCard />
               <SkeletonCard />
               <SkeletonCard />
             </>
@@ -1024,6 +1018,16 @@ function App() {
                   totalShares.toLocaleString('en-US', { maximumFractionDigits: 0 })
                 }
                 suffix={totalShares > 1e6 ? "" : "SHARES"}
+              />
+              <MetricCard
+                title="Total ETH Input"
+                value={totalETHInput.toFixed(2)}
+                suffix="ETH"
+              />
+              <MetricCard
+                title={<><img src="https://coin-images.coingecko.com/coins/images/32762/large/TitanXpng_%281%29.png?1704456654" alt="TitanX" style={{ width: '16px', height: '16px', marginRight: '6px', verticalAlign: 'middle', opacity: 0.8 }} />Total TitanX Used</>}
+                value={totalTitanXInput.toLocaleString('en-US', { maximumFractionDigits: 0 })}
+                suffix="TITANX"
               />
             </>
           )}
@@ -1291,59 +1295,10 @@ function App() {
             </p>
           )}
         </div>
-        <div style={{ display: 'flex', gap: '12px' }}>
-          <button 
-            onClick={() => loadData(false)} 
-            className="refresh-button"
-            disabled={loading}
-            title="Update with new data only (incremental)"
-          >
-            <svg 
-              width="16" 
-              height="16" 
-              viewBox="0 0 24 24" 
-              fill="none" 
-              stroke="currentColor" 
-              strokeWidth="2" 
-              strokeLinecap="round" 
-              strokeLinejoin="round"
-              style={{ marginRight: '8px' }}
-            >
-              <path d="M21 12a9 9 0 0 0-9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
-              <path d="M3 3v5h5"/>
-              <path d="M3 12a9 9 0 0 0 9 9 9.75 9.75 0 0 0 6.74-2.74L21 16"/>
-              <path d="M21 21v-5h-5"/>
-            </svg>
-            {loading ? 'Updating...' : 'Update Data'}
-          </button>
-          
-          <button 
-            onClick={() => loadData(true)} 
-            className="refresh-button"
-            disabled={loading}
-            title="Pull complete blockchain history (full refresh)"
-            style={{ 
-              background: 'linear-gradient(135deg, #dc2626 0%, #7c2d12 100%)',
-              opacity: loading ? 0.5 : 1
-            }}
-          >
-            <svg 
-              width="16" 
-              height="16" 
-              viewBox="0 0 24 24" 
-              fill="none" 
-              stroke="currentColor" 
-              strokeWidth="2" 
-              strokeLinecap="round" 
-              strokeLinejoin="round"
-              style={{ marginRight: '8px' }}
-            >
-              <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
-              <path d="M3 3v5h5"/>
-              <circle cx="12" cy="12" r="1"/>
-            </svg>
-            {loading ? 'Full Refresh...' : 'Full Refresh'}
-          </button>
+        <div style={{ display: 'flex', gap: '12px', alignItems: 'center' }}>
+          <span style={{ fontSize: '12px', color: '#888' }}>
+            Auto-updates every 30 minutes
+          </span>
         </div>
       </div>
       
