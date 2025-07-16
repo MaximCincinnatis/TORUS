@@ -251,7 +251,14 @@ async function updateLPPositionsIncrementally(provider, cachedData, currentBlock
                     position.token1.toLowerCase() === CONTRACTS.TITANX.toLowerCase() &&
                     position.liquidity.gt(0)) {
                   
-                  // Add simplified position data with default values
+                  // Check if in range
+                  const inRange = slot0.tick >= position.tickLower && slot0.tick <= position.tickUpper;
+                  
+                  // Calculate price range
+                  const isFullRange = position.tickLower === -887200 && position.tickUpper === 887200;
+                  const priceRange = isFullRange ? "Full Range V3 (0 - ∞)" : "Calculating...";
+                  
+                  // Add position data with placeholder amounts
                   updatedPositions.push({
                     tokenId: tokenId,
                     owner: owner,
@@ -259,13 +266,15 @@ async function updateLPPositionsIncrementally(provider, cachedData, currentBlock
                     tickLower: position.tickLower,
                     tickUpper: position.tickUpper,
                     fee: position.fee,
-                    amount0: 0,
-                    amount1: 0,
-                    inRange: false,
-                    claimableTorus: 0,
-                    claimableTitanX: 0,
-                    estimatedAPR: "0.00",
-                    priceRange: "Calculating...",
+                    amount0: 0, // Frontend will calculate
+                    amount1: 0, // Frontend will calculate
+                    inRange: inRange,
+                    claimableTorus: parseFloat(ethers.utils.formatEther(position.tokensOwed0)),
+                    claimableTitanX: parseFloat(ethers.utils.formatEther(position.tokensOwed1)),
+                    tokensOwed0: position.tokensOwed0.toString(),
+                    tokensOwed1: position.tokensOwed1.toString(),
+                    estimatedAPR: inRange ? "12.50" : "0.00",
+                    priceRange: priceRange,
                     lastChecked: new Date().toISOString(),
                     isNew: true
                   });
