@@ -1320,77 +1320,55 @@ function App() {
         <div className="footer-content">
           {/* Contract Addresses */}
           <div className="footer-section">
-            <h4 className="footer-title">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z"/>
-              </svg>
-              Smart Contracts
-            </h4>
-            <div className="contract-addresses">
-              <div className="contract-item">
-                <span className="contract-label">TORUS Token</span>
-                <a 
-                  href="https://etherscan.io/address/0xB47f575807fC5466285e1277Ef8aCFBB5c6686E8" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="contract-address"
-                >
-                  0xB47f575807fC5466285e1277Ef8aCFBB5c6686E8
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/>
-                  </svg>
-                </a>
-              </div>
-              <div className="contract-item">
-                <span className="contract-label">Create & Stake</span>
-                <a 
-                  href="https://etherscan.io/address/0xc7Cc775B21f9Df85E043C7FDd9dAC60af0B69507" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="contract-address"
-                >
-                  0xc7Cc775B21f9Df85E043C7FDd9dAC60af0B69507
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/>
-                  </svg>
-                </a>
-              </div>
-              <div className="contract-item">
-                <span className="contract-label">Buy & Process</span>
-                <a 
-                  href="https://etherscan.io/address/0xAa390a37006E22b5775A34f2147F81eBD6a63641" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="contract-address"
-                >
-                  0xAa390a37006E22b5775A34f2147F81eBD6a63641
-                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                    <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/>
-                  </svg>
-                </a>
-              </div>
+            <h3>Smart Contracts</h3>
+            <div className="footer-links">
+              <a 
+                href="https://etherscan.io/address/0xB47f575807fC5466285e1277Ef8aCFBB5c6686E8" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="footer-link"
+              >
+                <span className="link-icon">🔗</span>
+                TORUS Token
+              </a>
+              <div className="contract-address">0xB47f575807fC5466285e1277Ef8aCFBB5c6686E8</div>
+              
+              <a 
+                href="https://etherscan.io/address/0xc7Cc775B21f9Df85E043C7FDd9dAC60af0B69507" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="footer-link"
+              >
+                <span className="link-icon">🔗</span>
+                Create & Stake
+              </a>
+              <div className="contract-address">0xc7Cc775B21f9Df85E043C7FDd9dAC60af0B69507</div>
+              
+              <a 
+                href="https://etherscan.io/address/0xAa390a37006E22b5775A34f2147F81eBD6a63641" 
+                target="_blank" 
+                rel="noopener noreferrer"
+                className="footer-link"
+              >
+                <span className="link-icon">🔗</span>
+                Buy & Process
+              </a>
+              <div className="contract-address">0xAa390a37006E22b5775A34f2147F81eBD6a63641</div>
             </div>
           </div>
 
           {/* Official Links */}
           <div className="footer-section">
-            <h4 className="footer-title">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M10 13a5 5 0 007.54.54l3-3a5 5 0 00-7.07-7.07l-1.72 1.71M14 11a5 5 0 00-7.54-.54l-3 3a5 5 0 007.07 7.07l1.71-1.71"/>
-              </svg>
-              Official Links
-            </h4>
+            <h3>Official Links</h3>
             <div className="footer-links">
               <a 
                 href="https://www.torus.win/earn" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="footer-link primary"
+                className="footer-link"
               >
+                <span className="link-icon">🌐</span>
                 <span className="torus-text">TORUS</span> Dashboard
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/>
-                </svg>
               </a>
               <a 
                 href="https://docs.torus.win/" 
@@ -1398,22 +1376,15 @@ function App() {
                 rel="noopener noreferrer"
                 className="footer-link"
               >
+                <span className="link-icon">📖</span>
                 Documentation
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/>
-                </svg>
               </a>
             </div>
           </div>
 
           {/* Trading & Analytics */}
           <div className="footer-section">
-            <h4 className="footer-title">
-              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                <path d="M3 3l7.07 16.97 2.51-7.39 7.39-2.51L3 3zM13 13l6 6"/>
-              </svg>
-              Trading & Analytics
-            </h4>
+            <h3>Trading & Analytics</h3>
             <div className="footer-links">
               <a 
                 href="https://dexscreener.com/ethereum/0x7ff1f30f6e7eec2ff3f0d1b60739115bdf88190f" 
@@ -1421,10 +1392,8 @@ function App() {
                 rel="noopener noreferrer"
                 className="footer-link"
               >
+                <span className="link-icon">📊</span>
                 <span className="torus-text">TORUS</span>/TitanX Chart
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/>
-                </svg>
               </a>
               <a 
                 href="https://etherscan.io/token/tokenholderchart/0xB47f575807fC5466285e1277Ef8aCFBB5c6686E8" 
@@ -1432,23 +1401,9 @@ function App() {
                 rel="noopener noreferrer"
                 className="footer-link"
               >
+                <span className="link-icon">👥</span>
                 <span className="torus-text">TORUS</span> Holders
-                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6M15 3h6v6M10 14L21 3"/>
-                </svg>
               </a>
-            </div>
-          </div>
-        </div>
-        
-        <div className="footer-bottom">
-          <div className="footer-disclaimer">
-            <p>This is a community-built dashboard. Not affiliated with the official TORUS team.</p>
-          </div>
-          <div className="footer-status">
-            <div className="status-indicator">
-              <div className="status-dot"></div>
-              <span>Live Data</span>
             </div>
           </div>
         </div>
