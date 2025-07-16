@@ -129,8 +129,10 @@ const BarChart: React.FC<BarChartProps> = ({
       x: {
         stacked,
         grid: {
-          display: false,
-          color: '#333',
+          display: true,
+          color: 'rgba(148, 163, 184, 0.1)',
+          lineWidth: 1,
+          drawOnChartArea: true,
         },
         ticks: {
           color: '#888',
@@ -156,12 +158,12 @@ const BarChart: React.FC<BarChartProps> = ({
       },
       y: {
         stacked,
-        type: useLogScale ? ('logarithmic' as const) : ('linear' as const),
+        type: useLogScale ? 'logarithmic' as any : 'linear',
         position: 'left' as const,
         grid: {
           display: true,
-          color: '#333',
-          lineWidth: 0.8,
+          color: 'rgba(148, 163, 184, 0.1)',
+          lineWidth: 1,
           drawOnChartArea: true,
           drawTicks: true,
         },
@@ -184,25 +186,29 @@ const BarChart: React.FC<BarChartProps> = ({
             const value = typeof tickValue === 'string' ? parseFloat(tickValue) : tickValue;
             
             if (useLogScale) {
-              // Professional log scale like DexScreener
+              // Professional log scale with proper intermediate values
               const log10 = Math.log10(value);
-              const roundedLog = Math.round(log10);
+              const floorLog = Math.floor(log10);
+              const normalized = value / Math.pow(10, floorLog);
               
-              // Show powers of 10
-              if (Math.abs(log10 - roundedLog) < 0.01) {
-                if (value >= 1e6) return (value / 1e6).toFixed(0) + 'M';
-                if (value >= 1e3) return (value / 1e3).toFixed(0) + 'K';
-                if (value < 0.01) return value.toExponential(0);
-                return value.toString();
+              // Show proper log values: 1, 2.5, 5, 7.5, 10, etc. (skip 2)
+              const targetValues = [1, 2.5, 5, 7.5];
+              const tolerance = 0.15;
+              
+              let shouldShow = false;
+              for (const target of targetValues) {
+                if (Math.abs(normalized - target) < tolerance) {
+                  shouldShow = true;
+                  break;
+                }
               }
               
-              // Show 2 and 5 multiples in each decade
-              const normalized = value / Math.pow(10, Math.floor(log10));
-              if (Math.abs(normalized - 2) < 0.1 || Math.abs(normalized - 5) < 0.1) {
+              if (shouldShow) {
                 if (value >= 1e6) return (value / 1e6).toFixed(1).replace(/\.0$/, '') + 'M';
                 if (value >= 1e3) return (value / 1e3).toFixed(1).replace(/\.0$/, '') + 'K';
                 if (value < 1) return value.toFixed(2);
-                return Math.round(value).toString();
+                if (value === Math.round(value)) return Math.round(value).toString();
+                return value.toFixed(1);
               }
               
               return ''; // Hide other values
@@ -246,21 +252,66 @@ const BarChart: React.FC<BarChartProps> = ({
         ...(useLogScale && {
           min: hasValidData ? Math.pow(10, Math.floor(Math.log10(minValue))) : 1,
           max: hasValidData ? Math.pow(10, Math.ceil(Math.log10(maxValue))) : 1000,
-          // Force major/minor tick structure
+          // Generate custom ticks for proper 1,2,5,10,20,50,100 pattern
+          ticks: {
+            color: '#888',
+            font: {
+              size: 11,
+              weight: 400,
+            },
+            padding: 8,
+            callback: function(tickValue: string | number) {
+              const value = typeof tickValue === 'string' ? parseFloat(tickValue) : tickValue;
+              
+              // Professional log scale with proper intermediate values
+              const log10 = Math.log10(value);
+              const floorLog = Math.floor(log10);
+              const normalized = value / Math.pow(10, floorLog);
+              
+              // Show proper log values: 1, 2.5, 5, 7.5, 10, etc. (skip 2)
+              const targetValues = [1, 2.5, 5, 7.5];
+              const tolerance = 0.15;
+              
+              let shouldShow = false;
+              for (const target of targetValues) {
+                if (Math.abs(normalized - target) < tolerance) {
+                  shouldShow = true;
+                  break;
+                }
+              }
+              
+              if (shouldShow) {
+                if (value >= 1e6) return (value / 1e6).toFixed(1).replace(/\.0$/, '') + 'M';
+                if (value >= 1e3) return (value / 1e3).toFixed(1).replace(/\.0$/, '') + 'K';
+                if (value < 1) return value.toFixed(2);
+                if (value === Math.round(value)) return Math.round(value).toString();
+                return value.toFixed(1);
+              }
+              
+              return ''; // Hide other values
+            },
+          },
+          // Force major/minor tick structure with consistent styling
           grid: {
             display: true,
             color: function(context: any) {
               const value = context.tick.value;
               const log10 = Math.log10(value);
-              // Major grid lines at powers of 10
-              if (Math.abs(log10 - Math.round(log10)) < 0.01) {
-                return '#555'; // Darker for major lines
-              }
-              // Minor grid lines at 2 and 5
               const normalized = value / Math.pow(10, Math.floor(log10));
-              if (Math.abs(normalized - 2) < 0.1 || Math.abs(normalized - 5) < 0.1) {
-                return '#333'; // Lighter for minor lines
+              
+              // Major grid lines at powers of 10 (1, 10, 100)
+              if (Math.abs(log10 - Math.round(log10)) < 0.01) {
+                return 'rgba(148, 163, 184, 0.15)'; // Slightly more visible for major lines
               }
+              
+              // Minor grid lines at 2.5, 5, 7.5 (skip 2)
+              const targetValues = [2.5, 5, 7.5];
+              for (const target of targetValues) {
+                if (Math.abs(normalized - target) < 0.15) {
+                  return 'rgba(148, 163, 184, 0.1)'; // Same as other charts for minor lines
+                }
+              }
+              
               return 'transparent'; // Hide other grid lines
             },
             lineWidth: function(context: any) {
@@ -305,7 +356,7 @@ const BarChart: React.FC<BarChartProps> = ({
           }
           return ''; // Return empty string to hide
         },
-        backgroundColor: 'rgba(0,0,0,0.8)',
+        backgroundColor: 'rgba(0,0,0,0.3)',
         borderRadius: 4,
         padding: {
           top: 2,
@@ -337,24 +388,37 @@ const BarChart: React.FC<BarChartProps> = ({
         gradient.addColorStop(1, color);
       }
     } else if (color === '#8b5cf6' || color === '#4f46e5') {
-      // Purple gradient for TORUS
-      gradient.addColorStop(0, '#a855f7');
-      gradient.addColorStop(0.5, '#8b5cf6');
-      gradient.addColorStop(1, '#6d28d9');
+      // Purple gradient for TORUS with transparency
+      gradient.addColorStop(0, 'rgba(168, 85, 247, 0.9)');
+      gradient.addColorStop(0.5, 'rgba(139, 92, 246, 0.8)');
+      gradient.addColorStop(1, 'rgba(109, 40, 217, 0.7)');
     } else if (color === '#fbbf24' || color === '#f59e0b') {
-      // Yellow gradient for TitanX
-      gradient.addColorStop(0, '#fcd34d');
-      gradient.addColorStop(0.5, '#fbbf24');
-      gradient.addColorStop(1, '#f59e0b');
+      // Yellow gradient for TitanX with transparency
+      gradient.addColorStop(0, 'rgba(252, 211, 77, 0.9)');
+      gradient.addColorStop(0.5, 'rgba(251, 191, 36, 0.8)');
+      gradient.addColorStop(1, 'rgba(245, 158, 11, 0.7)');
     } else if (color === '#22c55e') {
-      // Green gradient
-      gradient.addColorStop(0, '#4ade80');
-      gradient.addColorStop(0.5, '#22c55e');
-      gradient.addColorStop(1, '#16a34a');
+      // Green gradient with transparency
+      gradient.addColorStop(0, 'rgba(74, 222, 128, 0.9)');
+      gradient.addColorStop(0.5, 'rgba(34, 197, 94, 0.8)');
+      gradient.addColorStop(1, 'rgba(22, 163, 74, 0.7)');
     } else {
-      // Default gradient for hex colors
-      gradient.addColorStop(0, color);
-      gradient.addColorStop(1, color + '99');
+      // Default gradient for hex colors with transparency
+      const hexToRgba = (hex: string, alpha: number) => {
+        const r = parseInt(hex.slice(1, 3), 16);
+        const g = parseInt(hex.slice(3, 5), 16);
+        const b = parseInt(hex.slice(5, 7), 16);
+        return `rgba(${r}, ${g}, ${b}, ${alpha})`;
+      };
+      
+      if (color.startsWith('#')) {
+        gradient.addColorStop(0, hexToRgba(color, 0.9));
+        gradient.addColorStop(0.5, hexToRgba(color, 0.8));
+        gradient.addColorStop(1, hexToRgba(color, 0.7));
+      } else {
+        gradient.addColorStop(0, color);
+        gradient.addColorStop(1, color);
+      }
     }
     return gradient;
   };
@@ -400,7 +464,7 @@ const BarChart: React.FC<BarChartProps> = ({
             display: 'flex',
             alignItems: 'center',
             gap: '8px',
-            background: 'rgba(0,0,0,0.9)',
+            background: 'rgba(0,0,0,0.3)',
             padding: '6px 10px',
             borderRadius: '6px',
             fontSize: '12px',

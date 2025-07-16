@@ -15,7 +15,7 @@ body {
   overflow-x: hidden;
 }
 
-/* TORUS official-style gradient background - rich dynamic lighting throughout */
+/* TORUS official-style gradient background - rich dynamic lighting with pulse */
 .dashboard-container {
   position: relative;
   min-height: 100vh;
@@ -74,7 +74,7 @@ body {
   overflow: hidden;
 }
 
-/* Rich purple to green glow overlay - multiple dynamic layers */
+/* Rich purple to green glow overlay - multiple dynamic layers with subtle pulse */
 .dashboard-container::before {
   content: '';
   position: absolute;
@@ -82,6 +82,7 @@ body {
   left: 0;
   right: 0;
   bottom: 0;
+  animation: lightingPulse 10s ease-in-out infinite;
   background: 
     /* Original top dynamics */
     radial-gradient(ellipse 1600px 900px at 50% 0%, rgba(168, 85, 247, 0.08), transparent),
@@ -944,5 +945,17 @@ html {
   
   .dashboard-footer {
     margin-top: 32px;
+  }
+}
+
+/* Subtle lighting pulse animation - only affects background overlay */
+@keyframes lightingPulse {
+  0%, 100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  50% {
+    opacity: 0.8;
+    transform: scale(1.01);
   }
 }
