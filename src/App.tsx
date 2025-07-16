@@ -1311,10 +1311,8 @@ function App() {
             {/* Brand Section */}
             <div className="footer-brand">
               <div className="footer-logo">
-                <div className="torus-text">
-                  <span className="torus-symbol">Ⓣ</span>
-                  <span className="footer-logo-text">TORUS</span>
-                </div>
+                <img src="/favicon.svg" alt="TORUS" style={{ width: '40px', height: '40px', marginRight: '10px' }} />
+                <span className="footer-logo-text">TORUS</span>
               </div>
               <p className="footer-tagline">
                 Comprehensive analytics dashboard for the TORUS ecosystem. Track staking metrics, token creation data, and liquidity positions in real-time.

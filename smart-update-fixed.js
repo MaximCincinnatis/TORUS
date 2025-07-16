@@ -39,6 +39,33 @@ const colors = {
   cyan: '\x1b[36m'
 };
 
+
+// Uniswap V3 math helper for calculating position amounts
+function calculatePositionAmounts(position, sqrtPriceX96, currentTick) {
+  const Q96 = ethers.BigNumber.from(2).pow(96);
+  const liquidityBN = ethers.BigNumber.from(position.liquidity);
+  
+  // Full range position calculation
+  if (position.tickLower === -887200 && position.tickUpper === 887200) {
+    // amount1 = L * sqrtPrice / 2^96
+    const amount1 = liquidityBN.mul(sqrtPriceX96).div(Q96);
+    // amount0 = L / sqrtPrice * 2^96
+    const amount0 = liquidityBN.mul(Q96).div(sqrtPriceX96);
+    
+    return {
+      amount0: parseFloat(ethers.utils.formatEther(amount0)),
+      amount1: parseFloat(ethers.utils.formatEther(amount1))
+    };
+  }
+  
+  // For other positions, return existing amounts for now
+  // TODO: Implement concentrated liquidity position math
+  return {
+    amount0: position.amount0 || 0,
+    amount1: position.amount1 || 0
+  };
+}
+
 function log(message, color = 'reset') {
   const timestamp = new Date().toISOString();
   console.log(`[${timestamp}] ${colors[color]}${message}${colors.reset}`);
@@ -193,11 +220,32 @@ async function updateLPPositionsIncrementally(provider, cachedData, currentBlock
           updateStats.updatedPositions++;
         }
         
+
+        // Calculate current amounts if pool data is available
+        let amount0 = position.amount0 || 0;
+        let amount1 = position.amount1 || 0;
+        
+        if (cachedData.poolData && cachedData.poolData.sqrtPriceX96) {
+          const calculated = calculatePositionAmounts(
+            currentPosition,
+            ethers.BigNumber.from(cachedData.poolData.sqrtPriceX96),
+            cachedData.poolData.currentTick
+          );
+          amount0 = calculated.amount0;
+          amount1 = calculated.amount1;
+        }
+        
         // Always include the position (updated or not) to preserve it
         updatedPositions.push({
           ...position,
           liquidity: currentPosition.liquidity.toString(),
           owner: owner,
+          amount0: amount0,
+          amount1: amount1,
+          claimableTorus: parseFloat(ethers.utils.formatEther(currentPosition.tokensOwed0)),
+          claimableTitanX: parseFloat(ethers.utils.formatEther(currentPosition.tokensOwed1)),
+          tokensOwed0: currentPosition.tokensOwed0.toString(),
+          tokensOwed1: currentPosition.tokensOwed1.toString(),
           lastChecked: new Date().toISOString()
         });
         
