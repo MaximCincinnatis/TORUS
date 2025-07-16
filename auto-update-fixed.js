@@ -69,8 +69,11 @@ async function main() {
     log('📝 Git changes detected:', 'cyan');
     console.log(gitStatus);
     
-    // 4. Add and commit
-    execCommand('git add public/data/cached-data.json update-log.json', 'Staging changes');
+    // 4. Force Vercel rebuild
+    execCommand('node force-vercel-rebuild.js', 'Forcing Vercel rebuild');
+    
+    // 5. Add and commit
+    execCommand('git add public/data/cached-data.json update-log.json src/constants/buildTimestamp.ts', 'Staging changes');
     
     const timestamp = new Date().toISOString();
     const commitMessage = `Auto-update (fixed) - ${timestamp}
