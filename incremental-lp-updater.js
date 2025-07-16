@@ -11,6 +11,7 @@
 
 const { ethers } = require('ethers');
 const fs = require('fs');
+const { calculateEnhancedAPR } = require('./enhanced-apr-calculator');
 
 // Configuration
 const CACHE_FILE = './public/data/cached-data.json';
@@ -174,22 +175,45 @@ async function fetchPositionData(tokenId, provider, slot0) {
     const positionValueTORUS = amounts.amount0 + (amounts.amount1 / titanxPerTorus);
     const totalClaimableTORUS = claimableTorus + (claimableTitanX / titanxPerTorus);
     
+    // Use enhanced APR calculation
     let estimatedAPR = 0;
-    if (positionValueTORUS > 0) {
-      const weeklyYieldRate = totalClaimableTORUS / positionValueTORUS;
-      estimatedAPR = weeklyYieldRate * 52 * 100;
+    try {
+      const aprResult = await calculateEnhancedAPR(
+        {
+          tokenId: tokenId,
+          liquidity: position.liquidity.toString(),
+          tickLower: position.tickLower,
+          tickUpper: position.tickUpper,
+          amount0: amounts.amount0,
+          amount1: amounts.amount1
+        },
+        claimableTorus,
+        claimableTitanX
+      );
       
-      if (!inRange) {
-        estimatedAPR = Math.min(estimatedAPR * 0.1, 5);
+      estimatedAPR = aprResult.averageAPR;
+      log(`  📊 Enhanced APR: ${estimatedAPR.toFixed(2)}% (${aprResult.confidence} confidence, ${aprResult.dataPoints} data points)`, 'cyan');
+      
+    } catch (error) {
+      log(`  ⚠️  Enhanced APR calculation failed, using simple method: ${error.message}`, 'yellow');
+      
+      // Fallback to simple calculation
+      if (positionValueTORUS > 0) {
+        const weeklyYieldRate = totalClaimableTORUS / positionValueTORUS;
+        estimatedAPR = weeklyYieldRate * 52 * 100;
+        
+        if (!inRange) {
+          estimatedAPR = Math.min(estimatedAPR * 0.1, 5);
+        }
+        
+        // Apply range factor
+        const tickRange = position.tickUpper - position.tickLower;
+        const rangeFactor = Math.max(0.5, Math.min(2.0, 500000 / tickRange));
+        estimatedAPR = estimatedAPR * rangeFactor;
+        
+        // Cap at reasonable bounds
+        estimatedAPR = Math.max(0, Math.min(estimatedAPR, 300));
       }
-      
-      // Apply range factor
-      const tickRange = position.tickUpper - position.tickLower;
-      const rangeFactor = Math.max(0.5, Math.min(2.0, 500000 / tickRange));
-      estimatedAPR = estimatedAPR * rangeFactor;
-      
-      // Cap at reasonable bounds
-      estimatedAPR = Math.max(0, Math.min(estimatedAPR, 300));
     }
     
     // Format price range
