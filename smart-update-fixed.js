@@ -251,7 +251,7 @@ async function updateLPPositionsIncrementally(provider, cachedData, currentBlock
                     position.token1.toLowerCase() === CONTRACTS.TITANX.toLowerCase() &&
                     position.liquidity.gt(0)) {
                   
-                  // Add simplified position data
+                  // Add simplified position data with default values
                   updatedPositions.push({
                     tokenId: tokenId,
                     owner: owner,
@@ -259,6 +259,13 @@ async function updateLPPositionsIncrementally(provider, cachedData, currentBlock
                     tickLower: position.tickLower,
                     tickUpper: position.tickUpper,
                     fee: position.fee,
+                    amount0: 0,
+                    amount1: 0,
+                    inRange: false,
+                    claimableTorus: 0,
+                    claimableTitanX: 0,
+                    estimatedAPR: "0.00",
+                    priceRange: "Calculating...",
                     lastChecked: new Date().toISOString(),
                     isNew: true
                   });
