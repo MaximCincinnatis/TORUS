@@ -1412,7 +1412,7 @@ function App() {
                   Token Holders
                 </a>
                 <a 
-                  href="https://app.uniswap.org/pool/0x7ff1f30F6E7EeC2ff3F0D1b60739115BDF88190F" 
+                  href="https://app.uniswap.org/explore/pools/ethereum/0x7ff1f30F6E7EeC2ff3F0D1b60739115BDF88190F" 
                   target="_blank" 
                   rel="noopener noreferrer"
                   className="footer-link"
