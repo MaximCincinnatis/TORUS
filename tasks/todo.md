@@ -246,3 +246,65 @@ The data completeness issue has been fully resolved and deployed.
 2. Verify frontend loads without errors
 3. Confirm auto-update continues working every 30 minutes
 4. Repository can now be made public if desired
+
+## Critical Issues Fixed - 2025-07-16 (Part 2)
+
+### 🎯 Problems Identified
+
+1. **TitanX Price Range Formatting**
+   - Price ranges displayed without commas (e.g., "202681.091 - 20158952.814")
+   - Fixed by adding number formatting in LPPositionsTable component
+
+2. **APR Calculations Completely Wrong**
+   - Using hardcoded price of $0.00005 for TORUS (actual: $420.09)
+   - Using $0.000000001 for TitanX (actual: $0.00001)
+   - This made APR calculations off by ~8,400,000x for TORUS!
+
+3. **Missing Stakes in Updates**
+   - smart-update-fixed.js was NOT updating staking data at all
+   - Only updating LP positions and pool data
+   - New stakes were never being added to the dashboard
+
+### ✅ Fixes Implemented
+
+1. **Price Range Formatting**
+   - Added `formatPriceRangeWithCommas` function to format numbers with commas
+   - Now displays as "202,681.091 - 20,158,952.814"
+
+2. **APR Calculation Fix**
+   - Updated default TORUS price from $0.00005 to $420.09
+   - Updated default TitanX price from $0.000000001 to $0.00001
+   - APR calculations should now be much more accurate
+
+3. **Staking Data Updates**
+   - Added complete staking data update section to smart-update-fixed.js
+   - Now fetches new stake and create events incrementally
+   - Handles block ranges >10k by chunking requests
+   - Preserves existing events while adding new ones
+
+### 📊 Technical Details
+
+The smart-update-fixed.js now:
+- Updates pool data (existing)
+- Updates LP positions (existing)
+- **Updates staking data (NEW)**
+- Updates prices (existing)
+
+Staking updates include:
+- Fetches from last cached block to current
+- Processes both Staked and Created events
+- Adds proper metadata tracking
+- Only updates when >50 new blocks available
+
+### 🚨 Important Notes
+
+1. **APR values in cached JSON are still wrong** - They need to be recalculated with correct prices
+2. **Need to run a full update** to get all missing stakes from recent blocks
+3. **Monitor the auto-update** to ensure staking data is being captured
+
+### 🔄 Next Actions Required
+
+1. Run the updated smart-update-fixed.js to capture missing stakes
+2. Consider running a full data refresh to recalculate all APR values
+3. Monitor Vercel deployment with these fixes
+4. Verify stake maturity schedule shows all stakes

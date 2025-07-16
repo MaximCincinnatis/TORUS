@@ -106,8 +106,8 @@ export function calculateLiquidityShare(
 export function calculatePositionValueUSD(
   amount0: number,
   amount1: number,
-  torusPrice: number = 0.00005, // Estimated TORUS price in USD
-  titanXPrice: number = 0.000000001 // Estimated TitanX price in USD
+  torusPrice: number = 420.09, // Default TORUS price in USD (should be passed from cached data)
+  titanXPrice: number = 0.00001 // Default TitanX price in USD (should be passed from cached data)
 ): number {
   return (amount0 * torusPrice) + (amount1 * titanXPrice);
 }
@@ -165,16 +165,15 @@ export function calculateRealTimeAPR(
   claimableTorus: number,
   claimableTitanX: number,
   positionValueUSD: number,
-  daysSinceLastCollection: number = 7 // Default assumption
+  daysSinceLastCollection: number = 7, // Default assumption
+  torusPrice: number = 420.09, // Should be passed from cached data
+  titanXPrice: number = 0.00001 // Should be passed from cached data
 ): number {
   if (positionValueUSD <= 0 || daysSinceLastCollection <= 0) {
     return 0;
   }
 
   // Convert claimable amounts to USD
-  const torusPrice = 0.00005; // Estimated
-  const titanXPrice = 0.000000001; // Estimated
-  
   const claimableUSD = (claimableTorus * torusPrice) + (claimableTitanX * titanXPrice);
 
   // Calculate daily yield rate

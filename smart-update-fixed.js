@@ -364,7 +364,123 @@ async function performSmartUpdate(provider, updateLog, currentBlock, blocksSince
       log(`LP positions updated: ${lpUpdateResult.stats.newPositions} new, ${lpUpdateResult.stats.updatedPositions} updated, ${lpUpdateResult.stats.removedPositions} removed`, 'green');
     }
     
-    // 3. Update prices (lightweight)
+    // 3. Update staking data incrementally
+    log('Checking for new stake/create events...', 'cyan');
+    
+    try {
+      // Get last block from staking data
+      const lastStakeBlock = cachedData.stakingData?.metadata?.currentBlock || 
+                            cachedData.stakingData?.lastBlock || 
+                            22890272; // Fallback to deployment block
+      
+      // Only update if we have enough new blocks
+      if (currentBlock - lastStakeBlock > 50) {
+        const CONTRACTS = {
+          TORUS_CREATE_STAKE: '0xc7cc775b21f9df85e043c7fdd9dac60af0b69507'
+        };
+        
+        const contractABI = [
+          'event Staked(address indexed user, uint256 indexed id, uint256 amount, uint256 shares, uint16 indexed duration, uint256 timestamp)',
+          'event Created(address indexed user, uint256 indexed createId, uint256 amount, uint256 shares, uint16 indexed duration, uint256 rewardDay, uint256 timestamp, address referrer)'
+        ];
+        
+        const contract = new ethers.Contract(CONTRACTS.TORUS_CREATE_STAKE, contractABI, provider);
+        
+        // Fetch in chunks if needed
+        const MAX_BLOCK_RANGE = 9999;
+        let newStakeEvents = [];
+        let newCreateEvents = [];
+        
+        for (let fromBlock = lastStakeBlock + 1; fromBlock <= currentBlock; fromBlock += MAX_BLOCK_RANGE) {
+          const toBlock = Math.min(fromBlock + MAX_BLOCK_RANGE - 1, currentBlock);
+          
+          try {
+            const [stakeEvents, createEvents] = await Promise.all([
+              contract.queryFilter(contract.filters.Staked(), fromBlock, toBlock),
+              contract.queryFilter(contract.filters.Created(), fromBlock, toBlock)
+            ]);
+            
+            newStakeEvents.push(...stakeEvents);
+            newCreateEvents.push(...createEvents);
+            updateStats.rpcCalls += 2;
+          } catch (e) {
+            log(`  Error fetching events ${fromBlock}-${toBlock}: ${e.message}`, 'yellow');
+          }
+        }
+        
+        if (newStakeEvents.length > 0 || newCreateEvents.length > 0) {
+          // Process and merge new events
+          const processedStakes = newStakeEvents.map(event => ({
+            user: event.args.user,
+            id: event.args.id.toString(),
+            principal: ethers.utils.formatEther(event.args.amount),
+            shares: event.args.shares.toString(),
+            duration: event.args.duration.toString(),
+            timestamp: event.args.timestamp.toString(),
+            blockNumber: event.blockNumber,
+            // Add placeholders for missing fields
+            stakingDays: parseInt(event.args.duration.toString()),
+            power: "0",
+            claimedCreate: false,
+            claimedStake: false,
+            costETH: "0",
+            costTitanX: "0",
+            rawCostETH: "0",
+            rawCostTitanX: "0",
+            rewards: "0",
+            penalties: "0",
+            claimedAt: "0",
+            isCreate: false
+          }));
+          
+          const processedCreates = newCreateEvents.map(event => ({
+            user: event.args.user,
+            createId: event.args.createId.toString(),
+            principal: ethers.utils.formatEther(event.args.amount),
+            shares: event.args.shares.toString(),
+            duration: event.args.duration.toString(),
+            rewardDay: event.args.rewardDay.toString(),
+            timestamp: event.args.timestamp.toString(),
+            referrer: event.args.referrer,
+            blockNumber: event.blockNumber,
+            // Add placeholders for missing fields
+            id: event.args.createId.toString(),
+            stakingDays: parseInt(event.args.duration.toString()),
+            power: "0",
+            claimedCreate: false,
+            claimedStake: false,
+            costETH: "0",
+            costTitanX: "0",
+            rawCostETH: "0",
+            rawCostTitanX: "0"
+          }));
+          
+          // Merge with existing events
+          cachedData.stakingData.stakeEvents = [
+            ...(cachedData.stakingData.stakeEvents || []),
+            ...processedStakes
+          ];
+          
+          cachedData.stakingData.createEvents = [
+            ...(cachedData.stakingData.createEvents || []),
+            ...processedCreates
+          ];
+          
+          // Update metadata
+          cachedData.stakingData.metadata = cachedData.stakingData.metadata || {};
+          cachedData.stakingData.metadata.currentBlock = currentBlock;
+          cachedData.stakingData.lastBlock = currentBlock;
+          
+          updateStats.dataChanged = true;
+          log(`  Added ${newStakeEvents.length} new stakes, ${newCreateEvents.length} new creates`, 'green');
+        }
+      }
+    } catch (e) {
+      updateStats.errors.push(`Staking update: ${e.message}`);
+      log(`  Error updating staking data: ${e.message}`, 'red');
+    }
+    
+    // 4. Update prices (lightweight)
     try {
       if (cachedData.poolData && cachedData.poolData.sqrtPriceX96) {
         const sqrtPriceX96 = ethers.BigNumber.from(cachedData.poolData.sqrtPriceX96);
