@@ -1158,7 +1158,7 @@ function App() {
             height={600}
             yAxisLabel="TORUS Amount"
             xAxisLabel="Date / Contract Day"
-            enableScaleToggle={true}
+            enableScaleToggle={false}
             stacked={true}
             showLegend={true}
             formatTooltip={(value: number) => `TORUS: ${value.toLocaleString('en-US', { maximumFractionDigits: 2 })}`}
