@@ -409,51 +409,85 @@ async function performSmartUpdate(provider, updateLog, currentBlock, blocksSince
         }
         
         if (newStakeEvents.length > 0 || newCreateEvents.length > 0) {
-          // Process and merge new events
-          const processedStakes = newStakeEvents.map(event => ({
-            user: event.args.user,
-            id: event.args.stakeIndex.toString(),
-            principal: ethers.utils.formatEther(event.args.principal),
-            shares: event.args.shares.toString(),
-            duration: event.args.stakingDays.toString(),
-            timestamp: event.args.startTime.toString(),
-            blockNumber: event.blockNumber,
-            // Add placeholders for missing fields
-            stakingDays: parseInt(event.args.stakingDays.toString()),
-            power: "0",
-            claimedCreate: false,
-            claimedStake: false,
-            costETH: "0",
-            costTitanX: "0",
-            rawCostETH: "0",
-            rawCostTitanX: "0",
-            rewards: "0",
-            penalties: "0",
-            claimedAt: "0",
-            isCreate: false
-          }));
+          // Fetch block timestamps for new events
+          const blockNumbers = new Set([
+            ...newStakeEvents.map(e => e.blockNumber),
+            ...newCreateEvents.map(e => e.blockNumber)
+          ]);
           
-          const processedCreates = newCreateEvents.map(event => ({
-            user: event.args.user,
-            createId: event.args.createId.toString(),
-            principal: ethers.utils.formatEther(event.args.amount),
-            shares: event.args.shares.toString(),
-            duration: event.args.duration.toString(),
-            rewardDay: event.args.rewardDay.toString(),
-            timestamp: event.args.timestamp.toString(),
-            referrer: event.args.referrer,
-            blockNumber: event.blockNumber,
-            // Add placeholders for missing fields
-            id: event.args.createId.toString(),
-            stakingDays: parseInt(event.args.duration.toString()),
-            power: "0",
-            claimedCreate: false,
-            claimedStake: false,
-            costETH: "0",
-            costTitanX: "0",
-            rawCostETH: "0",
-            rawCostTitanX: "0"
-          }));
+          const blockTimestamps = new Map();
+          for (const blockNumber of blockNumbers) {
+            try {
+              const block = await provider.getBlock(blockNumber);
+              blockTimestamps.set(blockNumber, block.timestamp);
+            } catch (e) {
+              log(`  Error fetching block ${blockNumber}: ${e.message}`, 'yellow');
+            }
+          }
+          
+          // Process and merge new events
+          const processedStakes = newStakeEvents.map(event => {
+            const blockTimestamp = blockTimestamps.get(event.blockNumber) || Math.floor(Date.now() / 1000);
+            const stakingDays = parseInt(event.args.stakingDays.toString());
+            const maturityTimestamp = blockTimestamp + (stakingDays * 86400);
+            
+            return {
+              user: event.args.user,
+              id: event.args.stakeIndex.toString(),
+              principal: ethers.utils.formatEther(event.args.principal),
+              shares: event.args.shares.toString(),
+              duration: event.args.stakingDays.toString(),
+              timestamp: blockTimestamp.toString(),
+              blockNumber: event.blockNumber,
+              // Add calculated fields
+              stakingDays: stakingDays,
+              maturityDate: new Date(maturityTimestamp * 1000).toISOString(),
+              startDate: new Date(blockTimestamp * 1000).toISOString(),
+              // Add placeholders for missing fields
+              power: "0",
+              claimedCreate: false,
+              claimedStake: false,
+              costETH: "0",
+              costTitanX: "0",
+              rawCostETH: "0",
+              rawCostTitanX: "0",
+              rewards: "0",
+              penalties: "0",
+              claimedAt: "0",
+              isCreate: false
+            };
+          });
+          
+          const processedCreates = newCreateEvents.map(event => {
+            const blockTimestamp = blockTimestamps.get(event.blockNumber) || Math.floor(Date.now() / 1000);
+            const duration = parseInt(event.args.duration.toString());
+            const maturityTimestamp = blockTimestamp + (duration * 86400);
+            
+            return {
+              user: event.args.user,
+              createId: event.args.createId.toString(),
+              principal: ethers.utils.formatEther(event.args.amount),
+              shares: event.args.shares.toString(),
+              duration: event.args.duration.toString(),
+              rewardDay: event.args.rewardDay.toString(),
+              timestamp: blockTimestamp.toString(),
+              referrer: event.args.referrer,
+              blockNumber: event.blockNumber,
+              // Add calculated fields
+              id: event.args.createId.toString(),
+              stakingDays: duration,
+              maturityDate: new Date(maturityTimestamp * 1000).toISOString(),
+              startDate: new Date(blockTimestamp * 1000).toISOString(),
+              // Add placeholders for missing fields
+              power: "0",
+              claimedCreate: false,
+              claimedStake: false,
+              costETH: "0",
+              costTitanX: "0",
+              rawCostETH: "0",
+              rawCostTitanX: "0"
+            };
+          });
           
           // Merge with existing events
           cachedData.stakingData.stakeEvents = [
