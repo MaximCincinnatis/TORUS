@@ -133,7 +133,7 @@ const LPPositionsTable: React.FC<LPPositionsTableProps> = ({ positions, loading,
               </th>
               <th>Claimable Yield</th>
               <th>Est. APR (24hr)</th>
-              <th>TitanX Price Range (per TORUS)</th>
+              <th>TitanX Price Range (Millions per TORUS)</th>
               <th>Status</th>
               <th>Share %</th>
             </tr>

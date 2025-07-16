@@ -1026,7 +1026,7 @@ function App() {
                 suffix={totalShares > 1e6 ? "" : "SHARES"}
               />
               <MetricCard
-                title={<><img src="/ethereum-logo.png" alt="Ethereum" style={{ width: '16px', height: '16px', marginRight: '6px', verticalAlign: 'middle', opacity: 0.8 }} />Total ETH Input</>}
+                title={<><img src="/ethereum-logo.png" alt="Ethereum" style={{ width: '16px', height: '16px', marginRight: '6px', verticalAlign: 'middle' }} />Total ETH Input</>}
                 value={totalETHInput.toFixed(2)}
                 suffix="ETH"
               />
@@ -1311,16 +1311,15 @@ function App() {
             {/* Brand Section */}
             <div className="footer-brand">
               <div className="footer-logo">
-                <img src="https://gateway.torus.win/ipfs/QmWdkDbQmDQGb8N3NMQXNhU8eLguXaaqvHfVNJghdEuQKS" alt="TORUS" />
-                <span className="footer-logo-text">TORUS</span>
+                <div className="torus-text">
+                  <span className="torus-symbol">Ⓣ</span>
+                  <span className="footer-logo-text">TORUS</span>
+                </div>
               </div>
               <p className="footer-tagline">
                 Comprehensive analytics dashboard for the TORUS ecosystem. Track staking metrics, token creation data, and liquidity positions in real-time.
               </p>
-              <div className="footer-disclaimer">
-                <strong>⚠️ Community Dashboard</strong><br />
-                This is an independent, community-built tool. Not affiliated with the official TORUS team.
-              </div>
+              
             </div>
 
             {/* Contract Addresses */}
