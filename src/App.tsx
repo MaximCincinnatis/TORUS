@@ -16,6 +16,9 @@ import './App.css';
 const CONTRACT_START_DATE = new Date('2025-07-11');
 CONTRACT_START_DATE.setHours(0, 0, 0, 0);
 
+// Build info for debugging Vercel deployments
+console.log('Build timestamp:', new Date().toISOString());
+
 function App() {
   const [loading, setLoading] = useState(true);
   const [loadingProgress, setLoadingProgress] = useState(0);
