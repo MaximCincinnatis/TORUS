@@ -27,11 +27,12 @@
 ### 1. LP Position Data Loss (CRITICAL) ✅
 **File**: `scripts/data-updates/update-all-dashboard-data.js:956`
 **Problem**: `cachedData.lpPositions = lpPositions;` overwrote existing positions
-**Solution**: Added `mergeLPPositions()` function that:
+**Solution**: Added smart `mergeLPPositions()` function that:
 - Creates Map of existing positions by tokenId
 - Adds/updates with new positions
-- Preserves all existing positions not found in new scan
-- Includes audit logging for position count changes
+- **Handles legitimate removals**: If comprehensive scan (5+ positions found), removes positions not found (likely burned/transferred)
+- **Preserves during poor scans**: If limited scan (<5 positions), preserves existing positions (likely RPC issues)
+- Includes detailed audit logging for position count changes and removals
 
 ### 2. Aggressive Full Update Triggers (HIGH) ✅
 **File**: `smart-update.js:152`
@@ -60,6 +61,30 @@
 - Node.js: v18.19.1 ✅
 - ethers.js: 5.7.2 ✅
 - All npm packages installed ✅
+
+## How Position Removal Logic Works
+
+The improved `mergeLPPositions()` function now intelligently handles position removals:
+
+### Legitimate Removals (Allowed) ✅
+- **Comprehensive scan** (finds 5+ positions): Positions not found are considered legitimately removed
+- **Reasons**: LP burned, position transferred to new owner, liquidity fully removed
+- **Action**: Position removed from cached data with log message
+
+### Preservation (RPC Issues) 🛡️
+- **Limited scan** (finds <5 positions): Positions not found are likely due to RPC/scan issues
+- **Reasons**: RPC provider issues, event scanning problems, network issues
+- **Action**: Existing positions preserved with log message
+
+### Audit Logging 📊
+```
+📊 LP Position Merge Results:
+  - Existing: 10
+  - New scan found: 8
+  - Final total: 8  
+  - Net change: -2
+🔥 2 positions removed (likely burned/transferred)
+```
 
 ## Next Steps
 

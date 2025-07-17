@@ -952,24 +952,36 @@ async function updateAllDashboardData() {
       lpPositions: lpPositions
     };
     
-    // CRITICAL FIX: Merge LP positions instead of overwriting to prevent data loss
+    // CRITICAL FIX: Smart merge LP positions - preserve existing but handle legitimate removals
     function mergeLPPositions(existingPositions, newPositions) {
       const positionMap = new Map();
+      const newPositionIds = new Set();
       
-      // Add existing positions to map
-      if (existingPositions && Array.isArray(existingPositions)) {
-        existingPositions.forEach(pos => {
-          if (pos.tokenId) {
-            positionMap.set(pos.tokenId, pos);
-          }
-        });
-      }
-      
-      // Update or add new positions
+      // First, add all new positions and track their IDs
       if (newPositions && Array.isArray(newPositions)) {
         newPositions.forEach(pos => {
           if (pos.tokenId) {
             positionMap.set(pos.tokenId, pos);
+            newPositionIds.add(pos.tokenId);
+          }
+        });
+      }
+      
+      // Then, add existing positions that weren't found in new scan
+      // BUT only if the new scan found a reasonable number of positions
+      if (existingPositions && Array.isArray(existingPositions)) {
+        const scanFoundManyPositions = newPositions.length >= 5; // Threshold for "good scan"
+        
+        existingPositions.forEach(existingPos => {
+          if (existingPos.tokenId && !newPositionIds.has(existingPos.tokenId)) {
+            if (scanFoundManyPositions) {
+              // Good scan - position likely legitimately removed (burned/transferred)
+              console.log(`  🔥 Position ${existingPos.tokenId} not found in comprehensive scan - likely removed`);
+            } else {
+              // Poor scan - preserve existing position (likely RPC/scan issue)
+              console.log(`  💾 Preserving position ${existingPos.tokenId} (limited scan: ${newPositions.length} found)`);
+              positionMap.set(existingPos.tokenId, existingPos);
+            }
           }
         });
       }
@@ -985,10 +997,20 @@ async function updateAllDashboardData() {
     
     // Audit the merge results
     const positionCountAfter = cachedData.lpPositions?.length || 0;
-    console.log(`  📊 LP Position Merge: ${positionCountBefore} existing + ${lpPositions.length} new = ${positionCountAfter} total`);
+    const positionsRemoved = positionCountBefore - positionCountAfter + lpPositions.length;
     
-    if (positionCountAfter < positionCountBefore) {
-      console.warn(`  ⚠️  Position count decreased from ${positionCountBefore} to ${positionCountAfter}!`);
+    console.log(`  📊 LP Position Merge Results:`);
+    console.log(`    - Existing: ${positionCountBefore}`);
+    console.log(`    - New scan found: ${lpPositions.length}`);
+    console.log(`    - Final total: ${positionCountAfter}`);
+    console.log(`    - Net change: ${positionCountAfter - positionCountBefore > 0 ? '+' : ''}${positionCountAfter - positionCountBefore}`);
+    
+    if (positionsRemoved > 0) {
+      console.log(`  🔥 ${positionsRemoved} positions removed (likely burned/transferred)`);
+    }
+    
+    if (positionCountAfter < positionCountBefore && lpPositions.length < 5) {
+      console.warn(`  ⚠️  Position count decreased with limited scan - may indicate RPC issues!`);
     }
     
     console.log(`  ✅ Uniswap data updated with ${lpPositions.length} LP positions`);
