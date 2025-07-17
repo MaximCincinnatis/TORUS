@@ -986,6 +986,13 @@ async function updateAllDashboardData() {
           try {
             console.log(`  🔍 Validating position ${existingPos.tokenId}...`);
             
+            // Validate tokenId is a valid number
+            if (!existingPos.tokenId || isNaN(existingPos.tokenId)) {
+              console.log(`  ⚠️  Invalid tokenId ${existingPos.tokenId} - preserving`);
+              positionMap.set(existingPos.tokenId, existingPos);
+              continue;
+            }
+            
             // Check if position still exists and get current data
             const [positionData, currentOwner] = await Promise.all([
               positionManager.positions(existingPos.tokenId),
@@ -1007,9 +1014,14 @@ async function updateAllDashboardData() {
               continue;
             }
             
-            // Check if this position is in our target pool
-            const isTargetPool = positionData.token0.toLowerCase() === '0xB47f575807fC5466285e1277Ef8aCFBB5c6686E8'.toLowerCase() || 
-                               positionData.token1.toLowerCase() === '0xB47f575807fC5466285e1277Ef8aCFBB5c6686E8'.toLowerCase();
+            // Check if this position is in our target TORUS/TITANX pool
+            const torusToken = '0xB47f575807fC5466285e1277Ef8aCFBB5c6686E8'.toLowerCase();
+            const titanxToken = '0xF19308F923582A6f7c465e5CE7a9Dc1BEC6665B1'.toLowerCase();
+            const token0Lower = positionData.token0.toLowerCase();
+            const token1Lower = positionData.token1.toLowerCase();
+            
+            const isTargetPool = (token0Lower === torusToken && token1Lower === titanxToken) ||
+                               (token0Lower === titanxToken && token1Lower === torusToken);
             
             if (!isTargetPool) {
               // Position exists but not in TORUS pool
@@ -1031,6 +1043,9 @@ async function updateAllDashboardData() {
               positionMap.set(existingPos.tokenId, existingPos);
             }
           }
+          
+          // Rate limiting to avoid overwhelming RPC providers
+          await new Promise(resolve => setTimeout(resolve, 200));
         }
       }
       
