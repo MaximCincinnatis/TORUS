@@ -1,8 +1,13 @@
 .lp-positions-container {
-  background: #1a1a2e;
-  border-radius: 12px;
+  background: linear-gradient(135deg, rgba(10, 10, 15, 0.35) 0%, rgba(15, 15, 25, 0.55) 100%);
+  backdrop-filter: blur(24px);
+  border: 1px solid rgba(55, 65, 81, 0.1);
+  border-radius: 16px;
   padding: 24px;
   margin-top: 24px;
+  transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1);
+  overflow: hidden;
+  position: relative;
 }
 
 .lp-positions-header {
@@ -27,8 +32,8 @@
 .lp-table-wrapper {
   overflow-x: auto;
   border-radius: 8px;
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  background: rgba(5, 5, 10, 0.2);
+  border: 1px solid rgba(55, 65, 81, 0.08);
 }
 
 .lp-positions-table {
@@ -38,7 +43,7 @@
 }
 
 .lp-positions-table thead {
-  background: rgba(255, 255, 255, 0.03);
+  background: rgba(10, 10, 15, 0.3);
 }
 
 .lp-positions-table th {
@@ -57,7 +62,7 @@
 }
 
 .lp-positions-table tbody tr:hover {
-  background: rgba(255, 255, 255, 0.02);
+  background: rgba(139, 92, 246, 0.05);
 }
 
 .token-icon {
