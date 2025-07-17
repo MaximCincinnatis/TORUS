@@ -1843,13 +1843,6 @@ function App() {
                 </span>
               </div>
             </div>
-            
-            <div className="data-status-item">
-              <div className="data-status-text">
-                <span className="data-status-label">Refresh Schedule</span>
-                <span className="data-status-value">Auto-updates every 30 minutes</span>
-              </div>
-            </div>
           </div>
         </div>
 
