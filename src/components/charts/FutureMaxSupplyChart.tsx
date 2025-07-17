@@ -29,6 +29,9 @@ const FutureMaxSupplyChart: React.FC<FutureMaxSupplyChartProps> = ({
     console.log('currentSupply:', currentSupply);
     console.log('contractStartDate:', contractStartDate);
     
+    // Force console output to show
+    console.log('🚀 FutureMaxSupplyChart component is loading...');
+    
     if (!stakeEvents?.length || !createEvents?.length || !rewardPoolData?.length) {
       console.log('❌ Missing required data for chart');
       return {
