@@ -309,7 +309,7 @@ body {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
   gap: 20px;
-  background: linear-gradient(135deg, rgba(15, 15, 20, 0.15) 0%, rgba(20, 20, 30, 0.25) 100%);
+  background: linear-gradient(135deg, rgba(5, 5, 10, 0.3) 0%, rgba(10, 10, 20, 0.5) 100%);
   border-radius: 16px;
   padding: 30px;
   backdrop-filter: blur(24px);
@@ -319,7 +319,7 @@ body {
 }
 
 .supply-metric-card {
-  background: linear-gradient(135deg, rgba(15, 15, 20, 0.15) 0%, rgba(20, 20, 30, 0.25) 100%);
+  background: linear-gradient(135deg, rgba(5, 5, 10, 0.3) 0%, rgba(10, 10, 20, 0.5) 100%);
   border: 1px solid rgba(55, 65, 81, 0.1);
   border-radius: 16px;
   padding: 24px;
@@ -370,7 +370,7 @@ body {
 
 /* Chart sections with modern styling */
 .chart-section {
-  background: linear-gradient(135deg, rgba(15, 15, 20, 0.15) 0%, rgba(20, 20, 30, 0.25) 100%);
+  background: linear-gradient(135deg, rgba(5, 5, 10, 0.3) 0%, rgba(10, 10, 20, 0.5) 100%);
   border: 1px solid rgba(55, 65, 81, 0.1);
   border-radius: 16px;
   padding: 24px;
