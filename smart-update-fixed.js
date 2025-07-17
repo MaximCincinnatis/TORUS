@@ -395,7 +395,39 @@ async function performSmartUpdate(provider, updateLog, currentBlock, blocksSince
       updateStats.errors.push(`Pool update: ${e.message}`);
     }
     
-    // 2. Update LP positions incrementally
+    // 2. Update total supply
+    log('Updating total supply...', 'cyan');
+    try {
+      const torusContract = new ethers.Contract(
+        '0xb47f575807fc5466285e1277ef8acfbb5c6686e8',
+        ['function totalSupply() view returns (uint256)'],
+        provider
+      );
+      const totalSupply = await torusContract.totalSupply();
+      const formattedSupply = parseFloat(ethers.utils.formatEther(totalSupply));
+      
+      const oldSupply = cachedData.totalSupply || 0;
+      if (Math.abs(oldSupply - formattedSupply) > 0.000001) {
+        cachedData.totalSupply = formattedSupply;
+        updateStats.dataChanged = true;
+        log(`Total supply updated: ${formattedSupply.toFixed(6)} TORUS (was ${oldSupply.toFixed(6)})`, 'green');
+      }
+      
+      // Also update in stakingData section (where frontend reads from)
+      if (cachedData.stakingData) {
+        const oldStakingSupply = cachedData.stakingData.totalSupply || 0;
+        if (Math.abs(oldStakingSupply - formattedSupply) > 0.000001) {
+          cachedData.stakingData.totalSupply = formattedSupply;
+          updateStats.dataChanged = true;
+          log(`Staking data total supply updated: ${formattedSupply.toFixed(6)} TORUS (was ${oldStakingSupply.toFixed(6)})`, 'green');
+        }
+      }
+      updateStats.rpcCalls++;
+    } catch (e) {
+      log(`Failed to update total supply: ${e.message}`, 'yellow');
+    }
+    
+    // 3. Update LP positions incrementally
     log('Updating LP positions incrementally...', 'cyan');
     
     const lpUpdateResult = await updateLPPositionsIncrementally(
@@ -491,7 +523,7 @@ async function performSmartUpdate(provider, updateLog, currentBlock, blocksSince
             return {
               user: event.args.user,
               id: event.args.stakeIndex.toString(),
-              principal: ethers.utils.formatEther(event.args.principal),
+              principal: event.args.principal.toString(),
               shares: event.args.shares.toString(),
               duration: event.args.stakingDays.toString(),
               timestamp: blockTimestamp.toString(),
@@ -523,7 +555,7 @@ async function performSmartUpdate(provider, updateLog, currentBlock, blocksSince
             return {
               user: event.args.user,
               createId: event.args.createId.toString(),
-              principal: ethers.utils.formatEther(event.args.amount),
+              principal: event.args.amount.toString(),
               shares: event.args.shares.toString(),
               duration: event.args.duration.toString(),
               rewardDay: event.args.rewardDay.toString(),

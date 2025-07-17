@@ -41,6 +41,8 @@ interface LineChartProps {
   xAxisLabel?: string;
   formatTooltip?: (value: number) => string;
   formatYAxis?: (value: number) => string;
+  customTooltipData?: any[];
+  customTooltipCallback?: (context: any, customData: any) => string[];
 }
 
 const LineChart: React.FC<LineChartProps> = ({
@@ -53,6 +55,8 @@ const LineChart: React.FC<LineChartProps> = ({
   xAxisLabel,
   formatTooltip,
   formatYAxis,
+  customTooltipData,
+  customTooltipCallback,
 }) => {
   const options: ChartOptions<'line'> = {
     responsive: true,
@@ -107,6 +111,11 @@ const LineChart: React.FC<LineChartProps> = ({
         displayColors: true,
         callbacks: {
           label: function(context) {
+            // If custom tooltip data and callback provided, use them
+            if (customTooltipData && customTooltipCallback && context.dataIndex < customTooltipData.length) {
+              return customTooltipCallback(context, customTooltipData[context.dataIndex]);
+            }
+            // Otherwise use default formatting
             const label = context.dataset.label || '';
             const value = formatTooltip ? formatTooltip(context.parsed.y) : context.parsed.y.toLocaleString();
             return `${label}: ${value}`;

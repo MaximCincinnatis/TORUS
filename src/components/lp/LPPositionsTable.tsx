@@ -9,6 +9,8 @@ interface LPPositionsTableProps {
   tokenInfo: {
     token0IsTorus: boolean;
     token0IsTitanX: boolean;
+    token1IsTorus?: boolean;
+    token1IsTitanX?: boolean;
   };
 }
 

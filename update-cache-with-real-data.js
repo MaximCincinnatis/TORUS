@@ -280,7 +280,7 @@ async function createAccurateCacheData() {
       stakingData: {
         stakeEvents: stakeEvents,
         createEvents: createEvents,
-        rewardPoolData: rewardPoolData,
+        rewardPoolData: rewardPoolData, // WARNING: This script only fetches last 5 days - may overwrite historical data
         currentProtocolDay: protocolDay,
         totalSupply: totalSupplyFormatted,
         burnedSupply: burnedSupplyFormatted,

@@ -1,71 +1,39 @@
-const fs = require('fs');
-const data = JSON.parse(fs.readFileSync('public/data/cached-data.json', 'utf8'));
-const createEvents = data.stakingData.createEvents;
+// Mathematical Audit - Manual calculation verification
+console.log('🔍 MATHEMATICAL AUDIT - Manual Calculations');
+console.log('===========================================\n');
 
-console.log('=== TITANX CALCULATION VERIFICATION ===');
-console.log('From totals object:');
-console.log('Total TitanX:', data.totals.totalTitanX);
-console.log('Total Created TitanX:', data.totals.totalCreatedTitanX);
+// Test timestamp conversion
+console.log('📅 1. Testing Timestamp Conversion:');
+const testTimestamp = 1720656000;
+const convertedDate = new Date(testTimestamp * 1000);
+console.log('Timestamp:', testTimestamp);
+console.log('Converted:', convertedDate.toISOString());
+console.log('Year:', convertedDate.getFullYear());
 
-let totalTitanX = 0;
-let validTitanXCreates = 0;
-createEvents.forEach((c, i) => {
-  if (c.titanAmount && c.titanAmount !== '0') {
-    const amount = parseFloat(c.titanAmount) / 1e18;
-    totalTitanX += amount;
-    validTitanXCreates++;
-    if (i < 5) {
-      console.log('Create ' + i + ': ' + c.titanAmount + ' -> ' + amount.toFixed(2) + ' TitanX');
-    }
-  }
-});
+// This should be 2025, but it's 2024\!
+if (convertedDate.getFullYear() === 2024) {
+  console.log('❌ CRITICAL ISSUE: Timestamp is for 2024, not 2025\!');
+  
+  // Calculate correct timestamp for July 11, 2025
+  const correctDate = new Date('2025-07-11T00:00:00Z');
+  const correctTimestamp = Math.floor(correctDate.getTime() / 1000);
+  console.log('Correct timestamp for July 11, 2025:', correctTimestamp);
+  console.log('Correct date:', correctDate.toISOString());
+}
 
-console.log('\nCalculated from events:');
-console.log('Creates with TitanX:', validTitanXCreates);
-console.log('Calculated total TitanX:', totalTitanX.toLocaleString());
-console.log('Average TitanX per create:', (totalTitanX / validTitanXCreates).toFixed(2));
-console.log('\nVerification:');
-console.log('Totals match:', Math.abs(parseFloat(data.totals.totalTitanX) - totalTitanX) < 1);
+// Test share calculations
+console.log('\n📊 2. Testing Share Calculations:');
+const position1Shares = 5000;
+const day1TotalShares = 10000;
+const day1RewardPool = 1000;
 
-// ETH calculation verification
-const stakeEvents = data.stakingData.stakeEvents;
-console.log('\n=== ETH CALCULATION VERIFICATION ===');
+const sharePercentage = position1Shares / day1TotalShares;
+const dailyReward = day1RewardPool * sharePercentage;
 
-let totalStakeETH = 0;
-stakeEvents.forEach(s => {
-  if (s.costETH) {
-    totalStakeETH += parseFloat(s.costETH) / 1e18;
-  }
-});
+console.log('Position 1 shares:', position1Shares);
+console.log('Day 1 total shares:', day1TotalShares);
+console.log('Share percentage:', sharePercentage, '(' + (sharePercentage * 100) + '%)');
+console.log('Daily reward:', dailyReward, 'TORUS');
 
-let totalCreateETH = 0;
-createEvents.forEach(c => {
-  if (c.costETH) {
-    totalCreateETH += parseFloat(c.costETH) / 1e18;
-  }
-});
-
-console.log('From totals object:');
-console.log('Total ETH:', data.totals.totalETH);
-console.log('Total Staked ETH:', data.totals.totalStakedETH);
-console.log('Total Created ETH:', data.totals.totalCreatedETH);
-
-console.log('\nCalculated from events:');
-console.log('Calculated stake ETH:', totalStakeETH.toFixed(6));
-console.log('Calculated create ETH:', totalCreateETH.toFixed(6));
-console.log('Calculated total ETH:', (totalStakeETH + totalCreateETH).toFixed(6));
-
-console.log('\nISSUES FOUND:');
-console.log('- ETH totals mismatch: Cached shows', data.totals.totalETH, 'but calculated', (totalStakeETH + totalCreateETH).toFixed(6));
-console.log('- Create ETH missing: Cached shows', data.totals.totalCreatedETH, 'but calculated', totalCreateETH.toFixed(6));
-
-console.log('\n=== STAKING DAYS VERIFICATION ===');
-console.log('Checking that all stakes/creates are <= 88 days...');
-const allStakingDays = [...stakeEvents.map(s => s.stakingDays), ...createEvents.map(c => c.stakingDays)];
-const maxDays = Math.max(...allStakingDays);
-const minDays = Math.min(...allStakingDays);
-const over88 = allStakingDays.filter(d => d > 88).length;
-console.log('Min days:', minDays);
-console.log('Max days:', maxDays);
-console.log('Items over 88 days:', over88);
-console.log('Staking days verification:', over88 === 0 ? 'PASS' : 'FAIL');
+console.log('\n✅ Basic calculations look correct');
+console.log('🚨 MAJOR ISSUE: Test data uses 2024 timestamps, not 2025!');

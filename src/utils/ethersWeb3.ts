@@ -1139,10 +1139,21 @@ export const getContractInfo = async () => {
     const code = await provider.getCode(CONTRACTS.TORUS_CREATE_STAKE);
     const blockNumber = await provider.getBlockNumber();
     
+    // Get TitanX burned data from contract
+    const stakeContract = new ethers.Contract(CONTRACTS.TORUS_CREATE_STAKE, CREATE_STAKE_ABI, provider);
+    const totalTitanXBurnt = await stakeContract.totalTitanXBurnt();
+    
+    // Get TitanX total supply
+    const TITANX_ADDRESS = '0xf19308f923582a6f7c465e5ce7a9dc1bec6665b1';
+    const titanxContract = new ethers.Contract(TITANX_ADDRESS, TORUS_TOKEN_ABI, provider);
+    const titanxTotalSupply = await titanxContract.totalSupply();
+    
     return {
       balance: ethers.utils.formatEther(balance),
       hasCode: code !== '0x',
       currentBlock: blockNumber,
+      totalTitanXBurnt: totalTitanXBurnt.toString(),
+      titanxTotalSupply: titanxTotalSupply.toString(),
     };
   } catch (error) {
     console.error('Error getting contract info:', error);

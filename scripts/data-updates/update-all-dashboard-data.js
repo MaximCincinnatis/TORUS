@@ -56,7 +56,8 @@ const STAKE_CONTRACT_ABI = [
   'function getCurrentDayIndex() view returns (uint24)',
   'function rewardPool(uint24 day) view returns (uint256)',
   'function totalShares(uint24 day) view returns (uint256)',
-  'function penaltiesInRewardPool(uint24 day) view returns (uint256)'
+  'function penaltiesInRewardPool(uint24 day) view returns (uint256)',
+  'function totalTitanXBurnt() view returns (uint256)'
 ];
 
 const POOL_ABI = [
@@ -311,6 +312,15 @@ async function updateAllDashboardData() {
     const currentDayNumber = parseInt(currentDay.toString());
     cachedData.currentProtocolDay = currentDayNumber;
     cachedData.stakingData.currentProtocolDay = currentDayNumber;
+    
+    // Get TitanX burn data from contract
+    const totalTitanXBurnt = await stakeContract.totalTitanXBurnt();
+    cachedData.totalTitanXBurnt = totalTitanXBurnt.toString();
+    
+    // Get TitanX total supply
+    const titanxSupplyContract = new ethers.Contract(CONTRACTS.TITANX, ERC20_ABI, provider);
+    const titanxCurrentSupply = await titanxSupplyContract.totalSupply();
+    cachedData.titanxTotalSupply = titanxCurrentSupply.toString();
     
     // Update stake/create events (same logic as before but add missing fields)
     const allUsers = new Set();
@@ -1020,8 +1030,23 @@ async function updateAllDashboardData() {
         }
       }
       
-      cachedData.rewardPoolData = rewardPoolData;
-      cachedData.stakingData.rewardPoolData = rewardPoolData;
+      // PRESERVE HISTORICAL DATA: Merge instead of overwrite
+      const existingRewardPoolData = cachedData.stakingData.rewardPoolData || [];
+      const existingDays = new Set(existingRewardPoolData.map(d => d.day));
+      
+      // Keep existing historical data (days before current day)
+      const historicalData = existingRewardPoolData.filter(d => d.day < currentDayNumber);
+      
+      // Merge historical data with new data
+      const mergedRewardPoolData = [...historicalData, ...rewardPoolData];
+      
+      // Sort by day to ensure proper order
+      mergedRewardPoolData.sort((a, b) => a.day - b.day);
+      
+      cachedData.rewardPoolData = mergedRewardPoolData;
+      cachedData.stakingData.rewardPoolData = mergedRewardPoolData;
+      
+      console.log(`  ✅ Preserved ${historicalData.length} historical days, added ${rewardPoolData.length} new days`);
       
       console.log(`  ✅ Reward pool data fetched for ${rewardPoolData.length} days`);
       

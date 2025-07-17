@@ -200,6 +200,19 @@ async function calculateEnhancedAPR(position, claimableTorus = 0, claimableTitan
 
     console.log(`✅ Enhanced APR: ${averageAPR.toFixed(2)}% (${confidence} confidence)`);
 
+    // Check if position is out of range and has both amount0 and amount1 at 0
+    // This is a better indicator than inRange flag which might not be updated
+    if (position.amount0 === 0 && position.amount1 > 0) {
+      console.log(`📌 Position appears to be out of range (no TORUS) - setting APR to 0%`);
+      return {
+        volumeBasedAPR: 0,
+        realTimeAPR: 0,
+        averageAPR: 0,
+        confidence: 'high',
+        dataPoints: historicalData.length
+      };
+    }
+
     return {
       volumeBasedAPR,
       realTimeAPR,

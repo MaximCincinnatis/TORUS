@@ -9,6 +9,7 @@ import LoadingBar from './components/loading/LoadingBar';
 import SkeletonCard from './components/loading/SkeletonCard';
 import SkeletonChart from './components/loading/SkeletonChart';
 import LPPositionsTable from './components/lp/LPPositionsTable';
+import FutureMaxSupplyChart from './components/charts/FutureMaxSupplyChart';
 import { getContractInfo, RewardPoolData } from './utils/ethersWeb3';
 import { getTokenInfo, SimpleLPPosition } from './utils/uniswapV3RealOwners';
 import { DataCache } from './utils/cache';
@@ -37,10 +38,13 @@ function App() {
   const [lpPositions, setLpPositions] = useState<SimpleLPPosition[]>([]);
   const [lpTokenInfo, setLpTokenInfo] = useState<any>(null);
   const [lpLoading, setLpLoading] = useState(false);
+  const [contractInfo, setContractInfo] = useState<any>(null);
+  const [cachedTitanXData, setCachedTitanXData] = useState<{totalTitanXBurnt?: string, titanxTotalSupply?: string}>({});
   
   // Chart expansion state management
   const [expandedCharts, setExpandedCharts] = useState<Set<string>>(new Set([
     'supply-projection',
+    'max-supply-projection',
     'torus-staked-per-day',
     'stake-maturity',
     'create-maturity',
@@ -67,6 +71,7 @@ function App() {
   const handleExpandAll = () => {
     setExpandedCharts(new Set([
       'supply-projection',
+      'max-supply-projection',
       'torus-staked-per-day',
       'stake-maturity',
       'create-maturity',
@@ -85,6 +90,23 @@ function App() {
   useEffect(() => {
     loadData();
     // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // Load TitanX burn data directly from JSON
+  useEffect(() => {
+    const loadCachedTitanXData = async () => {
+      try {
+        const response = await fetch(`/data/cached-data.json?t=${Date.now()}`, { cache: 'no-cache' });
+        const data = await response.json();
+        setCachedTitanXData({
+          totalTitanXBurnt: data.totalTitanXBurnt || "0",
+          titanxTotalSupply: data.titanxTotalSupply || "0"
+        });
+      } catch (error) {
+        console.error('Error loading TitanX data:', error);
+      }
+    };
+    loadCachedTitanXData();
   }, []);
 
   const loadLPPositions = async () => {
@@ -129,6 +151,7 @@ function App() {
       setLoadingMessage('Verifying smart contract...');
       const contractInfo = await getContractInfo();
       console.log('Contract info:', contractInfo);
+      setContractInfo(contractInfo);
       
       setLoadingProgress(20);
       setLoadingMessage('Fetching stake events from blockchain...');
@@ -174,6 +197,20 @@ function App() {
       setCurrentProtocolDay(dashboardResult.data.currentProtocolDay || 0);
       setTotalSupply(dashboardResult.data.totalSupply || 0);
       setBurnedSupply(dashboardResult.data.burnedSupply || 0);
+      
+      // Update contract info with cached TitanX burn data
+      console.log('🔥 TitanX Burn Data Check:', {
+        totalTitanXBurnt: dashboardResult.data.totalTitanXBurnt,
+        titanxTotalSupply: dashboardResult.data.titanxTotalSupply
+      });
+      
+      if (dashboardResult.data.totalTitanXBurnt || dashboardResult.data.titanxTotalSupply) {
+        setContractInfo((prev: any) => ({
+          ...prev,
+          totalTitanXBurnt: dashboardResult.data.totalTitanXBurnt || "0",
+          titanxTotalSupply: dashboardResult.data.titanxTotalSupply || "0"
+        }));
+      }
       
       setLoadingProgress(55);
       setLoadingDetails(prev => [...prev, `Total supply: ${dashboardResult.data.totalSupply?.toLocaleString() || 0} TORUS`]);
@@ -800,15 +837,16 @@ function App() {
     console.log('\n%c=== SUPPLY PROJECTION DEBUG ===', 'background: #22c55e; color: white; font-weight: bold; font-size: 16px; padding: 10px');
     console.log(`Available torusReleasesWithRewards: ${torusReleasesWithRewards.length} entries`);
     
-    // Get current total supply (19,668 TORUS as seen in the UI)
-    const currentSupply = 19668;
-    const projection: { date: string; supply: number; released: number }[] = [];
+    // Get current total supply from actual data
+    const currentSupply = totalSupply || 19626.60;
+    const projection: { date: string; supply: number; released: number; contractDay: number; principal: number; rewards: number }[] = [];
     let cumulativeSupply = currentSupply;
     
     // Use the SAME data source as the working bar charts
     const releaseData = torusReleasesWithRewards.slice(0, 88); // Same as bar charts
     
     console.log(`Using ${releaseData.length} release data points`);
+    console.log(`Starting supply: ${currentSupply.toFixed(2)} TORUS`);
     if (releaseData.length > 0) {
       console.log(`First release: ${releaseData[0].date} - ${releaseData[0].total} TORUS`);
       console.log(`Last release: ${releaseData[releaseData.length - 1].date} - ${releaseData[releaseData.length - 1].total} TORUS`);
@@ -817,23 +855,27 @@ function App() {
     releaseData.forEach((release, i) => {
       const dailyRelease = release.total || 0;
       cumulativeSupply += dailyRelease;
+      const contractDay = currentProtocolDay + i;
       
-      // Debug significant releases and September dates
-      if (dailyRelease > 100 || release.date.includes('2025-09') || i >= 85) {
-        console.log(`Day ${i+1} (${release.date}): Released=${dailyRelease.toFixed(2)}, Cumulative=${cumulativeSupply.toFixed(2)}`);
+      // Debug significant releases and September/October dates
+      if (dailyRelease > 100 || release.date.includes('2025-09') || release.date.includes('2025-10') || i >= 85) {
+        console.log(`Day ${i+1} (${release.date}, Contract Day ${contractDay}): Principal=${release.principal.toFixed(2)}, Rewards=${release.rewards.toFixed(2)}, Total=${dailyRelease.toFixed(2)}, Cumulative=${cumulativeSupply.toFixed(2)}`);
       }
       
       projection.push({
         date: release.date,
         supply: cumulativeSupply,
-        released: dailyRelease
+        released: dailyRelease,
+        contractDay: contractDay,
+        principal: release.principal,
+        rewards: release.rewards
       });
     });
     
     const maxSupply = Math.max(...projection.map(p => p.supply));
     const maxRelease = Math.max(...projection.map(p => p.released));
     console.log(`Generated ${projection.length} days of projection`);
-    console.log(`Final cumulative supply: ${projection[projection.length - 1].supply.toLocaleString()}`);
+    console.log(`Final cumulative supply: ${projection[projection.length - 1]?.supply.toLocaleString()}`);
     console.log(`Maximum daily release: ${maxRelease.toLocaleString()}`);
     console.log('=== END SUPPLY PROJECTION DEBUG ===\n');
     
@@ -1046,6 +1088,24 @@ function App() {
   const totalTitanXFromStakes = stakesWithTitanX.reduce((sum, stake) => sum + parseFloat(stake.rawCostTitanX) / 1e18, 0);
   const totalTitanXInput = totalTitanXFromStakes + totalTitanXUsed;
   
+  // Get actual TitanX burned from cached data (most accurate)
+  const totalTitanXBurned = cachedTitanXData.totalTitanXBurnt 
+    ? parseFloat(cachedTitanXData.totalTitanXBurnt) / 1e18 
+    : 0;
+  
+  const titanxTotalSupply = cachedTitanXData.titanxTotalSupply 
+    ? parseFloat(cachedTitanXData.titanxTotalSupply) / 1e18 
+    : 1000000000000; // 1 trillion fallback
+  
+  const percentTitanXBurned = titanxTotalSupply > 0 ? (totalTitanXBurned / titanxTotalSupply) * 100 : 0;
+  
+  console.log('🔥 TitanX Metrics Debug:', {
+    contractInfo: contractInfo,
+    totalTitanXBurned,
+    titanxTotalSupply,
+    percentTitanXBurned
+  });
+  
   console.log('Supply metrics:', { totalSupply, totalStaked, totalTorusLocked, burnedSupply, percentStaked, percentBurned });
   
   console.log(`Total active shares: ${totalShares}`);
@@ -1125,6 +1185,41 @@ function App() {
                 <div className="supply-metric-title">% of Current <span className="torus-text">TORUS</span> Supply Staked</div>
                 <div className="supply-metric-value">
                   {percentStaked.toFixed(2)}
+                  <span className="supply-metric-suffix">%</span>
+                </div>
+              </div>
+            </>
+          )}
+        </div>
+      </div>
+
+      {/* TitanX Burn Metrics */}
+      <div className="supply-metrics">
+        <div className="supply-metrics-grid">
+          {loading ? (
+            <>
+              <SkeletonCard />
+              <SkeletonCard />
+            </>
+          ) : (
+            <>
+              <div className="supply-metric-card">
+                <div className="supply-metric-title">
+                  <img src="https://coin-images.coingecko.com/coins/images/32762/large/TitanXpng_%281%29.png?1704456654" alt="TitanX" style={{ width: '16px', height: '16px', marginRight: '6px', verticalAlign: 'middle', opacity: 0.8 }} />
+                  Total TitanX Burned by TORUS
+                </div>
+                <div className="supply-metric-value">
+                  {totalTitanXBurned.toLocaleString('en-US', { maximumFractionDigits: 0 })}
+                  <span className="supply-metric-suffix">TITANX</span>
+                </div>
+              </div>
+              <div className="supply-metric-card">
+                <div className="supply-metric-title">
+                  <img src="https://coin-images.coingecko.com/coins/images/32762/large/TitanXpng_%281%29.png?1704456654" alt="TitanX" style={{ width: '16px', height: '16px', marginRight: '6px', verticalAlign: 'middle', opacity: 0.8 }} />
+                  % of TitanX Supply Burned
+                </div>
+                <div className="supply-metric-value">
+                  {percentTitanXBurned.toFixed(6)}
                   <span className="supply-metric-suffix">%</span>
                 </div>
               </div>
@@ -1245,7 +1340,7 @@ function App() {
         onExpandAll={handleExpandAll}
         onCollapseAll={handleCollapseAll}
         expandedCount={expandedCharts.size}
-        totalCount={9}
+        totalCount={10}
       />
 
       {/* Charts Section */}
@@ -1300,7 +1395,16 @@ function App() {
           height={600}
           yAxisLabel="Total TORUS Supply"
           xAxisLabel="Date"
-          formatTooltip={(value: number) => `${value.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} TORUS`}
+          customTooltipData={supplyProjection}
+          customTooltipCallback={(context: any, data: any) => {
+            const lines = [];
+            lines.push(`Total Supply: ${data.supply.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} TORUS`);
+            lines.push(`Contract Day: ${data.contractDay}`);
+            lines.push(`Daily Release: ${data.released.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} TORUS`);
+            lines.push(`  - Principal: ${data.principal.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} TORUS`);
+            lines.push(`  - Rewards: ${data.rewards.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} TORUS`);
+            return lines;
+          }}
           formatYAxis={(value: number) => {
             if (value >= 1000000) return `${(value/1000000).toFixed(1)}M`;
             if (value >= 1000) return `${(value/1000).toFixed(1)}K`;
@@ -1308,7 +1412,49 @@ function App() {
           }}
         />
         <div className="chart-note">
-          This projection shows how the total TORUS supply will grow as positions mature and release both principal and accrued rewards. Starting from current supply of 19,668 TORUS, the line tracks cumulative supply increases each day. The growth rate depends on the number and size of positions maturing, including both their original principal and the share rewards they've accumulated throughout their staking period. Chart automatically scales to accommodate all values. This projection does not account for potential burn token dynamics.
+          This projection shows how the total TORUS supply will grow as positions mature and release both principal and accrued rewards. Starting from current supply of {totalSupply.toLocaleString()} TORUS, the line tracks cumulative supply increases each day. The growth rate depends on the number and size of positions maturing, including both their original principal and the share rewards they've accumulated throughout their staking period. Chart automatically scales to accommodate all values. This projection does not account for potential burn token dynamics.
+        </div>
+      </ExpandableChartSection>
+
+      <ExpandableChartSection
+        id="max-supply-projection"
+        title={<>Future <span className="torus-text">TORUS</span> Max Supply Projection</>}
+        subtitle="Maximum possible supply if all positions maintain their share percentages"
+        keyMetrics={[
+          {
+            label: "Active Positions",
+            value: [...stakeData, ...createData].length.toString(),
+            trend: "neutral"
+          },
+          {
+            label: "Total Shares",
+            value: rewardPoolData.length > 0 ? Math.round(parseFloat(rewardPoolData[rewardPoolData.length - 1]?.totalShares || "0")).toLocaleString() : "0",
+            trend: "up"
+          },
+          {
+            label: "Daily Reward Pool",
+            value: rewardPoolData.length > 0 ? Math.round(parseFloat(rewardPoolData[rewardPoolData.length - 1]?.rewardPool || "0")).toLocaleString() : "0",
+            trend: "up"
+          },
+          {
+            label: "Projection Days",
+            value: rewardPoolData.length.toString(),
+            trend: "neutral"
+          }
+        ]}
+        defaultExpanded={expandedCharts.has('max-supply-projection')}
+        loading={loading}
+        onToggle={(expanded) => handleChartToggle('max-supply-projection', expanded)}
+      >
+        <FutureMaxSupplyChart
+          stakeEvents={stakeData}
+          createEvents={createData}
+          rewardPoolData={rewardPoolData}
+          currentSupply={totalSupply}
+          contractStartDate={CONTRACT_START_DATE}
+        />
+        <div className="chart-note">
+          This projection shows the theoretical maximum TORUS supply if all current positions maintain their exact share percentages until maturity. New positions will dilute existing shares and reduce these projections. The chart combines rewards from both stake and create positions, accounting for the deflationary share pool mechanics where fewer shares mean higher rewards per share.
         </div>
       </ExpandableChartSection>
 

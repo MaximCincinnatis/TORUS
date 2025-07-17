@@ -122,6 +122,8 @@ export interface CachedData {
     totalStakedTitanX: string;
     totalCreatedTitanX: string;
   };
+  totalTitanXBurnt?: string;
+  titanxTotalSupply?: string;
 }
 
 /**
@@ -145,7 +147,7 @@ export async function loadCachedData(): Promise<CachedData | null> {
       console.log(`📂 Trying to fetch from ${source.name}: ${source.url}`);
       
       try {
-        response = await fetch(source.url, {
+        response = await fetch(`${source.url}?t=${Date.now()}`, {
           cache: 'no-cache', // Always get fresh data
           headers: {
             'Cache-Control': 'no-cache',
@@ -325,7 +327,9 @@ export async function getMainDashboardDataWithCache(
       rewardPoolData: cachedData.stakingData.rewardPoolData?.length || 0,
       currentProtocolDay: cachedData.stakingData.currentProtocolDay,
       totalSupply: cachedData.stakingData.totalSupply,
-      burnedSupply: cachedData.stakingData.burnedSupply
+      burnedSupply: cachedData.stakingData.burnedSupply,
+      totalTitanXBurnt: cachedData.totalTitanXBurnt,
+      titanxTotalSupply: cachedData.titanxTotalSupply
     });
     
     // Check if incremental updates are available
@@ -384,6 +388,8 @@ export async function getMainDashboardDataWithCache(
         currentProtocolDay: finalData.stakingData.currentProtocolDay || 0,
         totalSupply: finalData.stakingData.totalSupply || 0,
         burnedSupply: finalData.stakingData.burnedSupply || 0,
+        totalTitanXBurnt: finalData.totalTitanXBurnt || "0",
+        titanxTotalSupply: finalData.titanxTotalSupply || "0",
         totals: finalData.totals
       },
       source

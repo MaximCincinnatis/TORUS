@@ -76,6 +76,13 @@ export const CREATE_STAKE_ABI = [
     "type": "function"
   },
   {
+    "inputs": [],
+    "name": "totalTitanXBurnt",
+    "outputs": [{"internalType": "uint256", "name": "", "type": "uint256"}],
+    "stateMutability": "view",
+    "type": "function"
+  },
+  {
     "inputs": [
       {"internalType": "address", "name": "user", "type": "address"}
     ],
