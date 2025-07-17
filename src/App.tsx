@@ -12,7 +12,7 @@ import FutureMaxSupplyChart from './components/charts/FutureMaxSupplyChart';
 import { getContractInfo, RewardPoolData } from './utils/ethersWeb3';
 import { getTokenInfo, SimpleLPPosition } from './utils/uniswapV3RealOwners';
 import { DataCache } from './utils/cache';
-import { getMainDashboardDataWithCache, getLPPositionsWithCache } from './utils/cacheDataLoader';
+import { getMainDashboardDataWithCache, getLPPositionsWithCache, loadCachedData } from './utils/cacheDataLoader';
 import './App.css';
 
 // Contract launch date - Day 1 (corrected to align with protocol days)
@@ -39,6 +39,7 @@ function App() {
   const [lpLoading, setLpLoading] = useState(false);
   const [contractInfo, setContractInfo] = useState<any>(null);
   const [cachedTitanXData, setCachedTitanXData] = useState<{totalTitanXBurnt?: string, titanxTotalSupply?: string}>({});
+  const [lastUpdatedTime, setLastUpdatedTime] = useState<string | null>(null);
   
   // Chart expansion state management
   const [expandedCharts, setExpandedCharts] = useState<Set<string>>(new Set([
@@ -101,6 +102,7 @@ function App() {
           totalTitanXBurnt: data.totalTitanXBurnt || "0",
           titanxTotalSupply: data.titanxTotalSupply || "0"
         });
+        setLastUpdatedTime(data.lastUpdated || null);
       } catch (error) {
         console.error('Error loading TitanX data:', error);
       }
@@ -1982,8 +1984,8 @@ function App() {
               <div className="data-status-text">
                 <span className="data-status-label">Last Updated</span>
                 <span className="data-status-value">
-                  {DataCache.getLastUpdated() ? 
-                    new Date(DataCache.getLastUpdated()!).toLocaleString() : 
+                  {lastUpdatedTime ? 
+                    new Date(lastUpdatedTime).toLocaleString() : 
                     'Syncing...'}
                 </span>
               </div>
