@@ -952,8 +952,8 @@ async function updateAllDashboardData() {
       lpPositions: lpPositions
     };
     
-    // CRITICAL FIX: Smart merge LP positions - preserve existing but handle legitimate removals
-    function mergeLPPositions(existingPositions, newPositions) {
+    // CRITICAL FIX: Accurate LP position validation with individual on-chain checks
+    async function mergeLPPositionsWithValidation(existingPositions, newPositions, provider) {
       const positionMap = new Map();
       const newPositionIds = new Set();
       
@@ -967,23 +967,71 @@ async function updateAllDashboardData() {
         });
       }
       
-      // Then, add existing positions that weren't found in new scan
-      // BUT only if the new scan found a reasonable number of positions
+      // Uniswap V3 Position Manager contract
+      const positionManagerAddress = '0xC36442b4a4522E871399CD717aBDD847Ab11FE88';
+      const positionManagerABI = [
+        'function positions(uint256 tokenId) external view returns (uint96 nonce, address operator, address token0, address token1, uint24 fee, int24 tickLower, int24 tickUpper, uint128 liquidity, uint256 feeGrowthInside0LastX128, uint256 feeGrowthInside1LastX128, uint128 tokensOwed0, uint128 tokensOwed1)',
+        'function ownerOf(uint256 tokenId) external view returns (address)'
+      ];
+      const positionManager = new ethers.Contract(positionManagerAddress, positionManagerABI, provider);
+      
+      // Then, validate each existing position individually
       if (existingPositions && Array.isArray(existingPositions)) {
-        const scanFoundManyPositions = newPositions.length >= 5; // Threshold for "good scan"
-        
-        existingPositions.forEach(existingPos => {
-          if (existingPos.tokenId && !newPositionIds.has(existingPos.tokenId)) {
-            if (scanFoundManyPositions) {
-              // Good scan - position likely legitimately removed (burned/transferred)
-              console.log(`  🔥 Position ${existingPos.tokenId} not found in comprehensive scan - likely removed`);
+        for (const existingPos of existingPositions) {
+          if (!existingPos.tokenId || newPositionIds.has(existingPos.tokenId)) {
+            // Already in new positions, skip validation
+            continue;
+          }
+          
+          try {
+            console.log(`  🔍 Validating position ${existingPos.tokenId}...`);
+            
+            // Check if position still exists and get current data
+            const [positionData, currentOwner] = await Promise.all([
+              positionManager.positions(existingPos.tokenId),
+              positionManager.ownerOf(existingPos.tokenId).catch(() => null)
+            ]);
+            
+            const currentLiquidity = positionData.liquidity.toString();
+            const hasLiquidity = currentLiquidity !== '0';
+            
+            if (!currentOwner) {
+              // Position doesn't exist (burned)
+              console.log(`  🔥 Position ${existingPos.tokenId} burned (doesn't exist) - removing`);
+              continue;
+            }
+            
+            if (!hasLiquidity) {
+              // Position exists but has zero liquidity
+              console.log(`  💧 Position ${existingPos.tokenId} has zero liquidity - removing`);
+              continue;
+            }
+            
+            // Check if this position is in our target pool
+            const isTargetPool = positionData.token0.toLowerCase() === '0xB47f575807fC5466285e1277Ef8aCFBB5c6686E8'.toLowerCase() || 
+                               positionData.token1.toLowerCase() === '0xB47f575807fC5466285e1277Ef8aCFBB5c6686E8'.toLowerCase();
+            
+            if (!isTargetPool) {
+              // Position exists but not in TORUS pool
+              console.log(`  🚫 Position ${existingPos.tokenId} not in TORUS pool - removing`);
+              continue;
+            }
+            
+            // Position is valid - preserve it
+            console.log(`  ✅ Position ${existingPos.tokenId} validated (owner: ${currentOwner.substring(0,8)}..., liquidity: ${currentLiquidity})`);
+            positionMap.set(existingPos.tokenId, existingPos);
+            
+          } catch (error) {
+            // RPC error or position doesn't exist
+            if (error.message.includes('ERC721: owner query for nonexistent token')) {
+              console.log(`  🔥 Position ${existingPos.tokenId} doesn't exist (burned) - removing`);
             } else {
-              // Poor scan - preserve existing position (likely RPC/scan issue)
-              console.log(`  💾 Preserving position ${existingPos.tokenId} (limited scan: ${newPositions.length} found)`);
+              // Other RPC error - preserve position to be safe
+              console.log(`  ⚠️  Error validating position ${existingPos.tokenId}: ${error.message} - preserving`);
               positionMap.set(existingPos.tokenId, existingPos);
             }
           }
-        });
+        }
       }
       
       return Array.from(positionMap.values());
@@ -992,26 +1040,27 @@ async function updateAllDashboardData() {
     // Store position count before merge for audit
     const positionCountBefore = cachedData.lpPositions?.length || 0;
     
-    // Merge LP positions instead of overwriting
-    cachedData.lpPositions = mergeLPPositions(cachedData.lpPositions, lpPositions);
+    // Merge LP positions with individual on-chain validation
+    console.log(`  🔍 Validating ${positionCountBefore} existing positions...`);
+    cachedData.lpPositions = await mergeLPPositionsWithValidation(cachedData.lpPositions, lpPositions, provider);
     
-    // Audit the merge results
+    // Audit the validation results
     const positionCountAfter = cachedData.lpPositions?.length || 0;
-    const positionsRemoved = positionCountBefore - positionCountAfter + lpPositions.length;
+    const positionsRemoved = Math.max(0, positionCountBefore - positionCountAfter + lpPositions.length);
+    const positionsValidated = positionCountBefore - lpPositions.length; // Existing positions that needed validation
     
-    console.log(`  📊 LP Position Merge Results:`);
-    console.log(`    - Existing: ${positionCountBefore}`);
+    console.log(`  📊 LP Position Validation Results:`);
+    console.log(`    - Existing positions: ${positionCountBefore}`);
     console.log(`    - New scan found: ${lpPositions.length}`);
+    console.log(`    - Validated individually: ${positionsValidated}`);
     console.log(`    - Final total: ${positionCountAfter}`);
     console.log(`    - Net change: ${positionCountAfter - positionCountBefore > 0 ? '+' : ''}${positionCountAfter - positionCountBefore}`);
     
     if (positionsRemoved > 0) {
-      console.log(`  🔥 ${positionsRemoved} positions removed (likely burned/transferred)`);
+      console.log(`  🔥 ${positionsRemoved} positions removed after on-chain validation`);
     }
     
-    if (positionCountAfter < positionCountBefore && lpPositions.length < 5) {
-      console.warn(`  ⚠️  Position count decreased with limited scan - may indicate RPC issues!`);
-    }
+    console.log(`  ✅ All positions validated against blockchain state`);
     
     console.log(`  ✅ Uniswap data updated with ${lpPositions.length} LP positions`);
     

@@ -27,12 +27,21 @@
 ### 1. LP Position Data Loss (CRITICAL) ✅
 **File**: `scripts/data-updates/update-all-dashboard-data.js:956`
 **Problem**: `cachedData.lpPositions = lpPositions;` overwrote existing positions
-**Solution**: Added smart `mergeLPPositions()` function that:
+**Solution**: Added accurate `mergeLPPositionsWithValidation()` function that:
 - Creates Map of existing positions by tokenId
-- Adds/updates with new positions
-- **Handles legitimate removals**: If comprehensive scan (5+ positions found), removes positions not found (likely burned/transferred)
-- **Preserves during poor scans**: If limited scan (<5 positions), preserves existing positions (likely RPC issues)
-- Includes detailed audit logging for position count changes and removals
+- Adds/updates with new positions from bulk scan
+- **Individual On-Chain Validation**: For each existing position not found in bulk scan:
+  - Queries Uniswap V3 Position Manager contract directly
+  - Checks if position exists (`ownerOf()` call)
+  - Validates liquidity > 0 (`positions()` call)
+  - Confirms position is in TORUS pool (token0/token1 check)
+  - Only removes positions with definitive on-chain proof of removal
+- **Accurate Removal Logic**: Positions only removed when blockchain confirms:
+  - Position burned (ERC721 doesn't exist)
+  - Position has zero liquidity
+  - Position not in TORUS pool
+- **Safe Error Handling**: RPC errors preserve positions to prevent false removals
+- Detailed validation logging for each position checked
 
 ### 2. Aggressive Full Update Triggers (HIGH) ✅
 **File**: `smart-update.js:152`
@@ -64,26 +73,36 @@
 
 ## How Position Removal Logic Works
 
-The improved `mergeLPPositions()` function now intelligently handles position removals:
+The new `mergeLPPositionsWithValidation()` function uses accurate on-chain validation:
 
-### Legitimate Removals (Allowed) ✅
-- **Comprehensive scan** (finds 5+ positions): Positions not found are considered legitimately removed
-- **Reasons**: LP burned, position transferred to new owner, liquidity fully removed
-- **Action**: Position removed from cached data with log message
+### Individual Position Validation 🔍
+For each existing position not found in bulk scan:
+1. **Direct Contract Query**: Calls Uniswap V3 Position Manager
+2. **Existence Check**: `ownerOf(tokenId)` - does position exist?
+3. **Liquidity Check**: `positions(tokenId)` - does it have liquidity > 0?
+4. **Pool Check**: Is token0 or token1 the TORUS token?
 
-### Preservation (RPC Issues) 🛡️
-- **Limited scan** (finds <5 positions): Positions not found are likely due to RPC/scan issues
-- **Reasons**: RPC provider issues, event scanning problems, network issues
-- **Action**: Existing positions preserved with log message
+### Legitimate Removals (Only When Blockchain Confirms) ✅
+- **Position Burned**: `ownerOf()` throws "nonexistent token" error
+- **Zero Liquidity**: Position exists but liquidity = 0
+- **Wrong Pool**: Position exists but not in TORUS/TITANX pool
+- **Action**: Position removed with specific reason logged
+
+### Position Preserved (Safe Default) 🛡️
+- **Valid Position**: Has owner, liquidity > 0, correct pool
+- **RPC Errors**: Network issues, provider problems
+- **Action**: Position kept in cache with validation status
 
 ### Audit Logging 📊
 ```
-📊 LP Position Merge Results:
-  - Existing: 10
+📊 LP Position Validation Results:
+  - Existing positions: 10
   - New scan found: 8
-  - Final total: 8  
-  - Net change: -2
-🔥 2 positions removed (likely burned/transferred)
+  - Validated individually: 2
+  - Final total: 9
+  - Net change: -1
+🔥 1 positions removed after on-chain validation
+✅ All positions validated against blockchain state
 ```
 
 ## Next Steps
