@@ -136,7 +136,7 @@ export async function loadCachedData(): Promise<CachedData | null> {
     // Try multiple sources in order
     const sources = [
       { url: '/data/cached-data.json', name: 'Static File' },
-      { url: 'https://raw.githubusercontent.com/MaximCincinnatis/TORUS/master/torus-dashboard/public/data/cached-data.json', name: 'GitHub Raw' },
+      { url: 'https://raw.githubusercontent.com/MaximCincinnatis/TORUS/master/public/data/cached-data.json', name: 'GitHub Raw' },
       { url: 'https://torus-dashboard-omega.vercel.app/data/cached-data.json', name: 'Vercel Production' }
     ];
     
