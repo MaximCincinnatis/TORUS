@@ -148,8 +148,15 @@ async function performSmartUpdate(provider, updateLog, currentBlock, blocksSince
         if (mintEvents.length > 0) {
           log(`Found ${mintEvents.length} new Mint events`, 'yellow');
           updateStats.dataChanged = true;
-          // Mark for full update
-          return { ...updateStats, needsFullUpdate: true };
+          
+          // Only trigger full update for significant changes (more than 5 new positions or many blocks)
+          if (mintEvents.length > 5 || blocksSinceLastUpdate > 1000) {
+            log(`Triggering full update: ${mintEvents.length} mint events, ${blocksSinceLastUpdate} blocks`, 'yellow');
+            return { ...updateStats, needsFullUpdate: true };
+          } else {
+            log(`Minor LP changes (${mintEvents.length} events), continuing with smart update`, 'cyan');
+            // Could add incremental LP position update here
+          }
         }
       } catch (e) {
         updateStats.errors.push(`LP check: ${e.message}`);

@@ -952,8 +952,44 @@ async function updateAllDashboardData() {
       lpPositions: lpPositions
     };
     
-    // Also add lpPositions at root level for backward compatibility
-    cachedData.lpPositions = lpPositions;
+    // CRITICAL FIX: Merge LP positions instead of overwriting to prevent data loss
+    function mergeLPPositions(existingPositions, newPositions) {
+      const positionMap = new Map();
+      
+      // Add existing positions to map
+      if (existingPositions && Array.isArray(existingPositions)) {
+        existingPositions.forEach(pos => {
+          if (pos.tokenId) {
+            positionMap.set(pos.tokenId, pos);
+          }
+        });
+      }
+      
+      // Update or add new positions
+      if (newPositions && Array.isArray(newPositions)) {
+        newPositions.forEach(pos => {
+          if (pos.tokenId) {
+            positionMap.set(pos.tokenId, pos);
+          }
+        });
+      }
+      
+      return Array.from(positionMap.values());
+    }
+    
+    // Store position count before merge for audit
+    const positionCountBefore = cachedData.lpPositions?.length || 0;
+    
+    // Merge LP positions instead of overwriting
+    cachedData.lpPositions = mergeLPPositions(cachedData.lpPositions, lpPositions);
+    
+    // Audit the merge results
+    const positionCountAfter = cachedData.lpPositions?.length || 0;
+    console.log(`  📊 LP Position Merge: ${positionCountBefore} existing + ${lpPositions.length} new = ${positionCountAfter} total`);
+    
+    if (positionCountAfter < positionCountBefore) {
+      console.warn(`  ⚠️  Position count decreased from ${positionCountBefore} to ${positionCountAfter}!`);
+    }
     
     console.log(`  ✅ Uniswap data updated with ${lpPositions.length} LP positions`);
     
