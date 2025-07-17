@@ -136,7 +136,6 @@ const LPPositionsTable: React.FC<LPPositionsTableProps> = ({ positions, loading,
               <th>Est. APR (24hr)</th>
               <th>TitanX Price Range (Millions per TORUS)</th>
               <th>Status</th>
-              <th>Share %</th>
             </tr>
           </thead>
           <tbody>
@@ -166,12 +165,6 @@ const LPPositionsTable: React.FC<LPPositionsTableProps> = ({ positions, loading,
               const titanXPriceRange = isFullRange 
                 ? "Full Range V3" 
                 : formatPriceRangeWithCommas((position as any).priceRange) || formatTitanXPriceRange(position.tickLower, position.tickUpper);
-              
-              // Calculate share percentage (rough estimate)
-              const totalLiquidity = positions.reduce((sum, p) => sum + BigInt(p.liquidity), BigInt(0));
-              const sharePercent = totalLiquidity > 0 
-                ? (Number(BigInt(position.liquidity) * BigInt(10000) / totalLiquidity) / 100)
-                : 0;
 
               return (
                 <tr key={`${position.owner}-${index}`}>
@@ -208,7 +201,6 @@ const LPPositionsTable: React.FC<LPPositionsTableProps> = ({ positions, loading,
                       {position.inRange ? 'In Range' : 'Out of Range'}
                     </span>
                   </td>
-                  <td>{sharePercent.toFixed(2)}%</td>
                 </tr>
               );
             })}

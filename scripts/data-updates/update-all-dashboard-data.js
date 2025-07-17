@@ -127,8 +127,8 @@ async function calculatePositionAPR(amounts, claimableTorus, claimableTitanX, cu
     const inRange = currentTick >= tickLower && currentTick <= tickUpper;
     
     if (!inRange) {
-      // Out of range positions don't earn fees, so APR should be very low
-      return Math.min(conservativeAPR * 0.1, 5); // Max 5% for out-of-range
+      // Out of range positions don't earn fees, so APR should be 0
+      return 0;
     }
     
     // Method 3: Estimate based on fee tier and typical Uniswap yields
@@ -1029,9 +1029,80 @@ async function updateAllDashboardData() {
               continue;
             }
             
-            // Position is valid - preserve it
+            // Position is valid - recalculate amounts with fresh data
             console.log(`  ✅ Position ${existingPos.tokenId} validated (owner: ${currentOwner.substring(0,8)}..., liquidity: ${currentLiquidity})`);
-            positionMap.set(existingPos.tokenId, existingPos);
+            
+            // Recalculate token amounts with current pool state
+            const amounts = calculateTokenAmounts(
+              currentLiquidity,
+              cachedData.poolData.sqrtPriceX96,
+              positionData.tickLower,
+              positionData.tickUpper
+            );
+            
+            // Recalculate claimable fees
+            let claimableTorus = 0;
+            let claimableTitanX = 0;
+            
+            try {
+              // Simulate collect call for accurate fees
+              const collectInterface = new ethers.utils.Interface([
+                'function collect(tuple(uint256 tokenId, address recipient, uint128 amount0Max, uint128 amount1Max)) returns (uint256 amount0, uint256 amount1)'
+              ]);
+              
+              const collectParams = {
+                tokenId: existingPos.tokenId,
+                recipient: currentOwner,
+                amount0Max: '0xffffffffffffffffffffffffffffffff',
+                amount1Max: '0xffffffffffffffffffffffffffffffff'
+              };
+              
+              const collectData = collectInterface.encodeFunctionData('collect', [collectParams]);
+              const result = await provider.call({
+                to: CONTRACTS.NFT_POSITION_MANAGER,
+                data: collectData,
+                from: currentOwner
+              });
+              
+              const decoded = collectInterface.decodeFunctionResult('collect', result);
+              claimableTorus = parseFloat(ethers.utils.formatEther(decoded.amount0));
+              claimableTitanX = parseFloat(ethers.utils.formatEther(decoded.amount1));
+              
+            } catch (collectError) {
+              // Fallback to tokensOwed
+              claimableTorus = parseFloat(ethers.utils.formatEther(positionData.tokensOwed0));
+              claimableTitanX = parseFloat(ethers.utils.formatEther(positionData.tokensOwed1));
+            }
+            
+            // Recalculate APR 
+            const currentTick = parseInt(cachedData.poolData.currentTick);
+            const estimatedAPR = await calculatePositionAPR(
+              amounts,
+              claimableTorus,
+              claimableTitanX,
+              currentTick,
+              positionData.tickLower,
+              positionData.tickUpper,
+              existingPos.tokenId
+            );
+            
+            // Update position with fresh data
+            const updatedPosition = {
+              ...existingPos,
+              owner: currentOwner,
+              liquidity: currentLiquidity,
+              amount0: amounts.amount0,
+              amount1: amounts.amount1,
+              claimableTorus: claimableTorus,
+              claimableTitanX: claimableTitanX,
+              tokensOwed0: positionData.tokensOwed0.toString(),
+              tokensOwed1: positionData.tokensOwed1.toString(),
+              inRange: positionData.tickLower <= currentTick && currentTick <= positionData.tickUpper,
+              estimatedAPR: isNaN(estimatedAPR) ? 0 : estimatedAPR.toFixed(2),
+              lastChecked: new Date().toISOString()
+            };
+            
+            positionMap.set(existingPos.tokenId, updatedPosition);
             
           } catch (error) {
             // RPC error or position doesn't exist

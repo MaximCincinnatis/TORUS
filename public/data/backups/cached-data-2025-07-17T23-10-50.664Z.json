@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2025-07-17T23:12:29.164Z",
+  "lastUpdated": "2025-07-17T23:00:06.692Z",
   "version": "1.0.0",
   "poolData": {
     "sqrtPriceX96": "523645228533733833558961720405887",
@@ -12,6 +12,27 @@
   },
   "lpPositions": [
     {
+      "tokenId": "1029195",
+      "owner": "0xAa390a37006E22b5775A34f2147F81eBD6a63641",
+      "liquidity": "63419569934991862290206742",
+      "tickLower": -887200,
+      "tickUpper": 887200,
+      "lowerTitanxPerTorus": "0.00M",
+      "upperTitanxPerTorus": "Infinity",
+      "currentTitanxPerTorus": "43.60M",
+      "amount0": 9595.458374487214,
+      "amount1": 419160991978.58936,
+      "claimableTorus": 1.7998445231945943,
+      "claimableTitanX": 383147783.96525913,
+      "tokensOwed0": "1799844523194594424",
+      "tokensOwed1": "383147783965259161359130007",
+      "fee": 10000,
+      "inRange": true,
+      "estimatedAPR": "6.88",
+      "priceRange": "Full Range",
+      "lastChecked": "2025-07-17T23:00:03.882Z"
+    },
+    {
       "tokenId": "1030759",
       "owner": "0x9BBb45e12c4a75f7406Cb38e858Fa6C68A88f30d",
       "liquidity": "28467664237287326082660",
@@ -21,7 +42,7 @@
       "upperTitanxPerTorus": "20.16M",
       "currentTitanxPerTorus": "43.68M",
       "amount0": 0,
-      "amount1": 114999999.99989024,
+      "amount1": 0,
       "claimableTorus": 0,
       "claimableTitanX": 0,
       "tokensOwed0": "0",
@@ -29,7 +50,8 @@
       "fee": 10000,
       "inRange": false,
       "estimatedAPR": "0.00",
-      "priceRange": "0.20M - 20.16M TITANX per TORUS"
+      "priceRange": "0.20M - 20.16M TITANX per TORUS",
+      "lastChecked": "2025-07-17T23:00:04.196Z"
     },
     {
       "tokenId": "1031465",
@@ -40,16 +62,17 @@
       "lowerTitanxPerTorus": "31.30M",
       "upperTitanxPerTorus": "51.60M",
       "currentTitanxPerTorus": "43.68M",
-      "amount0": 76.48300654464666,
-      "amount1": 6416136194.768041,
-      "claimableTorus": 0.30711898319026243,
-      "claimableTitanX": 22092568.321289208,
+      "amount0": 0,
+      "amount1": 0,
+      "claimableTorus": 0,
+      "claimableTitanX": 0,
       "tokensOwed0": "0",
       "tokensOwed1": "0",
       "fee": 10000,
       "inRange": true,
       "estimatedAPR": "50.00",
-      "priceRange": "31.30M - 51.60M TITANX per TORUS"
+      "priceRange": "31.30M - 51.60M TITANX per TORUS",
+      "lastChecked": "2025-07-17T23:00:04.504Z"
     },
     {
       "tokenId": "1031533",
@@ -60,16 +83,17 @@
       "lowerTitanxPerTorus": "0.00M",
       "upperTitanxPerTorus": "Infinity",
       "currentTitanxPerTorus": "43.68M",
-      "amount0": 131.54431567175948,
+      "amount0": 131.54431567175953,
       "amount1": 5746285762.931678,
-      "claimableTorus": 0.24485240647024561,
-      "claimableTitanX": 16898558.521796767,
+      "claimableTorus": 0,
+      "claimableTitanX": 0,
       "tokensOwed0": "0",
       "tokensOwed1": "0",
       "fee": 10000,
       "inRange": true,
       "estimatedAPR": "12.50",
-      "priceRange": "0.00M - Infinity TITANX per TORUS"
+      "priceRange": "0.00M - Infinity TITANX per TORUS",
+      "lastChecked": "2025-07-17T23:00:04.945Z"
     },
     {
       "tokenId": "1032346",
@@ -81,15 +105,16 @@
       "upperTitanxPerTorus": "35.29M",
       "currentTitanxPerTorus": "43.68M",
       "amount0": 0,
-      "amount1": 879002737.6988096,
-      "claimableTorus": 0.1460776033756232,
-      "claimableTitanX": 5003826.698754727,
+      "amount1": 0,
+      "claimableTorus": 0,
+      "claimableTitanX": 0,
       "tokensOwed0": "0",
       "tokensOwed1": "0",
       "fee": 10000,
       "inRange": false,
-      "estimatedAPR": "0.00",
-      "priceRange": "28.89M - 35.29M TITANX per TORUS"
+      "estimatedAPR": "5.00",
+      "priceRange": "28.89M - 35.29M TITANX per TORUS",
+      "lastChecked": "2025-07-17T23:00:05.243Z"
     },
     {
       "tokenId": "1033659",
@@ -100,429 +125,409 @@
       "lowerTitanxPerTorus": "28.89M",
       "upperTitanxPerTorus": "48.60M",
       "currentTitanxPerTorus": "43.68M",
-      "amount0": 20.902144628664242,
-      "amount1": 3283315177.5560675,
-      "claimableTorus": 0.13528787778296833,
-      "claimableTitanX": 16679353.65421935,
+      "amount0": 0,
+      "amount1": 0,
+      "claimableTorus": 0,
+      "claimableTitanX": 0,
       "tokensOwed0": "0",
       "tokensOwed1": "0",
       "fee": 10000,
       "inRange": true,
       "estimatedAPR": "55.98",
-      "priceRange": "28.89M - 48.60M TITANX per TORUS"
-    },
-    {
-      "tokenId": "1029195",
-      "owner": "0xAa390a37006E22b5775A34f2147F81eBD6a63641",
-      "liquidity": "63419569934991862290206742",
-      "tickLower": -887200,
-      "tickUpper": 887200,
-      "lowerTitanxPerTorus": "0.00M",
-      "upperTitanxPerTorus": "Infinity",
-      "currentTitanxPerTorus": "43.60M",
-      "amount0": 9595.45837448721,
-      "amount1": 419160991978.58936,
-      "claimableTorus": 3.2236046591141108,
-      "claimableTitanX": 416152568.823509,
-      "tokensOwed0": "1799844523194594424",
-      "tokensOwed1": "383147783965259161359130007",
-      "fee": 10000,
-      "inRange": true,
-      "estimatedAPR": "12.50",
-      "priceRange": "Full Range",
-      "lastChecked": "2025-07-17T23:12:01.831Z"
+      "priceRange": "28.89M - 48.60M TITANX per TORUS",
+      "lastChecked": "2025-07-17T23:00:05.535Z"
     }
   ],
   "historicalData": {
     "sevenDay": [
       {
         "date": "2025-07-11",
-        "volumeUSD": 69780.14939265876,
-        "volumeToken0": 1227.2840838941472,
-        "volumeToken1": 26696720.722610623,
-        "feesUSD": 606.6765383872707,
+        "volumeUSD": 122192.5427586799,
+        "volumeToken0": 1404.5046597416545,
+        "volumeToken1": 47189057.96235584,
+        "feesUSD": 1191.678542192058,
         "tvlUSD": 8859547.753168317,
         "liquidity": "74316438506935709237979883",
-        "txCount": 115
+        "txCount": 135
       },
       {
         "date": "2025-07-12",
-        "volumeUSD": 99190.43122240098,
-        "volumeToken0": 1420.5757984972615,
-        "volumeToken1": 65260346.801907435,
-        "feesUSD": 1488.5147626183577,
+        "volumeUSD": 141948.87242012235,
+        "volumeToken0": 875.7068694134423,
+        "volumeToken1": 31681923.043985903,
+        "feesUSD": 1114.6093454724069,
         "tvlUSD": 8859547.753168317,
         "liquidity": "74316438506935709237979883",
-        "txCount": 278
+        "txCount": 122
       },
       {
         "date": "2025-07-13",
-        "volumeUSD": 142880.30811420735,
-        "volumeToken0": 1452.9993506411602,
-        "volumeToken1": 53453794.48546627,
-        "feesUSD": 571.2951943739952,
+        "volumeUSD": 62530.715821697784,
+        "volumeToken0": 1229.6726138503486,
+        "volumeToken1": 70521744.80177125,
+        "feesUSD": 1021.432380492453,
         "tvlUSD": 8859547.753168317,
         "liquidity": "74316438506935709237979883",
-        "txCount": 281
+        "txCount": 121
       },
       {
         "date": "2025-07-14",
-        "volumeUSD": 129430.79763269094,
-        "volumeToken0": 1408.0019912536236,
-        "volumeToken1": 49664362.4600519,
-        "feesUSD": 797.3651709518741,
+        "volumeUSD": 112083.88809243412,
+        "volumeToken0": 755.9683044243682,
+        "volumeToken1": 57274505.36422468,
+        "feesUSD": 1024.014518880618,
         "tvlUSD": 8859547.753168317,
         "liquidity": "74316438506935709237979883",
-        "txCount": 163
+        "txCount": 270
       },
       {
         "date": "2025-07-15",
-        "volumeUSD": 90821.03321601765,
-        "volumeToken0": 1375.1513778330718,
-        "volumeToken1": 30271354.747362267,
-        "feesUSD": 1104.957625346878,
+        "volumeUSD": 59546.48589696949,
+        "volumeToken0": 946.2418200017648,
+        "volumeToken1": 47985173.01420052,
+        "feesUSD": 1374.8358303691448,
         "tvlUSD": 8859547.753168317,
         "liquidity": "74316438506935709237979883",
-        "txCount": 207
+        "txCount": 182
       },
       {
         "date": "2025-07-16",
-        "volumeUSD": 130378.39972937557,
-        "volumeToken0": 1238.3993833490645,
-        "volumeToken1": 66147366.96791441,
-        "feesUSD": 970.0651280529049,
+        "volumeUSD": 116358.68693721347,
+        "volumeToken0": 821.1868492896513,
+        "volumeToken1": 72489351.243426,
+        "feesUSD": 795.3208584913675,
         "tvlUSD": 8859547.753168317,
         "liquidity": "74316438506935709237979883",
-        "txCount": 243
+        "txCount": 156
       },
       {
         "date": "2025-07-17",
-        "volumeUSD": 84475.96542887454,
-        "volumeToken0": 893.6786076765071,
-        "volumeToken1": 67093896.37830074,
-        "feesUSD": 1162.436020954157,
+        "volumeUSD": 141475.91471186854,
+        "volumeToken0": 968.1513132692268,
+        "volumeToken1": 43216620.40181632,
+        "feesUSD": 525.9239879646968,
         "tvlUSD": 8859547.753168317,
         "liquidity": "74316438506935709237979883",
-        "txCount": 250
+        "txCount": 184
       }
     ],
     "thirtyDay": [
       {
         "date": "2025-06-18",
-        "volumeUSD": 141833.28760082123,
-        "volumeToken0": 1321.0238186253787,
-        "volumeToken1": 44910468.83125053,
-        "feesUSD": 1389.7056971255356,
+        "volumeUSD": 115773.90159390088,
+        "volumeToken0": 550.7930287914726,
+        "volumeToken1": 47661082.85178596,
+        "feesUSD": 552.5826757959911,
         "tvlUSD": 8859547.753168317,
         "liquidity": "74316438506935709237979883",
-        "txCount": 186
+        "txCount": 275
       },
       {
         "date": "2025-06-19",
-        "volumeUSD": 99619.79325825338,
-        "volumeToken0": 509.3844028906378,
-        "volumeToken1": 54438113.69704811,
-        "feesUSD": 1372.2660893445575,
+        "volumeUSD": 121751.74180582621,
+        "volumeToken0": 1191.5506003720816,
+        "volumeToken1": 50795385.30451693,
+        "feesUSD": 1206.4381249998162,
         "tvlUSD": 8859547.753168317,
         "liquidity": "74316438506935709237979883",
-        "txCount": 241
+        "txCount": 291
       },
       {
         "date": "2025-06-20",
-        "volumeUSD": 147443.27752390067,
-        "volumeToken0": 1461.193887390687,
-        "volumeToken1": 71272861.29529157,
-        "feesUSD": 1230.4898062636958,
-        "tvlUSD": 8859547.753168317,
-        "liquidity": "74316438506935709237979883",
-        "txCount": 154
-      },
-      {
-        "date": "2025-06-21",
-        "volumeUSD": 144256.8069488174,
-        "volumeToken0": 749.5855729791623,
-        "volumeToken1": 47939900.95744118,
-        "feesUSD": 1046.6317839003855,
-        "tvlUSD": 8859547.753168317,
-        "liquidity": "74316438506935709237979883",
-        "txCount": 260
-      },
-      {
-        "date": "2025-06-22",
-        "volumeUSD": 88496.42446609556,
-        "volumeToken0": 1382.1932442338991,
-        "volumeToken1": 45723926.49146642,
-        "feesUSD": 750.328635727592,
-        "tvlUSD": 8859547.753168317,
-        "liquidity": "74316438506935709237979883",
-        "txCount": 208
-      },
-      {
-        "date": "2025-06-23",
-        "volumeUSD": 130192.53049094867,
-        "volumeToken0": 1277.1686920108173,
-        "volumeToken1": 48334577.604634926,
-        "feesUSD": 967.0659034098226,
-        "tvlUSD": 8859547.753168317,
-        "liquidity": "74316438506935709237979883",
-        "txCount": 130
-      },
-      {
-        "date": "2025-06-24",
-        "volumeUSD": 138767.31847798487,
-        "volumeToken0": 548.5665538798279,
-        "volumeToken1": 35536789.024163544,
-        "feesUSD": 605.0599978647613,
-        "tvlUSD": 8859547.753168317,
-        "liquidity": "74316438506935709237979883",
-        "txCount": 173
-      },
-      {
-        "date": "2025-06-25",
-        "volumeUSD": 79241.89631983379,
-        "volumeToken0": 931.2222568931468,
-        "volumeToken1": 65400546.2862825,
-        "feesUSD": 1302.1770035383154,
-        "tvlUSD": 8859547.753168317,
-        "liquidity": "74316438506935709237979883",
-        "txCount": 129
-      },
-      {
-        "date": "2025-06-26",
-        "volumeUSD": 82749.30394995832,
-        "volumeToken0": 859.5229585084371,
-        "volumeToken1": 70959585.26615685,
-        "feesUSD": 739.5508932149332,
-        "tvlUSD": 8859547.753168317,
-        "liquidity": "74316438506935709237979883",
-        "txCount": 116
-      },
-      {
-        "date": "2025-06-27",
-        "volumeUSD": 146166.8834043577,
-        "volumeToken0": 1395.829442830499,
-        "volumeToken1": 50634655.735227,
-        "feesUSD": 1207.5614720966114,
-        "tvlUSD": 8859547.753168317,
-        "liquidity": "74316438506935709237979883",
-        "txCount": 280
-      },
-      {
-        "date": "2025-06-28",
-        "volumeUSD": 88911.09460550509,
-        "volumeToken0": 530.9098377517267,
-        "volumeToken1": 58887295.65681415,
-        "feesUSD": 523.597916769424,
-        "tvlUSD": 8859547.753168317,
-        "liquidity": "74316438506935709237979883",
-        "txCount": 277
-      },
-      {
-        "date": "2025-06-29",
-        "volumeUSD": 88946.20570902039,
-        "volumeToken0": 1338.6646917316912,
-        "volumeToken1": 54967261.39532246,
-        "feesUSD": 847.545157718891,
-        "tvlUSD": 8859547.753168317,
-        "liquidity": "74316438506935709237979883",
-        "txCount": 159
-      },
-      {
-        "date": "2025-06-30",
-        "volumeUSD": 54988.075771840304,
-        "volumeToken0": 513.5970432590831,
-        "volumeToken1": 44329884.21248882,
-        "feesUSD": 1046.61117979695,
-        "tvlUSD": 8859547.753168317,
-        "liquidity": "74316438506935709237979883",
-        "txCount": 282
-      },
-      {
-        "date": "2025-07-01",
-        "volumeUSD": 109416.63954197141,
-        "volumeToken0": 603.7382386766114,
-        "volumeToken1": 49829858.48813668,
-        "feesUSD": 1323.1265205362386,
+        "volumeUSD": 63821.976003344,
+        "volumeToken0": 1460.2630303892295,
+        "volumeToken1": 38459298.44179876,
+        "feesUSD": 736.8553344136255,
         "tvlUSD": 8859547.753168317,
         "liquidity": "74316438506935709237979883",
         "txCount": 115
       },
       {
-        "date": "2025-07-02",
-        "volumeUSD": 58142.421663702626,
-        "volumeToken0": 957.0628937751844,
-        "volumeToken1": 33261211.486225463,
-        "feesUSD": 502.3800580927782,
+        "date": "2025-06-21",
+        "volumeUSD": 55689.63444593635,
+        "volumeToken0": 630.3807779217157,
+        "volumeToken1": 59240648.16786682,
+        "feesUSD": 702.606885666748,
         "tvlUSD": 8859547.753168317,
         "liquidity": "74316438506935709237979883",
-        "txCount": 184
+        "txCount": 120
+      },
+      {
+        "date": "2025-06-22",
+        "volumeUSD": 110986.06243985512,
+        "volumeToken0": 1385.114002618027,
+        "volumeToken1": 59809010.02639216,
+        "feesUSD": 505.5067920016365,
+        "tvlUSD": 8859547.753168317,
+        "liquidity": "74316438506935709237979883",
+        "txCount": 203
+      },
+      {
+        "date": "2025-06-23",
+        "volumeUSD": 76858.11228086957,
+        "volumeToken0": 980.6227362832127,
+        "volumeToken1": 58604726.65570461,
+        "feesUSD": 851.7118157139328,
+        "tvlUSD": 8859547.753168317,
+        "liquidity": "74316438506935709237979883",
+        "txCount": 136
+      },
+      {
+        "date": "2025-06-24",
+        "volumeUSD": 113515.30224708852,
+        "volumeToken0": 1194.6994350933119,
+        "volumeToken1": 27472508.69638148,
+        "feesUSD": 537.9802830400107,
+        "tvlUSD": 8859547.753168317,
+        "liquidity": "74316438506935709237979883",
+        "txCount": 265
+      },
+      {
+        "date": "2025-06-25",
+        "volumeUSD": 112816.93553017732,
+        "volumeToken0": 1120.6740056847416,
+        "volumeToken1": 48833574.4518688,
+        "feesUSD": 989.4927263600126,
+        "tvlUSD": 8859547.753168317,
+        "liquidity": "74316438506935709237979883",
+        "txCount": 118
+      },
+      {
+        "date": "2025-06-26",
+        "volumeUSD": 96159.36414125077,
+        "volumeToken0": 711.7637803549175,
+        "volumeToken1": 63395217.166580975,
+        "feesUSD": 1135.4866400588319,
+        "tvlUSD": 8859547.753168317,
+        "liquidity": "74316438506935709237979883",
+        "txCount": 157
+      },
+      {
+        "date": "2025-06-27",
+        "volumeUSD": 111293.535883195,
+        "volumeToken0": 1354.3372211386493,
+        "volumeToken1": 74480561.79669273,
+        "feesUSD": 762.0169394384136,
+        "tvlUSD": 8859547.753168317,
+        "liquidity": "74316438506935709237979883",
+        "txCount": 204
+      },
+      {
+        "date": "2025-06-28",
+        "volumeUSD": 108577.12406244857,
+        "volumeToken0": 1477.0922556142873,
+        "volumeToken1": 53736460.13821703,
+        "feesUSD": 744.6127345847353,
+        "tvlUSD": 8859547.753168317,
+        "liquidity": "74316438506935709237979883",
+        "txCount": 106
+      },
+      {
+        "date": "2025-06-29",
+        "volumeUSD": 90810.42253559147,
+        "volumeToken0": 1302.9709671117662,
+        "volumeToken1": 57385796.31205353,
+        "feesUSD": 1369.8056596123693,
+        "tvlUSD": 8859547.753168317,
+        "liquidity": "74316438506935709237979883",
+        "txCount": 125
+      },
+      {
+        "date": "2025-06-30",
+        "volumeUSD": 93061.58506494667,
+        "volumeToken0": 1334.677172272599,
+        "volumeToken1": 40442901.58205825,
+        "feesUSD": 1396.3354228949884,
+        "tvlUSD": 8859547.753168317,
+        "liquidity": "74316438506935709237979883",
+        "txCount": 168
+      },
+      {
+        "date": "2025-07-01",
+        "volumeUSD": 141278.18773530732,
+        "volumeToken0": 870.5755325032094,
+        "volumeToken1": 62815299.41907287,
+        "feesUSD": 1494.2058780129946,
+        "tvlUSD": 8859547.753168317,
+        "liquidity": "74316438506935709237979883",
+        "txCount": 118
+      },
+      {
+        "date": "2025-07-02",
+        "volumeUSD": 144867.94600323378,
+        "volumeToken0": 653.78281580143,
+        "volumeToken1": 43339792.08939539,
+        "feesUSD": 1239.8017383448114,
+        "tvlUSD": 8859547.753168317,
+        "liquidity": "74316438506935709237979883",
+        "txCount": 200
       },
       {
         "date": "2025-07-03",
-        "volumeUSD": 60237.75889308836,
-        "volumeToken0": 1362.3452980533016,
-        "volumeToken1": 72465581.9578141,
-        "feesUSD": 942.8699457116945,
+        "volumeUSD": 59973.4442585228,
+        "volumeToken0": 640.5753763525795,
+        "volumeToken1": 46842422.09494749,
+        "feesUSD": 1207.6153722874928,
         "tvlUSD": 8859547.753168317,
         "liquidity": "74316438506935709237979883",
-        "txCount": 113
+        "txCount": 166
       },
       {
         "date": "2025-07-04",
-        "volumeUSD": 132231.21999819527,
-        "volumeToken0": 1481.4298420139746,
-        "volumeToken1": 25689716.129808325,
-        "feesUSD": 778.9673506574743,
+        "volumeUSD": 96842.08139360137,
+        "volumeToken0": 570.6525079423839,
+        "volumeToken1": 67866031.79109916,
+        "feesUSD": 1104.1584404980626,
         "tvlUSD": 8859547.753168317,
         "liquidity": "74316438506935709237979883",
-        "txCount": 227
+        "txCount": 207
       },
       {
         "date": "2025-07-05",
-        "volumeUSD": 105481.48657432152,
-        "volumeToken0": 677.9563432744267,
-        "volumeToken1": 60097015.28135779,
-        "feesUSD": 1426.3928472438176,
+        "volumeUSD": 143706.7507228743,
+        "volumeToken0": 650.6794993192522,
+        "volumeToken1": 56297465.63055104,
+        "feesUSD": 1149.8594437465172,
         "tvlUSD": 8859547.753168317,
         "liquidity": "74316438506935709237979883",
-        "txCount": 233
+        "txCount": 213
       },
       {
         "date": "2025-07-06",
-        "volumeUSD": 70995.8845198233,
-        "volumeToken0": 1118.9537055530036,
-        "volumeToken1": 55677033.74811447,
-        "feesUSD": 1416.7953405924004,
+        "volumeUSD": 84583.44263794977,
+        "volumeToken0": 1043.1084943787105,
+        "volumeToken1": 42389080.17377293,
+        "feesUSD": 1427.6723476026932,
         "tvlUSD": 8859547.753168317,
         "liquidity": "74316438506935709237979883",
-        "txCount": 222
+        "txCount": 171
       },
       {
         "date": "2025-07-07",
-        "volumeUSD": 87550.8438301144,
-        "volumeToken0": 956.1980406473915,
-        "volumeToken1": 68354027.18431878,
-        "feesUSD": 809.6341967864466,
+        "volumeUSD": 69722.32481219011,
+        "volumeToken0": 1108.841532372801,
+        "volumeToken1": 67268213.29881963,
+        "feesUSD": 688.249761016323,
         "tvlUSD": 8859547.753168317,
         "liquidity": "74316438506935709237979883",
-        "txCount": 124
+        "txCount": 141
       },
       {
         "date": "2025-07-08",
-        "volumeUSD": 143160.57860410848,
-        "volumeToken0": 1114.3022095227395,
-        "volumeToken1": 60709892.3511151,
-        "feesUSD": 1163.4462486268524,
+        "volumeUSD": 63991.059665489855,
+        "volumeToken0": 1185.153689774791,
+        "volumeToken1": 48310542.01192896,
+        "feesUSD": 1101.8003533542214,
+        "tvlUSD": 8859547.753168317,
+        "liquidity": "74316438506935709237979883",
+        "txCount": 281
+      },
+      {
+        "date": "2025-07-09",
+        "volumeUSD": 85953.35641223585,
+        "volumeToken0": 1343.449404578887,
+        "volumeToken1": 72202142.94017342,
+        "feesUSD": 893.5734343280023,
+        "tvlUSD": 8859547.753168317,
+        "liquidity": "74316438506935709237979883",
+        "txCount": 215
+      },
+      {
+        "date": "2025-07-10",
+        "volumeUSD": 117760.81747290863,
+        "volumeToken0": 662.3889318004049,
+        "volumeToken1": 58339942.58055054,
+        "feesUSD": 1075.6752567798735,
+        "tvlUSD": 8859547.753168317,
+        "liquidity": "74316438506935709237979883",
+        "txCount": 165
+      },
+      {
+        "date": "2025-07-11",
+        "volumeUSD": 117746.69188427797,
+        "volumeToken0": 1307.4115773987867,
+        "volumeToken1": 62605605.352168016,
+        "feesUSD": 996.0129786093069,
         "tvlUSD": 8859547.753168317,
         "liquidity": "74316438506935709237979883",
         "txCount": 256
       },
       {
-        "date": "2025-07-09",
-        "volumeUSD": 131952.3774192298,
-        "volumeToken0": 1020.0972095100353,
-        "volumeToken1": 61049574.1591506,
-        "feesUSD": 1047.0802419488296,
-        "tvlUSD": 8859547.753168317,
-        "liquidity": "74316438506935709237979883",
-        "txCount": 262
-      },
-      {
-        "date": "2025-07-10",
-        "volumeUSD": 60470.75124199506,
-        "volumeToken0": 1430.2128723680335,
-        "volumeToken1": 41099123.063165784,
-        "feesUSD": 606.7440095881868,
-        "tvlUSD": 8859547.753168317,
-        "liquidity": "74316438506935709237979883",
-        "txCount": 249
-      },
-      {
-        "date": "2025-07-11",
-        "volumeUSD": 121611.04772203328,
-        "volumeToken0": 757.5487239529305,
-        "volumeToken1": 72198540.13727483,
-        "feesUSD": 1302.170454113298,
-        "tvlUSD": 8859547.753168317,
-        "liquidity": "74316438506935709237979883",
-        "txCount": 264
-      },
-      {
         "date": "2025-07-12",
-        "volumeUSD": 123774.97717553443,
-        "volumeToken0": 1383.9048800103808,
-        "volumeToken1": 42904323.46034448,
-        "feesUSD": 635.036183284674,
+        "volumeUSD": 96205.02889607576,
+        "volumeToken0": 745.576918234967,
+        "volumeToken1": 43792761.31939085,
+        "feesUSD": 538.6995482516892,
         "tvlUSD": 8859547.753168317,
         "liquidity": "74316438506935709237979883",
-        "txCount": 258
+        "txCount": 236
       },
       {
         "date": "2025-07-13",
-        "volumeUSD": 98690.95781134802,
-        "volumeToken0": 1027.1386138314965,
-        "volumeToken1": 46322402.905148655,
-        "feesUSD": 1208.9378082414014,
+        "volumeUSD": 149148.957195935,
+        "volumeToken0": 1411.567059472446,
+        "volumeToken1": 71932333.07380937,
+        "feesUSD": 1327.4518003540663,
         "tvlUSD": 8859547.753168317,
         "liquidity": "74316438506935709237979883",
-        "txCount": 127
+        "txCount": 211
       },
       {
         "date": "2025-07-14",
-        "volumeUSD": 78618.19114763886,
-        "volumeToken0": 621.706898053358,
-        "volumeToken1": 49533690.04579081,
-        "feesUSD": 1052.2051974721912,
+        "volumeUSD": 144137.66475643497,
+        "volumeToken0": 879.0757803217934,
+        "volumeToken1": 45998924.8417452,
+        "feesUSD": 680.4328135776021,
         "tvlUSD": 8859547.753168317,
         "liquidity": "74316438506935709237979883",
-        "txCount": 187
+        "txCount": 268
       },
       {
         "date": "2025-07-15",
-        "volumeUSD": 65842.38807897233,
-        "volumeToken0": 665.703111452546,
-        "volumeToken1": 47657421.01921932,
-        "feesUSD": 681.5757081233028,
+        "volumeUSD": 141417.37314825747,
+        "volumeToken0": 554.2521700735508,
+        "volumeToken1": 49128917.521557204,
+        "feesUSD": 1094.8133385621593,
         "tvlUSD": 8859547.753168317,
         "liquidity": "74316438506935709237979883",
-        "txCount": 259
+        "txCount": 243
       },
       {
         "date": "2025-07-16",
-        "volumeUSD": 137267.6399809176,
-        "volumeToken0": 920.7751151877652,
-        "volumeToken1": 25673030.122032814,
-        "feesUSD": 1134.4711532170377,
+        "volumeUSD": 98415.33098880149,
+        "volumeToken0": 1276.396517918756,
+        "volumeToken1": 74555780.00599793,
+        "feesUSD": 544.4256291508185,
         "tvlUSD": 8859547.753168317,
         "liquidity": "74316438506935709237979883",
-        "txCount": 289
+        "txCount": 191
       },
       {
         "date": "2025-07-17",
-        "volumeUSD": 89006.16404915796,
-        "volumeToken0": 782.8175838231391,
-        "volumeToken1": 70934306.09845427,
-        "feesUSD": 1305.120280634053,
+        "volumeUSD": 78893.00836975293,
+        "volumeToken0": 595.1200896548523,
+        "volumeToken1": 68436542.52112043,
+        "feesUSD": 603.5604312753815,
         "tvlUSD": 8859547.753168317,
         "liquidity": "74316438506935709237979883",
-        "txCount": 164
+        "txCount": 140
       }
     ]
   },
   "tokenPrices": {
     "torus": {
-      "usd": 443.58219557410507,
+      "usd": 436.8326927383389,
       "eth": 0.12673777016403,
-      "lastUpdated": "2025-07-17T23:12:02.032Z"
+      "lastUpdated": "2025-07-17T23:00:06.692Z"
     },
     "titanx": {
       "usd": 0.00001,
       "eth": 2.857142857142857e-9,
-      "lastUpdated": "2025-07-17T23:12:02.032Z"
+      "lastUpdated": "2025-07-17T22:43:08.751Z"
     },
     "eth": {
       "usd": 3500,
-      "lastUpdated": "2025-07-17T23:12:02.032Z"
+      "lastUpdated": "2025-07-17T22:43:08.751Z"
     }
   },
   "stakingData": {
@@ -18327,7 +18332,7 @@
   },
   "metadata": {
     "dataSource": "Blockchain RPC",
-    "lastCompleteUpdate": "2025-07-17T23:12:29.164Z",
+    "lastCompleteUpdate": "2025-07-17T22:43:41.667Z",
     "dataComplete": true,
     "description": "Complete TORUS dashboard data with all frontend requirements",
     "fallbackToRPC": false,
@@ -18366,6 +18371,27 @@
     },
     "lpPositions": [
       {
+        "tokenId": "1029195",
+        "owner": "0xAa390a37006E22b5775A34f2147F81eBD6a63641",
+        "liquidity": "63419569934991862290206742",
+        "tickLower": -887200,
+        "tickUpper": 887200,
+        "lowerTitanxPerTorus": "0.00M",
+        "upperTitanxPerTorus": "Infinity",
+        "currentTitanxPerTorus": "43.60M",
+        "amount0": 9595.458374487214,
+        "amount1": 419160991978.58936,
+        "claimableTorus": 1.7998445231945943,
+        "claimableTitanX": 383147783.96525913,
+        "tokensOwed0": "1799844523194594424",
+        "tokensOwed1": "383147783965259161359130007",
+        "fee": 10000,
+        "inRange": true,
+        "estimatedAPR": "6.88",
+        "priceRange": "Full Range",
+        "lastChecked": "2025-07-17T23:00:03.882Z"
+      },
+      {
         "tokenId": "1030759",
         "owner": "0x9BBb45e12c4a75f7406Cb38e858Fa6C68A88f30d",
         "liquidity": "28467664237287326082660",
@@ -18375,7 +18401,7 @@
         "upperTitanxPerTorus": "20.16M",
         "currentTitanxPerTorus": "43.68M",
         "amount0": 0,
-        "amount1": 114999999.99989024,
+        "amount1": 0,
         "claimableTorus": 0,
         "claimableTitanX": 0,
         "tokensOwed0": "0",
@@ -18383,7 +18409,8 @@
         "fee": 10000,
         "inRange": false,
         "estimatedAPR": "0.00",
-        "priceRange": "0.20M - 20.16M TITANX per TORUS"
+        "priceRange": "0.20M - 20.16M TITANX per TORUS",
+        "lastChecked": "2025-07-17T23:00:04.196Z"
       },
       {
         "tokenId": "1031465",
@@ -18394,16 +18421,17 @@
         "lowerTitanxPerTorus": "31.30M",
         "upperTitanxPerTorus": "51.60M",
         "currentTitanxPerTorus": "43.68M",
-        "amount0": 76.48300654464666,
-        "amount1": 6416136194.768041,
-        "claimableTorus": 0.30711898319026243,
-        "claimableTitanX": 22092568.321289208,
+        "amount0": 0,
+        "amount1": 0,
+        "claimableTorus": 0,
+        "claimableTitanX": 0,
         "tokensOwed0": "0",
         "tokensOwed1": "0",
         "fee": 10000,
         "inRange": true,
         "estimatedAPR": "50.00",
-        "priceRange": "31.30M - 51.60M TITANX per TORUS"
+        "priceRange": "31.30M - 51.60M TITANX per TORUS",
+        "lastChecked": "2025-07-17T23:00:04.504Z"
       },
       {
         "tokenId": "1031533",
@@ -18414,16 +18442,17 @@
         "lowerTitanxPerTorus": "0.00M",
         "upperTitanxPerTorus": "Infinity",
         "currentTitanxPerTorus": "43.68M",
-        "amount0": 131.54431567175948,
+        "amount0": 131.54431567175953,
         "amount1": 5746285762.931678,
-        "claimableTorus": 0.24485240647024561,
-        "claimableTitanX": 16898558.521796767,
+        "claimableTorus": 0,
+        "claimableTitanX": 0,
         "tokensOwed0": "0",
         "tokensOwed1": "0",
         "fee": 10000,
         "inRange": true,
         "estimatedAPR": "12.50",
-        "priceRange": "0.00M - Infinity TITANX per TORUS"
+        "priceRange": "0.00M - Infinity TITANX per TORUS",
+        "lastChecked": "2025-07-17T23:00:04.945Z"
       },
       {
         "tokenId": "1032346",
@@ -18435,15 +18464,16 @@
         "upperTitanxPerTorus": "35.29M",
         "currentTitanxPerTorus": "43.68M",
         "amount0": 0,
-        "amount1": 879002737.6988096,
-        "claimableTorus": 0.1460776033756232,
-        "claimableTitanX": 5003826.698754727,
+        "amount1": 0,
+        "claimableTorus": 0,
+        "claimableTitanX": 0,
         "tokensOwed0": "0",
         "tokensOwed1": "0",
         "fee": 10000,
         "inRange": false,
-        "estimatedAPR": "0.00",
-        "priceRange": "28.89M - 35.29M TITANX per TORUS"
+        "estimatedAPR": "5.00",
+        "priceRange": "28.89M - 35.29M TITANX per TORUS",
+        "lastChecked": "2025-07-17T23:00:05.243Z"
       },
       {
         "tokenId": "1033659",
@@ -18454,16 +18484,17 @@
         "lowerTitanxPerTorus": "28.89M",
         "upperTitanxPerTorus": "48.60M",
         "currentTitanxPerTorus": "43.68M",
-        "amount0": 20.902144628664242,
-        "amount1": 3283315177.5560675,
-        "claimableTorus": 0.13528787778296833,
-        "claimableTitanX": 16679353.65421935,
+        "amount0": 0,
+        "amount1": 0,
+        "claimableTorus": 0,
+        "claimableTitanX": 0,
         "tokensOwed0": "0",
         "tokensOwed1": "0",
         "fee": 10000,
         "inRange": true,
         "estimatedAPR": "55.98",
-        "priceRange": "28.89M - 48.60M TITANX per TORUS"
+        "priceRange": "28.89M - 48.60M TITANX per TORUS",
+        "lastChecked": "2025-07-17T23:00:05.535Z"
       }
     ]
   },
