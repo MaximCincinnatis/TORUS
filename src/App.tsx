@@ -7,7 +7,6 @@ import ExpandableChartSection from './components/charts/ExpandableChartSection';
 import ChartManager from './components/charts/ChartManager';
 import LoadingBar from './components/loading/LoadingBar';
 import SkeletonCard from './components/loading/SkeletonCard';
-import SkeletonChart from './components/loading/SkeletonChart';
 import LPPositionsTable from './components/lp/LPPositionsTable';
 import FutureMaxSupplyChart from './components/charts/FutureMaxSupplyChart';
 import { getContractInfo, RewardPoolData } from './utils/ethersWeb3';
@@ -872,7 +871,6 @@ function App() {
       });
     });
     
-    const maxSupply = Math.max(...projection.map(p => p.supply));
     const maxRelease = Math.max(...projection.map(p => p.released));
     console.log(`Generated ${projection.length} days of projection`);
     console.log(`Final cumulative supply: ${projection[projection.length - 1]?.supply.toLocaleString()}`);
@@ -1452,9 +1450,10 @@ function App() {
           rewardPoolData={rewardPoolData}
           currentSupply={totalSupply}
           contractStartDate={CONTRACT_START_DATE}
+          currentProtocolDay={currentProtocolDay}
         />
         <div className="chart-note">
-          This projection shows the theoretical maximum TORUS supply if all current positions maintain their exact share percentages until maturity. New positions will dilute existing shares and reduce these projections. The chart combines rewards from both stake and create positions, accounting for the deflationary share pool mechanics where fewer shares mean higher rewards per share.
+          This projection shows the accrued future supply based on existing positions only. It includes principal returns from stakes and new tokens from creates that will be added when positions mature. This does NOT project future share rewards beyond what current positions have already earned. New positions created after today will dilute existing share percentages and reduce actual rewards.
         </div>
       </ExpandableChartSection>
 
