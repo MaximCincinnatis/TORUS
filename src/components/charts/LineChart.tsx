@@ -43,6 +43,7 @@ interface LineChartProps {
   formatYAxis?: (value: number) => string;
   customTooltipData?: any[];
   customTooltipCallback?: (context: any, customData: any) => string[];
+  unifiedTooltip?: boolean;
 }
 
 const LineChart: React.FC<LineChartProps> = ({
@@ -57,6 +58,7 @@ const LineChart: React.FC<LineChartProps> = ({
   formatYAxis,
   customTooltipData,
   customTooltipCallback,
+  unifiedTooltip = false,
 }) => {
   const options: ChartOptions<'line'> = {
     responsive: true,
@@ -111,14 +113,28 @@ const LineChart: React.FC<LineChartProps> = ({
         displayColors: true,
         callbacks: {
           label: function(context) {
-            // If custom tooltip data and callback provided, use them
-            if (customTooltipData && customTooltipCallback && context.dataIndex < customTooltipData.length) {
-              return customTooltipCallback(context, customTooltipData[context.dataIndex]);
+            if (unifiedTooltip) {
+              // For unified tooltip, return dataset label and value
+              const label = context.dataset.label || '';
+              const value = context.parsed.y.toLocaleString();
+              return `${label}: ${value} TORUS`;
             }
             // Otherwise use default formatting
             const label = context.dataset.label || '';
             const value = formatTooltip ? formatTooltip(context.parsed.y) : context.parsed.y.toLocaleString();
             return `${label}: ${value}`;
+          },
+          afterBody: function(context) {
+            // Add custom unified data after all dataset lines
+            if (unifiedTooltip && customTooltipData && customTooltipCallback && context[0]?.dataIndex < customTooltipData.length) {
+              const data = customTooltipData[context[0].dataIndex];
+              return [
+                '',
+                `Day ${data.day} (${new Date(data.date).toLocaleDateString()})`,
+                `Active Positions: ${data.activePositions}`,
+              ];
+            }
+            return [];
           },
         },
       },

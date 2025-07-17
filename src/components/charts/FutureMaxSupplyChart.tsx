@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import LineChart from './LineChart';
 import {
   calculateFutureMaxSupply,
@@ -12,6 +12,7 @@ interface FutureMaxSupplyChartProps {
   rewardPoolData: RewardPoolData[];
   currentSupply: number;
   contractStartDate: Date;
+  currentProtocolDay: number;
 }
 
 const FutureMaxSupplyChart: React.FC<FutureMaxSupplyChartProps> = ({
@@ -19,14 +20,18 @@ const FutureMaxSupplyChart: React.FC<FutureMaxSupplyChartProps> = ({
   createEvents,
   rewardPoolData,
   currentSupply,
-  contractStartDate
+  contractStartDate,
+  currentProtocolDay
 }) => {
+  // Timeframe state
+  const [timeframe, setTimeframe] = useState<'7d' | '30d' | '90d' | 'all'>('30d');
+  
   const chartData = useMemo(() => {
     console.log('🔍 FutureMaxSupplyChart - Input Data:');
     console.log('stakeEvents:', stakeEvents?.length || 0);
     console.log('createEvents:', createEvents?.length || 0);
     console.log('rewardPoolData:', rewardPoolData?.length || 0);
-    console.log('currentSupply:', currentSupply);
+    console.log('currentSupply:', currentSupply, 'TORUS (this should reflect burns)');
     console.log('contractStartDate:', contractStartDate);
     
     // Force console output to show
@@ -59,47 +64,79 @@ const FutureMaxSupplyChart: React.FC<FutureMaxSupplyChartProps> = ({
       console.log('First projection:', projections[0]);
       console.log('Last projection:', projections[projections.length - 1]);
       
-      // Format data for Chart.js
-      const labels = projections.map(projection => 
+      // Apply timeframe filtering - only show current day onward
+      console.log('🔍 Using currentProtocolDay:', currentProtocolDay);
+      
+      // Always start from current day and show the specified number of future days (up to 88 days max)
+      let endDay: number;
+      switch (timeframe) {
+        case '7d':
+          endDay = currentProtocolDay + 7;
+          break;
+        case '30d':
+          endDay = currentProtocolDay + 30;
+          break;
+        case '90d':
+          endDay = currentProtocolDay + 88; // Cap at 88 days from current day
+          break;
+        case 'all':
+        default:
+          endDay = currentProtocolDay + 88; // Show 88 days from current day
+          break;
+      }
+      
+      let filteredProjections = projections.filter(p => p.day >= currentProtocolDay && p.day <= endDay);
+      
+      console.log(`📊 BEFORE filtering: projections has ${projections.length} days`);
+      console.log(`📊 BEFORE filtering: First projection day: ${projections[0]?.day}, Last: ${projections[projections.length - 1]?.day}`);
+      console.log(`📊 Filtering for days ${currentProtocolDay} to ${endDay}`);
+      console.log(`📊 AFTER filtering: ${filteredProjections.length} days`);
+      console.log(`📊 AFTER filtering: First day shown: ${filteredProjections[0]?.day}, Last: ${filteredProjections[filteredProjections.length - 1]?.day}`);
+      
+      // Format data for Chart.js using filtered projections
+      const labels = filteredProjections.map(projection => 
         `Day ${projection.day} (${new Date(projection.date).toLocaleDateString('en-US', {
           month: 'short',
           day: 'numeric'
         })})`
       );
       
+      console.log('📊 FIRST LABEL:', labels[0]);
+      console.log('📊 LAST LABEL:', labels[labels.length - 1]);
+      
       const datasets = [
         {
-          label: 'Current Supply',
-          data: projections.map(() => Math.round(currentSupply)),
-          borderColor: '#6B7280',
-          backgroundColor: 'rgba(107, 114, 128, 0.1)',
-          borderDash: [5, 5],
-          fill: false,
-        },
-        {
           label: 'Max Supply',
-          data: projections.map(p => Math.round(p.totalMaxSupply)),
+          data: filteredProjections.map(p => Math.round(p.totalMaxSupply)),
           borderColor: '#FBBF24',
           backgroundColor: 'rgba(251, 191, 36, 0.1)',
           fill: false,
         },
         {
           label: 'From Stakes',
-          data: projections.map(p => Math.round(p.breakdown.fromStakes)),
+          data: filteredProjections.map(p => Math.round(p.breakdown.fromStakes)),
           borderColor: '#22C55E',
           backgroundColor: 'rgba(34, 197, 94, 0.1)',
           fill: false,
         },
         {
           label: 'From Creates',
-          data: projections.map(p => Math.round(p.breakdown.fromCreates)),
+          data: filteredProjections.map(p => Math.round(p.breakdown.fromCreates)),
           borderColor: '#3B82F6',
           backgroundColor: 'rgba(59, 130, 246, 0.1)',
+          fill: false,
+        },
+        {
+          label: 'Current Supply',
+          data: filteredProjections.map(() => Math.round(currentSupply)),
+          borderColor: '#6B7280',
+          backgroundColor: 'rgba(107, 114, 128, 0.1)',
+          borderDash: [5, 5],
           fill: false,
         }
       ];
       
-      const customTooltipData = projections.map(projection => ({
+      const customTooltipData = filteredProjections.map(projection => ({
         day: projection.day,
         date: projection.date,
         totalMaxSupply: Math.round(projection.totalMaxSupply),
@@ -132,7 +169,7 @@ const FutureMaxSupplyChart: React.FC<FutureMaxSupplyChartProps> = ({
         customTooltipData: []
       };
     }
-  }, [stakeEvents, createEvents, rewardPoolData, currentSupply, contractStartDate]);
+  }, [stakeEvents, createEvents, rewardPoolData, currentSupply, contractStartDate, currentProtocolDay, timeframe]);
 
   if (!chartData.labels.length) {
     return (
@@ -146,33 +183,73 @@ const FutureMaxSupplyChart: React.FC<FutureMaxSupplyChartProps> = ({
   }
 
   return (
-    <LineChart
-      title="Future TORUS Max Supply Projection"
-      labels={chartData.labels}
-      datasets={chartData.datasets}
-      height={400}
-      yAxisLabel="TORUS Supply"
-      xAxisLabel="Protocol Day"
-      customTooltipData={chartData.customTooltipData}
-      customTooltipCallback={(context: any, data: any) => {
-        const lines = [];
-        lines.push(`Protocol Day: ${data.day}`);
-        lines.push(`Date: ${data.date}`);
-        lines.push(`Max Supply: ${data.totalMaxSupply.toLocaleString()} TORUS`);
-        lines.push(`From Stakes: ${data.fromStakes.toLocaleString()} TORUS`);
-        lines.push(`From Creates: ${data.fromCreates.toLocaleString()} TORUS`);
-        lines.push(`Current Supply: ${data.currentSupply.toLocaleString()} TORUS`);
-        lines.push(`Active Positions: ${data.activePositions}`);
-        lines.push(`Daily Reward Pool: ${data.dailyRewardPool.toLocaleString()} TORUS`);
-        lines.push(`Total Shares: ${data.totalShares.toLocaleString()}`);
-        return lines;
-      }}
-      formatYAxis={(value: number) => {
+    <div style={{ position: 'relative', paddingTop: '50px' }}>
+      {/* Timeframe Controls - Above chart */}
+      <div style={{ 
+        position: 'absolute', 
+        top: '10px', 
+        right: '0px', 
+        zIndex: 10,
+        display: 'flex',
+        flexDirection: 'column',
+        gap: '4px'
+      }}>
+        <div style={{ 
+          background: 'rgba(42, 42, 42, 0.6)',
+          padding: '6px 10px',
+          borderRadius: '6px',
+          fontSize: '12px',
+          border: '1px solid rgba(68, 68, 68, 0.6)',
+          backdropFilter: 'blur(4px)'
+        }}>
+          <label style={{ 
+            cursor: 'pointer', 
+            display: 'flex', 
+            alignItems: 'center', 
+            gap: '6px',
+            color: 'rgba(204, 204, 204, 0.9)',
+            fontWeight: '500'
+          }}>
+            <select
+              value={timeframe}
+              onChange={(e) => setTimeframe(e.target.value as any)}
+              style={{
+                background: 'rgba(26, 26, 26, 0.7)',
+                color: 'rgba(204, 204, 204, 0.9)',
+                border: '1px solid rgba(68, 68, 68, 0.6)',
+                borderRadius: '4px',
+                padding: '2px 6px',
+                fontSize: '12px',
+                cursor: 'pointer',
+                backdropFilter: 'blur(4px)'
+              }}
+            >
+              <option value="7d">7 Days</option>
+              <option value="30d">30 Days</option>
+              <option value="90d">90 Days</option>
+              <option value="all">All</option>
+            </select>
+            Timeframe
+          </label>
+        </div>
+      </div>
+      
+      <LineChart
+        title="Accrued Future Supply Projection"
+        labels={chartData.labels}
+        datasets={chartData.datasets}
+        height={600}
+        yAxisLabel="TORUS Supply"
+        xAxisLabel="Protocol Day"
+        customTooltipData={chartData.customTooltipData}
+        unifiedTooltip={true}
+        formatYAxis={(value: number) => {
         if (value >= 1000000) return `${(value/1000000).toFixed(1)}M`;
         if (value >= 1000) return `${(value/1000).toFixed(1)}K`;
         return value.toLocaleString();
       }}
     />
+    </div>
   );
 };
 

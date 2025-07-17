@@ -200,9 +200,49 @@ export function calculateFutureMaxSupply(
   const firstFewDays = rewardPoolData.slice(0, 10);
   console.log('🔍 First 10 days of reward pool data:', firstFewDays.map(d => ({ day: d.day, rewardPool: d.rewardPool })));
   
-  // DEBUG: Check what the actual issue might be
-  const totalPossibleRewards = rewardPoolData.reduce((sum, d) => sum + parseFloat(d.rewardPool.toString()), 0);
-  console.log('🔍 Total possible rewards from all pools:', totalPossibleRewards.toFixed(2));
+  // CRITICAL FIX: Generate missing reward pool data for proper projections
+  const extendedRewardPoolData = [...rewardPoolData];
+  
+  // Find the last day with non-zero rewards (should be day 8)
+  const daysWithRewards = rewardPoolData.filter(d => parseFloat(d.rewardPool.toString()) > 0);
+  const lastDayWithRewards = Math.max(...daysWithRewards.map(d => d.day));
+  const lastRewardPool = parseFloat(rewardPoolData.find(d => d.day === lastDayWithRewards)?.rewardPool.toString() || '0');
+  
+  // Generate corrected reward pool data with 0.08% daily reduction for days 9+
+  const dailyReductionRate = 0.0008; // 0.08% as decimal
+  let currentPool = lastRewardPool;
+  
+  // Update existing zero entries and add any missing days
+  for (let day = lastDayWithRewards + 1; day <= 96; day++) {
+    currentPool = currentPool * (1 - dailyReductionRate);
+    
+    // Find existing entry for this day
+    const existingIndex = extendedRewardPoolData.findIndex(d => d.day === day);
+    if (existingIndex >= 0) {
+      // Update existing entry
+      extendedRewardPoolData[existingIndex].rewardPool = currentPool;
+    } else {
+      // Add missing entry
+      extendedRewardPoolData.push({
+        day,
+        rewardPool: currentPool,
+        totalShares: '0',
+        penaltiesInPool: '0'
+      });
+    }
+  }
+  
+  console.log('🔍 Extended reward pool data from', lastDayWithRewards, 'to 96 days');
+  console.log('🔍 Last actual reward pool (day', lastDayWithRewards, '):', lastRewardPool.toFixed(2));
+  console.log('🔍 Projected reward pool (day 96):', currentPool.toFixed(2));
+  
+  // AUDIT: Check specific key days
+  const day88Pool = parseFloat(extendedRewardPoolData.find(d => d.day === 88)?.rewardPool?.toString() || '0');
+  console.log('🎯 AUDIT: Day 88 reward pool:', day88Pool.toFixed(2));
+  
+  // Calculate total rewards with extended data
+  const totalPossibleRewards = extendedRewardPoolData.reduce((sum, d) => sum + parseFloat(d.rewardPool.toString()), 0);
+  console.log('🔍 Total possible rewards (with projections):', totalPossibleRewards.toFixed(2));
   console.log('🔍 Current supply + all rewards would be:', (currentSupply + totalPossibleRewards).toFixed(2));
   
   // Validate input parameters
@@ -211,7 +251,7 @@ export function calculateFutureMaxSupply(
     return [];
   }
   
-  if (!rewardPoolData || rewardPoolData.length === 0) {
+  if (!extendedRewardPoolData || extendedRewardPoolData.length === 0) {
     console.warn('⚠️ No reward pool data provided, returning empty projections');
     return [];
   }
@@ -226,20 +266,20 @@ export function calculateFutureMaxSupply(
     return [];
   }
   
-  const positionProjections = calculateSharePoolPercentages(positions, rewardPoolData, contractStartDate);
+  const positionProjections = calculateSharePoolPercentages(positions, extendedRewardPoolData, contractStartDate);
   const maxSupplyProjections: MaxSupplyProjection[] = [];
   
   // Create a map of day -> reward pool data for quick lookup
   const rewardPoolMap = new Map<number, RewardPoolData>();
-  rewardPoolData.forEach(data => {
+  extendedRewardPoolData.forEach(data => {
     rewardPoolMap.set(data.day, data);
   });
   
   // Calculate max supply for each day
-  const minDay = Math.min(...rewardPoolData.map(data => data.day));
-  const maxDay = Math.max(...rewardPoolData.map(data => data.day));
+  const minDay = Math.min(...extendedRewardPoolData.map(data => data.day));
+  const maxDay = Math.max(...extendedRewardPoolData.map(data => data.day));
   
-  console.log(`🔍 Processing days ${minDay} to ${maxDay} (${rewardPoolData.length} total days)`);
+  console.log(`🔍 Processing days ${minDay} to ${maxDay} (${extendedRewardPoolData.length} total days)`);
   
   // Track cumulative rewards across all days
   let cumulativeFromStakes = 0;
@@ -259,22 +299,25 @@ export function calculateFutureMaxSupply(
     let dailyFromStakes = 0;
     let dailyFromCreates = 0;
     
-    // Add rewards from this specific day only
+    // CORRECT LOGIC: Supply only added on maturity days when positions are claimed
     positionProjections.forEach(projection => {
       const dayProjection = projection.dailyProjections.find(p => p.day === day);
       if (dayProjection?.isActive) {
         activePositions++;
-        
-        // Add ONLY the daily reward for this day
+      }
+      
+      // Only add supply on maturity day when position can be claimed
+      if (day === projection.maturityDay) {
         if (projection.position.type === 'stake') {
-          dailyFromStakes += dayProjection.dailyReward;
-        } else {
-          dailyFromCreates += dayProjection.dailyReward;
-          
-          // Add the torusAmount that will be minted on maturity (one-time)
-          if (day === projection.maturityDay && projection.position.torusAmount) {
-            dailyFromCreates += parseFloat(projection.position.torusAmount) / 1e18;
-          }
+          // Stakes: Add principal + all accumulated rewards on maturity day
+          const principal = parseFloat(projection.position.principal || '0') / 1e18;
+          const accumulatedRewards = dayProjection?.cumulativeReward || 0;
+          dailyFromStakes += principal + accumulatedRewards;
+        } else if (projection.position.type === 'create') {
+          // Creates: Add new tokens + all accumulated rewards on maturity day  
+          const newTokens = parseFloat(projection.position.torusAmount || '0') / 1e18;
+          const accumulatedRewards = dayProjection?.cumulativeReward || 0;
+          dailyFromCreates += newTokens + accumulatedRewards;
         }
       }
     });
@@ -295,9 +338,23 @@ export function calculateFutureMaxSupply(
       cumulativeFromCreates = Math.max(0, cumulativeFromCreates);
     }
     
-    if (day <= 15) { // Debug first 15 days
+    if (day <= 15 || day === 88) { // Debug first 15 days and day 88
       console.log(`Day ${day}: totalMaxSupply=${totalMaxSupply.toFixed(2)} (current=${currentSupply} + stakes=${cumulativeFromStakes.toFixed(2)} + creates=${cumulativeFromCreates.toFixed(2)})`);
-      console.log(`  Daily: stakes=${dailyFromStakes.toFixed(2)}, creates=${dailyFromCreates.toFixed(2)}, RewardPool: ${rewardData.rewardPool}, ActivePositions: ${activePositions}`);
+      console.log(`  Daily: stakes=${dailyFromStakes.toFixed(2)}, creates=${dailyFromCreates.toFixed(2)}, RewardPool: ${parseFloat(rewardData.rewardPool.toString()).toFixed(2)}, ActivePositions: ${activePositions}`);
+    }
+    
+    // CRITICAL AUDIT for day 88
+    if (day === 88) {
+      console.log('🎯 CRITICAL AUDIT - Day 88 Results:');
+      console.log(`  Max Supply: ${totalMaxSupply.toFixed(2)} TORUS`);
+      console.log(`  Target: ~8,800,000 TORUS`);
+      console.log(`  Match: ${totalMaxSupply >= 8000000 ? '✅ PASS' : '❌ FAIL'}`);
+      console.log(`  Breakdown: current=${currentSupply} + stakes=${cumulativeFromStakes.toFixed(2)} + creates=${cumulativeFromCreates.toFixed(2)}`);
+    }
+    
+    // Debug maturity days
+    if (dailyFromStakes > 0 || dailyFromCreates > 0) {
+      console.log(`📅 MATURITY DAY ${day}: Stakes=${dailyFromStakes.toFixed(2)} Creates=${dailyFromCreates.toFixed(2)}`);
     }
     
     maxSupplyProjections.push({
