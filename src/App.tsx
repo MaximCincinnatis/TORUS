@@ -8,6 +8,7 @@ import LoadingBar from './components/loading/LoadingBar';
 import SkeletonCard from './components/loading/SkeletonCard';
 import LPPositionsTable from './components/lp/LPPositionsTable';
 import FutureMaxSupplyChart from './components/charts/FutureMaxSupplyChart';
+import DateRangeButtons from './components/charts/DateRangeButtons';
 import { getContractInfo, RewardPoolData } from './utils/ethersWeb3';
 import { getTokenInfo, SimpleLPPosition } from './utils/uniswapV3RealOwners';
 import { getMainDashboardDataWithCache, getLPPositionsWithCache } from './utils/cacheDataLoader';
@@ -38,6 +39,13 @@ function App() {
   const [contractInfo, setContractInfo] = useState<any>(null);
   const [cachedTitanXData, setCachedTitanXData] = useState<{totalTitanXBurnt?: string, titanxTotalSupply?: string}>({});
   const [lastUpdatedTime, setLastUpdatedTime] = useState<string | null>(null);
+  
+  // Date range states for charts
+  const [stakeMaturityDays, setStakeMaturityDays] = useState<number>(88);
+  const [torusReleasesDays, setTorusReleasesDays] = useState<number>(88);
+  const [titanXUsageDays, setTitanXUsageDays] = useState<number>(88);
+  const [sharesReleasesDays, setSharesReleasesDays] = useState<number>(88);
+  const [maxSupplyDays, setMaxSupplyDays] = useState<number>(88);
 
   useEffect(() => {
     loadData();
@@ -1477,7 +1485,7 @@ function App() {
 
       <ExpandableChartSection
         id="stake-maturity"
-        title="Stake Maturity Schedule (Next 88 Days)"
+        title={`Stake Maturity Schedule (Next ${stakeMaturityDays} Days)`}
         subtitle="Stakes ending by future date"
         keyMetrics={[
           {
@@ -1487,19 +1495,19 @@ function App() {
           },
           {
             label: "Peak Day",
-            value: stakeReleases.length > 0 ? 
-              Math.max(...stakeReleases.map(r => r.count)).toString() : 
+            value: stakeReleases.slice(0, stakeMaturityDays).length > 0 ? 
+              Math.max(...stakeReleases.slice(0, stakeMaturityDays).map(r => r.count)).toString() : 
               "0",
             trend: "up"
           },
           {
             label: "Next 30 Days",
-            value: stakeReleases.slice(0, 30).reduce((sum, r) => sum + r.count, 0).toString(),
+            value: stakeReleases.slice(0, Math.min(30, stakeMaturityDays)).reduce((sum, r) => sum + r.count, 0).toString(),
             trend: "neutral"
           },
           {
-            label: "Total Future",
-            value: stakeReleases.reduce((sum, r) => sum + r.count, 0).toString(),
+            label: `Total in ${stakeMaturityDays}d`,
+            value: stakeReleases.slice(0, stakeMaturityDays).reduce((sum, r) => sum + r.count, 0).toString(),
             trend: "neutral"
           }
         ]}
@@ -1507,10 +1515,14 @@ function App() {
         loading={loading}
 
       >
+        <DateRangeButtons 
+          selectedDays={stakeMaturityDays}
+          onDaysChange={setStakeMaturityDays}
+        />
         <BarChart
           key="stakes-maturity-chart"
           title="Number of Stakes Ending Each Day"
-          labels={stakeReleases.slice(0, 88).map(r => {
+          labels={stakeReleases.slice(0, stakeMaturityDays).map(r => {
             const date = new Date(r.date);
             const contractDay = getContractDay(date);
             return [`${r.date.substring(5)}`, `Day ${contractDay}`];
@@ -1518,7 +1530,7 @@ function App() {
           datasets={[
             {
               label: 'Number of Stakes',
-              data: stakeReleases.slice(0, 88).map(r => r.count),
+              data: stakeReleases.slice(0, stakeMaturityDays).map(r => r.count),
               backgroundColor: '#4f46e5',
             },
           ]}
@@ -1530,13 +1542,13 @@ function App() {
           showDataLabels={true}
         />
         <div className="chart-note">
-          Shows the number of stakes ending each day over the next 88 days. The numbers on top of each bar indicate the exact count of stakes maturing that day. Stakes can be created for 1-88 days, so the distribution shows when users originally chose to end their staking positions.
+          Shows the number of stakes ending each day over the next {stakeMaturityDays} days. The numbers on top of each bar indicate the exact count of stakes maturing that day. Stakes can be created for 1-88 days, so the distribution shows when users originally chose to end their staking positions.
         </div>
       </ExpandableChartSection>
 
       <ExpandableChartSection
         id="create-maturity"
-        title="Create Maturity Schedule (Next 88 Days)"
+        title={`Create Maturity Schedule (Next ${torusReleasesDays} Days)`}
         subtitle="Creates ending by future date"
         keyMetrics={[
           {
@@ -1566,10 +1578,14 @@ function App() {
         loading={loading}
 
       >
+        <DateRangeButtons 
+          selectedDays={torusReleasesDays}
+          onDaysChange={setTorusReleasesDays}
+        />
         <BarChart
           key="creates-maturity-chart"
           title="Number of Creates Ending Each Day"
-          labels={createReleases.slice(0, 88).map(r => {
+          labels={createReleases.slice(0, torusReleasesDays).map(r => {
             const date = new Date(r.date);
             const contractDay = getContractDay(date);
             return [`${r.date.substring(5)}`, `Day ${contractDay}`];
@@ -1577,7 +1593,7 @@ function App() {
           datasets={[
             {
               label: 'Number of Creates',
-              data: createReleases.slice(0, 88).map(r => r.count),
+              data: createReleases.slice(0, torusReleasesDays).map(r => r.count),
               backgroundColor: '#10b981',
             },
           ]}
@@ -1589,13 +1605,13 @@ function App() {
           showDataLabels={true}
         />
         <div className="chart-note">
-          Shows the number of creates ending each day over the next 88 days. The numbers on top of each bar indicate the exact count of creates maturing that day. Creates can be made for 1-88 days, similar to stakes, representing when users originally chose to end their create positions.
+          Shows the number of creates ending each day over the next {torusReleasesDays} days. The numbers on top of each bar indicate the exact count of creates maturing that day. Creates can be made for 1-88 days, similar to stakes, representing when users originally chose to end their create positions.
         </div>
       </ExpandableChartSection>
 
       <ExpandableChartSection
         id="torus-releases"
-        title={<><span className="torus-text">TORUS</span> Release Amounts Principal (Next 88 Days)</>}
+        title={<><span className="torus-text">TORUS</span> Release Amounts Principal (Next {torusReleasesDays} Days)</>}
         subtitle="Principal amounts releasing daily"
         keyMetrics={[
           {
@@ -1627,10 +1643,14 @@ function App() {
         loading={loading}
 
       >
+        <DateRangeButtons 
+          selectedDays={torusReleasesDays}
+          onDaysChange={setTorusReleasesDays}
+        />
         <BarChart
           key="torus-releases-chart"
           title="Total TORUS Principal Amount Releasing Each Day"
-          labels={torusReleases.slice(0, 88).map(r => {
+          labels={torusReleases.slice(0, torusReleasesDays).map(r => {
             const date = new Date(r.date);
             const contractDay = getContractDay(date);
             return [`${r.date.substring(5)}`, `Day ${contractDay}`];
@@ -1638,7 +1658,7 @@ function App() {
           datasets={[
             {
               label: 'TORUS Amount',
-              data: torusReleases.slice(0, 88).map(r => Math.round(r.amount * 100) / 100),
+              data: torusReleases.slice(0, torusReleasesDays).map(r => Math.round(r.amount * 100) / 100),
               backgroundColor: '#8b5cf6',
             },
           ]}
@@ -1736,7 +1756,7 @@ function App() {
               alt="TitanX Logo" 
               style={{ width: '24px', height: '24px', marginRight: '8px', verticalAlign: 'middle', opacity: 0.8 }}
             />
-            TitanX Usage by End Date (Next 88 Days)
+            TitanX Usage by End Date (Next {titanXUsageDays} Days)
           </>
         }
         subtitle="TitanX amounts from creates ending"
@@ -1770,10 +1790,14 @@ function App() {
         loading={loading}
 
       >
+        <DateRangeButtons 
+          selectedDays={titanXUsageDays}
+          onDaysChange={setTitanXUsageDays}
+        />
         <BarChart
           key="titanx-usage-chart"
           title="Total TitanX Used for Creates Ending Each Day"
-          labels={titanXUsage.slice(0, 88).map(r => {
+          labels={titanXUsage.slice(0, titanXUsageDays).map(r => {
             const date = new Date(r.date);
             const contractDay = getContractDay(date);
             return [`${r.date.substring(5)}`, `Day ${contractDay}`];
@@ -1781,7 +1805,7 @@ function App() {
           datasets={[
             {
               label: 'TitanX Amount',
-              data: titanXUsage.slice(0, 88).map(r => Math.round(r.amount * 100) / 100),
+              data: titanXUsage.slice(0, titanXUsageDays).map(r => Math.round(r.amount * 100) / 100),
               backgroundColor: '#fbbf24',
             },
           ]}
@@ -1792,13 +1816,13 @@ function App() {
           enableScaleToggle={true}
         />
         <div className="chart-note">
-          Shows the total TitanX amounts that were used for creates ending each day. When users create positions, they pay TitanX as a fee. This chart displays the aggregate TitanX amounts from all creates maturing on each specific day over the next 88 days.
+          Shows the total TitanX amounts that were used for creates ending each day. When users create positions, they pay TitanX as a fee. This chart displays the aggregate TitanX amounts from all creates maturing on each specific day over the next {titanXUsageDays} days.
         </div>
       </ExpandableChartSection>
 
       <ExpandableChartSection
         id="shares-releases"
-        title="Shares Release Schedule (Next 88 Days)"
+        title={`Shares Release Schedule (Next ${sharesReleasesDays} Days)`}
         subtitle="Shares ending by future date"
         keyMetrics={[
           {
@@ -1836,10 +1860,14 @@ function App() {
         loading={loading}
 
       >
+        <DateRangeButtons 
+          selectedDays={sharesReleasesDays}
+          onDaysChange={setSharesReleasesDays}
+        />
         <BarChart
           key="shares-releases-chart"
           title="Total Shares Ending Each Day"
-          labels={sharesReleases.slice(0, 88).map(r => {
+          labels={sharesReleases.slice(0, sharesReleasesDays).map(r => {
             const date = new Date(r.date);
             const contractDay = getContractDay(date);
             return [`${r.date.substring(5)}`, `Day ${contractDay}`];
@@ -1847,10 +1875,11 @@ function App() {
           datasets={[
             {
               label: 'Shares',
-              data: sharesReleases.slice(0, 88).map(r => {
-                // Use consistent scaling based on the maximum value
-                const hasB = sharesReleases.some(r => r.shares > 1e9);
-                const hasM = sharesReleases.some(r => r.shares > 1e6);
+              data: sharesReleases.slice(0, sharesReleasesDays).map(r => {
+                // Use consistent scaling based on the maximum value in the selected range
+                const selectedData = sharesReleases.slice(0, sharesReleasesDays);
+                const hasB = selectedData.some(r => r.shares > 1e9);
+                const hasM = selectedData.some(r => r.shares > 1e6);
                 
                 if (hasB) return r.shares / 1e9;
                 if (hasM) return r.shares / 1e6;
@@ -1860,17 +1889,18 @@ function App() {
             },
           ]}
           height={600}
-          yAxisLabel={`Total Shares (${sharesReleases.some(r => r.shares > 1e9) ? 'Billions' : sharesReleases.some(r => r.shares > 1e6) ? 'Millions' : 'Units'})`}
+          yAxisLabel={`Total Shares (${sharesReleases.slice(0, sharesReleasesDays).some(r => r.shares > 1e9) ? 'Billions' : sharesReleases.slice(0, sharesReleasesDays).some(r => r.shares > 1e6) ? 'Millions' : 'Units'})`}
           xAxisLabel="Date / Contract Day"
           formatTooltip={(value: number) => {
-            const label = sharesReleases.some(r => r.shares > 1e9) ? 'B' : sharesReleases.some(r => r.shares > 1e6) ? 'M' : '';
+            const selectedData = sharesReleases.slice(0, sharesReleasesDays);
+            const label = selectedData.some(r => r.shares > 1e9) ? 'B' : selectedData.some(r => r.shares > 1e6) ? 'M' : '';
             return `Shares: ${value.toLocaleString('en-US', { maximumFractionDigits: 2 })}${label}`;
           }}
           enableScaleToggle={true}
           minBarHeight={2}
         />
         <div className="chart-note">
-          Shows the total shares ending each day over the next 88 days. Shares represent the user's proportion of the reward pool and are earned from both stakes and creates. When positions mature, these shares are released and converted to TORUS rewards based on the current share-to-TORUS ratio.
+          Shows the total shares ending each day over the next {sharesReleasesDays} days. Shares represent the user's proportion of the reward pool and are earned from both stakes and creates. When positions mature, these shares are released and converted to TORUS rewards based on the current share-to-TORUS ratio.
         </div>
       </ExpandableChartSection>
 
