@@ -45,9 +45,10 @@ function App() {
   const [torusReleasesDays, setTorusReleasesDays] = useState<number>(88);
   const [titanXUsageDays, setTitanXUsageDays] = useState<number>(88);
   const [sharesReleasesDays, setSharesReleasesDays] = useState<number>(88);
-  const [maxSupplyDays, setMaxSupplyDays] = useState<number>(88);
+  const [futureMaxSupplyDays, setFutureMaxSupplyDays] = useState<number>(88);
   const [torusStakedDays, setTorusStakedDays] = useState<number>(88);
   const [torusRewardsDays, setTorusRewardsDays] = useState<number>(88);
+  const [supplyProjectionDays, setSupplyProjectionDays] = useState<number>(88);
 
   useEffect(() => {
     loadData();
@@ -1311,81 +1312,6 @@ function App() {
 
       {/* Charts Section */}
       <ExpandableChartSection
-        id="supply-projection"
-        title={<>Future <span className="torus-text">TORUS</span> Supply Projection (Current Share Pool)</>}
-        subtitle="Projected supply growth from current staked positions only - does not include future daily TORUS share pool distributions"
-        keyMetrics={[
-          {
-            label: "Current Supply",
-            value: totalSupply.toLocaleString(),
-            trend: "neutral"
-          },
-          {
-            label: "Projected Max",
-            value: supplyProjection.length > 0 ? Math.round(supplyProjection[supplyProjection.length - 1]?.supply || 0).toLocaleString() : "0",
-            trend: "up"
-          },
-          {
-            label: "Days Tracked",
-            value: supplyProjection.length,
-            trend: "neutral"
-          },
-          {
-            label: "Growth Rate",
-            value: totalSupply > 0 && supplyProjection.length > 0 ? 
-              `${(((supplyProjection[supplyProjection.length - 1]?.supply || 0) / totalSupply - 1) * 100).toFixed(1)}%` : 
-              "0%",
-            trend: "up"
-          }
-        ]}
-        loading={loading}
-
-      >
-        <LineChart
-          key={`supply-projection-chart-${supplyProjection.length}`}
-          title={`TORUS Supply from Current Share Pool (${supplyProjection.length} data points)`}
-          labels={supplyProjection.map(p => {
-            const date = new Date(p.date);
-            return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
-          })}
-          datasets={[
-            {
-              label: 'Total TORUS Supply',
-              data: supplyProjection.map(p => Math.round(p.supply * 100) / 100),
-              borderColor: '#8b5cf6',
-              backgroundColor: 'rgba(139, 92, 246, 0.1)',
-              fill: true,
-            },
-          ]}
-          height={600}
-          yAxisLabel="Total TORUS Supply"
-          xAxisLabel="Date"
-          customTooltipData={supplyProjection}
-          customTooltipCallback={(context: any, data: any) => {
-            const lines = [];
-            lines.push(`Total Supply: ${data.supply.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} TORUS`);
-            lines.push(`Contract Day: ${data.contractDay}`);
-            lines.push(`Daily Release: ${data.released.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} TORUS`);
-            lines.push(`  - Principal: ${data.principal.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} TORUS`);
-            lines.push(`  - Rewards: ${data.rewards.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} TORUS`);
-            return lines;
-          }}
-          formatYAxis={(value: number) => {
-            if (value >= 1000000) return `${(value/1000000).toFixed(1)}M`;
-            if (value >= 1000) return `${(value/1000).toFixed(1)}K`;
-            return value.toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
-          }}
-        />
-        <div className="chart-note">
-          <strong>Important:</strong> This projection shows how the total TORUS supply will grow as <em>currently staked positions</em> mature and release both principal and accrued rewards. Starting from current supply of {totalSupply.toLocaleString()} TORUS, the line tracks cumulative supply increases each day from existing stakes only. 
-          <br /><br />
-          <strong>Not Included:</strong> This projection does <em>not</em> factor in future daily TORUS share pool distributions that will be available for new staking. The actual future supply will likely be higher as new TORUS tokens are minted daily and distributed to the share pool for additional staking opportunities.
-          <br /><br />
-          <strong>Current Scope:</strong> Shows releases from {torusReleasesWithRewards.filter(r => r.total > 0).length} positions maturing over the next 88 days, including their original principal and accumulated share rewards.
-        </div>
-      </ExpandableChartSection>
-
-      <ExpandableChartSection
         id="max-supply-projection"
         title={<>Future <span className="torus-text">TORUS</span> Max Supply Projection</>}
         subtitle="Maximum possible supply if all positions maintain their share percentages"
@@ -1415,6 +1341,10 @@ function App() {
         loading={loading}
 
       >
+        <DateRangeButtons 
+          selectedDays={futureMaxSupplyDays}
+          onDaysChange={setFutureMaxSupplyDays}
+        />
         <FutureMaxSupplyChart
           stakeEvents={stakeData}
           createEvents={createData}
@@ -1422,6 +1352,7 @@ function App() {
           currentSupply={totalSupply}
           contractStartDate={CONTRACT_START_DATE}
           currentProtocolDay={currentProtocolDay}
+          days={futureMaxSupplyDays}
         />
         <div className="chart-note">
           This projection shows the accrued future supply based on existing positions only. It includes principal returns from stakes and new tokens from creates that will be added when positions mature. This does NOT project future share rewards beyond what current positions have already earned. New positions created after today will dilute existing share percentages and reduce actual rewards.
@@ -1429,8 +1360,88 @@ function App() {
       </ExpandableChartSection>
 
       <ExpandableChartSection
+        id="supply-projection"
+        title={<>Future <span className="torus-text">TORUS</span> Supply Projection</>}
+        subtitle="Projected supply growth from current staked positions only - does not include future daily TORUS share pool distributions"
+        keyMetrics={[
+          {
+            label: "Current Supply",
+            value: totalSupply.toLocaleString(),
+            trend: "neutral"
+          },
+          {
+            label: "Projected Max",
+            value: supplyProjection.slice(0, supplyProjectionDays).length > 0 ? 
+              Math.round(supplyProjection.slice(0, supplyProjectionDays)[supplyProjection.slice(0, supplyProjectionDays).length - 1]?.supply || 0).toLocaleString() : "0",
+            trend: "up"
+          },
+          {
+            label: "Days Tracked",
+            value: Math.min(supplyProjection.length, supplyProjectionDays),
+            trend: "neutral"
+          },
+          {
+            label: "Growth Rate",
+            value: totalSupply > 0 && supplyProjection.slice(0, supplyProjectionDays).length > 0 ? 
+              `${(((supplyProjection.slice(0, supplyProjectionDays)[supplyProjection.slice(0, supplyProjectionDays).length - 1]?.supply || 0) / totalSupply - 1) * 100).toFixed(1)}%` : 
+              "0%",
+            trend: "up"
+          }
+        ]}
+        loading={loading}
+
+      >
+        <DateRangeButtons 
+          selectedDays={supplyProjectionDays}
+          onDaysChange={setSupplyProjectionDays}
+        />
+        <LineChart
+          key={`supply-projection-chart-${supplyProjection.slice(0, supplyProjectionDays).length}`}
+          title={`TORUS Supply from Current Share Pool (${supplyProjection.slice(0, supplyProjectionDays).length} data points)`}
+          labels={supplyProjection.slice(0, supplyProjectionDays).map(p => {
+            const date = new Date(p.date);
+            return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+          })}
+          datasets={[
+            {
+              label: 'Total TORUS Supply',
+              data: supplyProjection.slice(0, supplyProjectionDays).map(p => Math.round(p.supply * 100) / 100),
+              borderColor: '#8b5cf6',
+              backgroundColor: 'rgba(139, 92, 246, 0.1)',
+              fill: true,
+            },
+          ]}
+          height={600}
+          yAxisLabel="Total TORUS Supply"
+          xAxisLabel="Date"
+          customTooltipData={supplyProjection.slice(0, supplyProjectionDays)}
+          customTooltipCallback={(context: any, data: any) => {
+            const lines = [];
+            lines.push(`Total Supply: ${data.supply.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} TORUS`);
+            lines.push(`Contract Day: ${data.contractDay}`);
+            lines.push(`Daily Release: ${data.released.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} TORUS`);
+            lines.push(`  - Principal: ${data.principal.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} TORUS`);
+            lines.push(`  - Rewards: ${data.rewards.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} TORUS`);
+            return lines;
+          }}
+          formatYAxis={(value: number) => {
+            if (value >= 1000000) return `${(value/1000000).toFixed(1)}M`;
+            if (value >= 1000) return `${(value/1000).toFixed(1)}K`;
+            return value.toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
+          }}
+        />
+        <div className="chart-note">
+          <strong>Important:</strong> This projection shows how the total TORUS supply will grow as <em>currently staked positions</em> mature and release both principal and accrued rewards. Starting from current supply of {totalSupply.toLocaleString()} TORUS, the line tracks cumulative supply increases each day from existing stakes only. 
+          <br /><br />
+          <strong>Not Included:</strong> This projection does <em>not</em> factor in future daily TORUS share pool distributions that will be available for new staking. The actual future supply will likely be higher as new TORUS tokens are minted daily and distributed to the share pool for additional staking opportunities.
+          <br /><br />
+          <strong>Current Scope:</strong> Shows releases from {torusReleasesWithRewards.slice(0, supplyProjectionDays).filter(r => r.total > 0).length} positions maturing over the next {supplyProjectionDays} days, including their original principal and accumulated share rewards.
+        </div>
+      </ExpandableChartSection>
+
+      <ExpandableChartSection
         id="torus-staked-per-day"
-        title={<><span className="torus-text">TORUS</span> Staked Per Contract Day (Last {torusStakedDays} Days)</>}
+        title={<><span className="torus-text">TORUS</span> Staked Per Contract Day</>}
         subtitle="Historical staking activity by day"
         keyMetrics={[
           {
@@ -1491,7 +1502,7 @@ function App() {
 
       <ExpandableChartSection
         id="stake-maturity"
-        title={`Stake Maturity Schedule (Next ${stakeMaturityDays} Days)`}
+        title="Stake Maturity Schedule"
         subtitle="Stakes ending by future date"
         keyMetrics={[
           {
@@ -1554,7 +1565,7 @@ function App() {
 
       <ExpandableChartSection
         id="create-maturity"
-        title={`Create Maturity Schedule (Next ${torusReleasesDays} Days)`}
+        title="Create Maturity Schedule"
         subtitle="Creates ending by future date"
         keyMetrics={[
           {
@@ -1617,7 +1628,7 @@ function App() {
 
       <ExpandableChartSection
         id="torus-releases"
-        title={<><span className="torus-text">TORUS</span> Release Amounts Principal (Next {torusReleasesDays} Days)</>}
+        title={<><span className="torus-text">TORUS</span> Release Amounts Principal</>}
         subtitle="Principal amounts releasing daily"
         keyMetrics={[
           {
@@ -1677,7 +1688,7 @@ function App() {
 
       <ExpandableChartSection
         id="torus-rewards"
-        title={<><span className="torus-text">TORUS</span> Release Schedule with Accrued Rewards (Next {torusRewardsDays} Days)</>}
+        title={<><span className="torus-text">TORUS</span> Release Schedule with Accrued Rewards</>}
         subtitle="Principal vs rewards releasing daily"
         keyMetrics={[
           {
@@ -1766,7 +1777,7 @@ function App() {
               alt="TitanX Logo" 
               style={{ width: '24px', height: '24px', marginRight: '8px', verticalAlign: 'middle', opacity: 0.8 }}
             />
-            TitanX Usage by End Date (Next {titanXUsageDays} Days)
+            TitanX Usage by End Date
           </>
         }
         subtitle="TitanX amounts from creates ending"
@@ -1832,7 +1843,7 @@ function App() {
 
       <ExpandableChartSection
         id="shares-releases"
-        title={`Shares Release Schedule (Next ${sharesReleasesDays} Days)`}
+        title="Shares Release Schedule"
         subtitle="Shares ending by future date"
         keyMetrics={[
           {

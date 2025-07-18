@@ -66,8 +66,8 @@ const BarChart: React.FC<BarChartProps> = ({
   const minValue = hasValidData ? Math.min(...allValues) : 1;
   const valueRatio = hasValidData ? maxValue / minValue : 1;
   
-  // Auto-detect when log scale should be default (following best practices)
-  const shouldDefaultToLog = valueRatio > 100; // More than 2 orders of magnitude
+  // Default to log scale for all charts
+  const shouldDefaultToLog = true; // Always default to log scale
   const [useLogScale, setUseLogScale] = useState(shouldDefaultToLog);
   
   // Show toggle if enabled OR if there's a significant benefit to log scale

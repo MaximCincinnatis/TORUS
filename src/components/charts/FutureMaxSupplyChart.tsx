@@ -1,4 +1,4 @@
-import React, { useMemo, useState } from 'react';
+import React, { useMemo } from 'react';
 import LineChart from './LineChart';
 import {
   calculateFutureMaxSupply,
@@ -13,6 +13,7 @@ interface FutureMaxSupplyChartProps {
   currentSupply: number;
   contractStartDate: Date;
   currentProtocolDay: number;
+  days?: number;
 }
 
 const FutureMaxSupplyChart: React.FC<FutureMaxSupplyChartProps> = ({
@@ -21,10 +22,9 @@ const FutureMaxSupplyChart: React.FC<FutureMaxSupplyChartProps> = ({
   rewardPoolData,
   currentSupply,
   contractStartDate,
-  currentProtocolDay
+  currentProtocolDay,
+  days = 88
 }) => {
-  // Timeframe state
-  const [timeframe, setTimeframe] = useState<'7d' | '30d' | '90d' | 'all'>('30d');
   
   const chartData = useMemo(() => {
     console.log('🔍 FutureMaxSupplyChart - Input Data:');
@@ -67,23 +67,8 @@ const FutureMaxSupplyChart: React.FC<FutureMaxSupplyChartProps> = ({
       // Apply timeframe filtering - only show current day onward
       console.log('🔍 Using currentProtocolDay:', currentProtocolDay);
       
-      // Always start from current day and show the specified number of future days (up to 88 days max)
-      let endDay: number;
-      switch (timeframe) {
-        case '7d':
-          endDay = currentProtocolDay + 7;
-          break;
-        case '30d':
-          endDay = currentProtocolDay + 30;
-          break;
-        case '90d':
-          endDay = currentProtocolDay + 88; // Cap at 88 days from current day
-          break;
-        case 'all':
-        default:
-          endDay = currentProtocolDay + 88; // Show 88 days from current day
-          break;
-      }
+      // Always start from current day and show the specified number of future days
+      const endDay = currentProtocolDay + days;
       
       let filteredProjections = projections.filter(p => p.day >= currentProtocolDay && p.day <= endDay);
       
@@ -169,7 +154,7 @@ const FutureMaxSupplyChart: React.FC<FutureMaxSupplyChartProps> = ({
         customTooltipData: []
       };
     }
-  }, [stakeEvents, createEvents, rewardPoolData, currentSupply, contractStartDate, currentProtocolDay, timeframe]);
+  }, [stakeEvents, createEvents, rewardPoolData, currentSupply, contractStartDate, currentProtocolDay, days]);
 
   if (!chartData.labels.length) {
     return (
@@ -183,58 +168,7 @@ const FutureMaxSupplyChart: React.FC<FutureMaxSupplyChartProps> = ({
   }
 
   return (
-    <div style={{ position: 'relative', paddingTop: '50px' }}>
-      {/* Timeframe Controls - Above chart */}
-      <div style={{ 
-        position: 'absolute', 
-        top: '10px', 
-        right: '0px', 
-        zIndex: 10,
-        display: 'flex',
-        flexDirection: 'column',
-        gap: '4px'
-      }}>
-        <div style={{ 
-          background: 'rgba(42, 42, 42, 0.6)',
-          padding: '6px 10px',
-          borderRadius: '6px',
-          fontSize: '12px',
-          border: '1px solid rgba(68, 68, 68, 0.6)',
-          backdropFilter: 'blur(4px)'
-        }}>
-          <label style={{ 
-            cursor: 'pointer', 
-            display: 'flex', 
-            alignItems: 'center', 
-            gap: '6px',
-            color: 'rgba(204, 204, 204, 0.9)',
-            fontWeight: '500'
-          }}>
-            <select
-              value={timeframe}
-              onChange={(e) => setTimeframe(e.target.value as any)}
-              style={{
-                background: 'rgba(26, 26, 26, 0.7)',
-                color: 'rgba(204, 204, 204, 0.9)',
-                border: '1px solid rgba(68, 68, 68, 0.6)',
-                borderRadius: '4px',
-                padding: '2px 6px',
-                fontSize: '12px',
-                cursor: 'pointer',
-                backdropFilter: 'blur(4px)'
-              }}
-            >
-              <option value="7d">7 Days</option>
-              <option value="30d">30 Days</option>
-              <option value="90d">90 Days</option>
-              <option value="all">All</option>
-            </select>
-            Timeframe
-          </label>
-        </div>
-      </div>
-      
-      <LineChart
+    <LineChart
         title="Accrued Future Supply Projection"
         labels={chartData.labels}
         datasets={chartData.datasets}
@@ -249,7 +183,6 @@ const FutureMaxSupplyChart: React.FC<FutureMaxSupplyChartProps> = ({
         return value.toLocaleString();
       }}
     />
-    </div>
   );
 };
 
