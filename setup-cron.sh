@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # TORUS Dashboard - Cron Setup Script
-# Sets up automatic updates every 30 minutes
+# Sets up automatic updates every 10 minutes
 
 echo "🕐 Setting up TORUS Dashboard automatic updates"
 echo "=============================================="
@@ -11,13 +11,13 @@ DASHBOARD_DIR=$(pwd)
 NODE_PATH=$(which node)
 
 # Create the cron command
-CRON_CMD="*/30 * * * * cd $DASHBOARD_DIR && $NODE_PATH smart-update.js >> smart-update.log 2>&1"
+CRON_CMD="*/10 * * * * cd $DASHBOARD_DIR && $NODE_PATH smart-update.js >> smart-update.log 2>&1"
 
 echo ""
 echo "📝 This will add the following cron job:"
 echo "   $CRON_CMD"
 echo ""
-echo "This runs the smart update script every 30 minutes."
+echo "This runs the smart update script every 10 minutes."
 echo ""
 
 read -p "Do you want to add this cron job? (y/n) " -n 1 -r

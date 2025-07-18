@@ -56,7 +56,7 @@
 ### Automation Setup ✅
 ```bash
 # Active cron jobs:
-*/30 * * * * /home/wsl/projects/TORUSspecs/torus-dashboard/run-auto-update.sh
+*/10 * * * * /home/wsl/projects/TORUSspecs/torus-dashboard/run-auto-update.sh
 @reboot cd /home/wsl/projects/TORUSspecs/torus-dashboard && nohup /usr/bin/node run-updater-service.js >> logs/reboot-service.log 2>&1 &
 ```
 

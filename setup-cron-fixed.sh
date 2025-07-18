@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # TORUS Dashboard - Fixed Cron Setup Script
-# Sets up automatic updates every 30 minutes with data preservation
+# Sets up automatic updates every 10 minutes with data preservation
 
 echo "🕐 Setting up TORUS Dashboard automatic updates (FIXED VERSION)"
 echo "=============================================================="
@@ -14,7 +14,7 @@ NODE_PATH=$(which node)
 mkdir -p logs
 
 # Create the cron command using the FIXED auto-update script
-CRON_CMD="*/30 * * * * cd $DASHBOARD_DIR && $NODE_PATH auto-update-fixed.js >> logs/auto-update-fixed.log 2>&1"
+CRON_CMD="*/10 * * * * cd $DASHBOARD_DIR && $NODE_PATH auto-update-fixed.js >> logs/auto-update-fixed.log 2>&1"
 
 echo ""
 echo "📝 This will add the following cron job:"
@@ -61,7 +61,7 @@ if [[ $REPLY =~ ^[Yy]$ ]]; then
     echo "   tail -f logs/auto-update-fixed.log  # Watch live updates"
     echo "   node auto-update-fixed.js     # Run manually"
     echo ""
-    echo "⏰ Next automatic update will run within 30 minutes"
+    echo "⏰ Next automatic update will run within 10 minutes"
 else
     echo "❌ Cron setup cancelled"
     echo ""
