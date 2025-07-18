@@ -46,6 +46,8 @@ function App() {
   const [titanXUsageDays, setTitanXUsageDays] = useState<number>(88);
   const [sharesReleasesDays, setSharesReleasesDays] = useState<number>(88);
   const [maxSupplyDays, setMaxSupplyDays] = useState<number>(88);
+  const [torusStakedDays, setTorusStakedDays] = useState<number>(88);
+  const [torusRewardsDays, setTorusRewardsDays] = useState<number>(88);
 
   useEffect(() => {
     loadData();
@@ -1428,7 +1430,7 @@ function App() {
 
       <ExpandableChartSection
         id="torus-staked-per-day"
-        title={<><span className="torus-text">TORUS</span> Staked Per Contract Day</>}
+        title={<><span className="torus-text">TORUS</span> Staked Per Contract Day (Last {torusStakedDays} Days)</>}
         subtitle="Historical staking activity by day"
         keyMetrics={[
           {
@@ -1438,20 +1440,20 @@ function App() {
           },
           {
             label: "Peak Day",
-            value: torusStakedPerDay.length > 0 ? 
-              `Day ${torusStakedPerDay.reduce((max, day) => day.amount > max.amount ? day : max, {day: 0, amount: 0}).day}` : 
+            value: torusStakedPerDay.slice(-torusStakedDays).length > 0 ? 
+              `Day ${torusStakedPerDay.slice(-torusStakedDays).reduce((max, day) => day.amount > max.amount ? day : max, {day: 0, amount: 0}).day}` : 
               "N/A",
             trend: "up"
           },
           {
             label: "Active Days",
-            value: torusStakedPerDay.filter(d => d.amount > 0).length,
+            value: torusStakedPerDay.slice(-torusStakedDays).filter(d => d.amount > 0).length,
             trend: "up"
           },
           {
             label: "Avg Daily",
-            value: torusStakedPerDay.length > 0 ? 
-              `${(torusStakedPerDay.reduce((sum, d) => sum + d.amount, 0) / torusStakedPerDay.filter(d => d.amount > 0).length).toLocaleString('en-US', { maximumFractionDigits: 0 })} TORUS` : 
+            value: torusStakedPerDay.slice(-torusStakedDays).length > 0 ? 
+              `${(torusStakedPerDay.slice(-torusStakedDays).reduce((sum, d) => sum + d.amount, 0) / torusStakedPerDay.slice(-torusStakedDays).filter(d => d.amount > 0).length).toLocaleString('en-US', { maximumFractionDigits: 0 })} TORUS` : 
               "0",
             trend: "neutral"
           }
@@ -1460,14 +1462,18 @@ function App() {
         loading={loading}
 
       >
+        <DateRangeButtons 
+          selectedDays={torusStakedDays}
+          onDaysChange={setTorusStakedDays}
+        />
         <BarChart
           key="torus-staked-per-day-chart"
           title="Total TORUS Staked Each Contract Day"
-          labels={torusStakedPerDay.map(d => [`Day ${d.day}`])}
+          labels={torusStakedPerDay.slice(-torusStakedDays).map(d => [`Day ${d.day}`])}
           datasets={[
             {
               label: 'TORUS Staked',
-              data: torusStakedPerDay.map(d => Math.round(d.amount * 100) / 100),
+              data: torusStakedPerDay.slice(-torusStakedDays).map(d => Math.round(d.amount * 100) / 100),
               backgroundColor: 'rgba(139, 92, 246, 0.8)',
             },
           ]}
@@ -1479,7 +1485,7 @@ function App() {
           formatTooltip={(value: number) => `${value.toLocaleString('en-US', { maximumFractionDigits: 2 })} TORUS`}
         />
         <div className="chart-note">
-          Shows the total amount of TORUS staked each contract day since launch. This represents the cumulative principal amounts from all stakes created on each specific day. Contract days start from Day 1 (July 11, 2025) when the TORUS protocol launched.
+          Shows the total amount of TORUS staked each contract day over the last {torusStakedDays} days. This represents the cumulative principal amounts from all stakes created on each specific day. Contract days start from Day 1 (July 11, 2025) when the TORUS protocol launched.
         </div>
       </ExpandableChartSection>
 
@@ -1671,25 +1677,25 @@ function App() {
 
       <ExpandableChartSection
         id="torus-rewards"
-        title={<><span className="torus-text">TORUS</span> Release Schedule with Accrued Rewards</>}
+        title={<><span className="torus-text">TORUS</span> Release Schedule with Accrued Rewards (Next {torusRewardsDays} Days)</>}
         subtitle="Principal vs rewards releasing daily"
         keyMetrics={[
           {
             label: "Total Principal",
-            value: `${torusReleasesWithRewards.reduce((sum, r) => sum + r.principal, 0).toLocaleString('en-US', { maximumFractionDigits: 0 })} TORUS`,
+            value: `${torusReleasesWithRewards.slice(0, torusRewardsDays).reduce((sum, r) => sum + r.principal, 0).toLocaleString('en-US', { maximumFractionDigits: 0 })} TORUS`,
             trend: "up"
           },
           {
             label: "Total Rewards",
-            value: `${torusReleasesWithRewards.reduce((sum, r) => sum + r.rewards, 0).toLocaleString('en-US', { maximumFractionDigits: 0 })} TORUS`,
+            value: `${torusReleasesWithRewards.slice(0, torusRewardsDays).reduce((sum, r) => sum + r.rewards, 0).toLocaleString('en-US', { maximumFractionDigits: 0 })} TORUS`,
             trend: "up"
           },
           {
             label: "Reward Ratio",
-            value: torusReleasesWithRewards.length > 0 ? 
+            value: torusReleasesWithRewards.slice(0, torusRewardsDays).length > 0 ? 
               (() => {
-                const totalPrincipal = torusReleasesWithRewards.reduce((sum, r) => sum + r.principal, 0);
-                const totalRewards = torusReleasesWithRewards.reduce((sum, r) => sum + r.rewards, 0);
+                const totalPrincipal = torusReleasesWithRewards.slice(0, torusRewardsDays).reduce((sum, r) => sum + r.principal, 0);
+                const totalRewards = torusReleasesWithRewards.slice(0, torusRewardsDays).reduce((sum, r) => sum + r.rewards, 0);
                 return totalPrincipal > 0 ? `${((totalRewards / totalPrincipal) * 100).toFixed(1)}%` : "0%";
               })() : 
               "0%",
@@ -1697,8 +1703,8 @@ function App() {
           },
           {
             label: "Peak Day Total",
-            value: torusReleasesWithRewards.length > 0 && torusReleasesWithRewards.some(r => r.total > 0) ? 
-              `${Math.max(...torusReleasesWithRewards.map(r => r.total)).toLocaleString('en-US', { maximumFractionDigits: 0 })} TORUS` : 
+            value: torusReleasesWithRewards.slice(0, torusRewardsDays).length > 0 && torusReleasesWithRewards.slice(0, torusRewardsDays).some(r => r.total > 0) ? 
+              `${Math.max(...torusReleasesWithRewards.slice(0, torusRewardsDays).map(r => r.total)).toLocaleString('en-US', { maximumFractionDigits: 0 })} TORUS` : 
               "0 TORUS",
             trend: "up"
           }
@@ -1707,11 +1713,15 @@ function App() {
         loading={loading}
 
       >
+        <DateRangeButtons 
+          selectedDays={torusRewardsDays}
+          onDaysChange={setTorusRewardsDays}
+        />
         <BarChart
           key="torus-rewards-chart"
           title="TORUS Released Each Day: Principal vs Accrued Share Rewards"
           labels={torusReleasesWithRewards
-            .slice(0, 88)
+            .slice(0, torusRewardsDays)
             .map(r => {
               const date = new Date(r.date);
               const contractDay = getContractDay(date);
@@ -1721,14 +1731,14 @@ function App() {
             {
               label: 'Principal TORUS',
               data: torusReleasesWithRewards
-                .slice(0, 88)
+                .slice(0, torusRewardsDays)
                 .map(r => Math.round(r.principal * 100) / 100),
               backgroundColor: '#8b5cf6',
             },
             {
               label: 'Accrued Rewards',
               data: torusReleasesWithRewards
-                .slice(0, 88)
+                .slice(0, torusRewardsDays)
                 .map(r => Math.round(r.rewards * 100) / 100),
               backgroundColor: '#22c55e',
             },
