@@ -1558,19 +1558,19 @@ function App() {
           },
           {
             label: "Peak Day",
-            value: createReleases.length > 0 ? 
-              Math.max(...createReleases.map(r => r.count)).toString() : 
+            value: createReleases.slice(0, torusReleasesDays).length > 0 ? 
+              Math.max(...createReleases.slice(0, torusReleasesDays).map(r => r.count)).toString() : 
               "0",
             trend: "up"
           },
           {
             label: "Next 30 Days",
-            value: createReleases.slice(0, 30).reduce((sum, r) => sum + r.count, 0).toString(),
+            value: createReleases.slice(0, Math.min(30, torusReleasesDays)).reduce((sum, r) => sum + r.count, 0).toString(),
             trend: "neutral"
           },
           {
-            label: "Total Future",
-            value: createReleases.reduce((sum, r) => sum + r.count, 0).toString(),
+            label: `Total in ${torusReleasesDays}d`,
+            value: createReleases.slice(0, torusReleasesDays).reduce((sum, r) => sum + r.count, 0).toString(),
             trend: "neutral"
           }
         ]}
@@ -1616,25 +1616,25 @@ function App() {
         keyMetrics={[
           {
             label: "Total Principal",
-            value: `${torusReleases.reduce((sum, r) => sum + r.amount, 0).toLocaleString('en-US', { maximumFractionDigits: 0 })} TORUS`,
+            value: `${torusReleases.slice(0, torusReleasesDays).reduce((sum, r) => sum + r.amount, 0).toLocaleString('en-US', { maximumFractionDigits: 0 })} TORUS`,
             trend: "up"
           },
           {
             label: "Peak Day",
-            value: torusReleases.length > 0 ? 
-              `${Math.max(...torusReleases.map(r => r.amount)).toLocaleString('en-US', { maximumFractionDigits: 0 })} TORUS` : 
+            value: torusReleases.slice(0, torusReleasesDays).length > 0 ? 
+              `${Math.max(...torusReleases.slice(0, torusReleasesDays).map(r => r.amount)).toLocaleString('en-US', { maximumFractionDigits: 0 })} TORUS` : 
               "0",
             trend: "up"
           },
           {
             label: "Days with Releases",
-            value: torusReleases.filter(r => r.amount > 0).length,
+            value: torusReleases.slice(0, torusReleasesDays).filter(r => r.amount > 0).length,
             trend: "neutral"
           },
           {
             label: "Avg Daily",
-            value: torusReleases.length > 0 ? 
-              `${(torusReleases.reduce((sum, r) => sum + r.amount, 0) / torusReleases.filter(r => r.amount > 0).length).toLocaleString('en-US', { maximumFractionDigits: 0 })} TORUS` : 
+            value: torusReleases.slice(0, torusReleasesDays).length > 0 ? 
+              `${(torusReleases.slice(0, torusReleasesDays).reduce((sum, r) => sum + r.amount, 0) / torusReleases.slice(0, torusReleasesDays).filter(r => r.amount > 0).length).toLocaleString('en-US', { maximumFractionDigits: 0 })} TORUS` : 
               "0",
             trend: "neutral"
           }
@@ -1763,25 +1763,25 @@ function App() {
         keyMetrics={[
           {
             label: "Total TitanX",
-            value: `${titanXUsage.reduce((sum, r) => sum + r.amount, 0).toLocaleString('en-US', { maximumFractionDigits: 0 })} TITANX`,
+            value: `${titanXUsage.slice(0, titanXUsageDays).reduce((sum, r) => sum + r.amount, 0).toLocaleString('en-US', { maximumFractionDigits: 0 })} TITANX`,
             trend: "up"
           },
           {
             label: "Peak Day",
-            value: titanXUsage.length > 0 ? 
-              `${Math.max(...titanXUsage.map(r => r.amount)).toLocaleString('en-US', { maximumFractionDigits: 0 })} TITANX` : 
+            value: titanXUsage.slice(0, titanXUsageDays).length > 0 ? 
+              `${Math.max(...titanXUsage.slice(0, titanXUsageDays).map(r => r.amount)).toLocaleString('en-US', { maximumFractionDigits: 0 })} TITANX` : 
               "0",
             trend: "up"
           },
           {
             label: "Days with Usage",
-            value: titanXUsage.filter(r => r.amount > 0).length,
+            value: titanXUsage.slice(0, titanXUsageDays).filter(r => r.amount > 0).length,
             trend: "neutral"
           },
           {
             label: "Avg Daily",
-            value: titanXUsage.length > 0 ? 
-              `${(titanXUsage.reduce((sum, r) => sum + r.amount, 0) / titanXUsage.filter(r => r.amount > 0).length).toLocaleString('en-US', { maximumFractionDigits: 0 })} TITANX` : 
+            value: titanXUsage.slice(0, titanXUsageDays).length > 0 ? 
+              `${(titanXUsage.slice(0, titanXUsageDays).reduce((sum, r) => sum + r.amount, 0) / titanXUsage.slice(0, titanXUsageDays).filter(r => r.amount > 0).length).toLocaleString('en-US', { maximumFractionDigits: 0 })} TITANX` : 
               "0",
             trend: "neutral"
           }
@@ -1826,24 +1826,24 @@ function App() {
         subtitle="Shares ending by future date"
         keyMetrics={[
           {
-            label: "Total Shares",
-            value: sharesReleases.some(r => r.shares > 1e9) ? 
-              `${(sharesReleases.reduce((sum, r) => sum + r.shares, 0) / 1e9).toLocaleString('en-US', { minimumFractionDigits: 1, maximumFractionDigits: 1 })}B` :
-              `${(sharesReleases.reduce((sum, r) => sum + r.shares, 0) / 1e6).toLocaleString('en-US', { minimumFractionDigits: 1, maximumFractionDigits: 1 })}M`,
+            label: `Total in ${sharesReleasesDays}d`,
+            value: sharesReleases.slice(0, sharesReleasesDays).some(r => r.shares > 1e9) ? 
+              `${(sharesReleases.slice(0, sharesReleasesDays).reduce((sum, r) => sum + r.shares, 0) / 1e9).toLocaleString('en-US', { minimumFractionDigits: 1, maximumFractionDigits: 1 })}B` :
+              `${(sharesReleases.slice(0, sharesReleasesDays).reduce((sum, r) => sum + r.shares, 0) / 1e6).toLocaleString('en-US', { minimumFractionDigits: 1, maximumFractionDigits: 1 })}M`,
             trend: "up"
           },
           {
             label: "Peak Day",
-            value: sharesReleases.length > 0 ? 
-              sharesReleases.some(r => r.shares > 1e9) ? 
-                `${(Math.max(...sharesReleases.map(r => r.shares)) / 1e9).toLocaleString('en-US', { minimumFractionDigits: 1, maximumFractionDigits: 1 })}B` :
-                `${(Math.max(...sharesReleases.map(r => r.shares)) / 1e6).toLocaleString('en-US', { minimumFractionDigits: 1, maximumFractionDigits: 1 })}M` : 
+            value: sharesReleases.slice(0, sharesReleasesDays).length > 0 ? 
+              sharesReleases.slice(0, sharesReleasesDays).some(r => r.shares > 1e9) ? 
+                `${(Math.max(...sharesReleases.slice(0, sharesReleasesDays).map(r => r.shares)) / 1e9).toLocaleString('en-US', { minimumFractionDigits: 1, maximumFractionDigits: 1 })}B` :
+                `${(Math.max(...sharesReleases.slice(0, sharesReleasesDays).map(r => r.shares)) / 1e6).toLocaleString('en-US', { minimumFractionDigits: 1, maximumFractionDigits: 1 })}M` : 
               "0",
             trend: "up"
           },
           {
             label: "Days with Shares",
-            value: sharesReleases.filter(r => r.shares > 0).length,
+            value: sharesReleases.slice(0, sharesReleasesDays).filter(r => r.shares > 0).length,
             trend: "neutral"
           },
           {
