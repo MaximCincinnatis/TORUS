@@ -4,7 +4,6 @@ import MetricCard from './components/metrics/MetricCard';
 import BarChart from './components/charts/BarChart';
 import LineChart from './components/charts/LineChart';
 import ExpandableChartSection from './components/charts/ExpandableChartSection';
-import ChartManager from './components/charts/ChartManager';
 import LoadingBar from './components/loading/LoadingBar';
 import SkeletonCard from './components/loading/SkeletonCard';
 import LPPositionsTable from './components/lp/LPPositionsTable';
@@ -39,52 +38,6 @@ function App() {
   const [contractInfo, setContractInfo] = useState<any>(null);
   const [cachedTitanXData, setCachedTitanXData] = useState<{totalTitanXBurnt?: string, titanxTotalSupply?: string}>({});
   const [lastUpdatedTime, setLastUpdatedTime] = useState<string | null>(null);
-  
-  // Chart expansion state management
-  const [expandedCharts, setExpandedCharts] = useState<Set<string>>(new Set([
-    'supply-projection',
-    'max-supply-projection',
-    'torus-staked-per-day',
-    'stake-maturity',
-    'create-maturity',
-    'torus-releases',
-    'torus-rewards',
-    'titanx-usage',
-    'shares-releases',
-    'lp-positions'
-  ])); // Auto-expand all charts on page load
-  
-  // Chart management functions
-  const handleChartToggle = (chartId: string, expanded: boolean) => {
-    setExpandedCharts(prev => {
-      const newSet = new Set(prev);
-      if (expanded) {
-        newSet.add(chartId);
-      } else {
-        newSet.delete(chartId);
-      }
-      return newSet;
-    });
-  };
-  
-  const handleExpandAll = () => {
-    setExpandedCharts(new Set([
-      'supply-projection',
-      'max-supply-projection',
-      'torus-staked-per-day',
-      'stake-maturity',
-      'create-maturity',
-      'torus-releases',
-      'torus-rewards',
-      'titanx-usage',
-      'shares-releases',
-      'lp-positions'
-    ]));
-  };
-  
-  const handleCollapseAll = () => {
-    setExpandedCharts(new Set());
-  };
 
   useEffect(() => {
     loadData();
@@ -97,6 +50,11 @@ function App() {
       try {
         const response = await fetch(`/data/cached-data.json?t=${Date.now()}`, { cache: 'no-cache' });
         const data = await response.json();
+        console.log('🔥 TitanX Data Loaded:', {
+          totalTitanXBurnt: data.totalTitanXBurnt,
+          titanxTotalSupply: data.titanxTotalSupply,
+          parsed: data.totalTitanXBurnt ? (parseFloat(data.totalTitanXBurnt) / 1e18 / 1e9).toFixed(3) + 'B' : '0'
+        });
         setCachedTitanXData({
           totalTitanXBurnt: data.totalTitanXBurnt || "0",
           titanxTotalSupply: data.titanxTotalSupply || "0"
@@ -1092,6 +1050,12 @@ function App() {
     ? parseFloat(cachedTitanXData.totalTitanXBurnt) / 1e18 
     : 0;
   
+  console.log('🔥 TitanX Burn Display Calculation:', {
+    cachedData: cachedTitanXData,
+    totalTitanXBurned,
+    inBillions: (totalTitanXBurned / 1e9).toFixed(3) + 'B'
+  });
+  
   const titanxTotalSupply = cachedTitanXData.titanxTotalSupply 
     ? parseFloat(cachedTitanXData.titanxTotalSupply) / 1e18 
     : 1000000000000; // 1 trillion fallback
@@ -1334,13 +1298,6 @@ function App() {
         </div>
       </div>
 
-      {/* Chart Management Controls */}
-      <ChartManager
-        onExpandAll={handleExpandAll}
-        onCollapseAll={handleCollapseAll}
-        expandedCount={expandedCharts.size}
-        totalCount={10}
-      />
 
       {/* Charts Section */}
       <ExpandableChartSection
@@ -1371,9 +1328,8 @@ function App() {
             trend: "up"
           }
         ]}
-        defaultExpanded={expandedCharts.has('supply-projection')}
         loading={loading}
-        onToggle={(expanded) => handleChartToggle('supply-projection', expanded)}
+
       >
         <LineChart
           key={`supply-projection-chart-${supplyProjection.length}`}
@@ -1445,9 +1401,9 @@ function App() {
             trend: "neutral"
           }
         ]}
-        defaultExpanded={expandedCharts.has('max-supply-projection')}
+
         loading={loading}
-        onToggle={(expanded) => handleChartToggle('max-supply-projection', expanded)}
+
       >
         <FutureMaxSupplyChart
           stakeEvents={stakeData}
@@ -1492,9 +1448,9 @@ function App() {
             trend: "neutral"
           }
         ]}
-        defaultExpanded={expandedCharts.has('torus-staked-per-day')}
+
         loading={loading}
-        onToggle={(expanded) => handleChartToggle('torus-staked-per-day', expanded)}
+
       >
         <BarChart
           key="torus-staked-per-day-chart"
@@ -1547,9 +1503,9 @@ function App() {
             trend: "neutral"
           }
         ]}
-        defaultExpanded={expandedCharts.has('stake-maturity')}
+
         loading={loading}
-        onToggle={(expanded) => handleChartToggle('stake-maturity', expanded)}
+
       >
         <BarChart
           key="stakes-maturity-chart"
@@ -1606,9 +1562,9 @@ function App() {
             trend: "neutral"
           }
         ]}
-        defaultExpanded={expandedCharts.has('create-maturity')}
+
         loading={loading}
-        onToggle={(expanded) => handleChartToggle('create-maturity', expanded)}
+
       >
         <BarChart
           key="creates-maturity-chart"
@@ -1667,9 +1623,9 @@ function App() {
             trend: "neutral"
           }
         ]}
-        defaultExpanded={expandedCharts.has('torus-releases')}
+
         loading={loading}
-        onToggle={(expanded) => handleChartToggle('torus-releases', expanded)}
+
       >
         <BarChart
           key="torus-releases-chart"
@@ -1727,9 +1683,9 @@ function App() {
             trend: "up"
           }
         ]}
-        defaultExpanded={expandedCharts.has('torus-rewards')}
+
         loading={loading}
-        onToggle={(expanded) => handleChartToggle('torus-rewards', expanded)}
+
       >
         <BarChart
           key="torus-rewards-chart"
@@ -1810,9 +1766,9 @@ function App() {
             trend: "neutral"
           }
         ]}
-        defaultExpanded={expandedCharts.has('titanx-usage')}
+
         loading={loading}
-        onToggle={(expanded) => handleChartToggle('titanx-usage', expanded)}
+
       >
         <BarChart
           key="titanx-usage-chart"
@@ -1876,9 +1832,9 @@ function App() {
             trend: "up"
           }
         ]}
-        defaultExpanded={expandedCharts.has('shares-releases')}
+
         loading={loading}
-        onToggle={(expanded) => handleChartToggle('shares-releases', expanded)}
+
       >
         <BarChart
           key="shares-releases-chart"
@@ -1945,9 +1901,9 @@ function App() {
             trend: lpLoading ? "neutral" : "up"
           }
         ]}
-        defaultExpanded={expandedCharts.has('lp-positions')}
+
         loading={lpLoading}
-        onToggle={(expanded) => handleChartToggle('lp-positions', expanded)}
+
       >
         <LPPositionsTable 
           positions={lpPositions} 
