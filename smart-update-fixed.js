@@ -42,27 +42,55 @@ const colors = {
 
 // Uniswap V3 math helper for calculating position amounts
 function calculatePositionAmounts(position, sqrtPriceX96, currentTick) {
-  const Q96 = ethers.BigNumber.from(2).pow(96);
-  const liquidityBN = ethers.BigNumber.from(position.liquidity);
+  // Use proper Uniswap V3 math for all positions
+  const liquidity = position.liquidity.toString();
+  const tickLower = position.tickLower;
+  const tickUpper = position.tickUpper;
   
-  // Full range position calculation
-  if (position.tickLower === -887200 && position.tickUpper === 887200) {
-    // amount1 = L * sqrtPrice / 2^96
-    const amount1 = liquidityBN.mul(sqrtPriceX96).div(Q96);
-    // amount0 = L / sqrtPrice * 2^96
-    const amount0 = liquidityBN.mul(Q96).div(sqrtPriceX96);
-    
-    return {
-      amount0: parseFloat(ethers.utils.formatEther(amount0)),
-      amount1: parseFloat(ethers.utils.formatEther(amount1))
-    };
+  // Use BigInt for precision
+  const liquidityBN = BigInt(liquidity);
+  const sqrtPrice = BigInt(sqrtPriceX96.toString());
+  const Q96 = BigInt(2) ** BigInt(96);
+  
+  // Calculate sqrt prices for the tick range
+  const priceLower = Math.pow(1.0001, tickLower);
+  const priceUpper = Math.pow(1.0001, tickUpper);
+  
+  // Convert to BigInt sqrt prices (multiply by 2^96 and take sqrt)
+  const sqrtPriceLowerFloat = Math.sqrt(priceLower) * Math.pow(2, 96);
+  const sqrtPriceUpperFloat = Math.sqrt(priceUpper) * Math.pow(2, 96);
+  
+  const sqrtPriceLower = BigInt(Math.floor(sqrtPriceLowerFloat));
+  const sqrtPriceUpper = BigInt(Math.floor(sqrtPriceUpperFloat));
+  
+  let amount0 = BigInt(0);
+  let amount1 = BigInt(0);
+  
+  // Calculate based on current price position
+  if (sqrtPrice <= sqrtPriceLower) {
+    // Current price is below the range, all liquidity is in token0
+    amount0 = (liquidityBN * (sqrtPriceUpper - sqrtPriceLower) * Q96) / 
+      (sqrtPriceUpper * sqrtPriceLower);
+  } else if (sqrtPrice < sqrtPriceUpper) {
+    // Current price is within the range
+    amount0 = (liquidityBN * (sqrtPriceUpper - sqrtPrice) * Q96) / 
+      (sqrtPriceUpper * sqrtPrice);
+    amount1 = (liquidityBN * (sqrtPrice - sqrtPriceLower)) / Q96;
+  } else {
+    // Current price is above the range, all liquidity is in token1
+    amount1 = (liquidityBN * (sqrtPriceUpper - sqrtPriceLower)) / Q96;
   }
   
-  // For other positions, return existing amounts for now
-  // TODO: Implement concentrated liquidity position math
+  // Convert to decimal values
+  const decimals0 = BigInt(10) ** BigInt(18);
+  const decimals1 = BigInt(10) ** BigInt(18);
+  
+  const decimal0 = Number(amount0) / Number(decimals0);
+  const decimal1 = Number(amount1) / Number(decimals1);
+  
   return {
-    amount0: position.amount0 || 0,
-    amount1: position.amount1 || 0
+    amount0: decimal0,
+    amount1: decimal1
   };
 }
 
