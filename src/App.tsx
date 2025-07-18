@@ -1346,8 +1346,8 @@ function App() {
       {/* Charts Section */}
       <ExpandableChartSection
         id="supply-projection"
-        title={<>Future <span className="torus-text">TORUS</span> Supply Projection</>}
-        subtitle="Projected supply growth over next 88 days"
+        title={<>Future <span className="torus-text">TORUS</span> Supply Projection (Current Share Pool)</>}
+        subtitle="Projected supply growth from current staked positions only - does not include future daily TORUS share pool distributions"
         keyMetrics={[
           {
             label: "Current Supply",
@@ -1378,7 +1378,7 @@ function App() {
       >
         <LineChart
           key={`supply-projection-chart-${supplyProjection.length}`}
-          title={`Cumulative TORUS Supply Over Next 88 Days (${supplyProjection.length} data points)`}
+          title={`TORUS Supply from Current Share Pool (${supplyProjection.length} data points)`}
           labels={supplyProjection.map(p => {
             const date = new Date(p.date);
             return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
@@ -1412,7 +1412,11 @@ function App() {
           }}
         />
         <div className="chart-note">
-          This projection shows how the total TORUS supply will grow as positions mature and release both principal and accrued rewards. Starting from current supply of {totalSupply.toLocaleString()} TORUS, the line tracks cumulative supply increases each day. The growth rate depends on the number and size of positions maturing, including both their original principal and the share rewards they've accumulated throughout their staking period. Chart automatically scales to accommodate all values. This projection does not account for potential burn token dynamics.
+          <strong>Important:</strong> This projection shows how the total TORUS supply will grow as <em>currently staked positions</em> mature and release both principal and accrued rewards. Starting from current supply of {totalSupply.toLocaleString()} TORUS, the line tracks cumulative supply increases each day from existing stakes only. 
+          <br /><br />
+          <strong>Not Included:</strong> This projection does <em>not</em> factor in future daily TORUS share pool distributions that will be available for new staking. The actual future supply will likely be higher as new TORUS tokens are minted daily and distributed to the share pool for additional staking opportunities.
+          <br /><br />
+          <strong>Current Scope:</strong> Shows releases from {torusReleasesWithRewards.filter(r => r.amount > 0).length} positions maturing over the next 88 days, including their original principal and accumulated share rewards.
         </div>
       </ExpandableChartSection>
 
