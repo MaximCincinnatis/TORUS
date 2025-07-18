@@ -11,8 +11,7 @@ import LPPositionsTable from './components/lp/LPPositionsTable';
 import FutureMaxSupplyChart from './components/charts/FutureMaxSupplyChart';
 import { getContractInfo, RewardPoolData } from './utils/ethersWeb3';
 import { getTokenInfo, SimpleLPPosition } from './utils/uniswapV3RealOwners';
-import { DataCache } from './utils/cache';
-import { getMainDashboardDataWithCache, getLPPositionsWithCache, loadCachedData } from './utils/cacheDataLoader';
+import { getMainDashboardDataWithCache, getLPPositionsWithCache } from './utils/cacheDataLoader';
 import './App.css';
 
 // Contract launch date - Day 1 (corrected to align with protocol days)
@@ -1416,7 +1415,7 @@ function App() {
           <br /><br />
           <strong>Not Included:</strong> This projection does <em>not</em> factor in future daily TORUS share pool distributions that will be available for new staking. The actual future supply will likely be higher as new TORUS tokens are minted daily and distributed to the share pool for additional staking opportunities.
           <br /><br />
-          <strong>Current Scope:</strong> Shows releases from {torusReleasesWithRewards.filter(r => r.amount > 0).length} positions maturing over the next 88 days, including their original principal and accumulated share rewards.
+          <strong>Current Scope:</strong> Shows releases from {torusReleasesWithRewards.filter(r => r.total > 0).length} positions maturing over the next 88 days, including their original principal and accumulated share rewards.
         </div>
       </ExpandableChartSection>
 
