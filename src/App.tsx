@@ -1711,15 +1711,19 @@ function App() {
           {
             label: "Reward Ratio",
             value: torusReleasesWithRewards.length > 0 ? 
-              `${((torusReleasesWithRewards.reduce((sum, r) => sum + r.rewards, 0) / torusReleasesWithRewards.reduce((sum, r) => sum + r.principal, 0)) * 100).toFixed(1)}%` : 
+              (() => {
+                const totalPrincipal = torusReleasesWithRewards.reduce((sum, r) => sum + r.principal, 0);
+                const totalRewards = torusReleasesWithRewards.reduce((sum, r) => sum + r.rewards, 0);
+                return totalPrincipal > 0 ? `${((totalRewards / totalPrincipal) * 100).toFixed(1)}%` : "0%";
+              })() : 
               "0%",
             trend: "up"
           },
           {
             label: "Peak Day Total",
-            value: torusReleasesWithRewards.length > 0 ? 
+            value: torusReleasesWithRewards.length > 0 && torusReleasesWithRewards.some(r => r.total > 0) ? 
               `${Math.max(...torusReleasesWithRewards.map(r => r.total)).toLocaleString('en-US', { maximumFractionDigits: 0 })} TORUS` : 
-              "0",
+              "0 TORUS",
             trend: "up"
           }
         ]}
