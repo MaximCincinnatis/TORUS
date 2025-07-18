@@ -2070,6 +2070,14 @@ function App() {
                 >
                   Uniswap V3 Pool
                 </a>
+                <a 
+                  href="https://www.tincburn.fyi/" 
+                  target="_blank" 
+                  rel="noopener noreferrer"
+                  className="footer-link"
+                >
+                  TINC Burn Info
+                </a>
               </div>
             </div>
           </div>
