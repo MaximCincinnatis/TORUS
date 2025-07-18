@@ -32,6 +32,16 @@ Screenshot*.jpg
 Screenshot*.png
 src/debugCreateEvents.js
 
+# audit and test files
+audit-*.js
+*-audit.js
+*-test.js
+test-*.json
+*-summary.txt
+*-summary.md
+audit-reports/
+test-results/
+
 # IDE
 .vscode/
 .idea/
