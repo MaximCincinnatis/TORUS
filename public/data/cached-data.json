@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2025-07-19T15:00:05.076Z",
+  "lastUpdated": "2025-07-19T15:10:05.541Z",
   "version": "1.0.0",
   "poolData": {
     "sqrtPriceX96": "489943606620754599451889631186134",
@@ -3344,6 +3344,29 @@
         "stakingDays": 88,
         "maturityDate": "2025-10-15T14:17:59.000Z",
         "startDate": "2025-07-19T14:17:59.000Z",
+        "power": "0",
+        "claimedCreate": false,
+        "claimedStake": false,
+        "costETH": "0",
+        "costTitanX": "0",
+        "rawCostETH": "0",
+        "rawCostTitanX": "0",
+        "rewards": "0",
+        "penalties": "0",
+        "claimedAt": "0",
+        "isCreate": false
+      },
+      {
+        "user": "0x7dC5467C0911755496b9343E81Af716014a784f2",
+        "id": "5",
+        "principal": "7000000000000000000",
+        "shares": "54208000000000000000000",
+        "duration": "88",
+        "timestamp": "1752937415",
+        "blockNumber": 22954013,
+        "stakingDays": 88,
+        "maturityDate": "2025-10-15T15:03:35.000Z",
+        "startDate": "2025-07-19T15:03:35.000Z",
         "power": "0",
         "claimedCreate": false,
         "claimedStake": false,
@@ -18442,11 +18465,11 @@
     "burnedSupply": 0,
     "lastUpdated": "2025-07-16T19:25:33.217Z",
     "metadata": {
-      "currentBlock": 22953798,
+      "currentBlock": 22954045,
       "lastUpdate": "2025-07-16T19:14:31.015Z",
       "stakesRefreshed": "2025-07-16T18:54:18.007Z"
     },
-    "lastBlock": 22953798
+    "lastBlock": 22954045
   },
   "contractData": {
     "torusToken": {
