@@ -1,15 +1,8 @@
 {
-  "lastBlockNumber": 22952408,
-  "lastUpdateTime": 1752918006206,
-  "totalRpcCalls": 875,
+  "lastBlockNumber": 22952456,
+  "lastUpdateTime": 1752918606170,
+  "totalRpcCalls": 879,
   "updates": [
-    {
-      "timestamp": "2025-07-18T17:10:07.219Z",
-      "block": 22947489,
-      "rpcCalls": 4,
-      "dataChanged": true,
-      "errors": []
-    },
     {
       "timestamp": "2025-07-18T17:20:06.286Z",
       "block": 22947538,
@@ -704,6 +697,13 @@
       "errors": [
         "Pool update: missing revert data in call exception; Transaction reverted without a reason string [ See: https://links.ethers.org/v5-errors-CALL_EXCEPTION ] (data=\"0x\", transaction={\"to\":\"0x7ff1f30F6E7EeC2ff3F0D1b60739115BDF88190F\",\"data\":\"0x3850c7bd\",\"accessList\":null}, error={\"reason\":\"bad response\",\"code\":\"SERVER_ERROR\",\"status\":400,\"headers\":{\"date\":\"Sat, 19 Jul 2025 09:40:02 GMT\",\"content-type\":\"application/json\",\"transfer-encoding\":\"chunked\",\"connection\":\"close\",\"access-control-allow-origin\":\"*\",\"vary\":\"Accept-Encoding\",\"x-drpc-owner-id\":\"cb501251-31a8-4028-8b0a-54679f15c385\",\"x-drpc-owner-tier\":\"free\",\"x-drpc-trace-id\":\"63275282dfaf12eed16dfe814c2444d5\",\"strict-transport-security\":\"max-age=31536000; includeSubDomains\",\"access-control-allow-credentials\":\"true\",\"access-control-allow-methods\":\"GET, PUT, POST, DELETE, PATCH, OPTIONS\",\"access-control-allow-headers\":\"DNT,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range,Authorization\",\"access-control-max-age\":\"1728000\",\"cf-cache-status\":\"DYNAMIC\",\"server\":\"cloudflare\",\"cf-ray\":\"9619414a2bb527fc-SEA\"},\"body\":\"{\\\"id\\\":48,\\\"jsonrpc\\\":\\\"2.0\\\",\\\"error\\\":{\\\"message\\\":\\\"the method eth_call does not exist/is not available\\\",\\\"code\\\":-32601}}\",\"requestBody\":\"{\\\"method\\\":\\\"eth_call\\\",\\\"params\\\":[{\\\"to\\\":\\\"0x7ff1f30f6e7eec2ff3f0d1b60739115bdf88190f\\\",\\\"data\\\":\\\"0x3850c7bd\\\"},\\\"latest\\\"],\\\"id\\\":48,\\\"jsonrpc\\\":\\\"2.0\\\"}\",\"requestMethod\":\"POST\",\"url\":\"https://eth.drpc.org\"}, code=CALL_EXCEPTION, version=providers/5.7.2)"
       ]
+    },
+    {
+      "timestamp": "2025-07-19T09:50:06.170Z",
+      "block": 22952456,
+      "rpcCalls": 4,
+      "dataChanged": true,
+      "errors": []
     }
   ]
 }
