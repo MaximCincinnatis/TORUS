@@ -1,0 +1,27 @@
+--- Fix for LP Position Field Mapping ---
+
+The issue: Frontend expects 'torusAmount' and 'titanxAmount' fields, but backend provides 'amount0' and 'amount1'.
+
+Since token0 = TORUS and token1 = TitanX, we need to ensure all LP position objects include:
+- torusAmount = amount0
+- titanxAmount = amount1
+
+Changes needed in smart-update-fixed.js:
+
+1. For existing positions (around line 267), add:
+   torusAmount: amount0,
+   titanxAmount: amount1,
+
+2. For new positions (around line 345), replace:
+   amount0: 0, // Frontend will calculate
+   amount1: 0, // Frontend will calculate
+   
+   With:
+   amount0: calculated.amount0,
+   amount1: calculated.amount1,
+   torusAmount: calculated.amount0,
+   titanxAmount: calculated.amount1,
+
+3. Ensure calculatePositionAmounts is called for new positions too.
+
+This will permanently fix the issue and prevent regression.
