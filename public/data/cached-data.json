@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2025-07-19T11:30:05.884Z",
+  "lastUpdated": "2025-07-19T11:40:05.870Z",
   "version": "1.0.0",
   "poolData": {
     "sqrtPriceX96": "489116793182315297655975751844467",
@@ -3275,6 +3275,52 @@
         "stakingDays": 88,
         "maturityDate": "2025-10-15T07:55:47.000Z",
         "startDate": "2025-07-19T07:55:47.000Z",
+        "power": "0",
+        "claimedCreate": false,
+        "claimedStake": false,
+        "costETH": "0",
+        "costTitanX": "0",
+        "rawCostETH": "0",
+        "rawCostTitanX": "0",
+        "rewards": "0",
+        "penalties": "0",
+        "claimedAt": "0",
+        "isCreate": false
+      },
+      {
+        "user": "0x3212B384152a385446f548f789763e2e189661cE",
+        "id": "2",
+        "principal": "15000000000000000000",
+        "shares": "96000000000000000000000",
+        "duration": "80",
+        "timestamp": "1752924851",
+        "blockNumber": 22952977,
+        "stakingDays": 80,
+        "maturityDate": "2025-10-07T11:34:11.000Z",
+        "startDate": "2025-07-19T11:34:11.000Z",
+        "power": "0",
+        "claimedCreate": false,
+        "claimedStake": false,
+        "costETH": "0",
+        "costTitanX": "0",
+        "rawCostETH": "0",
+        "rawCostTitanX": "0",
+        "rewards": "0",
+        "penalties": "0",
+        "claimedAt": "0",
+        "isCreate": false
+      },
+      {
+        "user": "0x3212B384152a385446f548f789763e2e189661cE",
+        "id": "3",
+        "principal": "10000000000000000000",
+        "shares": "9000000000000000000000",
+        "duration": "30",
+        "timestamp": "1752924911",
+        "blockNumber": 22952982,
+        "stakingDays": 30,
+        "maturityDate": "2025-08-18T11:35:11.000Z",
+        "startDate": "2025-07-19T11:35:11.000Z",
         "power": "0",
         "claimedCreate": false,
         "claimedStake": false,
@@ -18373,11 +18419,11 @@
     "burnedSupply": 0,
     "lastUpdated": "2025-07-16T19:25:33.217Z",
     "metadata": {
-      "currentBlock": 22951914,
+      "currentBlock": 22953005,
       "lastUpdate": "2025-07-16T19:14:31.015Z",
       "stakesRefreshed": "2025-07-16T18:54:18.007Z"
     },
-    "lastBlock": 22951914
+    "lastBlock": 22953005
   },
   "contractData": {
     "torusToken": {
