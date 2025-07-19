@@ -13,6 +13,11 @@ const { ethers } = require('ethers');
 const fs = require('fs');
 const path = require('path');
 const { execSync } = require('child_process');
+const { 
+  calculatePositionAmounts: calculatePositionAmountsShared,
+  mapFieldNames,
+  mergeLPPositions 
+} = require('./shared/lpCalculations');
 
 // Configuration
 const UPDATE_LOG_FILE = 'update-log.json';
@@ -40,8 +45,13 @@ const colors = {
 };
 
 
-// Uniswap V3 math helper for calculating position amounts
+// Use shared calculation from lpCalculations module
 function calculatePositionAmounts(position, sqrtPriceX96, currentTick) {
+  return calculatePositionAmountsShared(position, sqrtPriceX96, currentTick);
+}
+
+// Legacy function kept for compatibility
+function calculatePositionAmountsLegacy(position, sqrtPriceX96, currentTick) {
   // Use proper Uniswap V3 math for all positions
   const liquidity = position.liquidity.toString();
   const tickLower = position.tickLower;
@@ -264,21 +274,19 @@ async function updateLPPositionsIncrementally(provider, cachedData, currentBlock
         }
         
         // Always include the position (updated or not) to preserve it
-        updatedPositions.push({
+        const updatedPosition = mapFieldNames({
           ...position,
           liquidity: currentPosition.liquidity.toString(),
           owner: owner,
           amount0: amount0,
           amount1: amount1,
-          // Add frontend-expected field names
-          torusAmount: amount0,
-          titanxAmount: amount1,
           claimableTorus: parseFloat(ethers.utils.formatEther(currentPosition.tokensOwed0)),
           claimableTitanX: parseFloat(ethers.utils.formatEther(currentPosition.tokensOwed1)),
           tokensOwed0: currentPosition.tokensOwed0.toString(),
           tokensOwed1: currentPosition.tokensOwed1.toString(),
           lastChecked: new Date().toISOString()
         });
+        updatedPositions.push(updatedPosition);
         
       } catch (e) {
         // Error checking position, keep the existing data
@@ -351,7 +359,7 @@ async function updateLPPositionsIncrementally(provider, cachedData, currentBlock
                   }
                   
                   // Add position data with calculated amounts
-                  updatedPositions.push({
+                  const newPosition = mapFieldNames({
                     tokenId: tokenId,
                     owner: owner,
                     liquidity: position.liquidity.toString(),
@@ -360,9 +368,6 @@ async function updateLPPositionsIncrementally(provider, cachedData, currentBlock
                     fee: position.fee,
                     amount0: amount0,
                     amount1: amount1,
-                    // Add frontend-expected field names
-                    torusAmount: amount0,
-                    titanxAmount: amount1,
                     inRange: inRange,
                     claimableTorus: parseFloat(ethers.utils.formatEther(position.tokensOwed0)),
                     claimableTitanX: parseFloat(ethers.utils.formatEther(position.tokensOwed1)),
@@ -373,6 +378,7 @@ async function updateLPPositionsIncrementally(provider, cachedData, currentBlock
                     lastChecked: new Date().toISOString(),
                     isNew: true
                   });
+                  updatedPositions.push(newPosition);
                   
                   updateStats.newPositions++;
                   log(`  Added new position ${tokenId}`, 'green');
