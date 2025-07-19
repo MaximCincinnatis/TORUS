@@ -75,9 +75,10 @@ const PannableLineChart: React.FC<PannableLineChartProps> = ({
   const [isDragging, setIsDragging] = useState(false);
   const [dragStartX, setDragStartX] = useState(0);
   const [dragStartIndex, setDragStartIndex] = useState(0);
+  const [currentWindowSize, setCurrentWindowSize] = useState(windowSize);
 
   // Calculate visible data window
-  const endIndex = Math.min(startIndex + windowSize, labels.length);
+  const endIndex = Math.min(startIndex + currentWindowSize, labels.length);
   const visibleLabels = labels.slice(startIndex, endIndex);
   const visibleDatasets = datasets.map(dataset => ({
     ...dataset,
@@ -86,7 +87,7 @@ const PannableLineChart: React.FC<PannableLineChartProps> = ({
   const visibleCustomData = customTooltipData?.slice(startIndex, endIndex);
 
   // Calculate max index for bounds checking
-  const maxStartIndex = Math.max(0, labels.length - windowSize);
+  const maxStartIndex = Math.max(0, labels.length - currentWindowSize);
 
   // Mouse event handlers
   const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -135,10 +136,11 @@ const PannableLineChart: React.FC<PannableLineChartProps> = ({
       const chartElement = document.querySelector('.pannable-chart-container');
       const chartWidth = chartElement?.clientWidth || 600;
       
-      console.log('🖱️ Global mouse move:', { deltaX, chartWidth, isDragging });
-      
-      const pointsPerPixel = windowSize / chartWidth;
-      const indexDelta = Math.round(-deltaX * pointsPerPixel);
+      // Improved drag sensitivity - map full drag width to full data range
+      const dragRatio = -deltaX / chartWidth; // Negative because dragging left should go forward in time
+      const totalDataPoints = labels.length;
+      const maxDragDistance = totalDataPoints - windowSize;
+      const indexDelta = Math.round(dragRatio * maxDragDistance);
       
       const newStartIndex = Math.max(0, Math.min(maxStartIndex, dragStartIndex + indexDelta));
       if (newStartIndex !== startIndex) {
@@ -192,16 +194,39 @@ const PannableLineChart: React.FC<PannableLineChartProps> = ({
     setIsDragging(false);
   };
 
+  // Mouse wheel zoom handler
+  const handleWheel = useCallback((e: React.WheelEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    
+    const zoomSpeed = 0.1;
+    const delta = e.deltaY > 0 ? 1 + zoomSpeed : 1 - zoomSpeed;
+    
+    // Calculate new window size with bounds
+    const newWindowSize = Math.round(currentWindowSize * delta);
+    const clampedWindowSize = Math.max(3, Math.min(labels.length, newWindowSize));
+    
+    if (clampedWindowSize !== currentWindowSize) {
+      // Adjust start index to keep the center point stable
+      const centerRatio = 0.5; // Keep center of view stable
+      const oldCenter = startIndex + currentWindowSize * centerRatio;
+      const newStartIndex = Math.round(oldCenter - clampedWindowSize * centerRatio);
+      const clampedStartIndex = Math.max(0, Math.min(labels.length - clampedWindowSize, newStartIndex));
+      
+      setCurrentWindowSize(clampedWindowSize);
+      setStartIndex(clampedStartIndex);
+    }
+  }, [currentWindowSize, startIndex, labels.length]);
+
   // Navigation buttons
   const canGoBack = startIndex > 0;
   const canGoForward = startIndex < maxStartIndex;
 
   const goBack = () => {
-    setStartIndex(Math.max(0, startIndex - Math.floor(windowSize / 2)));
+    setStartIndex(Math.max(0, startIndex - Math.floor(currentWindowSize / 2)));
   };
 
   const goForward = () => {
-    setStartIndex(Math.min(maxStartIndex, startIndex + Math.floor(windowSize / 2)));
+    setStartIndex(Math.min(maxStartIndex, startIndex + Math.floor(currentWindowSize / 2)));
   };
 
   const goToStart = () => {
@@ -298,20 +323,17 @@ const PannableLineChart: React.FC<PannableLineChartProps> = ({
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
           <h3 className="text-sm font-medium text-gray-300 mb-2">{title}</h3>
-          {labels.length > windowSize && (
+          {labels.length > currentWindowSize && (
             <span style={{ 
-              fontSize: '12px', 
-              color: '#60a5fa', 
-              backgroundColor: 'rgba(59, 130, 246, 0.1)', 
-              padding: '2px 8px', 
-              borderRadius: '12px',
-              border: '1px solid rgba(59, 130, 246, 0.3)'
+              fontSize: '11px', 
+              color: '#9ca3af', 
+              fontStyle: 'italic'
             }}>
-              ✋ Drag to pan
+              Click and drag to navigate • Scroll to zoom
             </span>
           )}
         </div>
-        {labels.length > windowSize && (
+        {labels.length > currentWindowSize && (
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
             <button
               onClick={goToStart}
@@ -417,6 +439,7 @@ const PannableLineChart: React.FC<PannableLineChartProps> = ({
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
+        onWheel={handleWheel}
       >
         <div style={{ pointerEvents: isDragging ? 'none' : 'auto' }}>
           <Line ref={chartRef} options={options} data={data} />

@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import Dashboard from './components/layout/Dashboard';
 import MetricCard from './components/metrics/MetricCard';
-import BarChart from './components/charts/BarChart';
+// import BarChart from './components/charts/BarChart'; // Replaced with PannableBarChart
 import LineChart from './components/charts/LineChart';
 import PannableLineChart from './components/charts/PannableLineChart';
+import PannableBarChart from './components/charts/PannableBarChart';
 import ExpandableChartSection from './components/charts/ExpandableChartSection';
 import LoadingBar from './components/loading/LoadingBar';
 import SkeletonCard from './components/loading/SkeletonCard';
@@ -1496,14 +1497,14 @@ function App() {
           selectedDays={torusStakedDays}
           onDaysChange={setTorusStakedDays}
         />
-        <BarChart
+        <PannableBarChart
           key="torus-staked-per-day-chart"
           title="Total TORUS Staked Each Contract Day"
-          labels={torusStakedPerDay.slice(-torusStakedDays).map(d => [`Day ${d.day}`])}
+          labels={torusStakedPerDay.map(d => [`Day ${d.day}`])}
           datasets={[
             {
               label: 'TORUS Staked',
-              data: torusStakedPerDay.slice(-torusStakedDays).map(d => Math.round(d.amount * 100) / 100),
+              data: torusStakedPerDay.map(d => Math.round(d.amount * 100) / 100),
               backgroundColor: 'rgba(139, 92, 246, 0.8)',
             },
           ]}
@@ -1511,8 +1512,8 @@ function App() {
           yAxisLabel="TORUS Amount"
           xAxisLabel="Contract Day"
           enableScaleToggle={true}
-          showDataLabels={true}
           formatTooltip={(value: number) => `${value.toLocaleString('en-US', { maximumFractionDigits: 2 })} TORUS`}
+          windowSize={torusStakedDays}
         />
         <div className="chart-note">
           Shows the total amount of TORUS staked each contract day over the last {torusStakedDays} days. This represents the cumulative principal amounts from all stakes created on each specific day. Contract days start from Day 1 (July 11, 2025) when the TORUS protocol launched.
@@ -1555,10 +1556,10 @@ function App() {
           selectedDays={stakeMaturityDays}
           onDaysChange={setStakeMaturityDays}
         />
-        <BarChart
+        <PannableBarChart
           key="stakes-maturity-chart"
           title="Number of Stakes Ending Each Day"
-          labels={stakeReleases.slice(0, stakeMaturityDays).map(r => {
+          labels={stakeReleases.map(r => {
             const date = new Date(r.date);
             const contractDay = getContractDay(date);
             return [`${r.date.substring(5)}`, `Day ${contractDay}`];
@@ -1566,7 +1567,7 @@ function App() {
           datasets={[
             {
               label: 'Number of Stakes',
-              data: stakeReleases.slice(0, stakeMaturityDays).map(r => r.count),
+              data: stakeReleases.map(r => r.count),
               backgroundColor: '#4f46e5',
             },
           ]}
@@ -1574,8 +1575,7 @@ function App() {
           yAxisLabel="Number of Stakes"
           xAxisLabel="Date / Contract Day"
           enableScaleToggle={true}
-          integerOnly={true}
-          showDataLabels={true}
+          windowSize={stakeMaturityDays}
         />
         <div className="chart-note">
           Shows the number of stakes ending each day over the next {stakeMaturityDays} days. The numbers on top of each bar indicate the exact count of stakes maturing that day. Stakes can be created for 1-88 days, so the distribution shows when users originally chose to end their staking positions.
@@ -1618,10 +1618,10 @@ function App() {
           selectedDays={torusReleasesDays}
           onDaysChange={setTorusReleasesDays}
         />
-        <BarChart
+        <PannableBarChart
           key="creates-maturity-chart"
           title="Number of Creates Ending Each Day"
-          labels={createReleases.slice(0, torusReleasesDays).map(r => {
+          labels={createReleases.map(r => {
             const date = new Date(r.date);
             const contractDay = getContractDay(date);
             return [`${r.date.substring(5)}`, `Day ${contractDay}`];
@@ -1629,7 +1629,7 @@ function App() {
           datasets={[
             {
               label: 'Number of Creates',
-              data: createReleases.slice(0, torusReleasesDays).map(r => r.count),
+              data: createReleases.map(r => r.count),
               backgroundColor: '#10b981',
             },
           ]}
@@ -1637,8 +1637,7 @@ function App() {
           yAxisLabel="Number of Creates"
           xAxisLabel="Date / Contract Day"
           enableScaleToggle={true}
-          integerOnly={true}
-          showDataLabels={true}
+          windowSize={torusReleasesDays}
         />
         <div className="chart-note">
           Shows the number of creates ending each day over the next {torusReleasesDays} days. The numbers on top of each bar indicate the exact count of creates maturing that day. Creates can be made for 1-88 days, similar to stakes, representing when users originally chose to end their create positions.
@@ -1683,10 +1682,10 @@ function App() {
           selectedDays={torusReleasesDays}
           onDaysChange={setTorusReleasesDays}
         />
-        <BarChart
+        <PannableBarChart
           key="torus-releases-chart"
           title="Total TORUS Principal Amount Releasing Each Day"
-          labels={torusReleases.slice(0, torusReleasesDays).map(r => {
+          labels={torusReleases.map(r => {
             const date = new Date(r.date);
             const contractDay = getContractDay(date);
             return [`${r.date.substring(5)}`, `Day ${contractDay}`];
@@ -1694,7 +1693,7 @@ function App() {
           datasets={[
             {
               label: 'TORUS Amount',
-              data: torusReleases.slice(0, torusReleasesDays).map(r => Math.round(r.amount * 100) / 100),
+              data: torusReleases.map(r => Math.round(r.amount * 100) / 100),
               backgroundColor: '#8b5cf6',
             },
           ]}
@@ -1702,6 +1701,7 @@ function App() {
           yAxisLabel="TORUS Amount"
           xAxisLabel="Date / Contract Day"
           enableScaleToggle={true}
+          windowSize={torusReleasesDays}
         />
       </ExpandableChartSection>
 
@@ -1747,11 +1747,10 @@ function App() {
           selectedDays={torusRewardsDays}
           onDaysChange={setTorusRewardsDays}
         />
-        <BarChart
+        <PannableBarChart
           key="torus-rewards-chart"
           title="TORUS Released Each Day: Principal vs Accrued Share Rewards"
           labels={torusReleasesWithRewards
-            .slice(0, torusRewardsDays)
             .map(r => {
               const date = new Date(r.date);
               const contractDay = getContractDay(date);
@@ -1761,14 +1760,12 @@ function App() {
             {
               label: 'Principal TORUS',
               data: torusReleasesWithRewards
-                .slice(0, torusRewardsDays)
                 .map(r => Math.round(r.principal * 100) / 100),
               backgroundColor: '#8b5cf6',
             },
             {
               label: 'Accrued Rewards',
               data: torusReleasesWithRewards
-                .slice(0, torusRewardsDays)
                 .map(r => Math.round(r.rewards * 100) / 100),
               backgroundColor: '#22c55e',
             },
@@ -1781,6 +1778,7 @@ function App() {
           showLegend={true}
           formatTooltip={(value: number) => `TORUS: ${value.toLocaleString('en-US', { maximumFractionDigits: 2 })}`}
           minBarHeight={0}
+          windowSize={torusRewardsDays}
         />
         <div className="chart-note">
           Note: Purple bars show principal from stakes/creates ending. Green bars show accrued share rewards that have accumulated daily throughout the position's lifetime. Bars are shown side-by-side for easy comparison. Days with no releases show no bars. Rewards are estimated based on current pool data.
@@ -1834,10 +1832,10 @@ function App() {
           selectedDays={titanXUsageDays}
           onDaysChange={setTitanXUsageDays}
         />
-        <BarChart
+        <PannableBarChart
           key="titanx-usage-chart"
           title="Total TitanX Used for Creates Ending Each Day"
-          labels={titanXUsage.slice(0, titanXUsageDays).map(r => {
+          labels={titanXUsage.map(r => {
             const date = new Date(r.date);
             const contractDay = getContractDay(date);
             return [`${r.date.substring(5)}`, `Day ${contractDay}`];
@@ -1845,7 +1843,7 @@ function App() {
           datasets={[
             {
               label: 'TitanX Amount',
-              data: titanXUsage.slice(0, titanXUsageDays).map(r => Math.round(r.amount * 100) / 100),
+              data: titanXUsage.map(r => Math.round(r.amount * 100) / 100),
               backgroundColor: '#fbbf24',
             },
           ]}
@@ -1854,6 +1852,7 @@ function App() {
           xAxisLabel="Date / Contract Day"
           formatTooltip={(value: number) => `TitanX: ${value.toLocaleString('en-US', { maximumFractionDigits: 2 })}`}
           enableScaleToggle={true}
+          windowSize={titanXUsageDays}
         />
         <div className="chart-note">
           Shows the total TitanX amounts that were used for creates ending each day. When users create positions, they pay TitanX as a fee. This chart displays the aggregate TitanX amounts from all creates maturing on each specific day over the next {titanXUsageDays} days.
@@ -1904,10 +1903,10 @@ function App() {
           selectedDays={sharesReleasesDays}
           onDaysChange={setSharesReleasesDays}
         />
-        <BarChart
+        <PannableBarChart
           key="shares-releases-chart"
           title="Total Shares Ending Each Day"
-          labels={sharesReleases.slice(0, sharesReleasesDays).map(r => {
+          labels={sharesReleases.map(r => {
             const date = new Date(r.date);
             const contractDay = getContractDay(date);
             return [`${r.date.substring(5)}`, `Day ${contractDay}`];
@@ -1915,11 +1914,10 @@ function App() {
           datasets={[
             {
               label: 'Shares',
-              data: sharesReleases.slice(0, sharesReleasesDays).map(r => {
-                // Use consistent scaling based on the maximum value in the selected range
-                const selectedData = sharesReleases.slice(0, sharesReleasesDays);
-                const hasB = selectedData.some(r => r.shares > 1e9);
-                const hasM = selectedData.some(r => r.shares > 1e6);
+              data: sharesReleases.map(r => {
+                // Use consistent scaling based on the maximum value
+                const hasB = sharesReleases.some(r => r.shares > 1e9);
+                const hasM = sharesReleases.some(r => r.shares > 1e6);
                 
                 if (hasB) return r.shares / 1e9;
                 if (hasM) return r.shares / 1e6;
@@ -1929,10 +1927,11 @@ function App() {
             },
           ]}
           height={600}
-          yAxisLabel={`Total Shares (${sharesReleases.slice(0, sharesReleasesDays).some(r => r.shares > 1e9) ? 'Billions' : sharesReleases.slice(0, sharesReleasesDays).some(r => r.shares > 1e6) ? 'Millions' : 'Units'})`}
+          yAxisLabel={`Total Shares (${sharesReleases.some(r => r.shares > 1e9) ? 'Billions' : sharesReleases.some(r => r.shares > 1e6) ? 'Millions' : 'Units'})`}
           xAxisLabel="Date / Contract Day"
+          windowSize={sharesReleasesDays}
           formatTooltip={(value: number) => {
-            const selectedData = sharesReleases.slice(0, sharesReleasesDays);
+            const selectedData = sharesReleases;
             const label = selectedData.some(r => r.shares > 1e9) ? 'B' : selectedData.some(r => r.shares > 1e6) ? 'M' : '';
             return `Shares: ${value.toLocaleString('en-US', { maximumFractionDigits: 2 })}${label}`;
           }}
