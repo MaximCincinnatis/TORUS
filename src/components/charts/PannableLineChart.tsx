@@ -1,4 +1,4 @@
-import React, { useRef, useEffect, useState } from 'react';
+import React, { useRef, useEffect, useState, useCallback } from 'react';
 import {
   Chart as ChartJS,
   CategoryScale,
@@ -90,10 +90,12 @@ const PannableLineChart: React.FC<PannableLineChartProps> = ({
 
   // Mouse event handlers
   const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
+    console.log('🖱️ Mouse down at:', e.clientX);
     setIsDragging(true);
     setDragStartX(e.clientX);
     setDragStartIndex(startIndex);
     e.preventDefault();
+    e.stopPropagation();
   };
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
@@ -102,21 +104,66 @@ const PannableLineChart: React.FC<PannableLineChartProps> = ({
     const deltaX = e.clientX - dragStartX;
     const chartWidth = e.currentTarget.offsetWidth;
     
+    console.log('🖱️ Mouse move:', { deltaX, chartWidth, isDragging });
+    
     // Calculate how many data points to shift based on drag distance
     const pointsPerPixel = windowSize / chartWidth;
     const indexDelta = Math.round(-deltaX * pointsPerPixel);
     
     const newStartIndex = Math.max(0, Math.min(maxStartIndex, dragStartIndex + indexDelta));
-    setStartIndex(newStartIndex);
+    if (newStartIndex !== startIndex) {
+      console.log('🖱️ Updating index from', startIndex, 'to', newStartIndex);
+      setStartIndex(newStartIndex);
+    }
   };
 
-  const handleMouseUp = () => {
+  const handleMouseUp = useCallback(() => {
+    console.log('🖱️ Mouse up');
     setIsDragging(false);
-  };
+  }, []);
 
   const handleMouseLeave = () => {
-    setIsDragging(false);
+    // Don't stop dragging on mouse leave - only on mouse up
   };
+
+  // Global mouse move and up handlers
+  useEffect(() => {
+    const handleGlobalMouseMove = (e: MouseEvent) => {
+      if (!isDragging) return;
+
+      const deltaX = e.clientX - dragStartX;
+      const chartElement = document.querySelector('.pannable-chart-container');
+      const chartWidth = chartElement?.clientWidth || 600;
+      
+      console.log('🖱️ Global mouse move:', { deltaX, chartWidth, isDragging });
+      
+      const pointsPerPixel = windowSize / chartWidth;
+      const indexDelta = Math.round(-deltaX * pointsPerPixel);
+      
+      const newStartIndex = Math.max(0, Math.min(maxStartIndex, dragStartIndex + indexDelta));
+      if (newStartIndex !== startIndex) {
+        console.log('🖱️ Updating index from', startIndex, 'to', newStartIndex);
+        setStartIndex(newStartIndex);
+      }
+    };
+
+    const handleGlobalMouseUp = () => {
+      if (isDragging) {
+        console.log('🖱️ Global mouse up');
+        setIsDragging(false);
+      }
+    };
+
+    if (isDragging) {
+      document.addEventListener('mousemove', handleGlobalMouseMove);
+      document.addEventListener('mouseup', handleGlobalMouseUp);
+      
+      return () => {
+        document.removeEventListener('mousemove', handleGlobalMouseMove);
+        document.removeEventListener('mouseup', handleGlobalMouseUp);
+      };
+    }
+  }, [isDragging, dragStartX, dragStartIndex, windowSize, maxStartIndex, startIndex]);
 
   // Touch event handlers for mobile
   const handleTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
@@ -172,6 +219,7 @@ const PannableLineChart: React.FC<PannableLineChartProps> = ({
       mode: 'index' as const,
       intersect: false,
     },
+    events: isDragging ? [] : ['mousemove', 'mouseout', 'click', 'touchstart', 'touchmove'],
     plugins: {
       legend: {
         display: showLegend,
@@ -352,7 +400,16 @@ const PannableLineChart: React.FC<PannableLineChartProps> = ({
         )}
       </div>
       <div 
-        style={{ height: `${height}px`, cursor: isDragging ? 'grabbing' : 'grab' }}
+        className="pannable-chart-container"
+        style={{ 
+          height: `${height}px`, 
+          cursor: isDragging ? 'grabbing' : 'grab',
+          position: 'relative',
+          userSelect: 'none',
+          WebkitUserSelect: 'none',
+          MozUserSelect: 'none',
+          msUserSelect: 'none'
+        }}
         onMouseDown={handleMouseDown}
         onMouseMove={handleMouseMove}
         onMouseUp={handleMouseUp}
@@ -361,7 +418,9 @@ const PannableLineChart: React.FC<PannableLineChartProps> = ({
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
       >
-        <Line ref={chartRef} options={options} data={data} />
+        <div style={{ pointerEvents: isDragging ? 'none' : 'auto' }}>
+          <Line ref={chartRef} options={options} data={data} />
+        </div>
       </div>
     </div>
   );
