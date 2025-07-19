@@ -64,12 +64,6 @@ const PannableLineChart: React.FC<PannableLineChartProps> = ({
   unifiedTooltip = false,
   windowSize = 7, // Default to 7 days
 }) => {
-  console.log('🎯 PannableLineChart rendering with:', {
-    title,
-    totalLabels: labels.length,
-    windowSize,
-    showControls: labels.length > windowSize
-  });
   const chartRef = useRef<ChartJSOrUndefined<'line'>>(null);
   const [startIndex, setStartIndex] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
@@ -91,7 +85,6 @@ const PannableLineChart: React.FC<PannableLineChartProps> = ({
 
   // Mouse event handlers
   const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
-    console.log('🖱️ Mouse down at:', e.clientX);
     setIsDragging(true);
     setDragStartX(e.clientX);
     setDragStartIndex(startIndex);
@@ -100,26 +93,10 @@ const PannableLineChart: React.FC<PannableLineChartProps> = ({
   };
 
   const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (!isDragging) return;
-
-    const deltaX = e.clientX - dragStartX;
-    const chartWidth = e.currentTarget.offsetWidth;
-    
-    console.log('🖱️ Mouse move:', { deltaX, chartWidth, isDragging });
-    
-    // Calculate how many data points to shift based on drag distance
-    const pointsPerPixel = windowSize / chartWidth;
-    const indexDelta = Math.round(-deltaX * pointsPerPixel);
-    
-    const newStartIndex = Math.max(0, Math.min(maxStartIndex, dragStartIndex + indexDelta));
-    if (newStartIndex !== startIndex) {
-      console.log('🖱️ Updating index from', startIndex, 'to', newStartIndex);
-      setStartIndex(newStartIndex);
-    }
+    // Remove local handler - we'll use global handler for consistency
   };
 
   const handleMouseUp = useCallback(() => {
-    console.log('🖱️ Mouse up');
     setIsDragging(false);
   }, []);
 
@@ -136,22 +113,21 @@ const PannableLineChart: React.FC<PannableLineChartProps> = ({
       const chartElement = document.querySelector('.pannable-chart-container');
       const chartWidth = chartElement?.clientWidth || 600;
       
-      // Improved drag sensitivity - map full drag width to full data range
-      const dragRatio = -deltaX / chartWidth; // Negative because dragging left should go forward in time
-      const totalDataPoints = labels.length;
-      const maxDragDistance = totalDataPoints - windowSize;
-      const indexDelta = Math.round(dragRatio * maxDragDistance);
+      // Calculate drag sensitivity based on window size
+      // For smaller windows (like 7 days), we want less sensitivity
+      // For larger windows (like 88 days), we want more sensitivity
+      const sensitivity = Math.max(0.5, Math.min(2, currentWindowSize / 30));
+      const pixelsPerDataPoint = chartWidth / currentWindowSize;
+      const dataPointsMoved = Math.round(deltaX / pixelsPerDataPoint * sensitivity);
       
-      const newStartIndex = Math.max(0, Math.min(maxStartIndex, dragStartIndex + indexDelta));
+      const newStartIndex = Math.max(0, Math.min(maxStartIndex, dragStartIndex - dataPointsMoved));
       if (newStartIndex !== startIndex) {
-        console.log('🖱️ Updating index from', startIndex, 'to', newStartIndex);
         setStartIndex(newStartIndex);
       }
     };
 
     const handleGlobalMouseUp = () => {
       if (isDragging) {
-        console.log('🖱️ Global mouse up');
         setIsDragging(false);
       }
     };
@@ -165,7 +141,7 @@ const PannableLineChart: React.FC<PannableLineChartProps> = ({
         document.removeEventListener('mouseup', handleGlobalMouseUp);
       };
     }
-  }, [isDragging, dragStartX, dragStartIndex, windowSize, maxStartIndex, startIndex]);
+  }, [isDragging, dragStartX, dragStartIndex, currentWindowSize, maxStartIndex, startIndex, labels.length]);
 
   // Touch event handlers for mobile
   const handleTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
@@ -441,7 +417,7 @@ const PannableLineChart: React.FC<PannableLineChartProps> = ({
         onTouchEnd={handleTouchEnd}
         onWheel={handleWheel}
       >
-        <div style={{ pointerEvents: isDragging ? 'none' : 'auto' }}>
+        <div style={{ pointerEvents: isDragging ? 'none' : 'auto', height: '100%' }}>
           <Line ref={chartRef} options={options} data={data} />
         </div>
       </div>

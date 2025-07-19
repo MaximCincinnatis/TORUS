@@ -99,13 +99,12 @@ const PannableBarChart: React.FC<PannableBarChartProps> = ({
       const chartElement = document.querySelector('.pannable-bar-chart-container');
       const chartWidth = chartElement?.clientWidth || 600;
       
-      // Improved drag sensitivity
-      const dragRatio = -deltaX / chartWidth;
-      const totalDataPoints = labels.length;
-      const maxDragDistance = totalDataPoints - currentWindowSize;
-      const indexDelta = Math.round(dragRatio * maxDragDistance);
+      // Calculate drag sensitivity based on window size
+      const sensitivity = Math.max(0.5, Math.min(2, currentWindowSize / 30));
+      const pixelsPerDataPoint = chartWidth / currentWindowSize;
+      const dataPointsMoved = Math.round(deltaX / pixelsPerDataPoint * sensitivity);
       
-      const newStartIndex = Math.max(0, Math.min(maxStartIndex, dragStartIndex + indexDelta));
+      const newStartIndex = Math.max(0, Math.min(maxStartIndex, dragStartIndex - dataPointsMoved));
       if (newStartIndex !== startIndex) {
         setStartIndex(newStartIndex);
       }
@@ -335,7 +334,7 @@ const PannableBarChart: React.FC<PannableBarChartProps> = ({
         onMouseLeave={() => {}}
         onWheel={handleWheel}
       >
-        <div style={{ pointerEvents: isDragging ? 'none' : 'auto' }}>
+        <div style={{ pointerEvents: isDragging ? 'none' : 'auto', height: '100%' }}>
           <Bar ref={chartRef} options={options} data={data} />
         </div>
       </div>
