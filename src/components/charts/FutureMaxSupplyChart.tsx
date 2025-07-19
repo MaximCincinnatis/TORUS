@@ -1,5 +1,6 @@
 import React, { useMemo } from 'react';
 import LineChart from './LineChart';
+import PannableLineChart from './PannableLineChart';
 import {
   calculateFutureMaxSupply,
   convertToPositions,
@@ -184,7 +185,7 @@ const FutureMaxSupplyChart: React.FC<FutureMaxSupplyChartProps> = ({
   }
 
   return (
-    <LineChart
+    <PannableLineChart
         title="Accrued Future Supply Projection"
         labels={chartData.labels}
         datasets={chartData.datasets}
@@ -198,6 +199,7 @@ const FutureMaxSupplyChart: React.FC<FutureMaxSupplyChartProps> = ({
         if (value >= 1000) return `${(value/1000).toFixed(1)}K`;
         return value.toLocaleString();
       }}
+      windowSize={days}
     />
   );
 };

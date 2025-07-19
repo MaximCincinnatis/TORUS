@@ -1413,80 +1413,42 @@ function App() {
           selectedDays={supplyProjectionDays}
           onDaysChange={setSupplyProjectionDays}
         />
-        {supplyProjectionDays === 7 ? (
-          <PannableLineChart
-            key={`supply-projection-chart-pannable-${supplyProjection.length}`}
-            title={`TORUS Supply from Current Share Pool (${supplyProjection.length} data points)`}
-            labels={supplyProjection.map(p => {
-              const date = new Date(p.date);
-              return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
-            })}
-            datasets={[
-              {
-                label: 'Total TORUS Supply',
-                data: supplyProjection.map(p => Math.round(p.supply * 100) / 100),
-                borderColor: '#8b5cf6',
-                backgroundColor: 'rgba(139, 92, 246, 0.1)',
-                fill: true,
-              },
-            ]}
-            height={600}
-            yAxisLabel="Total TORUS Supply"
-            xAxisLabel="Date"
-            customTooltipData={supplyProjection}
-            customTooltipCallback={(context: any, data: any) => {
-              const lines = [];
-              lines.push(`Total Supply: ${data.supply.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} TORUS`);
-              lines.push(`Contract Day: ${data.contractDay}`);
-              lines.push(`Daily Release: ${data.released.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} TORUS`);
-              lines.push(`  - Principal: ${data.principal.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} TORUS`);
-              lines.push(`  - Rewards: ${data.rewards.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} TORUS`);
-              return lines;
-            }}
-            formatYAxis={(value: number) => {
-              if (value >= 1000000) return `${(value/1000000).toFixed(1)}M`;
-              if (value >= 1000) return `${(value/1000).toFixed(1)}K`;
-              return value.toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
-            }}
-            windowSize={7}
-          />
-        ) : (
-          <LineChart
-            key={`supply-projection-chart-${supplyProjection.slice(0, supplyProjectionDays).length}`}
-            title={`TORUS Supply from Current Share Pool (${supplyProjection.slice(0, supplyProjectionDays).length} data points)`}
-            labels={supplyProjection.slice(0, supplyProjectionDays).map(p => {
-              const date = new Date(p.date);
-              return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
-            })}
-            datasets={[
-              {
-                label: 'Total TORUS Supply',
-                data: supplyProjection.slice(0, supplyProjectionDays).map(p => Math.round(p.supply * 100) / 100),
-                borderColor: '#8b5cf6',
-                backgroundColor: 'rgba(139, 92, 246, 0.1)',
-                fill: true,
-              },
-            ]}
-            height={600}
-            yAxisLabel="Total TORUS Supply"
-            xAxisLabel="Date"
-            customTooltipData={supplyProjection.slice(0, supplyProjectionDays)}
-            customTooltipCallback={(context: any, data: any) => {
-              const lines = [];
-              lines.push(`Total Supply: ${data.supply.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} TORUS`);
-              lines.push(`Contract Day: ${data.contractDay}`);
-              lines.push(`Daily Release: ${data.released.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} TORUS`);
-              lines.push(`  - Principal: ${data.principal.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} TORUS`);
-              lines.push(`  - Rewards: ${data.rewards.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} TORUS`);
-              return lines;
-            }}
-            formatYAxis={(value: number) => {
-              if (value >= 1000000) return `${(value/1000000).toFixed(1)}M`;
-              if (value >= 1000) return `${(value/1000).toFixed(1)}K`;
-              return value.toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
-            }}
-          />
-        )}
+        <PannableLineChart
+          key={`supply-projection-chart-pannable-${supplyProjection.length}-${supplyProjectionDays}`}
+          title={`TORUS Supply from Current Share Pool (${supplyProjection.length} data points)`}
+          labels={supplyProjection.map(p => {
+            const date = new Date(p.date);
+            return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
+          })}
+          datasets={[
+            {
+              label: 'Total TORUS Supply',
+              data: supplyProjection.map(p => Math.round(p.supply * 100) / 100),
+              borderColor: '#8b5cf6',
+              backgroundColor: 'rgba(139, 92, 246, 0.1)',
+              fill: true,
+            },
+          ]}
+          height={600}
+          yAxisLabel="Total TORUS Supply"
+          xAxisLabel="Date"
+          customTooltipData={supplyProjection}
+          customTooltipCallback={(context: any, data: any) => {
+            const lines = [];
+            lines.push(`Total Supply: ${data.supply.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} TORUS`);
+            lines.push(`Contract Day: ${data.contractDay}`);
+            lines.push(`Daily Release: ${data.released.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} TORUS`);
+            lines.push(`  - Principal: ${data.principal.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} TORUS`);
+            lines.push(`  - Rewards: ${data.rewards.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })} TORUS`);
+            return lines;
+          }}
+          formatYAxis={(value: number) => {
+            if (value >= 1000000) return `${(value/1000000).toFixed(1)}M`;
+            if (value >= 1000) return `${(value/1000).toFixed(1)}K`;
+            return value.toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
+          }}
+          windowSize={supplyProjectionDays}
+        />
         <div className="chart-note">
           <strong>Important:</strong> This projection shows how the total TORUS supply will grow as <em>currently staked positions</em> mature and release both principal and accrued rewards. Starting from current supply of {totalSupply.toLocaleString()} TORUS, the line tracks cumulative supply increases each day from existing stakes only. 
           <br /><br />

@@ -64,6 +64,12 @@ const PannableLineChart: React.FC<PannableLineChartProps> = ({
   unifiedTooltip = false,
   windowSize = 7, // Default to 7 days
 }) => {
+  console.log('🎯 PannableLineChart rendering with:', {
+    title,
+    totalLabels: labels.length,
+    windowSize,
+    showControls: labels.length > windowSize
+  });
   const chartRef = useRef<ChartJSOrUndefined<'line'>>(null);
   const [startIndex, setStartIndex] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
@@ -242,7 +248,21 @@ const PannableLineChart: React.FC<PannableLineChartProps> = ({
   return (
     <div style={{ position: 'relative' }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
-        <h3 className="text-sm font-medium text-gray-300 mb-2">{title}</h3>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+          <h3 className="text-sm font-medium text-gray-300 mb-2">{title}</h3>
+          {labels.length > windowSize && (
+            <span style={{ 
+              fontSize: '12px', 
+              color: '#60a5fa', 
+              backgroundColor: 'rgba(59, 130, 246, 0.1)', 
+              padding: '2px 8px', 
+              borderRadius: '12px',
+              border: '1px solid rgba(59, 130, 246, 0.3)'
+            }}>
+              ✋ Drag to pan
+            </span>
+          )}
+        </div>
         {labels.length > windowSize && (
           <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
             <button
