@@ -1197,8 +1197,11 @@ function App() {
                   Total TitanX Burned by TORUS
                 </div>
                 <div className="supply-metric-value">
-                  {totalTitanXBurned.toLocaleString('en-US', { maximumFractionDigits: 0 })}
-                  <span className="supply-metric-suffix">TITANX</span>
+                  {totalTitanXBurned > 1e9 ? 
+                    (totalTitanXBurned / 1e9).toFixed(1) : 
+                    totalTitanXBurned.toLocaleString('en-US', { maximumFractionDigits: 0 })
+                  }
+                  <span className="supply-metric-suffix">{totalTitanXBurned > 1e9 ? "B TITANX" : "TITANX"}</span>
                 </div>
               </div>
               <div className="supply-metric-card">
@@ -1319,9 +1322,17 @@ function App() {
                 suffix="TITANX"
               />
               <MetricCard
-                title={<><img src="https://coin-images.coingecko.com/coins/images/32762/large/TitanXpng_%281%29.png?1704456654" alt="TitanX" style={{ width: '16px', height: '16px', marginRight: '6px', verticalAlign: 'middle', opacity: 0.8 }} />Total TitanX Burned 🔥</>}
-                value={totalTitanXBurned.toLocaleString('en-US', { maximumFractionDigits: 0 })}
-                suffix="TITANX"
+                title={<><img src="https://coin-images.coingecko.com/coins/images/32762/large/TitanXpng_%281%29.png?1704456654" alt="TitanX" style={{ width: '16px', height: '16px', marginRight: '6px', verticalAlign: 'middle', opacity: 0.8 }} />Total TitanX Burned</>}
+                value={totalTitanXBurned > 1e9 ? 
+                  `${(totalTitanXBurned / 1e9).toFixed(3)}B` : 
+                  totalTitanXBurned.toLocaleString('en-US', { maximumFractionDigits: 0 })
+                }
+                suffix={totalTitanXBurned > 1e9 ? "" : "TITANX"}
+              />
+              <MetricCard
+                title={<><img src="https://coin-images.coingecko.com/coins/images/32762/large/TitanXpng_%281%29.png?1704456654" alt="TitanX" style={{ width: '16px', height: '16px', marginRight: '6px', verticalAlign: 'middle', opacity: 0.8 }} />% of TitanX Supply Burned</>}
+                value={percentTitanXBurned.toFixed(4)}
+                suffix="%"
               />
             </>
           )}

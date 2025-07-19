@@ -113,12 +113,10 @@ const PannableLineChart: React.FC<PannableLineChartProps> = ({
       const chartElement = document.querySelector('.pannable-chart-container');
       const chartWidth = chartElement?.clientWidth || 600;
       
-      // Calculate drag sensitivity based on window size
-      // For smaller windows (like 7 days), we want less sensitivity
-      // For larger windows (like 88 days), we want more sensitivity
-      const sensitivity = Math.max(0.5, Math.min(2, currentWindowSize / 30));
+      // Calculate drag movement - simpler approach
+      // Each pixel of drag should move a consistent amount relative to visible window
       const pixelsPerDataPoint = chartWidth / currentWindowSize;
-      const dataPointsMoved = Math.round(deltaX / pixelsPerDataPoint * sensitivity);
+      const dataPointsMoved = Math.round(deltaX / pixelsPerDataPoint);
       
       const newStartIndex = Math.max(0, Math.min(maxStartIndex, dragStartIndex - dataPointsMoved));
       if (newStartIndex !== startIndex) {
