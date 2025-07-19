@@ -12,6 +12,7 @@ import {
   Filler,
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
+import type { ChartJSOrUndefined } from 'react-chartjs-2/dist/types';
 
 ChartJS.register(
   CategoryScale,
@@ -63,7 +64,7 @@ const PannableLineChart: React.FC<PannableLineChartProps> = ({
   unifiedTooltip = false,
   windowSize = 7, // Default to 7 days
 }) => {
-  const chartRef = useRef<ChartJS>(null);
+  const chartRef = useRef<ChartJSOrUndefined<'line'>>(null);
   const [startIndex, setStartIndex] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
   const [dragStartX, setDragStartX] = useState(0);
@@ -82,14 +83,14 @@ const PannableLineChart: React.FC<PannableLineChartProps> = ({
   const maxStartIndex = Math.max(0, labels.length - windowSize);
 
   // Mouse event handlers
-  const handleMouseDown = (e: React.MouseEvent<HTMLCanvasElement>) => {
+  const handleMouseDown = (e: React.MouseEvent<HTMLDivElement>) => {
     setIsDragging(true);
     setDragStartX(e.clientX);
     setDragStartIndex(startIndex);
     e.preventDefault();
   };
 
-  const handleMouseMove = (e: React.MouseEvent<HTMLCanvasElement>) => {
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
     if (!isDragging) return;
 
     const deltaX = e.clientX - dragStartX;
@@ -112,7 +113,7 @@ const PannableLineChart: React.FC<PannableLineChartProps> = ({
   };
 
   // Touch event handlers for mobile
-  const handleTouchStart = (e: React.TouchEvent<HTMLCanvasElement>) => {
+  const handleTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
     if (e.touches.length === 1) {
       setIsDragging(true);
       setDragStartX(e.touches[0].clientX);
@@ -121,7 +122,7 @@ const PannableLineChart: React.FC<PannableLineChartProps> = ({
     }
   };
 
-  const handleTouchMove = (e: React.TouchEvent<HTMLCanvasElement>) => {
+  const handleTouchMove = (e: React.TouchEvent<HTMLDivElement>) => {
     if (!isDragging || e.touches.length !== 1) return;
 
     const deltaX = e.touches[0].clientX - dragStartX;
@@ -221,44 +222,109 @@ const PannableLineChart: React.FC<PannableLineChartProps> = ({
     datasets: visibleDatasets,
   };
 
+  const navButtonStyle: React.CSSProperties = {
+    padding: '4px 8px',
+    background: 'rgba(59, 130, 246, 0.1)',
+    border: '1px solid rgba(59, 130, 246, 0.3)',
+    borderRadius: '4px',
+    color: '#60a5fa',
+    cursor: 'pointer',
+    fontSize: '14px',
+    transition: 'all 0.2s',
+  };
+
+  const navButtonDisabledStyle: React.CSSProperties = {
+    ...navButtonStyle,
+    opacity: 0.5,
+    cursor: 'not-allowed',
+  };
+
   return (
-    <div className="chart-container">
-      <div className="chart-header">
+    <div style={{ position: 'relative' }}>
+      <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
         <h3 className="text-sm font-medium text-gray-300 mb-2">{title}</h3>
         {labels.length > windowSize && (
-          <div className="chart-navigation">
+          <div style={{ display: 'flex', alignItems: 'center', gap: '8px' }}>
             <button
               onClick={goToStart}
               disabled={!canGoBack}
-              className="nav-button"
+              style={!canGoBack ? navButtonDisabledStyle : navButtonStyle}
               title="Go to start"
+              onMouseEnter={(e) => {
+                if (canGoBack) {
+                  e.currentTarget.style.background = 'rgba(59, 130, 246, 0.2)';
+                  e.currentTarget.style.borderColor = 'rgba(59, 130, 246, 0.5)';
+                }
+              }}
+              onMouseLeave={(e) => {
+                if (canGoBack) {
+                  e.currentTarget.style.background = 'rgba(59, 130, 246, 0.1)';
+                  e.currentTarget.style.borderColor = 'rgba(59, 130, 246, 0.3)';
+                }
+              }}
             >
               ⟨⟨
             </button>
             <button
               onClick={goBack}
               disabled={!canGoBack}
-              className="nav-button"
+              style={!canGoBack ? navButtonDisabledStyle : navButtonStyle}
               title="Previous"
+              onMouseEnter={(e) => {
+                if (canGoBack) {
+                  e.currentTarget.style.background = 'rgba(59, 130, 246, 0.2)';
+                  e.currentTarget.style.borderColor = 'rgba(59, 130, 246, 0.5)';
+                }
+              }}
+              onMouseLeave={(e) => {
+                if (canGoBack) {
+                  e.currentTarget.style.background = 'rgba(59, 130, 246, 0.1)';
+                  e.currentTarget.style.borderColor = 'rgba(59, 130, 246, 0.3)';
+                }
+              }}
             >
               ⟨
             </button>
-            <span className="nav-info">
+            <span style={{ color: '#9ca3af', fontSize: '12px', minWidth: '80px', textAlign: 'center' }}>
               {startIndex + 1}-{endIndex} of {labels.length}
             </span>
             <button
               onClick={goForward}
               disabled={!canGoForward}
-              className="nav-button"
+              style={!canGoForward ? navButtonDisabledStyle : navButtonStyle}
               title="Next"
+              onMouseEnter={(e) => {
+                if (canGoForward) {
+                  e.currentTarget.style.background = 'rgba(59, 130, 246, 0.2)';
+                  e.currentTarget.style.borderColor = 'rgba(59, 130, 246, 0.5)';
+                }
+              }}
+              onMouseLeave={(e) => {
+                if (canGoForward) {
+                  e.currentTarget.style.background = 'rgba(59, 130, 246, 0.1)';
+                  e.currentTarget.style.borderColor = 'rgba(59, 130, 246, 0.3)';
+                }
+              }}
             >
               ⟩
             </button>
             <button
               onClick={goToEnd}
               disabled={!canGoForward}
-              className="nav-button"
+              style={!canGoForward ? navButtonDisabledStyle : navButtonStyle}
               title="Go to end"
+              onMouseEnter={(e) => {
+                if (canGoForward) {
+                  e.currentTarget.style.background = 'rgba(59, 130, 246, 0.2)';
+                  e.currentTarget.style.borderColor = 'rgba(59, 130, 246, 0.5)';
+                }
+              }}
+              onMouseLeave={(e) => {
+                if (canGoForward) {
+                  e.currentTarget.style.background = 'rgba(59, 130, 246, 0.1)';
+                  e.currentTarget.style.borderColor = 'rgba(59, 130, 246, 0.3)';
+                }
+              }}
             >
               ⟩⟩
             </button>
@@ -277,46 +343,6 @@ const PannableLineChart: React.FC<PannableLineChartProps> = ({
       >
         <Line ref={chartRef} options={options} data={data} />
       </div>
-      <style jsx>{`
-        .chart-container {
-          position: relative;
-        }
-        .chart-header {
-          display: flex;
-          justify-content: space-between;
-          align-items: center;
-          margin-bottom: 8px;
-        }
-        .chart-navigation {
-          display: flex;
-          align-items: center;
-          gap: 8px;
-        }
-        .nav-button {
-          padding: 4px 8px;
-          background: rgba(59, 130, 246, 0.1);
-          border: 1px solid rgba(59, 130, 246, 0.3);
-          border-radius: 4px;
-          color: #60a5fa;
-          cursor: pointer;
-          font-size: 14px;
-          transition: all 0.2s;
-        }
-        .nav-button:hover:not(:disabled) {
-          background: rgba(59, 130, 246, 0.2);
-          border-color: rgba(59, 130, 246, 0.5);
-        }
-        .nav-button:disabled {
-          opacity: 0.5;
-          cursor: not-allowed;
-        }
-        .nav-info {
-          color: #9ca3af;
-          font-size: 12px;
-          min-width: 80px;
-          text-align: center;
-        }
-      `}</style>
     </div>
   );
 };
