@@ -1,20 +1,36 @@
-# TORUS Dashboard - LP Positions Fix Todo List
+# TORUS Dashboard - Development Progress & Todo List
 
-## Critical Issue: Uniswap V3 Yield Amounts Showing as 0
+## Phase 1: Data Integrity & LP Position Fixes (Days 1-7) 
 
-### Current Problem
-- Claimable yield amounts for non-full range positions are showing as 0
-- This issue has been fixed multiple times but keeps recurring
-- Need to identify root cause and implement permanent solution
+### Completed Tasks ✅
 
-### Tasks
+#### Day 1-3: Audit & Documentation
+- [x] Audit all 19+ update scripts and identify redundancies
+- [x] Document data flow and field mappings
+- [x] Create comprehensive architecture documentation (docs/data-flow-architecture.md)
+- [x] Create data structures documentation (docs/data-structures.md)
 
-#### High Priority - LP Position Fixes
-- [x] Audit all scripts that update LP position data
-- [ ] Fix Uniswap V3 yield amounts showing as 0 for non-full range positions
-- [ ] Create comprehensive test for LP position calculations  
-- [ ] Implement permanent fix to prevent regression
-- [ ] Consolidate update scripts into a single, reliable system
+#### Day 4: Fix Critical Issues
+- [x] Fix data overwriting in update-all-dashboard-data.js (now merges LP positions)
+- [x] Create shared lpCalculations.js module for consistent calculations
+- [x] Update smart-update-fixed.js to use shared module
+- [x] Apply field mapping to all active scripts (torusAmount/titanxAmount)
+- [x] Fix claimable yield calculation using collect simulation
+- [x] Fix TitanX burned display (was showing 999B, now correctly shows 129.7B)
+- [x] Fix Future TORUS Max Supply Projection to use historical data
+- [x] Create historical supply tracking system (localStorage-based)
+
+### Current Tasks 🔄
+
+#### Day 5: Data Validation & Testing
+- [ ] Create data-contracts.ts with validation
+- [ ] Add comprehensive test suite
+- [ ] Test all LP position calculations thoroughly
+
+#### Day 6-7: Script Consolidation
+- [ ] Consolidate 19 scripts into 2 core scripts
+- [ ] Archive deprecated scripts
+- [ ] Update automation to use new scripts
 
 ### Investigation Steps
 
@@ -120,3 +136,44 @@
 3. Create shared calculation modules
 4. Remove or archive unused scripts
 5. Implement proper data preservation in all active scripts
+
+## Review of Changes Made (Phase 1, Day 1-4)
+
+### Major Fixes Implemented:
+
+1. **LP Position Field Mapping Issue (Root Cause Found & Fixed)**
+   - Frontend expected `torusAmount`/`titanxAmount` but backend provided `amount0`/`amount1`
+   - Created shared `lpCalculations.js` module with `mapFieldNames()` function
+   - Applied to all active update scripts ensuring consistent field names
+
+2. **Claimable Yield Calculation Fixed**
+   - Implemented collect simulation for accurate fee calculation
+   - Falls back to tokensOwed only if simulation fails
+   - Now properly shows non-zero values for V3 positions
+
+3. **TitanX Burned Correction**
+   - Was incorrectly showing total dead address balance (999B)
+   - Fixed to show only TORUS-specific burns (129.7B)
+   - Now reads from `totalTitanXBurnt()` on TORUS contract
+
+4. **Data Preservation**
+   - Fixed `update-all-dashboard-data.js` to merge LP positions instead of overwriting
+   - Implemented proper incremental updates in `smart-update-fixed.js`
+   - Added data backup before updates
+
+5. **Historical Supply Tracking**
+   - Created localStorage-based system for daily supply snapshots
+   - Future TORUS Max Supply chart now shows accurate historical data
+   - Prevents projection errors for past days
+
+### Testing & Validation Done:
+- Verified LP positions show correct claimable amounts
+- Confirmed TitanX burned displays ~129.7B (correct value)
+- Tested field mapping produces `torusAmount`/`titanxAmount` fields
+- Verified historical supply tracking updates properly
+
+### Next Steps:
+- Create TypeScript data contracts for type safety
+- Add validation to prevent data corruption
+- Consolidate update scripts to reduce complexity
+- Add automated tests for critical calculations

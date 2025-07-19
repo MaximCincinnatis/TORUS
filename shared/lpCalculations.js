@@ -127,14 +127,16 @@ async function calculateClaimableFees(tokenId, owner, positionData, provider) {
 function mapFieldNames(position) {
   const claimableTotal = (position.claimableTorus || 0) + (position.claimableTitanX || 0);
   
+  // Create new object without amount0/amount1
+  const { amount0, amount1, ...rest } = position;
+  
   return {
-    ...position,
+    ...rest,
     // Map backend fields to frontend expectations
-    torusAmount: position.amount0 || 0,
-    titanxAmount: position.amount1 || 0,
+    torusAmount: position.torusAmount !== undefined ? position.torusAmount : (amount0 || 0),
+    titanxAmount: position.titanxAmount !== undefined ? position.titanxAmount : (amount1 || 0),
     // Ensure claimable fields exist
     claimableYield: position.claimableYield !== undefined ? position.claimableYield : claimableTotal,
-    // Preserve all other fields
   };
 }
 
@@ -203,20 +205,44 @@ function mergeLPPositions(existingPositions, newPositions) {
     });
   }
   
-  // Overlay new positions (will update if exists)
+  // Process new/updated positions
   if (newPositions && Array.isArray(newPositions)) {
-    newPositions.forEach(pos => {
-      if (pos.tokenId) {
-        // Preserve certain fields from existing position if available
-        const existing = positionMap.get(pos.tokenId);
-        if (existing) {
-          // Preserve manual fields that shouldn't be overwritten
-          pos.manualNotes = existing.manualNotes;
-          pos.customLabel = existing.customLabel;
-        }
-        // Apply field mapping
-        positionMap.set(pos.tokenId, mapFieldNames(pos));
+    newPositions.forEach(newPos => {
+      if (!newPos.tokenId) return;
+      
+      const existing = positionMap.get(newPos.tokenId);
+      
+      // Handle position removal (zero liquidity)
+      if (newPos.liquidity === '0' || newPos.liquidity === 0) {
+        positionMap.delete(newPos.tokenId);
+        return;
       }
+      
+      // If update has zero amounts but existing has values, preserve existing
+      if (existing && 
+          (newPos.amount0 === 0 || newPos.torusAmount === 0) && 
+          (newPos.amount1 === 0 || newPos.titanxAmount === 0) &&
+          (existing.torusAmount > 0 || existing.amount0 > 0)) {
+        // Keep existing position but update non-amount fields
+        const preserved = {
+          ...existing,
+          liquidity: newPos.liquidity,
+          lastUpdated: newPos.lastUpdated || new Date().toISOString()
+        };
+        positionMap.set(newPos.tokenId, preserved);
+        return;
+      }
+      
+      // Normal update/add
+      if (existing) {
+        // Preserve manual fields that shouldn't be overwritten
+        newPos.manualNotes = existing.manualNotes;
+        newPos.customLabel = existing.customLabel;
+        newPos.originalData = existing.originalData;
+      }
+      
+      // Apply field mapping and store
+      positionMap.set(newPos.tokenId, mapFieldNames(newPos));
     });
   }
   

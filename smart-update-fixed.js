@@ -489,21 +489,25 @@ async function performSmartUpdate(provider, updateLog, currentBlock, blocksSince
     try {
       // TitanX contract addresses
       const TITANX_CONTRACT = '0xf19308f923582a6f7c465e5ce7a9dc1bec6665b1';
-      const BURN_ADDRESS = '0x000000000000000000000000000000000000dead';
+      const TORUS_STAKE_CONTRACT = '0xc7cc775b21f9df85e043c7fdd9dac60af0b69507';
       
       const titanXContract = new ethers.Contract(
         TITANX_CONTRACT,
-        [
-          'function totalSupply() view returns (uint256)',
-          'function balanceOf(address) view returns (uint256)'
-        ],
+        ['function totalSupply() view returns (uint256)'],
         provider
       );
       
-      // Get TitanX total supply and burn amount
-      const [titanXTotalSupply, burnBalance] = await Promise.all([
+      // Get TitanX burned by TORUS contract specifically
+      const torusStakeContract = new ethers.Contract(
+        TORUS_STAKE_CONTRACT,
+        ['function totalTitanXBurnt() view returns (uint256)'],
+        provider
+      );
+      
+      // Get TitanX total supply and TORUS-specific burn amount
+      const [titanXTotalSupply, torusBurnedAmount] = await Promise.all([
         titanXContract.totalSupply(),
-        titanXContract.balanceOf(BURN_ADDRESS)
+        torusStakeContract.totalTitanXBurnt()
       ]);
       
       // Update TitanX total supply
@@ -514,12 +518,13 @@ async function performSmartUpdate(provider, updateLog, currentBlock, blocksSince
         log(`TitanX total supply updated: ${ethers.utils.formatEther(titanXTotalSupply)} TITANX`, 'green');
       }
       
-      // Update TitanX burned amount
+      // Update TitanX burned amount (TORUS-specific)
       const oldBurned = cachedData.totalTitanXBurnt || "0";
-      if (oldBurned !== burnBalance.toString()) {
-        cachedData.totalTitanXBurnt = burnBalance.toString();
+      if (oldBurned !== torusBurnedAmount.toString()) {
+        cachedData.totalTitanXBurnt = torusBurnedAmount.toString();
         updateStats.dataChanged = true;
-        log(`TitanX burned updated: ${ethers.utils.formatEther(burnBalance)} TITANX`, 'green');
+        log(`TitanX burned by TORUS updated: ${ethers.utils.formatEther(torusBurnedAmount)} TITANX`, 'green');
+        log(`In billions: ${(parseFloat(ethers.utils.formatEther(torusBurnedAmount)) / 1e9).toFixed(3)}B`, 'green');
       }
       
       updateStats.rpcCalls += 2;
