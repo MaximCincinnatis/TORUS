@@ -72,20 +72,68 @@ function calculatePositionAmounts(position, sqrtPriceX96, currentTick) {
 }
 
 /**
+ * Calculate claimable fees for a position
+ * @param {string} tokenId - Position token ID
+ * @param {string} owner - Position owner address
+ * @param {Object} positionData - Position data from contract
+ * @param {Object} provider - Ethers provider
+ * @returns {Promise<Object>} { claimableTorus, claimableTitanX }
+ */
+async function calculateClaimableFees(tokenId, owner, positionData, provider) {
+  const NFT_POSITION_MANAGER = '0xC36442b4a4522E871399CD717aBDD847Ab11FE88';
+  
+  try {
+    // Try to simulate collect call for accurate fees
+    const collectInterface = new ethers.utils.Interface([
+      'function collect(tuple(uint256 tokenId, address recipient, uint128 amount0Max, uint128 amount1Max)) returns (uint256 amount0, uint256 amount1)'
+    ]);
+    
+    const collectParams = {
+      tokenId: tokenId,
+      recipient: owner,
+      amount0Max: '0xffffffffffffffffffffffffffffffff',
+      amount1Max: '0xffffffffffffffffffffffffffffffff'
+    };
+    
+    const collectData = collectInterface.encodeFunctionData('collect', [collectParams]);
+    const result = await provider.call({
+      to: NFT_POSITION_MANAGER,
+      data: collectData,
+      from: owner
+    });
+    
+    const decoded = collectInterface.decodeFunctionResult('collect', result);
+    return {
+      claimableTorus: parseFloat(ethers.utils.formatEther(decoded.amount0)),
+      claimableTitanX: parseFloat(ethers.utils.formatEther(decoded.amount1))
+    };
+    
+  } catch (error) {
+    // Fallback to tokensOwed if collect simulation fails
+    console.log(`Collect simulation failed for position ${tokenId}, using tokensOwed`);
+    return {
+      claimableTorus: parseFloat(ethers.utils.formatEther(positionData.tokensOwed0 || '0')),
+      claimableTitanX: parseFloat(ethers.utils.formatEther(positionData.tokensOwed1 || '0'))
+    };
+  }
+}
+
+/**
  * Map backend field names to frontend expectations
  * CRITICAL: All scripts MUST use this function for consistency
  * @param {Object} position - LP position data
  * @returns {Object} Position with proper field mapping
  */
 function mapFieldNames(position) {
+  const claimableTotal = (position.claimableTorus || 0) + (position.claimableTitanX || 0);
+  
   return {
     ...position,
     // Map backend fields to frontend expectations
     torusAmount: position.amount0 || 0,
     titanxAmount: position.amount1 || 0,
     // Ensure claimable fields exist
-    claimableYield: position.claimableYield || 
-      ((position.claimableTorus || 0) + (position.claimableTitanX || 0)),
+    claimableYield: position.claimableYield !== undefined ? position.claimableYield : claimableTotal,
     // Preserve all other fields
   };
 }
@@ -243,6 +291,7 @@ function normalizeAmount(value) {
 
 module.exports = {
   calculatePositionAmounts,
+  calculateClaimableFees,
   mapFieldNames,
   calculatePrice,
   getSqrtPriceAtTick,

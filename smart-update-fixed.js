@@ -15,6 +15,7 @@ const path = require('path');
 const { execSync } = require('child_process');
 const { 
   calculatePositionAmounts: calculatePositionAmountsShared,
+  calculateClaimableFees,
   mapFieldNames,
   mergeLPPositions 
 } = require('./shared/lpCalculations');
@@ -173,38 +174,8 @@ async function shouldUpdate(provider, updateLog) {
   }
 }
 
-// Merge LP positions preserving existing ones
-function mergeLPPositions(existingPositions, newPositions) {
-  // Create a map of existing positions by tokenId
-  const positionMap = new Map();
-  
-  // Add all existing positions
-  existingPositions.forEach(pos => {
-    positionMap.set(pos.tokenId, pos);
-  });
-  
-  // Update or add new positions
-  newPositions.forEach(newPos => {
-    const existingPos = positionMap.get(newPos.tokenId);
-    
-    if (existingPos) {
-      // Update existing position with new data, preserving any custom fields
-      positionMap.set(newPos.tokenId, {
-        ...existingPos,
-        ...newPos,
-        // Preserve any manual overrides or custom fields
-        manualData: existingPos.manualData,
-        customNotes: existingPos.customNotes
-      });
-    } else {
-      // Add new position
-      positionMap.set(newPos.tokenId, newPos);
-    }
-  });
-  
-  // Convert back to array
-  return Array.from(positionMap.values());
-}
+// Use the shared mergeLPPositions from lpCalculations module
+// (removed local duplicate function)
 
 // Update LP positions incrementally
 async function updateLPPositionsIncrementally(provider, cachedData, currentBlock, blocksSinceLastUpdate) {
@@ -273,6 +244,14 @@ async function updateLPPositionsIncrementally(provider, cachedData, currentBlock
           amount1 = calculated.amount1;
         }
         
+        // Calculate claimable fees
+        const claimableFees = await calculateClaimableFees(
+          position.tokenId,
+          owner,
+          currentPosition,
+          provider
+        );
+        
         // Always include the position (updated or not) to preserve it
         const updatedPosition = mapFieldNames({
           ...position,
@@ -280,8 +259,8 @@ async function updateLPPositionsIncrementally(provider, cachedData, currentBlock
           owner: owner,
           amount0: amount0,
           amount1: amount1,
-          claimableTorus: parseFloat(ethers.utils.formatEther(currentPosition.tokensOwed0)),
-          claimableTitanX: parseFloat(ethers.utils.formatEther(currentPosition.tokensOwed1)),
+          claimableTorus: claimableFees.claimableTorus,
+          claimableTitanX: claimableFees.claimableTitanX,
           tokensOwed0: currentPosition.tokensOwed0.toString(),
           tokensOwed1: currentPosition.tokensOwed1.toString(),
           lastChecked: new Date().toISOString()
@@ -358,6 +337,14 @@ async function updateLPPositionsIncrementally(provider, cachedData, currentBlock
                     amount1 = calculated.amount1;
                   }
                   
+                  // Calculate claimable fees for new position
+                  const claimableFees = await calculateClaimableFees(
+                    tokenId,
+                    owner,
+                    position,
+                    provider
+                  );
+                  
                   // Add position data with calculated amounts
                   const newPosition = mapFieldNames({
                     tokenId: tokenId,
@@ -369,8 +356,8 @@ async function updateLPPositionsIncrementally(provider, cachedData, currentBlock
                     amount0: amount0,
                     amount1: amount1,
                     inRange: inRange,
-                    claimableTorus: parseFloat(ethers.utils.formatEther(position.tokensOwed0)),
-                    claimableTitanX: parseFloat(ethers.utils.formatEther(position.tokensOwed1)),
+                    claimableTorus: claimableFees.claimableTorus,
+                    claimableTitanX: claimableFees.claimableTitanX,
                     tokensOwed0: position.tokensOwed0.toString(),
                     tokensOwed1: position.tokensOwed1.toString(),
                     estimatedAPR: inRange ? "12.50" : "0.00",
