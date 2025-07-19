@@ -270,6 +270,9 @@ async function updateLPPositionsIncrementally(provider, cachedData, currentBlock
           owner: owner,
           amount0: amount0,
           amount1: amount1,
+          // Add frontend-expected field names
+          torusAmount: amount0,
+          titanxAmount: amount1,
           claimableTorus: parseFloat(ethers.utils.formatEther(currentPosition.tokensOwed0)),
           claimableTitanX: parseFloat(ethers.utils.formatEther(currentPosition.tokensOwed1)),
           tokensOwed0: currentPosition.tokensOwed0.toString(),
@@ -334,7 +337,20 @@ async function updateLPPositionsIncrementally(provider, cachedData, currentBlock
                   const isFullRange = position.tickLower === -887200 && position.tickUpper === 887200;
                   const priceRange = isFullRange ? "Full Range V3 (0 - ∞)" : "Calculating...";
                   
-                  // Add position data with placeholder amounts
+                  // Calculate amounts for new position
+                  let amount0 = 0;
+                  let amount1 = 0;
+                  if (cachedData.poolData && cachedData.poolData.sqrtPriceX96) {
+                    const calculated = calculatePositionAmounts(
+                      position,
+                      ethers.BigNumber.from(cachedData.poolData.sqrtPriceX96),
+                      cachedData.poolData.currentTick
+                    );
+                    amount0 = calculated.amount0;
+                    amount1 = calculated.amount1;
+                  }
+                  
+                  // Add position data with calculated amounts
                   updatedPositions.push({
                     tokenId: tokenId,
                     owner: owner,
@@ -342,8 +358,11 @@ async function updateLPPositionsIncrementally(provider, cachedData, currentBlock
                     tickLower: position.tickLower,
                     tickUpper: position.tickUpper,
                     fee: position.fee,
-                    amount0: 0, // Frontend will calculate
-                    amount1: 0, // Frontend will calculate
+                    amount0: amount0,
+                    amount1: amount1,
+                    // Add frontend-expected field names
+                    torusAmount: amount0,
+                    titanxAmount: amount1,
                     inRange: inRange,
                     claimableTorus: parseFloat(ethers.utils.formatEther(position.tokensOwed0)),
                     claimableTitanX: parseFloat(ethers.utils.formatEther(position.tokensOwed1)),
@@ -455,7 +474,50 @@ async function performSmartUpdate(provider, updateLog, currentBlock, blocksSince
       log(`Failed to update total supply: ${e.message}`, 'yellow');
     }
     
-    // 3. Update LP positions incrementally
+    // 3. Update TitanX data
+    log('Updating TitanX data...', 'cyan');
+    try {
+      // TitanX contract addresses
+      const TITANX_CONTRACT = '0xf19308f923582a6f7c465e5ce7a9dc1bec6665b1';
+      const BURN_ADDRESS = '0x000000000000000000000000000000000000dead';
+      
+      const titanXContract = new ethers.Contract(
+        TITANX_CONTRACT,
+        [
+          'function totalSupply() view returns (uint256)',
+          'function balanceOf(address) view returns (uint256)'
+        ],
+        provider
+      );
+      
+      // Get TitanX total supply and burn amount
+      const [titanXTotalSupply, burnBalance] = await Promise.all([
+        titanXContract.totalSupply(),
+        titanXContract.balanceOf(BURN_ADDRESS)
+      ]);
+      
+      // Update TitanX total supply
+      const oldTitanXSupply = cachedData.titanxTotalSupply || "0";
+      if (oldTitanXSupply !== titanXTotalSupply.toString()) {
+        cachedData.titanxTotalSupply = titanXTotalSupply.toString();
+        updateStats.dataChanged = true;
+        log(`TitanX total supply updated: ${ethers.utils.formatEther(titanXTotalSupply)} TITANX`, 'green');
+      }
+      
+      // Update TitanX burned amount
+      const oldBurned = cachedData.totalTitanXBurnt || "0";
+      if (oldBurned !== burnBalance.toString()) {
+        cachedData.totalTitanXBurnt = burnBalance.toString();
+        updateStats.dataChanged = true;
+        log(`TitanX burned updated: ${ethers.utils.formatEther(burnBalance)} TITANX`, 'green');
+      }
+      
+      updateStats.rpcCalls += 2;
+    } catch (e) {
+      log(`Failed to update TitanX data: ${e.message}`, 'yellow');
+    }
+    
+    // 4. Update LP positions incrementally
     log('Updating LP positions incrementally...', 'cyan');
     
     const lpUpdateResult = await updateLPPositionsIncrementally(
@@ -481,7 +543,7 @@ async function performSmartUpdate(provider, updateLog, currentBlock, blocksSince
       log(`LP positions updated: ${lpUpdateResult.stats.newPositions} new, ${lpUpdateResult.stats.updatedPositions} updated, ${lpUpdateResult.stats.removedPositions} removed`, 'green');
     }
     
-    // 3. Update staking data incrementally
+    // 5. Update staking data incrementally
     log('Checking for new stake/create events...', 'cyan');
     
     try {
@@ -631,7 +693,7 @@ async function performSmartUpdate(provider, updateLog, currentBlock, blocksSince
       log(`  Error updating staking data: ${e.message}`, 'red');
     }
     
-    // 4. Update prices (lightweight)
+    // 6. Update prices (lightweight)
     try {
       if (cachedData.poolData && cachedData.poolData.sqrtPriceX96) {
         const sqrtPriceX96 = ethers.BigNumber.from(cachedData.poolData.sqrtPriceX96);
@@ -654,10 +716,10 @@ async function performSmartUpdate(provider, updateLog, currentBlock, blocksSince
       updateStats.errors.push(`Price update: ${e.message}`);
     }
     
-    // 4. Update timestamp
+    // 7. Update timestamp
     cachedData.lastUpdated = new Date().toISOString();
     
-    // 5. Check if we need more comprehensive updates
+    // 8. Check if we need more comprehensive updates
     const needsFullUpdate = lpUpdateResult.stats.newPositions > 5 || updateStats.errors.length > 3;
     
     if (needsFullUpdate) {
