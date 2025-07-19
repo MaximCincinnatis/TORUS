@@ -2,6 +2,12 @@
 const { ethers } = require('ethers');
 const fs = require('fs');
 const path = require('path');
+const { 
+  calculatePositionAmounts,
+  calculateClaimableFees,
+  mapFieldNames,
+  mergeLPPositions 
+} = require('../../shared/lpCalculations');
 
 // Working RPC providers (all public, no API keys)
 const WORKING_RPC_PROVIDERS = [
@@ -163,52 +169,17 @@ async function calculatePositionAPR(amounts, claimableTorus, claimableTitanX, cu
   }
 }
 
+// Use shared calculation from lpCalculations module
 function calculateTokenAmounts(liquidity, sqrtPriceX96, tickLower, tickUpper) {
-  // Use the EXACT working frontend calculation logic
-  const liquidityBN = BigInt(liquidity);
-  const sqrtPrice = BigInt(sqrtPriceX96);
-  const Q96 = BigInt(2) ** BigInt(96);
-  
-  // Calculate sqrt prices for the tick range using BigInt-safe arithmetic
-  const priceLower = Math.pow(1.0001, tickLower);
-  const priceUpper = Math.pow(1.0001, tickUpper);
-  
-  // Convert to BigInt sqrt prices (multiply by 2^96 and take sqrt)
-  const sqrtPriceLowerFloat = Math.sqrt(priceLower) * Math.pow(2, 96);
-  const sqrtPriceUpperFloat = Math.sqrt(priceUpper) * Math.pow(2, 96);
-  
-  const sqrtPriceLower = BigInt(Math.floor(sqrtPriceLowerFloat));
-  const sqrtPriceUpper = BigInt(Math.floor(sqrtPriceUpperFloat));
-  
-  let amount0 = BigInt(0);
-  let amount1 = BigInt(0);
-  
-  // Calculate based on current price position
-  if (sqrtPrice <= sqrtPriceLower) {
-    // Current price is below the range, all liquidity is in token0
-    amount0 = (liquidityBN * (sqrtPriceUpper - sqrtPriceLower) * Q96) / 
-      (sqrtPriceUpper * sqrtPriceLower);
-  } else if (sqrtPrice < sqrtPriceUpper) {
-    // Current price is within the range
-    amount0 = (liquidityBN * (sqrtPriceUpper - sqrtPrice) * Q96) / 
-      (sqrtPriceUpper * sqrtPrice);
-    amount1 = (liquidityBN * (sqrtPrice - sqrtPriceLower)) / Q96;
-  } else {
-    // Current price is above the range, all liquidity is in token1
-    amount1 = (liquidityBN * (sqrtPriceUpper - sqrtPriceLower)) / Q96;
-  }
-  
-  // Convert to decimal values using BigInt arithmetic for precision
-  const decimals0 = BigInt(10) ** BigInt(18);
-  const decimals1 = BigInt(10) ** BigInt(18);
-  
-  const decimal0 = Number(amount0) / Number(decimals0);
-  const decimal1 = Number(amount1) / Number(decimals1);
-  
-  return {
-    amount0: decimal0,
-    amount1: decimal1
+  const position = {
+    liquidity: liquidity,
+    tickLower: tickLower,
+    tickUpper: tickUpper
   };
+  const sqrtPriceX96BN = ethers.BigNumber.from(sqrtPriceX96);
+  const currentTick = Math.floor(Math.log(Math.pow(Number(sqrtPriceX96BN) / Math.pow(2, 96), 2)) / Math.log(1.0001));
+  
+  return calculatePositionAmounts(position, sqrtPriceX96BN, currentTick);
 }
 
 function aggregateTitanXByEndDate(stakeEvents, createEvents) {
@@ -717,39 +688,15 @@ async function updateAllDashboardData() {
                       position.tickUpper
                     );
                     
-                    // Calculate claimable fees using collect simulation (working method)
-                    let claimableTorus = 0;
-                    let claimableTitanX = 0;
-                    
-                    try {
-                      // Simulate collect call for accurate fees
-                      const collectInterface = new ethers.utils.Interface([
-                        'function collect(tuple(uint256 tokenId, address recipient, uint128 amount0Max, uint128 amount1Max)) returns (uint256 amount0, uint256 amount1)'
-                      ]);
-                      
-                      const collectParams = {
-                        tokenId: tokenId,
-                        recipient: positionOwner,
-                        amount0Max: '0xffffffffffffffffffffffffffffffff', // MaxUint128
-                        amount1Max: '0xffffffffffffffffffffffffffffffff'
-                      };
-                      
-                      const collectData = collectInterface.encodeFunctionData('collect', [collectParams]);
-                      const result = await provider.call({
-                        to: CONTRACTS.NFT_POSITION_MANAGER,
-                        data: collectData,
-                        from: positionOwner
-                      });
-                      
-                      const decoded = collectInterface.decodeFunctionResult('collect', result);
-                      claimableTorus = parseFloat(ethers.utils.formatEther(decoded.amount0));
-                      claimableTitanX = parseFloat(ethers.utils.formatEther(decoded.amount1));
-                      
-                    } catch (collectError) {
-                      // Fallback to tokensOwed if collect simulation fails
-                      claimableTorus = parseFloat(ethers.utils.formatEther(position.tokensOwed0));
-                      claimableTitanX = parseFloat(ethers.utils.formatEther(position.tokensOwed1));
-                    }
+                    // Calculate claimable fees using shared function
+                    const claimableFees = await calculateClaimableFees(
+                      tokenId,
+                      positionOwner,
+                      position,
+                      provider
+                    );
+                    const claimableTorus = claimableFees.claimableTorus;
+                    const claimableTitanX = claimableFees.claimableTitanX;
                     
                     // Calculate APR using improved methodology
                     const estimatedAPR = await calculatePositionAPR(
@@ -771,7 +718,7 @@ async function updateAllDashboardData() {
                     
                     const inRange = position.tickLower <= slot0.tick && slot0.tick <= position.tickUpper;
                     
-                    lpPositions.push({
+                    lpPositions.push(mapFieldNames({
                       tokenId: tokenId,
                       owner: positionOwner,
                       liquidity: position.liquidity.toString(),
@@ -790,7 +737,7 @@ async function updateAllDashboardData() {
                       inRange: inRange,
                       estimatedAPR: isNaN(estimatedAPR) ? 0 : estimatedAPR.toFixed(2),
                       priceRange: priceRange
-                    });
+                    }));
                     
                     console.log(`    ✅ Found TORUS position ${tokenId} owned by ${positionOwner.substring(0,10)}...`);
                   }
@@ -847,37 +794,15 @@ async function updateAllDashboardData() {
                 position.tickUpper
               );
               
-              // Simulate collect for accurate fees
-              let claimableTorus = 0;
-              let claimableTitanX = 0;
-              
-              try {
-                const collectInterface = new ethers.utils.Interface([
-                  'function collect(tuple(uint256 tokenId, address recipient, uint128 amount0Max, uint128 amount1Max)) returns (uint256 amount0, uint256 amount1)'
-                ]);
-                
-                const collectParams = {
-                  tokenId: tokenId,
-                  recipient: owner,
-                  amount0Max: '0xffffffffffffffffffffffffffffffff',
-                  amount1Max: '0xffffffffffffffffffffffffffffffff'
-                };
-                
-                const collectData = collectInterface.encodeFunctionData('collect', [collectParams]);
-                const result = await provider.call({
-                  to: CONTRACTS.NFT_POSITION_MANAGER,
-                  data: collectData,
-                  from: owner
-                });
-                
-                const decoded = collectInterface.decodeFunctionResult('collect', result);
-                claimableTorus = parseFloat(ethers.utils.formatEther(decoded.amount0));
-                claimableTitanX = parseFloat(ethers.utils.formatEther(decoded.amount1));
-                
-              } catch (collectError) {
-                claimableTorus = parseFloat(ethers.utils.formatEther(position.tokensOwed0));
-                claimableTitanX = parseFloat(ethers.utils.formatEther(position.tokensOwed1));
-              }
+              // Calculate claimable fees using shared function
+              const claimableFees = await calculateClaimableFees(
+                tokenId,
+                owner,
+                position,
+                provider
+              );
+              const claimableTorus = claimableFees.claimableTorus;
+              const claimableTitanX = claimableFees.claimableTitanX;
               
               const lowerPrice = Math.pow(1.0001, position.tickLower);
               const upperPrice = Math.pow(1.0001, position.tickUpper);
@@ -897,7 +822,7 @@ async function updateAllDashboardData() {
                 tokenId
               );
               
-              lpPositions.push({
+              lpPositions.push(mapFieldNames({
                 tokenId: tokenId,
                 owner: owner,
                 liquidity: position.liquidity.toString(),
@@ -916,7 +841,7 @@ async function updateAllDashboardData() {
                 inRange: inRange,
                 estimatedAPR: isNaN(estimatedAPR) ? 0 : estimatedAPR.toFixed(2),
                 priceRange: priceRange
-              });
+              }));
               
               console.log(`  ✅ Added known position ${tokenId} owned by ${owner.substring(0,8)}...`);
             }

@@ -12,6 +12,12 @@
 const { ethers } = require('ethers');
 const fs = require('fs');
 const { calculateEnhancedAPR } = require('./enhanced-apr-calculator');
+const { 
+  calculatePositionAmounts,
+  calculateClaimableFees,
+  mapFieldNames,
+  mergeLPPositions 
+} = require('./shared/lpCalculations');
 
 // Configuration
 const CACHE_FILE = './public/data/cached-data.json';
@@ -61,45 +67,17 @@ async function getProvider() {
   throw new Error('No working RPC providers');
 }
 
-// Calculate token amounts (from frontend logic)
+// Use shared calculation from lpCalculations module
 function calculateTokenAmounts(liquidity, sqrtPriceX96, tickLower, tickUpper) {
-  const liquidityBN = BigInt(liquidity);
-  const sqrtPrice = BigInt(sqrtPriceX96);
-  const Q96 = BigInt(2) ** BigInt(96);
-  
-  const priceLower = Math.pow(1.0001, tickLower);
-  const priceUpper = Math.pow(1.0001, tickUpper);
-  
-  const sqrtPriceLowerFloat = Math.sqrt(priceLower) * Math.pow(2, 96);
-  const sqrtPriceUpperFloat = Math.sqrt(priceUpper) * Math.pow(2, 96);
-  
-  const sqrtPriceLower = BigInt(Math.floor(sqrtPriceLowerFloat));
-  const sqrtPriceUpper = BigInt(Math.floor(sqrtPriceUpperFloat));
-  
-  let amount0 = BigInt(0);
-  let amount1 = BigInt(0);
-  
-  if (sqrtPrice <= sqrtPriceLower) {
-    amount0 = (liquidityBN * (sqrtPriceUpper - sqrtPriceLower) * Q96) / 
-      (sqrtPriceUpper * sqrtPriceLower);
-  } else if (sqrtPrice < sqrtPriceUpper) {
-    amount0 = (liquidityBN * (sqrtPriceUpper - sqrtPrice) * Q96) / 
-      (sqrtPriceUpper * sqrtPrice);
-    amount1 = (liquidityBN * (sqrtPrice - sqrtPriceLower)) / Q96;
-  } else {
-    amount1 = (liquidityBN * (sqrtPriceUpper - sqrtPriceLower)) / Q96;
-  }
-  
-  const decimals0 = BigInt(10) ** BigInt(18);
-  const decimals1 = BigInt(10) ** BigInt(18);
-  
-  const decimal0 = Number(amount0) / Number(decimals0);
-  const decimal1 = Number(amount1) / Number(decimals1);
-  
-  return {
-    amount0: decimal0,
-    amount1: decimal1
+  const position = {
+    liquidity: liquidity,
+    tickLower: tickLower,
+    tickUpper: tickUpper
   };
+  const sqrtPriceX96BN = ethers.BigNumber.from(sqrtPriceX96);
+  const currentTick = Math.floor(Math.log(Math.pow(Number(sqrtPriceX96BN) / Math.pow(2, 96), 2)) / Math.log(1.0001));
+  
+  return calculatePositionAmounts(position, sqrtPriceX96BN, currentTick);
 }
 
 // Fetch complete position data
@@ -136,37 +114,15 @@ async function fetchPositionData(tokenId, provider, slot0) {
       position.tickUpper
     );
     
-    // Calculate claimable fees
-    let claimableTorus = 0;
-    let claimableTitanX = 0;
-    
-    try {
-      const collectInterface = new ethers.utils.Interface([
-        'function collect(tuple(uint256 tokenId, address recipient, uint128 amount0Max, uint128 amount1Max)) returns (uint256 amount0, uint256 amount1)'
-      ]);
-      
-      const collectParams = {
-        tokenId: tokenId,
-        recipient: owner,
-        amount0Max: '0xffffffffffffffffffffffffffffffff',
-        amount1Max: '0xffffffffffffffffffffffffffffffff'
-      };
-      
-      const collectData = collectInterface.encodeFunctionData('collect', [collectParams]);
-      const result = await provider.call({
-        to: CONTRACTS.NFT_POSITION_MANAGER,
-        data: collectData,
-        from: owner
-      });
-      
-      const decoded = collectInterface.decodeFunctionResult('collect', result);
-      claimableTorus = parseFloat(ethers.utils.formatEther(decoded.amount0));
-      claimableTitanX = parseFloat(ethers.utils.formatEther(decoded.amount1));
-    } catch (e) {
-      // Fallback to tokensOwed
-      claimableTorus = parseFloat(ethers.utils.formatEther(position.tokensOwed0));
-      claimableTitanX = parseFloat(ethers.utils.formatEther(position.tokensOwed1));
-    }
+    // Calculate claimable fees using shared function
+    const claimableFees = await calculateClaimableFees(
+      tokenId,
+      owner,
+      position,
+      provider
+    );
+    const claimableTorus = claimableFees.claimableTorus;
+    const claimableTitanX = claimableFees.claimableTitanX;
     
     // Calculate APR
     const currentTick = slot0.tick;
@@ -230,7 +186,7 @@ async function fetchPositionData(tokenId, provider, slot0) {
       priceRange = `${lowerDisplay} - ${upperDisplay}`;
     }
     
-    return {
+    return mapFieldNames({
       tokenId: tokenId,
       owner: owner,
       liquidity: position.liquidity.toString(),
@@ -250,7 +206,7 @@ async function fetchPositionData(tokenId, provider, slot0) {
       estimatedAPR: estimatedAPR.toFixed(2),
       priceRange: priceRange,
       lastUpdated: new Date().toISOString()
-    };
+    });
     
   } catch (e) {
     log(`Error fetching position ${tokenId}: ${e.message}`, 'red');
