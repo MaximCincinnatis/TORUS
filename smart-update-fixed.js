@@ -461,6 +461,23 @@ async function performSmartUpdate(provider, updateLog, currentBlock, blocksSince
           updateStats.dataChanged = true;
           log(`Staking data total supply updated: ${formattedSupply.toFixed(6)} TORUS (was ${oldStakingSupply.toFixed(6)})`, 'green');
         }
+        
+        // Track daily supply snapshot
+        if (cachedData.stakingData.currentProtocolDay) {
+          const snapshotData = {
+            day: cachedData.stakingData.currentProtocolDay,
+            totalSupply: formattedSupply,
+            burnedSupply: cachedData.stakingData.burnedSupply || 0,
+            timestamp: new Date().toISOString()
+          };
+          
+          // Store in metadata for frontend to process
+          if (!cachedData.stakingData.metadata) {
+            cachedData.stakingData.metadata = {};
+          }
+          cachedData.stakingData.metadata.dailySupplySnapshot = snapshotData;
+          log(`Daily supply snapshot recorded for day ${snapshotData.day}`, 'green');
+        }
       }
       updateStats.rpcCalls++;
     } catch (e) {

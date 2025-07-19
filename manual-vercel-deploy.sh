@@ -1,0 +1,30 @@
+#!/bin/bash
+
+echo "🚀 Manual Vercel Deployment Trigger"
+echo "==================================="
+echo ""
+echo "Current Status:"
+echo "- Git commits are happening every 10 minutes ✅"
+echo "- Vercel stopped deploying 2 hours ago ❌"
+echo "- Likely hit rate limit (100 builds/day on free tier)"
+echo ""
+echo "Options:"
+echo ""
+echo "1. Reduce update frequency to every 30 minutes:"
+echo "   crontab -e"
+echo "   Change: */10 * * * * to */30 * * * *"
+echo ""
+echo "2. Use Vercel Deploy Hook (create one at vercel.com):"
+echo "   curl -X POST https://api.vercel.com/v1/integrations/deploy/[DEPLOY_HOOK_URL]"
+echo ""
+echo "3. Force deploy from Vercel Dashboard:"
+echo "   https://vercel.com/[your-username]/torus-dashboard"
+echo "   Click 'Redeploy' on any recent deployment"
+echo ""
+echo "4. Check your Vercel plan limits:"
+echo "   https://vercel.com/[your-username]/settings/billing"
+echo ""
+
+# Check last few commits
+echo "Recent commits not deployed:"
+git log --since="2025-07-18 13:40:00 UTC" --oneline | head -5

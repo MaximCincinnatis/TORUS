@@ -5,6 +5,7 @@ import {
   convertToPositions,
   RewardPoolData
 } from '../../utils/maxSupplyProjection';
+import { getLatestSnapshotBeforeDay } from '../../utils/historicalSupplyTracker';
 
 interface FutureMaxSupplyChartProps {
   stakeEvents: any[];
@@ -78,8 +79,23 @@ const FutureMaxSupplyChart: React.FC<FutureMaxSupplyChartProps> = ({
       console.log(`📊 AFTER filtering: ${filteredProjections.length} days`);
       console.log(`📊 AFTER filtering: First day shown: ${filteredProjections[0]?.day}, Last: ${filteredProjections[filteredProjections.length - 1]?.day}`);
       
-      // Format data for Chart.js using filtered projections
-      const labels = filteredProjections.map(projection => 
+      // For past days, use historical supply data
+      const adjustedProjections = filteredProjections.map(projection => {
+        if (projection.day <= currentProtocolDay) {
+          // For past days, try to get historical snapshot
+          const historicalSnapshot = getLatestSnapshotBeforeDay(projection.day);
+          if (historicalSnapshot) {
+            return {
+              ...projection,
+              totalMaxSupply: historicalSnapshot.totalSupply
+            };
+          }
+        }
+        return projection;
+      });
+      
+      // Format data for Chart.js using adjusted projections
+      const labels = adjustedProjections.map(projection => 
         `Day ${projection.day} (${new Date(projection.date).toLocaleDateString('en-US', {
           month: 'short',
           day: 'numeric'
@@ -92,28 +108,28 @@ const FutureMaxSupplyChart: React.FC<FutureMaxSupplyChartProps> = ({
       const datasets = [
         {
           label: 'Max Supply',
-          data: filteredProjections.map(p => Math.round(p.totalMaxSupply)),
+          data: adjustedProjections.map(p => Math.round(p.totalMaxSupply)),
           borderColor: '#FBBF24',
           backgroundColor: 'rgba(251, 191, 36, 0.1)',
           fill: false,
         },
         {
           label: 'From Stakes',
-          data: filteredProjections.map(p => Math.round(p.breakdown.fromStakes)),
+          data: adjustedProjections.map(p => Math.round(p.breakdown.fromStakes)),
           borderColor: '#22C55E',
           backgroundColor: 'rgba(34, 197, 94, 0.1)',
           fill: false,
         },
         {
           label: 'From Creates',
-          data: filteredProjections.map(p => Math.round(p.breakdown.fromCreates)),
+          data: adjustedProjections.map(p => Math.round(p.breakdown.fromCreates)),
           borderColor: '#3B82F6',
           backgroundColor: 'rgba(59, 130, 246, 0.1)',
           fill: false,
         },
         {
           label: 'Current Supply',
-          data: filteredProjections.map(() => Math.round(currentSupply)),
+          data: adjustedProjections.map(() => Math.round(currentSupply)),
           borderColor: '#6B7280',
           backgroundColor: 'rgba(107, 114, 128, 0.1)',
           borderDash: [5, 5],
@@ -121,7 +137,7 @@ const FutureMaxSupplyChart: React.FC<FutureMaxSupplyChartProps> = ({
         }
       ];
       
-      const customTooltipData = filteredProjections.map(projection => ({
+      const customTooltipData = adjustedProjections.map(projection => ({
         day: projection.day,
         date: projection.date,
         totalMaxSupply: Math.round(projection.totalMaxSupply),

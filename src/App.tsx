@@ -12,6 +12,7 @@ import DateRangeButtons from './components/charts/DateRangeButtons';
 import { getContractInfo, RewardPoolData } from './utils/ethersWeb3';
 import { getTokenInfo, SimpleLPPosition } from './utils/uniswapV3RealOwners';
 import { getMainDashboardDataWithCache, getLPPositionsWithCache } from './utils/cacheDataLoader';
+import { updateDailySnapshot } from './utils/historicalSupplyTracker';
 import './App.css';
 
 // Contract launch date - Day 1 (corrected to align with protocol days)
@@ -209,6 +210,17 @@ function App() {
       
       setLoadingProgress(95);
       setLoadingMessage('Calculating projections...');
+      
+      // Update historical supply snapshot if available
+      if (dashboardResult.data.metadata?.dailySupplySnapshot) {
+        const snapshot = dashboardResult.data.metadata.dailySupplySnapshot;
+        updateDailySnapshot(
+          snapshot.day,
+          snapshot.totalSupply,
+          snapshot.burnedSupply
+        );
+        console.log('Updated daily supply snapshot for day', snapshot.day);
+      }
       
       // Data already set from cache above
       console.log('Data loaded - Stakes:', dashboardResult.data.stakeEvents?.length || 0, 'Creates:', dashboardResult.data.createEvents?.length || 0);
@@ -1302,6 +1314,11 @@ function App() {
               <MetricCard
                 title={<><img src="https://coin-images.coingecko.com/coins/images/32762/large/TitanXpng_%281%29.png?1704456654" alt="TitanX" style={{ width: '16px', height: '16px', marginRight: '6px', verticalAlign: 'middle', opacity: 0.8 }} />Total TitanX Used</>}
                 value={totalTitanXInput.toLocaleString('en-US', { maximumFractionDigits: 0 })}
+                suffix="TITANX"
+              />
+              <MetricCard
+                title={<><img src="https://coin-images.coingecko.com/coins/images/32762/large/TitanXpng_%281%29.png?1704456654" alt="TitanX" style={{ width: '16px', height: '16px', marginRight: '6px', verticalAlign: 'middle', opacity: 0.8 }} />Total TitanX Burned 🔥</>}
+                value={totalTitanXBurned.toLocaleString('en-US', { maximumFractionDigits: 0 })}
                 suffix="TITANX"
               />
             </>
