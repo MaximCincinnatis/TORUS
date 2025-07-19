@@ -518,7 +518,7 @@ function App() {
         const rewardPool = parseFloat(poolDataForDay.rewardPool) / 1e18;
         const penaltiesPool = parseFloat(poolDataForDay.penaltiesInPool) / 1e18;
         const totalPoolForDay = rewardPool + penaltiesPool;
-        const totalSharesForDay = parseFloat(poolDataForDay.totalShares) / 1e18;
+        const totalSharesForDay = parseFloat(poolDataForDay.totalShares); // Already in decimal form, not wei
         
         // Debug reward pool data for first few days
         if (i < 3) {
