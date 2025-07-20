@@ -1146,6 +1146,9 @@ function App() {
                   </div>
                 </div>
               </div>
+              <div style={{ fontSize: '14px', color: '#fbbf24', marginTop: '4px' }}>
+                🚧 BETA MODE - Dashboard under active development
+              </div>
             </div>
           </div>
         </div>
