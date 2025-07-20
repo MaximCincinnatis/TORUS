@@ -787,7 +787,7 @@ async function updateAllDashboardData() {
               processedTokenIds.add(tokenId);
               
               // Use same logic as above
-              const amounts = calculateTokenAmounts(
+              const amounts = calculatePositionAmounts(
                 position.liquidity.toString(),
                 slot0.sqrtPriceX96.toString(),
                 position.tickLower,
@@ -958,7 +958,7 @@ async function updateAllDashboardData() {
             console.log(`  ✅ Position ${existingPos.tokenId} validated (owner: ${currentOwner.substring(0,8)}..., liquidity: ${currentLiquidity})`);
             
             // Recalculate token amounts with current pool state
-            const amounts = calculateTokenAmounts(
+            const amounts = calculatePositionAmounts(
               currentLiquidity,
               cachedData.poolData.sqrtPriceX96,
               positionData.tickLower,

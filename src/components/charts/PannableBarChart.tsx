@@ -205,12 +205,11 @@ const PannableBarChart: React.FC<PannableBarChartProps> = ({
         grid: {
           display: true,
           color: 'rgba(255, 255, 255, 0.1)',
-          drawBorder: false,
         },
       },
       y: {
         stacked,
-        type: isLogScale ? 'logarithmic' : 'linear',
+        type: isLogScale ? 'logarithmic' as const : 'linear' as const,
         title: {
           display: !!yAxisLabel,
           text: yAxisLabel,
@@ -227,7 +226,6 @@ const PannableBarChart: React.FC<PannableBarChartProps> = ({
         grid: {
           display: true,
           color: 'rgba(255, 255, 255, 0.1)',
-          drawBorder: false,
         },
       },
     },

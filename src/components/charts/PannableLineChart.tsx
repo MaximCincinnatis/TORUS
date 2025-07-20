@@ -251,7 +251,6 @@ const PannableLineChart: React.FC<PannableLineChartProps> = ({
         grid: {
           display: true,
           color: 'rgba(255, 255, 255, 0.1)',
-          drawBorder: false,
         },
       },
       y: {
@@ -271,7 +270,6 @@ const PannableLineChart: React.FC<PannableLineChartProps> = ({
         grid: {
           display: true,
           color: 'rgba(255, 255, 255, 0.1)',
-          drawBorder: false,
         },
       },
     },
