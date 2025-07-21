@@ -21,6 +21,9 @@ import './App.css';
 const CONTRACT_START_DATE = new Date('2025-07-11');
 CONTRACT_START_DATE.setHours(0, 0, 0, 0);
 
+// Maximum days to calculate for all charts (for panning capability)
+const MAX_CHART_DAYS = 365; // Show up to 1 year of data for panning
+
 // Build info for debugging Vercel deployments
 console.log('Build timestamp:', new Date().toISOString());
 console.log('Deployment trigger:', '2025-07-16T18:55:00Z');
@@ -268,8 +271,8 @@ function App() {
       });
     });
     
-    // Initialize next 88 days with 0 count
-    for (let i = 0; i < 88; i++) {
+    // Initialize next MAX_CHART_DAYS with 0 count for panning capability
+    for (let i = 0; i < MAX_CHART_DAYS; i++) {
       const date = new Date(today);
       date.setDate(date.getDate() + i);
       const dateKey = date.toISOString().split('T')[0];
@@ -322,7 +325,7 @@ function App() {
           }
           stakeDates.set(dateKey, stakeDates.get(dateKey) + 1);
         } else {
-          console.log(`WARNING: Stake maturity date ${dateKey} is outside 88-day window`);
+          console.log(`WARNING: Stake maturity date ${dateKey} is outside ${MAX_CHART_DAYS}-day window`);
         }
       } else {
         // Debug past stakes too
@@ -359,8 +362,8 @@ function App() {
     const today = new Date();
     today.setHours(0, 0, 0, 0); // Start of today
     
-    // Initialize next 88 days with 0 count
-    for (let i = 0; i < 88; i++) {
+    // Initialize next MAX_CHART_DAYS with 0 count for panning capability
+    for (let i = 0; i < MAX_CHART_DAYS; i++) {
       const date = new Date(today);
       date.setDate(date.getDate() + i);
       const dateKey = date.toISOString().split('T')[0];
@@ -384,7 +387,7 @@ function App() {
     });
     
     const totalEnding = Object.values(releases).reduce((sum, count) => sum + count, 0);
-    console.log(`Total creates ending in next 88 days: ${totalEnding}`);
+    console.log(`Total creates ending in next ${MAX_CHART_DAYS} days: ${totalEnding}`);
     console.log('=== END CREATE RELEASES ===\n');
     
     const result = Object.entries(releases).map(([date, count]) => ({
@@ -416,8 +419,8 @@ function App() {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
     
-    // Initialize next 88 days with 0 amount
-    for (let i = 0; i < 88; i++) {
+    // Initialize next MAX_CHART_DAYS with 0 amount for panning capability
+    for (let i = 0; i < MAX_CHART_DAYS; i++) {
       const date = new Date(today);
       date.setDate(date.getDate() + i);
       const dateKey = date.toISOString().split('T')[0];
@@ -449,8 +452,8 @@ function App() {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
     
-    // Initialize next 88 days
-    for (let i = 0; i < 88; i++) {
+    // Initialize next MAX_CHART_DAYS with 0 amount for panning capability
+    for (let i = 0; i < MAX_CHART_DAYS; i++) {
       const date = new Date(today);
       date.setDate(date.getDate() + i);
       const dateKey = date.toISOString().split('T')[0];
@@ -507,8 +510,8 @@ function App() {
     const octoberMaturities = futureMaturityDates.filter(d => d.includes('2025-10')).length;
     console.log(`September maturity dates: ${septemberMaturities}, October: ${octoberMaturities}`);
     
-    // For each day in our range
-    for (let i = 0; i < 88; i++) {
+    // For each day in our range for panning capability
+    for (let i = 0; i < MAX_CHART_DAYS; i++) {
       const date = new Date(today);
       date.setDate(date.getDate() + i);
       const protocolDayForDate = currentProtocolDay + i;
@@ -654,8 +657,8 @@ function App() {
     
     console.log(`Processing ${createData.length} creates for TitanX...`);
     
-    // Initialize next 88 days with 0 amount
-    for (let i = 0; i < 88; i++) {
+    // Initialize next MAX_CHART_DAYS with 0 amount for panning capability
+    for (let i = 0; i < MAX_CHART_DAYS; i++) {
       const date = new Date(today);
       date.setDate(date.getDate() + i);
       const dateKey = date.toISOString().split('T')[0];
@@ -699,8 +702,8 @@ function App() {
     
     console.log(`Processing ${stakeData.length} stakes for daily aggregation...`);
     
-    // Initialize all contract days from 1 to 88 with 0 amount
-    for (let day = 1; day <= 88; day++) {
+    // Initialize all contract days from 1 to MAX_CHART_DAYS with 0 amount for panning capability
+    for (let day = 1; day <= MAX_CHART_DAYS; day++) {
       stakedPerDay[day] = 0;
     }
     
@@ -709,7 +712,7 @@ function App() {
       const stakeDate = new Date(parseInt(stake.timestamp) * 1000);
       const contractDay = getContractDay(stakeDate);
       
-      if (contractDay >= 1 && contractDay <= 88) {
+      if (contractDay >= 1 && contractDay <= MAX_CHART_DAYS) {
         const principal = parseFloat(stake.principal) / 1e18;
         stakedPerDay[contractDay] += principal;
         
@@ -724,7 +727,7 @@ function App() {
     const daysWithStakes = Object.values(stakedPerDay).filter(amount => amount > 0).length;
     
     console.log(`Total TORUS staked: ${totalStakedAcrossDays.toFixed(2)} TORUS`);
-    console.log(`Days with stakes: ${daysWithStakes} out of 88 days`);
+    console.log(`Days with stakes: ${daysWithStakes} out of ${MAX_CHART_DAYS} days`);
     
     // Return array format matching other charts
     return Object.entries(stakedPerDay)
@@ -742,8 +745,8 @@ function App() {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
     
-    // Initialize next 88 days with 0 shares
-    for (let i = 0; i < 88; i++) {
+    // Initialize next MAX_CHART_DAYS with 0 shares for panning capability
+    for (let i = 0; i < MAX_CHART_DAYS; i++) {
       const date = new Date(today);
       date.setDate(date.getDate() + i);
       const dateKey = date.toISOString().split('T')[0];
@@ -825,8 +828,8 @@ function App() {
     const projection: { date: string; supply: number; released: number; contractDay: number; principal: number; rewards: number }[] = [];
     let cumulativeSupply = currentSupply;
     
-    // Use the SAME data source as the working bar charts
-    const releaseData = torusReleasesWithRewards.slice(0, 88); // Same as bar charts
+    // Use ALL available data - PannableLineChart will handle windowing
+    const releaseData = torusReleasesWithRewards; // Use all data for panning
     
     console.log(`Using ${releaseData.length} release data points`);
     console.log(`Starting supply: ${currentSupply.toFixed(2)} TORUS`);
@@ -870,7 +873,7 @@ function App() {
   if (!loading && supplyProjection.length > 0) {
     console.log(`\n%c=== SUPPLY PROJECTION VALIDATION ===`, 'background: #ff6b6b; color: white; font-weight: bold; padding: 8px');
     console.log(`Total projection entries: ${supplyProjection.length}`);
-    console.log(`Expected: 88 days`);
+    console.log(`Expected: ${MAX_CHART_DAYS} days`);
     if (supplyProjection.length > 85) {
       console.log(`Last 3 entries:`);
       supplyProjection.slice(-3).forEach((entry, i) => {
@@ -1184,43 +1187,6 @@ function App() {
         </div>
       </div>
 
-      {/* TitanX Burn Metrics */}
-      <div className="supply-metrics">
-        <div className="supply-metrics-grid">
-          {loading ? (
-            <>
-              <SkeletonCard />
-              <SkeletonCard />
-            </>
-          ) : (
-            <>
-              <div className="supply-metric-card">
-                <div className="supply-metric-title">
-                  <img src="https://coin-images.coingecko.com/coins/images/32762/large/TitanXpng_%281%29.png?1704456654" alt="TitanX" style={{ width: '16px', height: '16px', marginRight: '6px', verticalAlign: 'middle', opacity: 0.8 }} />
-                  Total TitanX Burned by TORUS
-                </div>
-                <div className="supply-metric-value">
-                  {totalTitanXBurned > 1e9 ? 
-                    (totalTitanXBurned / 1e9).toFixed(1) : 
-                    totalTitanXBurned.toLocaleString('en-US', { maximumFractionDigits: 0 })
-                  }
-                  <span className="supply-metric-suffix">{totalTitanXBurned > 1e9 ? "B TITANX" : "TITANX"}</span>
-                </div>
-              </div>
-              <div className="supply-metric-card">
-                <div className="supply-metric-title">
-                  <img src="https://coin-images.coingecko.com/coins/images/32762/large/TitanXpng_%281%29.png?1704456654" alt="TitanX" style={{ width: '16px', height: '16px', marginRight: '6px', verticalAlign: 'middle', opacity: 0.8 }} />
-                  % of TitanX Supply Burned
-                </div>
-                <div className="supply-metric-value">
-                  {percentTitanXBurned.toFixed(6)}
-                  <span className="supply-metric-suffix">%</span>
-                </div>
-              </div>
-            </>
-          )}
-        </div>
-      </div>
 
       {/* Stake Metrics */}
       <div className="chart-section">
@@ -1528,6 +1494,7 @@ function App() {
           enableScaleToggle={true}
           formatTooltip={(value: number) => `${value.toLocaleString('en-US', { maximumFractionDigits: 2 })} TORUS`}
           windowSize={torusStakedDays}
+          showDataLabels={true}
         />
         <div className="chart-note">
           Shows the total amount of TORUS staked each contract day over the last {torusStakedDays} days. This represents the cumulative principal amounts from all stakes created on each specific day. Contract days start from Day 1 (July 11, 2025) when the TORUS protocol launched.
@@ -1590,6 +1557,7 @@ function App() {
           xAxisLabel="Date / Contract Day"
           enableScaleToggle={true}
           windowSize={stakeMaturityDays}
+          showDataLabels={true}
         />
         <div className="chart-note">
           Shows the number of stakes ending each day over the next {stakeMaturityDays} days. The numbers on top of each bar indicate the exact count of stakes maturing that day. Stakes can be created for 1-88 days, so the distribution shows when users originally chose to end their staking positions.
@@ -1652,6 +1620,7 @@ function App() {
           xAxisLabel="Date / Contract Day"
           enableScaleToggle={true}
           windowSize={torusReleasesDays}
+          showDataLabels={true}
         />
         <div className="chart-note">
           Shows the number of creates ending each day over the next {torusReleasesDays} days. The numbers on top of each bar indicate the exact count of creates maturing that day. Creates can be made for 1-88 days, similar to stakes, representing when users originally chose to end their create positions.

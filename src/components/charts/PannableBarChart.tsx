@@ -10,6 +10,7 @@ import {
   ChartOptions,
   LogarithmicScale,
 } from 'chart.js';
+import ChartDataLabels from 'chartjs-plugin-datalabels';
 import { Bar } from 'react-chartjs-2';
 import type { ChartJSOrUndefined } from 'react-chartjs-2/dist/types';
 
@@ -43,6 +44,7 @@ interface PannableBarChartProps {
   enableScaleToggle?: boolean;
   minBarHeight?: number;
   windowSize?: number;
+  showDataLabels?: boolean;
 }
 
 const PannableBarChart: React.FC<PannableBarChartProps> = ({
@@ -59,6 +61,7 @@ const PannableBarChart: React.FC<PannableBarChartProps> = ({
   enableScaleToggle = false,
   minBarHeight = 1,
   windowSize = 30,
+  showDataLabels = false,
 }) => {
   const chartRef = useRef<ChartJSOrUndefined<'bar'>>(null);
   const [startIndex, setStartIndex] = useState(0);
@@ -67,6 +70,13 @@ const PannableBarChart: React.FC<PannableBarChartProps> = ({
   const [dragStartIndex, setDragStartIndex] = useState(0);
   const [currentWindowSize, setCurrentWindowSize] = useState(windowSize);
   const [isLogScale, setIsLogScale] = useState(false);
+
+  // Update currentWindowSize when windowSize prop changes
+  useEffect(() => {
+    setCurrentWindowSize(windowSize);
+    // Reset to start when window size changes
+    setStartIndex(0);
+  }, [windowSize]);
 
   // Calculate visible data window
   const endIndex = Math.min(startIndex + currentWindowSize, labels.length);
@@ -169,7 +179,7 @@ const PannableBarChart: React.FC<PannableBarChartProps> = ({
     setStartIndex(maxStartIndex);
   };
 
-  const options: ChartOptions<'bar'> = {
+  const baseOptions: ChartOptions<'bar'> = {
     responsive: true,
     maintainAspectRatio: false,
     interaction: {
@@ -177,6 +187,11 @@ const PannableBarChart: React.FC<PannableBarChartProps> = ({
       intersect: false,
     },
     events: isDragging ? [] : ['mousemove', 'mouseout', 'click', 'touchstart', 'touchmove'],
+    layout: {
+      padding: {
+        top: showDataLabels ? 25 : 10,
+      }
+    },
     plugins: {
       legend: {
         display: showLegend,
@@ -230,6 +245,44 @@ const PannableBarChart: React.FC<PannableBarChartProps> = ({
       },
     },
   };
+
+  // Add datalabels configuration if needed
+  const options: ChartOptions<'bar'> = showDataLabels ? {
+    ...baseOptions,
+    plugins: {
+      ...baseOptions.plugins,
+      datalabels: {
+        display: function(context: any) {
+          const value = context.dataset?.data?.[context.dataIndex];
+          return value !== null && value !== undefined && value > 0;
+        },
+        anchor: 'end' as const,
+        align: 'top' as const,
+        offset: 4,
+        clip: false,
+        clamp: false,
+        color: '#fff',
+        font: {
+          size: 10,
+          weight: 600,
+        },
+        formatter: function(value: number) {
+          if (value !== null && value !== undefined && value > 0) {
+            return Math.round(value).toString();
+          }
+          return '';
+        },
+        backgroundColor: 'rgba(0,0,0,0.3)',
+        borderRadius: 4,
+        padding: {
+          top: 2,
+          bottom: 2,
+          left: 4,
+          right: 4,
+        },
+      }
+    }
+  } as ChartOptions<'bar'> : baseOptions;
 
   const data = {
     labels: visibleLabels,
@@ -339,7 +392,7 @@ const PannableBarChart: React.FC<PannableBarChartProps> = ({
         onWheel={handleWheel}
       >
         <div style={{ pointerEvents: isDragging ? 'none' : 'auto', height: '100%' }}>
-          <Bar ref={chartRef} options={options} data={data} />
+          <Bar ref={chartRef} options={options} data={data} plugins={showDataLabels ? [ChartDataLabels] : []} />
         </div>
       </div>
     </div>

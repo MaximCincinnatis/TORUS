@@ -69,15 +69,14 @@ const FutureMaxSupplyChart: React.FC<FutureMaxSupplyChartProps> = ({
       // Apply timeframe filtering - only show current day onward
       console.log('🔍 Using currentProtocolDay:', currentProtocolDay);
       
-      // Always start from current day and show the specified number of future days
-      const endDay = currentProtocolDay + days;
-      
-      let filteredProjections = projections.filter(p => p.day >= currentProtocolDay && p.day <= endDay);
+      // Get ALL projections from current day forward, don't limit by days
+      // The PannableLineChart will handle windowing with the windowSize prop
+      let filteredProjections = projections.filter(p => p.day >= currentProtocolDay);
       
       console.log(`📊 BEFORE filtering: projections has ${projections.length} days`);
       console.log(`📊 BEFORE filtering: First projection day: ${projections[0]?.day}, Last: ${projections[projections.length - 1]?.day}`);
-      console.log(`📊 Filtering for days ${currentProtocolDay} to ${endDay}`);
-      console.log(`📊 AFTER filtering: ${filteredProjections.length} days`);
+      console.log(`📊 Filtering from day ${currentProtocolDay} forward`);
+      console.log(`📊 AFTER filtering: ${filteredProjections.length} days available for panning`);
       console.log(`📊 AFTER filtering: First day shown: ${filteredProjections[0]?.day}, Last: ${filteredProjections[filteredProjections.length - 1]?.day}`);
       
       // For past days, use historical supply data

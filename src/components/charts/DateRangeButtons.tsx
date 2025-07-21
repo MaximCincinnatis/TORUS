@@ -12,6 +12,7 @@ const DateRangeButtons: React.FC<DateRangeButtonsProps> = ({ selectedDays, onDay
     { label: '30d', value: 30 },
     { label: '60d', value: 60 },
     { label: '88d', value: 88 },
+    { label: 'ALL', value: 9999 }, // Large number to show all data
   ];
 
   return (

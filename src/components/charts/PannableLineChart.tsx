@@ -71,6 +71,13 @@ const PannableLineChart: React.FC<PannableLineChartProps> = ({
   const [dragStartIndex, setDragStartIndex] = useState(0);
   const [currentWindowSize, setCurrentWindowSize] = useState(windowSize);
 
+  // Update currentWindowSize when windowSize prop changes
+  useEffect(() => {
+    setCurrentWindowSize(windowSize);
+    // Reset to start when window size changes
+    setStartIndex(0);
+  }, [windowSize]);
+
   // Calculate visible data window
   const endIndex = Math.min(startIndex + currentWindowSize, labels.length);
   const visibleLabels = labels.slice(startIndex, endIndex);
