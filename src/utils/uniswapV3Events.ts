@@ -1,6 +1,7 @@
 import { ethers } from 'ethers';
 import { getProvider } from './ethersWeb3';
 import { calculateTokenAmounts, isPositionInRange } from './uniswapV3Math';
+import type { SimpleLPPosition } from './uniswapV3RealOwners';
 
 const POOL_ADDRESS = '0x7ff1f30F6E7EeC2ff3F0D1b60739115BDF88190F';
 
@@ -15,16 +16,8 @@ const POOL_ABI = [
 ];
 
 
-export interface SimpleLPPosition {
-  owner: string;
-  tokenId?: string;
-  liquidity: string;
-  tickLower: number;
-  tickUpper: number;
-  amount0: number;
-  amount1: number;
-  inRange: boolean;
-}
+// Use the standard SimpleLPPosition from uniswapV3RealOwners
+export type { SimpleLPPosition } from './uniswapV3RealOwners';
 
 export async function getPoolInfo() {
   const provider = getProvider();
@@ -88,12 +81,13 @@ export async function fetchLPPositionsFromEvents(fromBlock?: number): Promise<Si
         console.log(`Mint event - Amount: ${event.args.amount}, Ticks: ${event.args.tickLower} to ${event.args.tickUpper}`);
         
         const existing = positions.get(key) || {
+          tokenId: key, // Use the key as a pseudo-tokenId
           owner: 'Uniswap V3 Position Manager', // Since we can't easily track individual owners
           liquidity: '0',
           tickLower: event.args.tickLower,
           tickUpper: event.args.tickUpper,
-          amount0: 0,
-          amount1: 0,
+          torusAmount: 0,
+          titanxAmount: 0,
           inRange: false
         };
         
@@ -140,10 +134,13 @@ export async function fetchLPPositionsFromEvents(fromBlock?: number): Promise<Si
           18
         );
         
+        // Determine which token is which based on pool configuration
+        const token0IsTorus = poolInfo.token0.toLowerCase() === '0xb47f575807fc5466285e1277ef8acfbb5c6686e8'.toLowerCase();
+        
         activePositions.push({
           ...position,
-          amount0: amounts.amount0,
-          amount1: amounts.amount1,
+          torusAmount: token0IsTorus ? amounts.amount0 : amounts.amount1,
+          titanxAmount: token0IsTorus ? amounts.amount1 : amounts.amount0,
           inRange: isPositionInRange(poolInfo.currentTick, position.tickLower, position.tickUpper)
         });
       }

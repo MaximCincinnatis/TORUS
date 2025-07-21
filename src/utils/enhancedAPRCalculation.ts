@@ -211,8 +211,8 @@ export async function calculateEnhancedAPR(
 
     // Calculate position value in USD
     const positionValueUSD = calculatePositionValueUSD(
-      position.amount0,
-      position.amount1
+      position.torusAmount,
+      position.titanxAmount
     );
 
     console.log(`💰 Position value: $${positionValueUSD.toFixed(4)} USD`);

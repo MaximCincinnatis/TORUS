@@ -1,6 +1,22 @@
 {
-  "version": "1.0.0",
-  "lastUpdated": "2025-07-21",
+  "version": "1.1.0",
+  "lastUpdated": "2025-01-21",
+  "dynamicBehavior": {
+    "description": "Charts dynamically adjust to show data relative to the current protocol day",
+    "forwardLookingCharts": [
+      "stake-maturity",
+      "create-maturity",
+      "torus-releases",
+      "torus-rewards",
+      "titanx-usage",
+      "shares-releases"
+    ],
+    "behavior": {
+      "range": "Shows current day + 88 days into the future",
+      "updates": "Date ranges update automatically each day",
+      "protocolStart": "2024-04-11"
+    }
+  },
   "charts": {
     "max-supply-projection": {
       "id": "max-supply-projection",
@@ -95,7 +111,9 @@
       },
       "data": {
         "source": "calculateStakeReleases",
-        "maxDays": 365
+        "maxDays": 88,
+        "dynamicRange": true,
+        "description": "Shows stakes maturing in the next 88 days from current date"
       },
       "display": {
         "height": 400,
@@ -117,7 +135,9 @@
       },
       "data": {
         "source": "calculateCreateReleases",
-        "maxDays": 365
+        "maxDays": 88,
+        "dynamicRange": true,
+        "description": "Shows creates maturing in the next 88 days from current date"
       },
       "display": {
         "height": 400,
@@ -138,7 +158,9 @@
       },
       "data": {
         "source": "calculateTorusReleases",
-        "maxDays": 365
+        "maxDays": 88,
+        "dynamicRange": true,
+        "description": "Shows TORUS principal amounts releasing in the next 88 days"
       },
       "display": {
         "height": 400,
@@ -160,7 +182,9 @@
       },
       "data": {
         "source": "calculateTorusReleasesWithRewards",
-        "maxDays": 365
+        "maxDays": 88,
+        "dynamicRange": true,
+        "description": "Shows TORUS principal and rewards releasing in the next 88 days"
       },
       "display": {
         "height": 400,
@@ -190,7 +214,9 @@
       },
       "data": {
         "source": "calculateTitanXUsage",
-        "maxDays": 365
+        "maxDays": 88,
+        "dynamicRange": true,
+        "description": "Shows TitanX amounts from creates ending in the next 88 days"
       },
       "display": {
         "height": 400,
@@ -211,7 +237,9 @@
       },
       "data": {
         "source": "calculateSharesReleases",
-        "maxDays": 365
+        "maxDays": 88,
+        "dynamicRange": true,
+        "description": "Shows shares being released in the next 88 days"
       },
       "display": {
         "height": 400,

@@ -1,6 +1,12 @@
 #!/usr/bin/env node
 
 /**
+ * STATUS: ACTIVE - Core update logic
+ * RUNS: Called by auto-update-fixed.js every 30 minutes
+ * PURPOSE: Performs incremental data updates with blockchain fetching
+ * DEPENDENCIES: ethers.js, cached-data.json, lpCalculations.js
+ * CRITICAL: Falls back to full update if significant changes detected
+ * 
  * TORUS Dashboard - Fixed Smart Update Script
  * 
  * Fixes data preservation issues:

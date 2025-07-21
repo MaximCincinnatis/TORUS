@@ -236,8 +236,16 @@ export async function getLPPositionsWithCache(
   
   if (cachedData && cachedData.lpPositions.length > 0) {
     console.log('🚀 Using cached LP positions');
+    // Ensure positions use standard format
+    const standardizedPositions = cachedData.lpPositions.map(pos => ({
+      ...pos,
+      // Ensure we have the standard fields
+      torusAmount: pos.torusAmount ?? (pos as any).amount0 ?? 0,
+      titanxAmount: pos.titanxAmount ?? (pos as any).amount1 ?? 0
+    }));
+    
     return {
-      positions: cachedData.lpPositions,
+      positions: standardizedPositions,
       source: 'cache'
     };
   }

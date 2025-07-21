@@ -1,3 +1,12 @@
+/**
+ * STATUS: ACTIVE - Full data rebuild script
+ * RUNS: Called by smart-update-fixed.js when major changes detected
+ * PURPOSE: Complete rebuild of all dashboard data from blockchain
+ * DEPENDENCIES: ethers.js, all contract ABIs, lpCalculations.js
+ * BUG: Line 1072 overwrites lpPositions - should merge instead
+ * CRITICAL: This script can cause data loss if not careful
+ */
+
 // Complete master script with ALL fields needed by frontend
 const { ethers } = require('ethers');
 const fs = require('fs');
@@ -8,6 +17,8 @@ const {
   mapFieldNames,
   mergeLPPositions 
 } = require('../../shared/lpCalculations');
+const { standardizeLPPosition } = require('../../src/utils/lpPositionContract');
+const { safeMergeLPPositions } = require('../shared/useLPPositionStandard');
 
 // Working RPC providers (all public, no API keys)
 const WORKING_RPC_PROVIDERS = [
@@ -574,7 +585,8 @@ async function updateAllDashboardData() {
                 
                 const inRange = position.tickLower <= slot0.tick && slot0.tick <= position.tickUpper;
                 
-                lpPositions.push({
+                // Create position with standardized fields
+                const rawPosition = {
                   tokenId: tokenId,
                   owner: positionOwner,
                   liquidity: position.liquidity.toString(),
@@ -593,7 +605,19 @@ async function updateAllDashboardData() {
                   inRange: inRange,
                   estimatedAPR: isNaN(estimatedAPR) ? 0 : estimatedAPR.toFixed(2),
                   priceRange: priceRange
+                };
+                
+                // Standardize the position to ensure correct field names
+                const standardizedPosition = standardizeLPPosition(rawPosition);
+                
+                // Keep additional fields that aren't part of the standard
+                Object.keys(rawPosition).forEach(key => {
+                  if (!(key in standardizedPosition) && key !== 'amount0' && key !== 'amount1') {
+                    standardizedPosition[key] = rawPosition[key];
+                  }
                 });
+                
+                lpPositions.push(standardizedPosition);
                 
                 console.log(`  ✅ Added position ${tokenId} owned by ${positionOwner.substring(0,8)}...`);
               }
@@ -1012,7 +1036,7 @@ async function updateAllDashboardData() {
             );
             
             // Update position with fresh data
-            const updatedPosition = {
+            const rawUpdatedPosition = {
               ...existingPos,
               owner: currentOwner,
               liquidity: currentLiquidity,
@@ -1026,6 +1050,16 @@ async function updateAllDashboardData() {
               estimatedAPR: isNaN(estimatedAPR) ? 0 : estimatedAPR.toFixed(2),
               lastChecked: new Date().toISOString()
             };
+            
+            // Standardize the updated position
+            const updatedPosition = standardizeLPPosition(rawUpdatedPosition);
+            
+            // Keep additional fields that aren't part of the standard
+            Object.keys(rawUpdatedPosition).forEach(key => {
+              if (!(key in updatedPosition) && key !== 'amount0' && key !== 'amount1') {
+                updatedPosition[key] = rawUpdatedPosition[key];
+              }
+            });
             
             positionMap.set(existingPos.tokenId, updatedPosition);
             
@@ -1053,7 +1087,8 @@ async function updateAllDashboardData() {
     
     // Merge LP positions with individual on-chain validation
     console.log(`  🔍 Validating ${positionCountBefore} existing positions...`);
-    cachedData.lpPositions = await mergeLPPositionsWithValidation(cachedData.lpPositions, lpPositions, provider);
+    // Use safe merge that preserves existing non-zero amounts
+    cachedData.lpPositions = safeMergeLPPositions(lpPositions, cachedData.lpPositions);
     
     // Audit the validation results
     const positionCountAfter = cachedData.lpPositions?.length || 0;

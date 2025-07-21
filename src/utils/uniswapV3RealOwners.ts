@@ -20,18 +20,22 @@ const POSITION_MANAGER_ABI = [
 ];
 
 export interface SimpleLPPosition {
+  tokenId: string;
   owner: string;
-  tokenId?: string;
   liquidity: string;
   tickLower: number;
   tickUpper: number;
-  amount0: number;
-  amount1: number;
+  torusAmount: number;  // Standard field - required
+  titanxAmount: number; // Standard field - required
   inRange: boolean;
+  // Optional enhanced fields
   claimableTorus?: number;
   claimableTitanX?: number;
   estimatedAPR?: number;
   priceRange?: string;
+  // Legacy fields for backward compatibility (deprecated)
+  amount0?: number;
+  amount1?: number;
 }
 
 // Fallback approach: Try checking known NFT token IDs directly
@@ -78,14 +82,17 @@ async function tryDirectNFTApproach(positionManager: any, poolInfo: any): Promis
               18, 18
             );
             
+            // Determine which token is which based on pool configuration
+            const token0IsTorus = poolInfo.token0.toLowerCase() === '0xb47f575807fc5466285e1277ef8acfbb5c6686e8'.toLowerCase();
+            
             positions.push({
-              owner: realOwner,
               tokenId: tokenId.toString(),
+              owner: realOwner,
               liquidity: positionData.liquidity.toString(),
               tickLower: positionData.tickLower,
               tickUpper: positionData.tickUpper,
-              amount0: amounts.amount0,
-              amount1: amounts.amount1,
+              torusAmount: token0IsTorus ? amounts.amount0 : amounts.amount1,
+              titanxAmount: token0IsTorus ? amounts.amount1 : amounts.amount0,
               inRange: isPositionInRange(poolInfo.currentTick, positionData.tickLower, positionData.tickUpper)
             });
           }
@@ -368,14 +375,17 @@ export async function fetchLPPositionsFromEvents(): Promise<SimpleLPPosition[]> 
                 console.log(`    💰 Claimable TitanX: ${claimableTitanX.toFixed(4)}`);
                 console.log(`    📈 Estimated APR: ${estimatedAPR.toFixed(2)}%`);
                 
+                // Determine which token is which based on pool configuration
+                const token0IsTorus = poolInfo.token0.toLowerCase() === '0xb47f575807fc5466285e1277ef8acfbb5c6686e8'.toLowerCase();
+                
                 const position: SimpleLPPosition = {
-                  owner: realOwner,
                   tokenId,
+                  owner: realOwner,
                   liquidity: positionData.liquidity.toString(),
                   tickLower: Number(positionData.tickLower),
                   tickUpper: Number(positionData.tickUpper),
-                  amount0: amounts.amount0,
-                  amount1: amounts.amount1,
+                  torusAmount: token0IsTorus ? amounts.amount0 : amounts.amount1,
+                  titanxAmount: token0IsTorus ? amounts.amount1 : amounts.amount0,
                   inRange: isPositionInRange(poolInfo.currentTick, Number(positionData.tickLower), Number(positionData.tickUpper)),
                   claimableTorus,
                   claimableTitanX,
@@ -389,13 +399,13 @@ export async function fetchLPPositionsFromEvents(): Promise<SimpleLPPosition[]> 
                 console.error(`    ❌ Token calculation failed:`, calcError);
                 // Still add position with basic info
                 const position: SimpleLPPosition = {
-                  owner: realOwner,
                   tokenId,
+                  owner: realOwner,
                   liquidity: positionData.liquidity.toString(),
                   tickLower: Number(positionData.tickLower),
                   tickUpper: Number(positionData.tickUpper),
-                  amount0: 0,
-                  amount1: 0,
+                  torusAmount: 0,
+                  titanxAmount: 0,
                   inRange: false,
                   claimableTorus: 0,
                   claimableTitanX: 0,
@@ -426,8 +436,8 @@ export async function fetchLPPositionsFromEvents(): Promise<SimpleLPPosition[]> 
       
       positions.forEach((pos, i) => {
         console.log(`${i + 1}. Owner: ${pos.owner}`);
-        console.log(`   TORUS: ${pos.amount0.toFixed(2)}`);
-        console.log(`   TitanX: ${pos.amount1.toFixed(2)}`);
+        console.log(`   TORUS: ${pos.torusAmount.toFixed(2)}`);
+        console.log(`   TitanX: ${pos.titanxAmount.toFixed(2)}`);
         console.log(`   In Range: ${pos.inRange ? '✅' : '❌'}`);
       });
     } else {

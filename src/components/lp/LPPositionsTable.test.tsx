@@ -1,25 +1,27 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import LPPositionsTable from './LPPositionsTable';
-import { SimpleLPPosition } from '../../utils/uniswapV3Events';
+import { SimpleLPPosition } from '../../utils/uniswapV3RealOwners';
 
 const mockPositions: SimpleLPPosition[] = [
   {
+    tokenId: '123',
     owner: '0x1234567890123456789012345678901234567890',
     liquidity: '1000000000000000000',
     tickLower: -887200,
     tickUpper: 887200,
-    amount0: 100,
-    amount1: 3500000,
+    torusAmount: 100,
+    titanxAmount: 3500000,
     inRange: true,
   },
   {
+    tokenId: '456',
     owner: '0xabcdefabcdefabcdefabcdefabcdefabcdefabcd',
     liquidity: '500000000000000000',
     tickLower: 170000,
     tickUpper: 180000,
-    amount0: 50,
-    amount1: 1750000,
+    torusAmount: 50,
+    titanxAmount: 1750000,
     inRange: false,
   },
 ];

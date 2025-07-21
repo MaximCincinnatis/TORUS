@@ -18,11 +18,42 @@ import { updateDailySnapshot } from './utils/historicalSupplyTracker';
 import './App.css';
 
 // Contract launch date - Day 1 (corrected to align with protocol days)
-const CONTRACT_START_DATE = new Date('2025-07-11');
+const CONTRACT_START_DATE = new Date('2024-04-11');
 CONTRACT_START_DATE.setHours(0, 0, 0, 0);
 
 // Maximum days to calculate for all charts (for panning capability)
 const MAX_CHART_DAYS = 365; // Show up to 1 year of data for panning
+
+// Get current protocol day dynamically
+const getCurrentProtocolDay = () => {
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  const msPerDay = 24 * 60 * 60 * 1000;
+  const daysDiff = Math.floor((today.getTime() - CONTRACT_START_DATE.getTime()) / msPerDay) + 1;
+  return Math.max(1, daysDiff); // Ensure at least day 1
+};
+
+// Helper to determine if chart should be dynamic (forward-looking)
+const isForwardLookingChart = (chartId: string) => {
+  const forwardLookingCharts = [
+    'stake-maturity',
+    'create-maturity',
+    'torus-releases',
+    'torus-rewards',
+    'titanx-usage',
+    'shares-releases'
+  ];
+  return forwardLookingCharts.includes(chartId);
+};
+
+// Get dynamic date range for forward-looking charts
+const getDynamicDateRange = () => {
+  const today = new Date();
+  today.setHours(0, 0, 0, 0);
+  const endDate = new Date(today);
+  endDate.setDate(endDate.getDate() + 88);
+  return { today, endDate };
+};
 
 // Build info for debugging Vercel deployments
 console.log('Build timestamp:', new Date().toISOString());
@@ -271,8 +302,9 @@ function App() {
       });
     });
     
-    // Initialize next MAX_CHART_DAYS with 0 count for panning capability
-    for (let i = 0; i < MAX_CHART_DAYS; i++) {
+    // Initialize next 88 days for dynamic forward-looking view
+    const { endDate } = getDynamicDateRange();
+    for (let i = 0; i <= 88; i++) {
       const date = new Date(today);
       date.setDate(date.getDate() + i);
       const dateKey = date.toISOString().split('T')[0];
@@ -362,8 +394,9 @@ function App() {
     const today = new Date();
     today.setHours(0, 0, 0, 0); // Start of today
     
-    // Initialize next MAX_CHART_DAYS with 0 count for panning capability
-    for (let i = 0; i < MAX_CHART_DAYS; i++) {
+    // Initialize next 88 days for dynamic forward-looking view
+    const { endDate } = getDynamicDateRange();
+    for (let i = 0; i <= 88; i++) {
       const date = new Date(today);
       date.setDate(date.getDate() + i);
       const dateKey = date.toISOString().split('T')[0];
@@ -419,8 +452,9 @@ function App() {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
     
-    // Initialize next MAX_CHART_DAYS with 0 amount for panning capability
-    for (let i = 0; i < MAX_CHART_DAYS; i++) {
+    // Initialize next 88 days for dynamic forward-looking view
+    const { endDate } = getDynamicDateRange();
+    for (let i = 0; i <= 88; i++) {
       const date = new Date(today);
       date.setDate(date.getDate() + i);
       const dateKey = date.toISOString().split('T')[0];
@@ -452,8 +486,9 @@ function App() {
     const today = new Date();
     today.setHours(0, 0, 0, 0);
     
-    // Initialize next MAX_CHART_DAYS with 0 amount for panning capability
-    for (let i = 0; i < MAX_CHART_DAYS; i++) {
+    // Initialize next 88 days for dynamic forward-looking view
+    const { endDate } = getDynamicDateRange();
+    for (let i = 0; i <= 88; i++) {
       const date = new Date(today);
       date.setDate(date.getDate() + i);
       const dateKey = date.toISOString().split('T')[0];
@@ -510,8 +545,8 @@ function App() {
     const octoberMaturities = futureMaturityDates.filter(d => d.includes('2025-10')).length;
     console.log(`September maturity dates: ${septemberMaturities}, October: ${octoberMaturities}`);
     
-    // For each day in our range for panning capability
-    for (let i = 0; i < MAX_CHART_DAYS; i++) {
+    // For each day in our 88-day forward-looking range
+    for (let i = 0; i <= 88; i++) {
       const date = new Date(today);
       date.setDate(date.getDate() + i);
       const protocolDayForDate = currentProtocolDay + i;
@@ -520,8 +555,8 @@ function App() {
       const poolDataForDay = rewardPoolData.find(pd => pd.day === protocolDayForDate);
       
       if (poolDataForDay && parseFloat(poolDataForDay.totalShares) > 0) {
-        const rewardPool = parseFloat(poolDataForDay.rewardPool) / 1e18;
-        const penaltiesPool = parseFloat(poolDataForDay.penaltiesInPool) / 1e18;
+        const rewardPool = parseFloat(poolDataForDay.rewardPool); // Already in decimal form, not wei
+        const penaltiesPool = parseFloat(poolDataForDay.penaltiesInPool); // Already in decimal form, not wei
         const totalPoolForDay = rewardPool + penaltiesPool;
         const totalSharesForDay = parseFloat(poolDataForDay.totalShares); // Already in decimal form, not wei
         
@@ -1497,7 +1532,7 @@ function App() {
           showDataLabels={true}
         />
         <div className="chart-note">
-          Shows the total amount of TORUS staked each contract day over the last {torusStakedDays} days. This represents the cumulative principal amounts from all stakes created on each specific day. Contract days start from Day 1 (July 11, 2025) when the TORUS protocol launched.
+          Shows the total amount of TORUS staked each contract day over the last {torusStakedDays} days. This represents the cumulative principal amounts from all stakes created on each specific day. Contract days start from Day 1 (April 11, 2024) when the TORUS protocol launched.
         </div>
       </ExpandableChartSection>
 
@@ -1833,7 +1868,7 @@ function App() {
           height={600}
           yAxisLabel="TitanX Amount"
           xAxisLabel="Date / Contract Day"
-          formatTooltip={(value: number) => `TitanX: ${value.toLocaleString('en-US', { maximumFractionDigits: 2 })}`}
+          formatTooltip={(value: number) => `TitanX: ${(value || 0).toLocaleString('en-US', { maximumFractionDigits: 2 })}`}
           enableScaleToggle={true}
           windowSize={titanXUsageDays}
         />

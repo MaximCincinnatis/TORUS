@@ -140,8 +140,9 @@ const LPPositionsTable: React.FC<LPPositionsTableProps> = ({ positions, loading,
           </thead>
           <tbody>
             {sortedPositions.map((position, index) => {
-              const titanXAmount = tokenInfo.token0IsTitanX ? (position.amount0 || 0) : (position.amount1 || 0);
-              const torusAmount = tokenInfo.token0IsTorus ? (position.amount0 || 0) : (position.amount1 || 0);
+              // Always use standardized fields
+              const titanXAmount = position.titanxAmount || 0;
+              const torusAmount = position.torusAmount || 0;
               // Use cached priceRange data, but override for full range positions to show "Full Range V3"
               const isFullRange = position.tickLower === -887200 && position.tickUpper === 887200;
               

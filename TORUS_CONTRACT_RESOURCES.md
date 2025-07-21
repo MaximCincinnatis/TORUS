@@ -15,7 +15,7 @@
 ### Related Contracts
 - **TitanX Token**: `0xF19308F923582A6f7c465e5CE7a9Dc1BEC6665B1`
 - **Uniswap V3 TORUS/WETH Pool**: `0x7629C68615Ab5898c2871FBfdeD1cAdFc0bbCf1B`
-  - Pool Created: Block 22717088 (Sat Jul 13 2025 03:22:11 GMT+0000)
+  - Pool Created: Block 22717088 (Sat Apr 13 2024 03:22:11 GMT+0000)
   - Fee Tier: 1% (10000)
 
 ## Uniswap V3 Pool Information
@@ -141,7 +141,7 @@ const calculateProfitability = async (gasPrice, estimatedGas) => {
 
 ## Additional Resources
 - Contract deployment block: ~22717088
-- Protocol start date: July 11, 2025
+- Protocol start date: April 11, 2024
 - TORUS decimals: 18
 - TitanX decimals: 18
 

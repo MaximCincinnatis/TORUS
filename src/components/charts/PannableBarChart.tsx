@@ -204,6 +204,10 @@ const PannableBarChart: React.FC<PannableBarChartProps> = ({
         callbacks: {
           label: (context) => {
             const value = context.parsed.y;
+            // Handle undefined/null values gracefully
+            if (value === undefined || value === null || isNaN(value)) {
+              return `${context.dataset.label}: 0`;
+            }
             const formattedValue = formatTooltip ? formatTooltip(value) : value.toLocaleString();
             return `${context.dataset.label}: ${formattedValue}`;
           },

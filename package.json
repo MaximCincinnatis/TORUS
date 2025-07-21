@@ -34,7 +34,12 @@
     "eject": "react-scripts eject",
     "validate:specs": "node scripts/validate-specifications.js",
     "docs:generate": "node scripts/generate-chart-docs.js",
-    "specs:check": "npm run validate:specs && npm run docs:generate"
+    "specs:check": "npm run validate:specs && npm run docs:generate",
+    "test:lp-positions": "jest tests/lp-positions.test.ts",
+    "test:visual": "jest tests/visual-regression.test.ts",
+    "validate:lp-data": "node scripts/pre-commit-lp-check.js",
+    "test:all": "npm run validate:specs && npm run validate:lp-data && npm test",
+    "pre-commit": "npm run validate:lp-data && npm run validate:specs"
   },
   "eslintConfig": {
     "extends": [
