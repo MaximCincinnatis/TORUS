@@ -1,5 +1,75 @@
 # TORUS Dashboard - Development Progress & Todo List
 
+## Critical Issues - URGENT FIX NEEDED 🚨
+
+### LP Position Data Loss Problem
+**Issue**: LP positions repeatedly show 0 titanX and 0 TORUS amounts after JSON updates
+**Root Cause Analysis**:
+1. Multiple update scripts are running with different calculation logic
+2. Field mapping inconsistency (amount0/amount1 vs torusAmount/titanxAmount)
+3. Data overwriting during updates instead of merging
+4. Possible issue with Uniswap V3 position calculations
+
+### Missing Chart Features
+1. **Bar Chart Numbers**: Numbers above bars in stake/create maturity charts disappeared
+2. **Pan/Drag Functionality**: Click-and-drag not working on any charts
+
+## Current Sprint Tasks
+
+### 1. Restore Bar Chart Numbers ⏳
+- [ ] Check git history for how numbers were displayed on bars
+- [ ] Re-implement the feature in PannableBarChart component
+- [ ] Test with stake and create maturity charts
+
+### 2. Fix Chart Pan/Drag Functionality ⏳
+- [ ] Audit all chart components for drag functionality
+- [ ] Ensure PannableBarChart and PannableLineChart have drag enabled
+- [ ] Test on all chart instances
+
+### 3. Fix LP Position Zero Amounts (CRITICAL) ⏳
+- [ ] Create comprehensive audit script to track data flow
+- [ ] Monitor JSON updates in real-time
+- [ ] Identify which script is causing data loss
+- [ ] Implement data validation before saving
+- [ ] Add backup/restore mechanism
+
+### 4. Implement LP Data Persistence Plan ⏳
+- [ ] Create single source of truth for LP calculations
+- [ ] Consolidate all LP update logic into one module
+- [ ] Add pre-save validation to prevent zero values
+- [ ] Implement transaction-like updates (all or nothing)
+- [ ] Add extensive logging for debugging
+
+### 5. Test Complete Data Flow ⏳
+- [ ] Test smart-update-fixed.js independently
+- [ ] Test update-all-dashboard-data.js independently
+- [ ] Monitor cached-data.json during updates
+- [ ] Verify frontend reads correct fields
+- [ ] Create automated test for LP data integrity
+
+## Investigation Plan for LP Data Loss
+
+### Step 1: Immediate Audit
+1. Check current cached-data.json for LP positions
+2. Run each update script in isolation and check results
+3. Add logging to track when/where zeros appear
+
+### Step 2: Root Cause Analysis
+1. Compare calculation functions across all scripts
+2. Check for race conditions in concurrent updates
+3. Verify Uniswap V3 math implementations
+4. Check for type conversion issues (BigInt/Number)
+
+### Step 3: Permanent Fix
+1. Create lpDataManager.js module with:
+   - Single calculation function
+   - Data validation
+   - Atomic updates
+   - Rollback capability
+2. Update all scripts to use this module
+3. Add unit tests for edge cases
+4. Implement monitoring/alerting
+
 ## Phase 1: Data Integrity & LP Position Fixes (Days 1-7) 
 
 ### Completed Tasks ✅
@@ -128,9 +198,9 @@
 5. **No Single Source of Truth**: LP calculations duplicated across multiple scripts
 
 ### Scripts Actually Being Used:
-- **smart-update.js** - Used by automated 30-minute updates
+- **smart-update-fixed.js** - Used by automated 30-minute updates
 - **update-all-dashboard-data.js** - Called by smart-update as fallback
-- **auto-update.js** - Used for manual/scheduled full updates
+- **auto-update-fixed.js** - Used for manual/scheduled full updates
 
 ### Recommended Actions:
 1. Consolidate all update logic into 2-3 well-defined scripts
