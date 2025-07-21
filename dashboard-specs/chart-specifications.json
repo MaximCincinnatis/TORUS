@@ -1,0 +1,295 @@
+{
+  "version": "1.0.0",
+  "lastUpdated": "2025-07-21",
+  "charts": {
+    "max-supply-projection": {
+      "id": "max-supply-projection",
+      "type": "line",
+      "title": "Future TORUS Max Supply Projection",
+      "component": "PannableLineChart",
+      "features": {
+        "dragPan": true,
+        "zoom": true,
+        "timeframes": ["7d", "30d", "60d", "88d", "ALL"],
+        "dataLabels": false,
+        "tooltip": "unified",
+        "exportable": true
+      },
+      "data": {
+        "source": "calculateFutureMaxSupply",
+        "maxDays": 365,
+        "refreshInterval": 300000
+      },
+      "display": {
+        "height": 600,
+        "yAxisFormat": "abbreviated",
+        "xAxisLabel": "Protocol Day",
+        "yAxisLabel": "TORUS Supply"
+      },
+      "validation": {
+        "minDataPoints": 1,
+        "maxDataPoints": 365,
+        "requiredFields": ["day", "totalMaxSupply", "breakdown"]
+      }
+    },
+    "supply-projection": {
+      "id": "supply-projection",
+      "type": "line",
+      "title": "Future TORUS Supply Projection",
+      "component": "PannableLineChart",
+      "features": {
+        "dragPan": true,
+        "zoom": true,
+        "timeframes": ["7d", "30d", "60d", "88d", "ALL"],
+        "dataLabels": false,
+        "tooltip": "standard",
+        "exportable": true
+      },
+      "data": {
+        "source": "calculateSupplyProjection",
+        "maxDays": 365
+      },
+      "display": {
+        "height": 400,
+        "yAxisFormat": "abbreviated",
+        "lineColor": "#FBBF24"
+      }
+    },
+    "torus-staked-per-day": {
+      "id": "torus-staked-per-day",
+      "type": "bar",
+      "title": "TORUS Staked Per Contract Day",
+      "component": "PannableBarChart",
+      "features": {
+        "dragPan": true,
+        "zoom": true,
+        "timeframes": ["7d", "30d", "60d", "88d", "ALL"],
+        "dataLabels": true,
+        "dataLabelFormat": "abbreviated",
+        "tooltip": "standard"
+      },
+      "data": {
+        "source": "calculateTorusStakedPerDay",
+        "maxDays": 365
+      },
+      "display": {
+        "height": 400,
+        "barColor": "#22C55E"
+      },
+      "validation": {
+        "requiredFields": ["day", "amount"]
+      }
+    },
+    "stake-maturity": {
+      "id": "stake-maturity",
+      "type": "bar",
+      "title": "Stake Maturity Schedule",
+      "component": "PannableBarChart",
+      "features": {
+        "dragPan": true,
+        "zoom": true,
+        "timeframes": ["7d", "30d", "60d", "88d", "ALL"],
+        "dataLabels": true,
+        "dataLabelFormat": "full",
+        "tooltip": "standard"
+      },
+      "data": {
+        "source": "calculateStakeReleases",
+        "maxDays": 365
+      },
+      "display": {
+        "height": 400,
+        "barColor": "#EF4444"
+      }
+    },
+    "create-maturity": {
+      "id": "create-maturity",
+      "type": "bar",
+      "title": "Create Maturity Schedule",
+      "component": "PannableBarChart",
+      "features": {
+        "dragPan": true,
+        "zoom": true,
+        "timeframes": ["7d", "30d", "60d", "88d", "ALL"],
+        "dataLabels": true,
+        "dataLabelFormat": "full",
+        "tooltip": "standard"
+      },
+      "data": {
+        "source": "calculateCreateReleases",
+        "maxDays": 365
+      },
+      "display": {
+        "height": 400,
+        "barColor": "#3B82F6"
+      }
+    },
+    "torus-releases": {
+      "id": "torus-releases",
+      "type": "bar",
+      "title": "TORUS Release Amounts (Principal)",
+      "component": "PannableBarChart",
+      "features": {
+        "dragPan": true,
+        "zoom": true,
+        "timeframes": ["7d", "30d", "60d", "88d", "ALL"],
+        "dataLabels": false,
+        "tooltip": "standard"
+      },
+      "data": {
+        "source": "calculateTorusReleases",
+        "maxDays": 365
+      },
+      "display": {
+        "height": 400,
+        "barColor": "#10B981"
+      }
+    },
+    "torus-rewards": {
+      "id": "torus-rewards",
+      "type": "bar",
+      "title": "TORUS Release Schedule with Accrued Rewards",
+      "component": "PannableBarChart",
+      "features": {
+        "dragPan": true,
+        "zoom": true,
+        "timeframes": ["7d", "30d", "60d", "88d", "ALL"],
+        "dataLabels": false,
+        "tooltip": "enhanced",
+        "stackedBars": true
+      },
+      "data": {
+        "source": "calculateTorusReleasesWithRewards",
+        "maxDays": 365
+      },
+      "display": {
+        "height": 400,
+        "datasets": [
+          {
+            "label": "Principal",
+            "color": "#10B981"
+          },
+          {
+            "label": "Rewards",
+            "color": "#FBBF24"
+          }
+        ]
+      }
+    },
+    "titanx-usage": {
+      "id": "titanx-usage",
+      "type": "bar",
+      "title": "TitanX Usage by End Date",
+      "component": "PannableBarChart",
+      "features": {
+        "dragPan": true,
+        "zoom": true,
+        "timeframes": ["7d", "30d", "60d", "88d", "ALL"],
+        "dataLabels": false,
+        "tooltip": "standard"
+      },
+      "data": {
+        "source": "calculateTitanXUsage",
+        "maxDays": 365
+      },
+      "display": {
+        "height": 400,
+        "barColor": "#8B5CF6"
+      }
+    },
+    "shares-releases": {
+      "id": "shares-releases",
+      "type": "bar",
+      "title": "Shares Release Schedule",
+      "component": "PannableBarChart",
+      "features": {
+        "dragPan": true,
+        "zoom": true,
+        "timeframes": ["7d", "30d", "60d", "88d", "ALL"],
+        "dataLabels": false,
+        "tooltip": "standard"
+      },
+      "data": {
+        "source": "calculateSharesReleases",
+        "maxDays": 365
+      },
+      "display": {
+        "height": 400,
+        "barColor": "#F59E0B"
+      }
+    }
+  },
+  "components": {
+    "lp-positions-table": {
+      "id": "lp-positions-table",
+      "type": "table",
+      "title": "Uniswap V3 Liquidity Providers",
+      "component": "LPPositionsTable",
+      "requiredColumns": [
+        {
+          "field": "tokenId",
+          "header": "Token ID",
+          "sortable": true,
+          "width": "100px"
+        },
+        {
+          "field": "torusAmount",
+          "header": "TORUS Amount",
+          "format": "number",
+          "decimals": 2,
+          "sortable": true,
+          "required": true
+        },
+        {
+          "field": "titanxAmount",
+          "header": "TitanX Amount",
+          "format": "number",
+          "decimals": 2,
+          "sortable": true,
+          "required": true
+        },
+        {
+          "field": "owner",
+          "header": "Owner",
+          "format": "address",
+          "truncate": true
+        },
+        {
+          "field": "isActive",
+          "header": "Status",
+          "format": "boolean",
+          "trueLabel": "Active",
+          "falseLabel": "Inactive"
+        }
+      ],
+      "features": {
+        "sortable": true,
+        "filterable": true,
+        "exportable": true,
+        "pagination": true,
+        "pageSize": 10,
+        "searchable": true
+      },
+      "validation": {
+        "requiredFields": ["tokenId", "torusAmount", "titanxAmount", "owner"],
+        "fieldMappings": {
+          "amount0": "torusAmount",
+          "amount1": "titanxAmount"
+        },
+        "dataIntegrity": {
+          "noZeroAmounts": true,
+          "validTokenId": true,
+          "validAddress": true
+        }
+      }
+    }
+  },
+  "globalFeatures": {
+    "darkMode": false,
+    "animations": true,
+    "refreshInterval": 300000,
+    "errorHandling": "graceful",
+    "loadingStates": true,
+    "emptyStates": true
+  }
+}

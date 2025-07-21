@@ -1,0 +1,188 @@
+{
+  "version": "1.0.0",
+  "contracts": {
+    "LPPosition": {
+      "description": "Uniswap V3 liquidity position",
+      "fields": {
+        "tokenId": {
+          "type": "string",
+          "required": true,
+          "description": "NFT token ID for the position"
+        },
+        "owner": {
+          "type": "string",
+          "required": true,
+          "pattern": "^0x[a-fA-F0-9]{40}$",
+          "description": "Ethereum address of position owner"
+        },
+        "amount0": {
+          "type": "number",
+          "required": true,
+          "min": 0,
+          "description": "Raw amount of token0 (TORUS)"
+        },
+        "amount1": {
+          "type": "number",
+          "required": true,
+          "min": 0,
+          "description": "Raw amount of token1 (TitanX)"
+        },
+        "torusAmount": {
+          "type": "number",
+          "required": true,
+          "min": 0,
+          "mappedFrom": "amount0",
+          "description": "Human-readable TORUS amount"
+        },
+        "titanxAmount": {
+          "type": "number",
+          "required": true,
+          "min": 0,
+          "mappedFrom": "amount1",
+          "description": "Human-readable TitanX amount"
+        },
+        "tickLower": {
+          "type": "number",
+          "required": true,
+          "description": "Lower tick boundary"
+        },
+        "tickUpper": {
+          "type": "number",
+          "required": true,
+          "description": "Upper tick boundary"
+        },
+        "liquidity": {
+          "type": "string",
+          "required": true,
+          "description": "Position liquidity"
+        },
+        "isActive": {
+          "type": "boolean",
+          "required": true,
+          "description": "Whether position has liquidity"
+        }
+      }
+    },
+    "StakeEvent": {
+      "description": "TORUS staking event",
+      "fields": {
+        "user": {
+          "type": "string",
+          "required": true,
+          "pattern": "^0x[a-fA-F0-9]{40}$"
+        },
+        "principal": {
+          "type": "string",
+          "required": true,
+          "description": "Staked amount in wei"
+        },
+        "shares": {
+          "type": "string",
+          "required": true,
+          "description": "Shares received"
+        },
+        "stakingDays": {
+          "type": "number",
+          "required": true,
+          "min": 1,
+          "max": 365
+        },
+        "timestamp": {
+          "type": "string",
+          "required": true,
+          "description": "Unix timestamp"
+        },
+        "maturityDate": {
+          "type": "string",
+          "required": true,
+          "format": "date-time"
+        }
+      }
+    },
+    "CreateEvent": {
+      "description": "TORUS creation event",
+      "fields": {
+        "user": {
+          "type": "string",
+          "required": true,
+          "pattern": "^0x[a-fA-F0-9]{40}$"
+        },
+        "titanxAmount": {
+          "type": "string",
+          "required": true,
+          "description": "TitanX burned in wei"
+        },
+        "torusAmount": {
+          "type": "string",
+          "required": true,
+          "description": "TORUS created in wei"
+        },
+        "creationDays": {
+          "type": "number",
+          "required": true,
+          "min": 1,
+          "max": 88
+        },
+        "timestamp": {
+          "type": "string",
+          "required": true
+        },
+        "endDate": {
+          "type": "string",
+          "required": true,
+          "format": "date-time"
+        }
+      }
+    },
+    "RewardPoolData": {
+      "description": "Daily reward pool information",
+      "fields": {
+        "day": {
+          "type": "number",
+          "required": true,
+          "min": 1
+        },
+        "rewardPool": {
+          "type": "string",
+          "required": true,
+          "description": "Reward pool size in wei"
+        },
+        "penaltiesInPool": {
+          "type": "string",
+          "required": true,
+          "description": "Penalties added to pool in wei"
+        },
+        "totalShares": {
+          "type": "string",
+          "required": true,
+          "description": "Total shares for the day"
+        }
+      }
+    },
+    "ChartDataPoint": {
+      "description": "Generic chart data point",
+      "fields": {
+        "date": {
+          "type": "string",
+          "required": true,
+          "format": "date"
+        },
+        "value": {
+          "type": "number",
+          "required": true
+        },
+        "label": {
+          "type": "string",
+          "required": false
+        }
+      }
+    }
+  },
+  "validationRules": {
+    "strictMode": true,
+    "allowExtraFields": false,
+    "coerceTypes": false,
+    "validateOnWrite": true,
+    "validateOnRead": true
+  }
+}

@@ -1,0 +1,69 @@
+{
+  "version": "1.0.0",
+  "environment": "production",
+  "features": {
+    "enhanced-lp-positions": {
+      "enabled": true,
+      "rollout": "100%",
+      "description": "Show torusAmount and titanxAmount in LP positions table",
+      "requiredFields": ["torusAmount", "titanxAmount"],
+      "createdAt": "2025-07-21",
+      "owner": "dashboard-team"
+    },
+    "chart-data-labels": {
+      "enabled": true,
+      "rollout": "100%",
+      "description": "Display data labels on bar charts",
+      "affectedCharts": ["torus-staked-per-day", "stake-maturity", "create-maturity"],
+      "createdAt": "2025-07-21"
+    },
+    "extended-timeframes": {
+      "enabled": true,
+      "rollout": "100%",
+      "description": "Support for 365-day data window with panning",
+      "configuration": {
+        "maxChartDays": 365,
+        "defaultTimeframe": "88d"
+      },
+      "createdAt": "2025-07-21"
+    },
+    "drag-pan-all-charts": {
+      "enabled": true,
+      "rollout": "100%",
+      "description": "Enable drag and pan functionality on all charts",
+      "createdAt": "2025-07-21"
+    },
+    "unified-tooltips": {
+      "enabled": false,
+      "rollout": "0%",
+      "description": "New unified tooltip design for all charts",
+      "targetRelease": "1.2.0"
+    },
+    "dark-mode": {
+      "enabled": false,
+      "rollout": "0%",
+      "description": "Dark mode theme support",
+      "targetRelease": "1.3.0"
+    },
+    "export-charts": {
+      "enabled": false,
+      "rollout": "0%",
+      "description": "Export charts as PNG/SVG",
+      "targetRelease": "1.2.0"
+    }
+  },
+  "rolloutStrategies": {
+    "percentage": {
+      "description": "Roll out to percentage of users",
+      "implementation": "random"
+    },
+    "targeted": {
+      "description": "Roll out to specific users or groups",
+      "implementation": "user-list"
+    },
+    "gradual": {
+      "description": "Increase percentage over time",
+      "implementation": "time-based"
+    }
+  }
+}

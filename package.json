@@ -31,7 +31,10 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "validate:specs": "node scripts/validate-specifications.js",
+    "docs:generate": "node scripts/generate-chart-docs.js",
+    "specs:check": "npm run validate:specs && npm run docs:generate"
   },
   "eslintConfig": {
     "extends": [
