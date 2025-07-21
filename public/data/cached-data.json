@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2025-07-21T20:50:08.807Z",
+  "lastUpdated": "2025-07-21T21:00:07.628Z",
   "version": "1.0.0",
   "poolData": {
     "sqrtPriceX96": "492927870749868570328715596929825",
@@ -20063,6 +20063,31 @@
         "costTitanX": "0",
         "rawCostETH": "0",
         "rawCostTitanX": "0"
+      },
+      {
+        "user": "0x241c7809e31ae711805feb8082a926c708be13d2",
+        "owner": "0x241c7809e31ae711805feb8082a926c708be13d2",
+        "createId": "5",
+        "torusAmount": "148683998634759775850",
+        "principal": "148683998634759775850",
+        "timestamp": 1753131203,
+        "endTime": 1760734403,
+        "blockNumber": 22970076,
+        "id": "5",
+        "createDays": 88,
+        "stakingDays": 88,
+        "maturityDate": "2025-10-17T20:53:23.000Z",
+        "startDate": "2025-07-21T20:53:23.000Z",
+        "titanXAmount": "0",
+        "ethAmount": "0",
+        "shares": "0",
+        "power": "0",
+        "claimedCreate": false,
+        "claimedStake": false,
+        "costETH": "0",
+        "costTitanX": "0",
+        "rawCostETH": "0",
+        "rawCostTitanX": "0"
       }
     ],
     "rewardPoolData": [
@@ -20672,18 +20697,18 @@
     "burnedSupply": 0,
     "lastUpdated": "2025-07-16T19:25:33.217Z",
     "metadata": {
-      "currentBlock": 22969612,
+      "currentBlock": 22970106,
       "lastUpdate": "2025-07-16T19:14:31.015Z",
       "stakesRefreshed": "2025-07-16T18:54:18.007Z",
       "dailySupplySnapshot": {
         "day": 8,
         "totalSupply": 19058.768275341605,
         "burnedSupply": 0,
-        "timestamp": "2025-07-21T20:50:05.701Z"
+        "timestamp": "2025-07-21T21:00:03.893Z"
       },
       "lastCreateBlock": 22969998
     },
-    "lastBlock": 22969612
+    "lastBlock": 22970106
   },
   "contractData": {
     "torusToken": {
@@ -21813,6 +21838,6 @@
     }
   ],
   "totalSupply": 19058.768275341605,
-  "totalTitanXBurnt": "136467684425853759248326974238",
+  "totalTitanXBurnt": "136532334425853759248326974238",
   "titanxTotalSupply": "105680961536644260394595457446228"
 }
