@@ -18,7 +18,7 @@ import { updateDailySnapshot } from './utils/historicalSupplyTracker';
 import './App.css';
 
 // Contract launch date - Day 1 (corrected to align with protocol days)
-const CONTRACT_START_DATE = new Date('2024-04-11');
+const CONTRACT_START_DATE = new Date('2025-07-11');
 CONTRACT_START_DATE.setHours(0, 0, 0, 0);
 
 // Maximum days to calculate for all charts (for panning capability)
@@ -1532,7 +1532,7 @@ function App() {
           showDataLabels={true}
         />
         <div className="chart-note">
-          Shows the total amount of TORUS staked each contract day over the last {torusStakedDays} days. This represents the cumulative principal amounts from all stakes created on each specific day. Contract days start from Day 1 (April 11, 2024) when the TORUS protocol launched.
+          Shows the total amount of TORUS staked each contract day over the last {torusStakedDays} days. This represents the cumulative principal amounts from all stakes created on each specific day. Contract days start from Day 1 (July 11, 2025) when the TORUS protocol launched.
         </div>
       </ExpandableChartSection>
 
