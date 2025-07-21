@@ -581,7 +581,7 @@ async function performSmartUpdate(provider, updateLog, currentBlock, blocksSince
         
         const contractABI = [
           'event Staked(address indexed user, uint256 stakeIndex, uint256 principal, uint256 stakingDays, uint256 shares)',
-          'event Created(address indexed user, uint256 indexed createId, uint256 amount, uint256 shares, uint16 indexed duration, uint256 rewardDay, uint256 timestamp, address referrer)'
+          'event Created(address indexed user, uint256 stakeIndex, uint256 torusAmount, uint256 endTime)'
         ];
         
         const contract = new ethers.Contract(CONTRACTS.TORUS_CREATE_STAKE, contractABI, provider);
@@ -660,25 +660,29 @@ async function performSmartUpdate(provider, updateLog, currentBlock, blocksSince
           
           const processedCreates = newCreateEvents.map(event => {
             const blockTimestamp = blockTimestamps.get(event.blockNumber) || Math.floor(Date.now() / 1000);
-            const duration = parseInt(event.args.duration.toString());
-            const maturityTimestamp = blockTimestamp + (duration * 86400);
+            const endTime = parseInt(event.args.endTime.toString());
+            // Calculate duration from start to end time
+            const duration = Math.round((endTime - blockTimestamp) / 86400);
             
             return {
-              user: event.args.user,
-              createId: event.args.createId.toString(),
-              principal: event.args.amount.toString(),
-              shares: event.args.shares.toString(),
-              duration: event.args.duration.toString(),
-              rewardDay: event.args.rewardDay.toString(),
-              timestamp: blockTimestamp.toString(),
-              referrer: event.args.referrer,
+              user: event.args.user.toLowerCase(),
+              owner: event.args.user.toLowerCase(),
+              createId: event.args.stakeIndex.toString(),
+              torusAmount: event.args.torusAmount.toString(),
+              principal: event.args.torusAmount.toString(), // For compatibility
+              timestamp: blockTimestamp,
+              endTime: endTime,
               blockNumber: event.blockNumber,
               // Add calculated fields
-              id: event.args.createId.toString(),
-              stakingDays: duration,
-              maturityDate: new Date(maturityTimestamp * 1000).toISOString(),
+              id: event.args.stakeIndex.toString(),
+              createDays: duration,
+              stakingDays: duration, // For compatibility
+              maturityDate: new Date(endTime * 1000).toISOString(),
               startDate: new Date(blockTimestamp * 1000).toISOString(),
-              // Add placeholders for missing fields
+              // Add required fields with defaults
+              titanXAmount: "0",
+              ethAmount: "0",
+              shares: "0",
               power: "0",
               claimedCreate: false,
               claimedStake: false,
