@@ -741,10 +741,21 @@ async function performSmartUpdate(provider, updateLog, currentBlock, blocksSince
       updateStats.errors.push(`Price update: ${e.message}`);
     }
     
-    // 7. Update timestamp
+    // 7. Update Buy & Process data
+    log('Updating Buy & Process data...', 'cyan');
+    try {
+      execSync('node scripts/update-buy-process-data.js', { stdio: 'inherit' });
+      updateStats.dataChanged = true;
+      log('Buy & Process data updated', 'green');
+    } catch (e) {
+      updateStats.errors.push(`Buy & Process update: ${e.message}`);
+      log(`Failed to update Buy & Process data: ${e.message}`, 'yellow');
+    }
+    
+    // 8. Update timestamp
     cachedData.lastUpdated = new Date().toISOString();
     
-    // 8. Check if we need more comprehensive updates
+    // 9. Check if we need more comprehensive updates
     const needsFullUpdate = lpUpdateResult.stats.newPositions > 5 || updateStats.errors.length > 3;
     
     if (needsFullUpdate) {

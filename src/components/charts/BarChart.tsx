@@ -31,6 +31,7 @@ interface BarChartProps {
     data: number[];
     backgroundColor?: string;
     borderColor?: string;
+    yAxisID?: string;
   }[];
   height?: number;
   stacked?: boolean;

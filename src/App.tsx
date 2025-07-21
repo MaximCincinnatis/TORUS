@@ -76,6 +76,7 @@ function App() {
   const [contractInfo, setContractInfo] = useState<any>(null);
   const [cachedTitanXData, setCachedTitanXData] = useState<{totalTitanXBurnt?: string, titanxTotalSupply?: string}>({});
   const [lastUpdatedTime, setLastUpdatedTime] = useState<string | null>(null);
+  const [buyProcessData, setBuyProcessData] = useState<any>(null);
   
   // Date range states for charts
   const [stakeMaturityDays, setStakeMaturityDays] = useState<number>(88);
@@ -113,6 +114,24 @@ function App() {
       }
     };
     loadCachedTitanXData();
+  }, []);
+
+  // Load Buy & Process data
+  useEffect(() => {
+    const loadBuyProcessData = async () => {
+      try {
+        const response = await fetch(`/data/buy-process-data.json?t=${Date.now()}`, { cache: 'no-cache' });
+        const data = await response.json();
+        console.log('💰 Buy & Process Data Loaded:', {
+          totalTorusBurnt: data.totals?.torusBurnt,
+          dailyDataCount: data.dailyData?.length
+        });
+        setBuyProcessData(data);
+      } catch (error) {
+        console.error('Error loading Buy & Process data:', error);
+      }
+    };
+    loadBuyProcessData();
   }, []);
 
   const loadLPPositions = async () => {
@@ -834,6 +853,50 @@ function App() {
       }));
   };
 
+  // Calculate Buy & Process charts data
+  const calculateDailyTorusBurned = (): { date: string; amount: number }[] => {
+    if (!buyProcessData?.dailyData) return [];
+    
+    // Get all daily data sorted by date
+    return buyProcessData.dailyData.map((day: any) => ({
+      date: day.date,
+      amount: day.torusBurned
+    }));
+  };
+
+  const calculateCumulativeTorusBurned = (): { date: string; amount: number }[] => {
+    if (!buyProcessData?.dailyData) return [];
+    
+    let cumulative = 0;
+    return buyProcessData.dailyData.map((day: any) => {
+      cumulative += day.torusBurned;
+      return {
+        date: day.date,
+        amount: cumulative
+      };
+    });
+  };
+
+  const calculateBuyBurnActivity = (): { date: string; buyAndBurn: number; buyAndBuild: number }[] => {
+    if (!buyProcessData?.dailyData) return [];
+    
+    return buyProcessData.dailyData.map((day: any) => ({
+      date: day.date,
+      buyAndBurn: day.buyAndBurnCount,
+      buyAndBuild: day.buyAndBuildCount
+    }));
+  };
+
+  const calculateTitanXEthUsage = (): { date: string; titanX: number; eth: number }[] => {
+    if (!buyProcessData?.dailyData) return [];
+    
+    return buyProcessData.dailyData.map((day: any) => ({
+      date: day.date,
+      titanX: day.titanXUsed,
+      eth: day.ethUsed
+    }));
+  };
+
   // Only calculate if data is loaded
   const stakeReleases = loading || (stakeData.length === 0 && createData.length === 0) ? [] : calculateStakeReleases();
   const createReleases = loading || (stakeData.length === 0 && createData.length === 0) ? [] : calculateCreateReleases();
@@ -843,6 +906,12 @@ function App() {
   
   // Move sharesReleases calculation AFTER createReleases
   const sharesReleases = loading || (stakeData.length === 0 && createData.length === 0) ? [] : calculateSharesReleases();
+  
+  // Calculate Buy & Process data
+  const dailyTorusBurned = !buyProcessData ? [] : calculateDailyTorusBurned();
+  const cumulativeTorusBurned = !buyProcessData ? [] : calculateCumulativeTorusBurned();
+  const buyBurnActivity = !buyProcessData ? [] : calculateBuyBurnActivity();
+  const titanXEthUsage = !buyProcessData ? [] : calculateTitanXEthUsage();
   
   // Calculate TORUS releases with rewards
   console.log('Checking conditions for torusReleasesWithRewards calculation:', {
@@ -1662,66 +1731,6 @@ function App() {
         </div>
       </ExpandableChartSection>
 
-      <ExpandableChartSection
-        id="torus-releases"
-        title={<><span className="torus-text">TORUS</span> Release Amounts Principal</>}
-        subtitle="Principal amounts releasing daily"
-        keyMetrics={[
-          {
-            label: "Total Principal",
-            value: `${torusReleases.slice(0, torusReleasesDays).reduce((sum, r) => sum + r.amount, 0).toLocaleString('en-US', { maximumFractionDigits: 0 })} TORUS`,
-            trend: "up"
-          },
-          {
-            label: "Peak Day",
-            value: torusReleases.slice(0, torusReleasesDays).length > 0 ? 
-              `${Math.max(...torusReleases.slice(0, torusReleasesDays).map(r => r.amount)).toLocaleString('en-US', { maximumFractionDigits: 0 })} TORUS` : 
-              "0",
-            trend: "up"
-          },
-          {
-            label: "Days with Releases",
-            value: torusReleases.slice(0, torusReleasesDays).filter(r => r.amount > 0).length,
-            trend: "neutral"
-          },
-          {
-            label: "Avg Daily",
-            value: torusReleases.slice(0, torusReleasesDays).length > 0 ? 
-              `${(torusReleases.slice(0, torusReleasesDays).reduce((sum, r) => sum + r.amount, 0) / torusReleases.slice(0, torusReleasesDays).filter(r => r.amount > 0).length).toLocaleString('en-US', { maximumFractionDigits: 0 })} TORUS` : 
-              "0",
-            trend: "neutral"
-          }
-        ]}
-
-        loading={loading}
-
-      >
-        <DateRangeButtons 
-          selectedDays={torusReleasesDays}
-          onDaysChange={setTorusReleasesDays}
-        />
-        <PannableBarChart
-          key="torus-releases-chart"
-          title="Total TORUS Principal Amount Releasing Each Day"
-          labels={torusReleases.map(r => {
-            const date = new Date(r.date);
-            const contractDay = getContractDay(date);
-            return [`${r.date.substring(5)}`, `Day ${contractDay}`];
-          })}
-          datasets={[
-            {
-              label: 'TORUS Amount',
-              data: torusReleases.map(r => Math.round(r.amount * 100) / 100),
-              backgroundColor: '#8b5cf6',
-            },
-          ]}
-          height={600}
-          yAxisLabel="TORUS Amount"
-          xAxisLabel="Date / Contract Day"
-          enableScaleToggle={true}
-          windowSize={torusReleasesDays}
-        />
-      </ExpandableChartSection>
 
       <ExpandableChartSection
         id="torus-rewards"
@@ -1958,6 +1967,240 @@ function App() {
         />
         <div className="chart-note">
           Shows the total shares ending each day over the next {sharesReleasesDays} days. Shares represent the user's proportion of the reward pool and are earned from both stakes and creates. When positions mature, these shares are released and converted to TORUS rewards based on the current share-to-TORUS ratio.
+        </div>
+      </ExpandableChartSection>
+
+      {/* Buy & Process Charts Section */}
+      <ExpandableChartSection
+        id="daily-torus-burned"
+        title={<>Daily <span className="torus-text">TORUS</span> Burned</>}
+        subtitle="TORUS burned through Buy & Burn operations"
+        keyMetrics={[
+          {
+            label: "Total Burned",
+            value: buyProcessData ? `${parseFloat(buyProcessData.totals.torusBurnt).toLocaleString('en-US', { maximumFractionDigits: 0 })} TORUS` : "0 TORUS",
+            trend: "up"
+          },
+          {
+            label: "Avg Daily Burn",
+            value: dailyTorusBurned.length > 0 ? 
+              `${(dailyTorusBurned.reduce((sum, d) => sum + d.amount, 0) / dailyTorusBurned.length).toFixed(2)} TORUS` : 
+              "0 TORUS",
+            trend: "neutral"
+          },
+          {
+            label: "Days Active",
+            value: dailyTorusBurned.filter(d => d.amount > 0).length,
+            trend: "up"
+          },
+          {
+            label: "Peak Burn Day",
+            value: dailyTorusBurned.length > 0 ? 
+              `${Math.max(...dailyTorusBurned.map(d => d.amount)).toFixed(2)} TORUS` : 
+              "0 TORUS",
+            trend: "up"
+          }
+        ]}
+        loading={!buyProcessData}
+      >
+        <PannableBarChart
+          key="daily-torus-burned-chart"
+          title="TORUS Burned Per Day"
+          labels={dailyTorusBurned.map(d => {
+            const date = new Date(d.date);
+            const contractDay = getContractDay(date);
+            return [`${d.date.substring(5)}`, `Day ${contractDay}`];
+          })}
+          datasets={[
+            {
+              label: 'TORUS Burned',
+              data: dailyTorusBurned.map(d => d.amount),
+              backgroundColor: '#dc2626',
+            },
+          ]}
+          height={600}
+          yAxisLabel="TORUS Burned"
+          xAxisLabel="Date / Contract Day"
+          windowSize={88}
+          showDataLabels={true}
+          formatTooltip={(value: number) => `${value.toFixed(2)} TORUS burned`}
+        />
+        <div className="chart-note">
+          Shows daily TORUS burned through the Buy & Burn mechanism. Each bar represents the total amount of TORUS permanently removed from circulation on that day.
+        </div>
+      </ExpandableChartSection>
+
+      <ExpandableChartSection
+        id="cumulative-torus-burned"
+        title={<>Cumulative <span className="torus-text">TORUS</span> Burned</>}
+        subtitle="Total TORUS burned over time"
+        keyMetrics={[
+          {
+            label: "Total Burned",
+            value: buyProcessData ? `${parseFloat(buyProcessData.totals.torusBurnt).toLocaleString('en-US', { maximumFractionDigits: 0 })} TORUS` : "0 TORUS",
+            trend: "up"
+          },
+          {
+            label: "Burn Rate",
+            value: cumulativeTorusBurned.length > 1 ? 
+              `${((cumulativeTorusBurned[cumulativeTorusBurned.length - 1].amount - cumulativeTorusBurned[cumulativeTorusBurned.length - 2].amount)).toFixed(2)} TORUS/day` : 
+              "0 TORUS/day",
+            trend: "up"
+          },
+          {
+            label: "Total Operations",
+            value: buyProcessData ? buyProcessData.eventCounts.buyAndBurn : 0,
+            trend: "up"
+          }
+        ]}
+        loading={!buyProcessData}
+      >
+        <PannableLineChart
+          key="cumulative-torus-burned-chart"
+          title="Cumulative TORUS Burned"
+          labels={cumulativeTorusBurned.map(d => d.date.substring(5))}
+          datasets={[
+            {
+              label: 'Total TORUS Burned',
+              data: cumulativeTorusBurned.map(d => d.amount),
+              borderColor: '#dc2626',
+              backgroundColor: 'rgba(220, 38, 38, 0.1)',
+              fill: true,
+            },
+          ]}
+          height={600}
+          yAxisLabel="Total TORUS Burned"
+          xAxisLabel="Date"
+          windowSize={88}
+          formatTooltip={(value: number) => `${value.toFixed(2)} TORUS total`}
+        />
+        <div className="chart-note">
+          Shows the cumulative total of TORUS burned over time. The upward slope indicates the rate of TORUS being permanently removed from circulation.
+        </div>
+      </ExpandableChartSection>
+
+      <ExpandableChartSection
+        id="buy-burn-activity"
+        title="Buy & Burn/Build Activity"
+        subtitle="Daily operations count"
+        keyMetrics={[
+          {
+            label: "Total Buy & Burn",
+            value: buyProcessData ? buyProcessData.eventCounts.buyAndBurn : 0,
+            trend: "up"
+          },
+          {
+            label: "Total Buy & Build",
+            value: buyProcessData ? buyProcessData.eventCounts.buyAndBuild : 0,
+            trend: "up"
+          },
+          {
+            label: "Most Active Day",
+            value: buyBurnActivity.length > 0 ? 
+              Math.max(...buyBurnActivity.map(d => d.buyAndBurn + d.buyAndBuild)) : 
+              0,
+            trend: "up"
+          }
+        ]}
+        loading={!buyProcessData}
+      >
+        <PannableBarChart
+          key="buy-burn-activity-chart"
+          title="Daily Buy & Burn/Build Operations"
+          labels={buyBurnActivity.map(d => {
+            const date = new Date(d.date);
+            const contractDay = getContractDay(date);
+            return [`${d.date.substring(5)}`, `Day ${contractDay}`];
+          })}
+          datasets={[
+            {
+              label: 'Buy & Burn',
+              data: buyBurnActivity.map(d => d.buyAndBurn),
+              backgroundColor: '#dc2626',
+            },
+            {
+              label: 'Buy & Build',
+              data: buyBurnActivity.map(d => d.buyAndBuild),
+              backgroundColor: '#3b82f6',
+            },
+          ]}
+          height={600}
+          yAxisLabel="Number of Operations"
+          xAxisLabel="Date / Contract Day"
+          windowSize={88}
+          showDataLabels={true}
+          stacked={false}
+        />
+        <div className="chart-note">
+          Shows the daily count of Buy & Burn (red) and Buy & Build (blue) operations. Buy & Burn permanently removes TORUS from circulation, while Buy & Build purchases TORUS for protocol development.
+        </div>
+      </ExpandableChartSection>
+
+      <ExpandableChartSection
+        id="titanx-eth-usage"
+        title="TitanX/ETH Usage for Burns"
+        subtitle="Resources used in Buy & Burn operations"
+        keyMetrics={[
+          {
+            label: "Total TitanX Used",
+            value: buyProcessData ? 
+              `${(parseFloat(buyProcessData.totals.titanXUsedForBurns) / 1e9).toFixed(2)}B TitanX` : 
+              "0 TitanX",
+            trend: "up"
+          },
+          {
+            label: "Total ETH Used",
+            value: buyProcessData ? 
+              `${parseFloat(buyProcessData.totals.ethUsedForBurns).toFixed(4)} ETH` : 
+              "0 ETH",
+            trend: "up"
+          },
+          {
+            label: "Primary Currency",
+            value: titanXEthUsage.reduce((sum, d) => sum + d.titanX, 0) > 0 ? "TitanX" : "ETH",
+            trend: "neutral"
+          }
+        ]}
+        loading={!buyProcessData}
+      >
+        <PannableBarChart
+          key="titanx-eth-usage-chart"
+          title="Daily TitanX/ETH Used for Burns"
+          labels={titanXEthUsage.map(d => {
+            const date = new Date(d.date);
+            const contractDay = getContractDay(date);
+            return [`${d.date.substring(5)}`, `Day ${contractDay}`];
+          })}
+          datasets={[
+            {
+              label: 'TitanX Used',
+              data: titanXEthUsage.map(d => d.titanX / 1e9), // Show in billions
+              backgroundColor: '#f59e0b',
+              yAxisID: 'y',
+            },
+            {
+              label: 'ETH Used',
+              data: titanXEthUsage.map(d => d.eth),
+              backgroundColor: '#6366f1',
+              yAxisID: 'y1',
+            },
+          ]}
+          height={600}
+          yAxisLabel="TitanX (Billions)"
+          xAxisLabel="Date / Contract Day"
+          windowSize={88}
+          showDataLabels={false}
+          formatTooltip={(value: number, datasetIndex?: number) => {
+            if (datasetIndex === 0) {
+              return `${value.toFixed(2)}B TitanX`;
+            } else {
+              return `${value.toFixed(4)} ETH`;
+            }
+          }}
+          multipleYAxes={true}
+        />
+        <div className="chart-note">
+          Shows the daily amount of TitanX (orange, left axis in billions) and ETH (purple, right axis) used to purchase and burn TORUS. Most operations use TitanX as the primary currency.
         </div>
       </ExpandableChartSection>
 

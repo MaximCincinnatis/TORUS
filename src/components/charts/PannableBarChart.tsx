@@ -33,18 +33,20 @@ interface PannableBarChartProps {
     backgroundColor?: string;
     borderColor?: string;
     borderWidth?: number;
+    yAxisID?: string;
   }[];
   height?: number;
   yAxisLabel?: string;
   xAxisLabel?: string;
   stacked?: boolean;
   showLegend?: boolean;
-  formatTooltip?: (value: number) => string;
+  formatTooltip?: (value: number, datasetIndex?: number) => string;
   formatYAxis?: (value: number) => string;
   enableScaleToggle?: boolean;
   minBarHeight?: number;
   windowSize?: number;
   showDataLabels?: boolean;
+  multipleYAxes?: boolean;
 }
 
 const PannableBarChart: React.FC<PannableBarChartProps> = ({
@@ -62,6 +64,7 @@ const PannableBarChart: React.FC<PannableBarChartProps> = ({
   minBarHeight = 1,
   windowSize = 30,
   showDataLabels = false,
+  multipleYAxes = false,
 }) => {
   const chartRef = useRef<ChartJSOrUndefined<'bar'>>(null);
   const [startIndex, setStartIndex] = useState(0);
@@ -208,13 +211,50 @@ const PannableBarChart: React.FC<PannableBarChartProps> = ({
             if (value === undefined || value === null || isNaN(value)) {
               return `${context.dataset.label}: 0`;
             }
-            const formattedValue = formatTooltip ? formatTooltip(value) : value.toLocaleString();
+            const formattedValue = formatTooltip ? formatTooltip(value, context.datasetIndex) : value.toLocaleString();
             return `${context.dataset.label}: ${formattedValue}`;
           },
         },
       },
     },
-    scales: {
+    scales: multipleYAxes ? {
+      x: {
+        stacked,
+        title: {
+          display: !!xAxisLabel,
+          text: xAxisLabel,
+        },
+        grid: {
+          display: true,
+          color: 'rgba(255, 255, 255, 0.1)',
+        },
+      },
+      y: {
+        type: 'linear' as const,
+        display: true,
+        position: 'left' as const,
+        title: {
+          display: true,
+          text: 'TitanX (Billions)',
+        },
+        grid: {
+          display: true,
+          color: 'rgba(255, 255, 255, 0.1)',
+        },
+      },
+      y1: {
+        type: 'linear' as const,
+        display: true,
+        position: 'right' as const,
+        title: {
+          display: true,
+          text: 'ETH',
+        },
+        grid: {
+          drawOnChartArea: false,
+        },
+      },
+    } : {
       x: {
         stacked,
         title: {
