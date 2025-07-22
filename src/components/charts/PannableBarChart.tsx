@@ -13,6 +13,7 @@ import {
 import ChartDataLabels from 'chartjs-plugin-datalabels';
 import { Bar } from 'react-chartjs-2';
 import type { ChartJSOrUndefined } from 'react-chartjs-2/dist/types';
+import { gradientPlugin } from '../../utils/chartGradients';
 
 ChartJS.register(
   CategoryScale,
@@ -21,7 +22,8 @@ ChartJS.register(
   BarElement,
   Title,
   Tooltip,
-  Legend
+  Legend,
+  gradientPlugin
 );
 
 interface PannableBarChartProps {
@@ -88,7 +90,8 @@ const PannableBarChart: React.FC<PannableBarChartProps> = ({
     ...dataset,
     data: dataset.data.slice(startIndex, endIndex).map(val => 
       isLogScale && val === 0 ? minBarHeight : val
-    )
+    ),
+    yAxisID: dataset.yAxisID // Explicitly preserve yAxisID
   }));
 
   // Calculate max index for bounds checking
@@ -241,6 +244,7 @@ const PannableBarChart: React.FC<PannableBarChartProps> = ({
           display: true,
           color: 'rgba(255, 255, 255, 0.1)',
         },
+        beginAtZero: true,
       },
       y1: {
         type: 'linear' as const,
@@ -253,6 +257,7 @@ const PannableBarChart: React.FC<PannableBarChartProps> = ({
         grid: {
           drawOnChartArea: false,
         },
+        beginAtZero: true,
       },
     } : {
       x: {
@@ -332,6 +337,25 @@ const PannableBarChart: React.FC<PannableBarChartProps> = ({
     labels: visibleLabels,
     datasets: visibleDatasets,
   };
+  
+  // Debug: Log data for charts with multiple y-axes
+  if (multipleYAxes && visibleDatasets.length > 1) {
+    console.log('Multiple Y-Axes Chart Data:', {
+      datasetsCount: visibleDatasets.length,
+      dataset0: { 
+        label: visibleDatasets[0].label, 
+        yAxisID: visibleDatasets[0].yAxisID,
+        dataLength: visibleDatasets[0].data.length,
+        firstValues: visibleDatasets[0].data.slice(0, 5)
+      },
+      dataset1: { 
+        label: visibleDatasets[1].label, 
+        yAxisID: visibleDatasets[1].yAxisID,
+        dataLength: visibleDatasets[1].data.length,
+        firstValues: visibleDatasets[1].data.slice(0, 5)
+      }
+    });
+  }
 
   const navButtonStyle: React.CSSProperties = {
     padding: '4px 8px',
@@ -354,7 +378,6 @@ const PannableBarChart: React.FC<PannableBarChartProps> = ({
     <div style={{ position: 'relative' }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-          <h3 className="text-sm font-medium text-gray-300 mb-2">{title}</h3>
           {labels.length > currentWindowSize && (
             <span style={{ 
               fontSize: '11px', 

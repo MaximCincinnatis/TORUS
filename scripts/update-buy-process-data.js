@@ -8,6 +8,7 @@
 const { ethers } = require('ethers');
 const fs = require('fs');
 const path = require('path');
+// ETH tracking now done directly from events (BuyAndBuild.tokenAllocated)
 
 // RPC endpoints
 const RPC_ENDPOINTS = [
@@ -129,6 +130,10 @@ async function updateBuyProcessData() {
           torusBurned: 0,
           titanXUsed: 0,
           ethUsed: 0,
+          titanXUsedForBurns: 0,
+          ethUsedForBurns: 0,
+          titanXUsedForBuilds: 0,
+          ethUsedForBuilds: 0,
           torusPurchased: 0,
           fractalTitanX: 0,
           fractalETH: 0
@@ -137,11 +142,15 @@ async function updateBuyProcessData() {
       
       newDailyData[dateKey].buyAndBurnCount++;
       newDailyData[dateKey].torusBurned += parseFloat(ethers.utils.formatEther(event.args.torusBurnt));
-      newDailyData[dateKey].titanXUsed += parseFloat(ethers.utils.formatEther(event.args.titanXAmount));
+      const titanXAmount = parseFloat(ethers.utils.formatEther(event.args.titanXAmount));
+      newDailyData[dateKey].titanXUsed += titanXAmount;
+      newDailyData[dateKey].titanXUsedForBurns += titanXAmount;
     });
     
     // Process new Buy & Build events
-    newBuyAndBuildEvents.forEach(event => {
+    // Need to fetch transactions to determine if tokenAllocated is ETH or TitanX
+    console.log('Processing Buy & Build events...');
+    for (const event of newBuyAndBuildEvents) {
       const timestamp = blockTimestamps.get(event.blockNumber);
       const date = new Date(timestamp * 1000);
       const dateKey = date.toISOString().split('T')[0];
@@ -155,6 +164,10 @@ async function updateBuyProcessData() {
           torusBurned: 0,
           titanXUsed: 0,
           ethUsed: 0,
+          titanXUsedForBurns: 0,
+          ethUsedForBurns: 0,
+          titanXUsedForBuilds: 0,
+          ethUsedForBuilds: 0,
           torusPurchased: 0,
           fractalTitanX: 0,
           fractalETH: 0
@@ -163,7 +176,32 @@ async function updateBuyProcessData() {
       
       newDailyData[dateKey].buyAndBuildCount++;
       newDailyData[dateKey].torusPurchased += parseFloat(ethers.utils.formatEther(event.args.torusPurchased));
-    });
+      
+      // Get transaction to determine if it's ETH or TitanX
+      try {
+        const tx = await provider.getTransaction(event.transactionHash);
+        const functionSelector = tx.data.slice(0, 10);
+        
+        // Function selectors (CORRECTED):
+        // swapETHForTorusAndBuild: 0x53ad9b96
+        // swapTitanXForTorusAndBuild: 0xfc9b61ae
+        const amount = parseFloat(ethers.utils.formatEther(event.args.tokenAllocated));
+        
+        if (functionSelector === '0x53ad9b96') {
+          // ETH build
+          newDailyData[dateKey].ethUsed += amount;
+          newDailyData[dateKey].ethUsedForBuilds += amount;
+        } else if (functionSelector === '0xfc9b61ae') {
+          // TitanX build
+          newDailyData[dateKey].titanXUsed += amount;
+          newDailyData[dateKey].titanXUsedForBuilds += amount;
+        } else {
+          console.warn(`Unknown function selector for BuyAndBuild: ${functionSelector}`);
+        }
+      } catch (error) {
+        console.error(`Error fetching transaction ${event.transactionHash}:`, error);
+      }
+    }
     
     // Process new Fractal events
     newFractalEvents.forEach(event => {
@@ -180,6 +218,10 @@ async function updateBuyProcessData() {
           torusBurned: 0,
           titanXUsed: 0,
           ethUsed: 0,
+          titanXUsedForBurns: 0,
+          ethUsedForBurns: 0,
+          titanXUsedForBuilds: 0,
+          ethUsedForBuilds: 0,
           torusPurchased: 0,
           fractalTitanX: 0,
           fractalETH: 0
@@ -210,10 +252,14 @@ async function updateBuyProcessData() {
           fractalCount: existing.fractalCount + data.fractalCount,
           torusBurned: existing.torusBurned + data.torusBurned,
           titanXUsed: existing.titanXUsed + data.titanXUsed,
-          ethUsed: existing.ethUsed + data.ethUsed,
+          ethUsed: existing.ethUsed + data.ethUsed,  // ETH from BuyAndBuild events
+          titanXUsedForBurns: (existing.titanXUsedForBurns || 0) + (data.titanXUsedForBurns || 0),
+          ethUsedForBurns: (existing.ethUsedForBurns || 0) + (data.ethUsedForBurns || 0),
+          titanXUsedForBuilds: (existing.titanXUsedForBuilds || 0) + (data.titanXUsedForBuilds || 0),
+          ethUsedForBuilds: (existing.ethUsedForBuilds || 0) + (data.ethUsedForBuilds || 0),
           torusPurchased: existing.torusPurchased + data.torusPurchased,
           fractalTitanX: existing.fractalTitanX + data.fractalTitanX,
-          fractalETH: existing.fractalETH + data.fractalETH
+          fractalETH: existing.fractalETH + data.fractalETH  // ETH from Fractal events
         });
       } else {
         dailyDataMap.set(date, data);
@@ -223,7 +269,7 @@ async function updateBuyProcessData() {
     // Convert back to array and sort
     mergedDailyData = Array.from(dailyDataMap.values()).sort((a, b) => a.date.localeCompare(b.date));
     
-    // Get updated totals from contract
+    // Get updated totals from contract first (needed for ETH estimation)
     const [
       totalTorusBurnt,
       totalTitanXBurnt,
@@ -238,11 +284,19 @@ async function updateBuyProcessData() {
       contract.ethUsedForBurns()
     ]);
     
+    // Note: ETH tracking is now done directly from events
+    // - BuyAndBuild events include ETH in tokenAllocated parameter
+    // - FractalFundsReleased events include ETH amounts
+    // - BuyAndBurn events don't include ETH directly, handled separately
+    
     // Update event counts
     const eventCounts = existingData?.eventCounts || { buyAndBurn: 0, buyAndBuild: 0, fractal: 0 };
     eventCounts.buyAndBurn += newBuyAndBurnEvents.length;
     eventCounts.buyAndBuild += newBuyAndBuildEvents.length;
     eventCounts.fractal += newFractalEvents.length;
+    
+    // Note: ETH validation - we're tracking ETH from BuyAndBuild events
+    // The ethUsedForBurns contract value includes burn ETH which we don't track from events
     
     // Save updated data
     const outputData = {

@@ -308,7 +308,6 @@ const PannableLineChart: React.FC<PannableLineChartProps> = ({
     <div style={{ position: 'relative' }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
-          <h3 className="text-sm font-medium text-gray-300 mb-2">{title}</h3>
           {labels.length > currentWindowSize && (
             <span style={{ 
               fontSize: '11px', 

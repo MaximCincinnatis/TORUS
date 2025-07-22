@@ -144,29 +144,6 @@
         "barColor": "#3B82F6"
       }
     },
-    "torus-releases": {
-      "id": "torus-releases",
-      "type": "bar",
-      "title": "TORUS Release Amounts (Principal)",
-      "component": "PannableBarChart",
-      "features": {
-        "dragPan": true,
-        "zoom": true,
-        "timeframes": ["7d", "30d", "60d", "88d", "ALL"],
-        "dataLabels": false,
-        "tooltip": "standard"
-      },
-      "data": {
-        "source": "calculateTorusReleases",
-        "maxDays": 88,
-        "dynamicRange": true,
-        "description": "Shows TORUS principal amounts releasing in the next 88 days"
-      },
-      "display": {
-        "height": 400,
-        "barColor": "#10B981"
-      }
-    },
     "torus-rewards": {
       "id": "torus-rewards",
       "type": "bar",
