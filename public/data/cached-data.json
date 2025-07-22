@@ -1,9 +1,9 @@
 {
-  "lastUpdated": "2025-07-22T23:30:10.771Z",
+  "lastUpdated": "2025-07-22T23:50:16.235Z",
   "version": "1.0.0",
   "poolData": {
-    "sqrtPriceX96": "511654887171938165613397085691858",
-    "currentTick": 175470,
+    "sqrtPriceX96": "512076899230869529218049599810841",
+    "currentTick": 175486,
     "token0": "0xB47f575807fC5466285e1277Ef8aCFBB5c6686E8",
     "token1": "0xF19308F923582A6f7c465e5CE7a9Dc1BEC6665B1",
     "liquidity": "70539748011339879786162512",
@@ -28,7 +28,7 @@
       "inRange": false,
       "estimatedAPR": "0.00",
       "priceRange": "0.20M - 20.16M TITANX per TORUS",
-      "lastChecked": "2025-07-22T18:50:08.902Z",
+      "lastChecked": "2025-07-22T23:50:09.706Z",
       "torusAmount": 0,
       "titanxAmount": 114999999.99989024,
       "claimableYield": 0
@@ -43,14 +43,14 @@
       "upperTitanxPerTorus": "51.60M",
       "currentTitanxPerTorus": "43.84M",
       "claimableTorus": 0.029512993911540185,
-      "claimableTitanX": 7792966.083943496,
+      "claimableTitanX": 17030402.06054081,
       "tokensOwed0": "0",
       "tokensOwed1": "0",
       "fee": 10000,
       "inRange": true,
       "estimatedAPR": "50.00",
       "priceRange": "31.30M - 51.60M TITANX per TORUS",
-      "lastChecked": "2025-07-22T18:50:09.576Z",
+      "lastChecked": "2025-07-22T23:50:10.383Z",
       "torusAmount": 142.95908485722072,
       "titanxAmount": 3700904013.3938413,
       "claimableYield": 0
@@ -72,7 +72,7 @@
       "inRange": false,
       "estimatedAPR": "0.00",
       "priceRange": "28.89M - 35.29M TITANX per TORUS",
-      "lastChecked": "2025-07-22T18:50:10.245Z",
+      "lastChecked": "2025-07-22T23:50:12.108Z",
       "torusAmount": 0,
       "titanxAmount": 879002737.6988096,
       "claimableYield": 0
@@ -80,21 +80,21 @@
     {
       "tokenId": "1029195",
       "owner": "0xAa390a37006E22b5775A34f2147F81eBD6a63641",
-      "liquidity": "64342385890848652050033558",
+      "liquidity": "64367403364144257459147608",
       "tickLower": -887200,
       "tickUpper": 887200,
       "lowerTitanxPerTorus": "0.00M",
       "upperTitanxPerTorus": "Infinity",
       "currentTitanxPerTorus": "43.60M",
       "claimableTorus": 28.003275198706973,
-      "claimableTitanX": 1242547495.0037906,
+      "claimableTitanX": 1336542036.63329,
       "tokensOwed0": "28003275198706973256",
-      "tokensOwed1": "1242547495003790679157824585",
+      "tokensOwed1": "1334558903897276562134733641",
       "fee": 10000,
       "inRange": true,
       "estimatedAPR": "12.50",
       "priceRange": "Full Range",
-      "lastChecked": "2025-07-22T18:50:10.859Z",
+      "lastChecked": "2025-07-22T23:50:12.772Z",
       "torusAmount": 10331.252155288586,
       "titanxAmount": 394567210003.75946,
       "claimableYield": 583858510.3099428
@@ -478,9 +478,9 @@
   },
   "tokenPrices": {
     "torus": {
-      "usd": 417.0566841239861,
+      "usd": 417.7449430963361,
       "eth": 0.12726998093856626,
-      "lastUpdated": "2025-07-22T23:30:08.745Z"
+      "lastUpdated": "2025-07-22T23:50:13.723Z"
     },
     "titanx": {
       "usd": 0.00001,
@@ -37572,7 +37572,7 @@
       }
     ],
     "currentProtocolDay": 8,
-    "totalSupply": 18882.356708411462,
+    "totalSupply": 18877.17036003683,
     "burnedSupply": 0,
     "lastUpdated": "2025-07-16T19:25:33.217Z",
     "metadata": {
@@ -37581,9 +37581,9 @@
       "stakesRefreshed": "2025-07-16T18:54:18.007Z",
       "dailySupplySnapshot": {
         "day": 8,
-        "totalSupply": 18882.356708411462,
+        "totalSupply": 18877.17036003683,
         "burnedSupply": 0,
-        "timestamp": "2025-07-22T23:30:05.177Z"
+        "timestamp": "2025-07-22T23:50:08.632Z"
       },
       "lastCreateBlock": 22969998,
       "lastFullRebuild": "2025-07-21T22:29:04.583Z",
@@ -37634,8 +37634,8 @@
     "torusAddress": "0xb47f575807fc5466285e1277ef8acfbb5c6686e8",
     "titanxAddress": "0xf19308f923582a6f7c465e5ce7a9dc1bec6665b1",
     "poolData": {
-      "sqrtPriceX96": "511654887171938165613397085691858",
-      "currentTick": 175470,
+      "sqrtPriceX96": "512076899230869529218049599810841",
+      "currentTick": 175486,
       "liquidity": "74357721985194556278656269",
       "fee": 10000,
       "token0": "0xB47f575807fC5466285e1277Ef8aCFBB5c6686E8",
@@ -37669,7 +37669,7 @@
         "inRange": false,
         "estimatedAPR": "0.00",
         "priceRange": "0.20M - 20.16M TITANX per TORUS",
-        "lastChecked": "2025-07-22T18:50:08.902Z",
+        "lastChecked": "2025-07-22T23:50:09.706Z",
         "torusAmount": 0,
         "titanxAmount": 114999999.99989024,
         "claimableYield": 0
@@ -37684,14 +37684,14 @@
         "upperTitanxPerTorus": "51.60M",
         "currentTitanxPerTorus": "43.84M",
         "claimableTorus": 0.029512993911540185,
-        "claimableTitanX": 7792966.083943496,
+        "claimableTitanX": 17030402.06054081,
         "tokensOwed0": "0",
         "tokensOwed1": "0",
         "fee": 10000,
         "inRange": true,
         "estimatedAPR": "50.00",
         "priceRange": "31.30M - 51.60M TITANX per TORUS",
-        "lastChecked": "2025-07-22T18:50:09.576Z",
+        "lastChecked": "2025-07-22T23:50:10.383Z",
         "torusAmount": 142.95908485722072,
         "titanxAmount": 3700904013.3938413,
         "claimableYield": 0
@@ -37713,7 +37713,7 @@
         "inRange": false,
         "estimatedAPR": "0.00",
         "priceRange": "28.89M - 35.29M TITANX per TORUS",
-        "lastChecked": "2025-07-22T18:50:10.245Z",
+        "lastChecked": "2025-07-22T23:50:12.108Z",
         "torusAmount": 0,
         "titanxAmount": 879002737.6988096,
         "claimableYield": 0
@@ -37721,21 +37721,21 @@
       {
         "tokenId": "1029195",
         "owner": "0xAa390a37006E22b5775A34f2147F81eBD6a63641",
-        "liquidity": "64342385890848652050033558",
+        "liquidity": "64367403364144257459147608",
         "tickLower": -887200,
         "tickUpper": 887200,
         "lowerTitanxPerTorus": "0.00M",
         "upperTitanxPerTorus": "Infinity",
         "currentTitanxPerTorus": "43.60M",
         "claimableTorus": 28.003275198706973,
-        "claimableTitanX": 1242547495.0037906,
+        "claimableTitanX": 1336542036.63329,
         "tokensOwed0": "28003275198706973256",
-        "tokensOwed1": "1242547495003790679157824585",
+        "tokensOwed1": "1334558903897276562134733641",
         "fee": 10000,
         "inRange": true,
         "estimatedAPR": "12.50",
         "priceRange": "Full Range",
-        "lastChecked": "2025-07-22T18:50:10.859Z",
+        "lastChecked": "2025-07-22T23:50:12.772Z",
         "torusAmount": 10331.252155288586,
         "titanxAmount": 394567210003.75946,
         "claimableYield": 583858510.3099428
@@ -38719,7 +38719,7 @@
       "penaltiesInPool": 0
     }
   ],
-  "totalSupply": 18882.356708411462,
+  "totalSupply": 18877.17036003683,
   "totalTitanXBurnt": "141084138983503687251709155610",
   "titanxTotalSupply": "105729473525984884778189009402163"
 }
