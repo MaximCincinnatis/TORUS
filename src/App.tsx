@@ -19,7 +19,7 @@ import { updateDailySnapshot } from './utils/historicalSupplyTracker';
 import './App.css';
 
 // Contract launch date - Day 1 (corrected to align with protocol days)
-const CONTRACT_START_DATE = new Date('2025-07-11');
+const CONTRACT_START_DATE = new Date('2025-07-10');
 CONTRACT_START_DATE.setHours(0, 0, 0, 0);
 
 // Maximum days to calculate for all charts (for panning capability)
@@ -78,6 +78,7 @@ function App() {
   const [cachedTitanXData, setCachedTitanXData] = useState<{totalTitanXBurnt?: string, titanxTotalSupply?: string}>({});
   const [lastUpdatedTime, setLastUpdatedTime] = useState<string | null>(null);
   const [buyProcessData, setBuyProcessData] = useState<any>(null);
+  const [lpFeeBurnsData, setLpFeeBurnsData] = useState<any>(null);
   
   // Date range states for charts
   const [stakeMaturityDays, setStakeMaturityDays] = useState<number>(88);
@@ -93,6 +94,7 @@ function App() {
   const [buyBurnActivityDays, setBuyBurnActivityDays] = useState<number>(88);
   const [titanXEthUsageDays, setTitanXEthUsageDays] = useState<number>(88);
   const [titanXEthBuildUsageDays, setTitanXEthBuildUsageDays] = useState<number>(88);
+  const [lpFeeBurnsDays, setLpFeeBurnsDays] = useState<number>(88);
 
   useEffect(() => {
     loadData();
@@ -138,6 +140,24 @@ function App() {
       }
     };
     loadBuyProcessData();
+  }, []);
+
+  // Load LP Fee Burns data
+  useEffect(() => {
+    const loadLpFeeBurnsData = async () => {
+      try {
+        const response = await fetch(`/data/buy-process-burns.json?t=${Date.now()}`, { cache: 'no-cache' });
+        const data = await response.json();
+        console.log('🔥 LP Fee Burns Data Loaded:', {
+          totalTorusBurned: data.totals?.torusBurned,
+          feeCollections: data.totals?.feeCollections
+        });
+        setLpFeeBurnsData(data);
+      } catch (error) {
+        console.error('Error loading LP Fee Burns data:', error);
+      }
+    };
+    loadLpFeeBurnsData();
   }, []);
 
   const loadLPPositions = async () => {
@@ -863,37 +883,45 @@ function App() {
   const calculateDailyTorusBurned = (): { date: string; amount: number }[] => {
     if (!buyProcessData?.dailyData) return [];
     
-    // Get all daily data sorted by date
-    return buyProcessData.dailyData.map((day: any) => ({
-      date: day.date,
-      amount: day.torusBurned
+    // Create a map to combine regular burns and LP fee burns by date
+    const burnsByDate = new Map<string, number>();
+    
+    // Add regular buy & burn data
+    buyProcessData.dailyData.forEach((day: any) => {
+      burnsByDate.set(day.date, (burnsByDate.get(day.date) || 0) + day.torusBurned);
+    });
+    
+    // Add LP fee burns if available
+    if (lpFeeBurnsData?.feeDrivenBurns) {
+      lpFeeBurnsData.feeDrivenBurns.forEach((burn: any) => {
+        const date = burn.date.split('T')[0]; // Extract date part
+        const burnAmount = parseFloat(burn.torusBurned);
+        burnsByDate.set(date, (burnsByDate.get(date) || 0) + burnAmount);
+      });
+    }
+    
+    // Convert back to array, sorted by date
+    const dates = Array.from(burnsByDate.keys()).sort();
+    return dates.map(date => ({
+      date,
+      amount: burnsByDate.get(date) || 0
     }));
   };
 
   const calculateCumulativeTorusBurned = (): { date: string; amount: number }[] => {
     if (!buyProcessData?.dailyData) return [];
     
+    // Get daily burns including LP fee burns
+    const dailyBurns = calculateDailyTorusBurned();
+    
     let cumulative = 0;
-    const result = buyProcessData.dailyData.map((day: any) => {
-      cumulative += day.torusBurned;
+    return dailyBurns.map((day) => {
+      cumulative += day.amount;
       return {
         date: day.date,
         amount: cumulative
       };
     });
-    
-    // Debug: Log the total burned and verify it matches
-    console.log('Cumulative TORUS Burned Calculation:');
-    console.log('- Final cumulative from daily sum:', cumulative);
-    console.log('- buyProcessData.totals.torusBurnt:', buyProcessData.totals.torusBurnt);
-    console.log('- Difference:', Math.abs(cumulative - parseFloat(buyProcessData.totals.torusBurnt)));
-    
-    // The difference might be due to recent burns not yet in daily data
-    if (Math.abs(cumulative - parseFloat(buyProcessData.totals.torusBurnt)) > 0.01) {
-      console.log('⚠️ Discrepancy detected between daily sum and total');
-    }
-    
-    return result;
   };
 
   const calculateBuyBurnActivity = (): { date: string; buyAndBurn: number; buyAndBuild: number }[] => {
@@ -990,6 +1018,39 @@ function App() {
   const buyBurnActivity = !buyProcessData ? [] : calculateBuyBurnActivity();
   const titanXEthUsage = !buyProcessData ? [] : calculateTitanXEthUsage();
   const titanXEthBuildUsage = !buyProcessData ? [] : calculateTitanXEthBuildUsage();
+  
+  // Calculate LP Fee Burns data
+  const calculateLPFeeBurns = (): { date: string; torusBurned: number; titanxForBurns: number }[] => {
+    if (!lpFeeBurnsData?.feeDrivenBurns) return [];
+    
+    // Create a map to aggregate by date
+    const burnsByDate = new Map<string, { torusBurned: number; titanxForBurns: number }>();
+    
+    // Initialize with dates from buy process data for consistent x-axis
+    if (buyProcessData?.dailyData) {
+      buyProcessData.dailyData.forEach((day: any) => {
+        burnsByDate.set(day.date, { torusBurned: 0, titanxForBurns: 0 });
+      });
+    }
+    
+    // Add LP fee burns
+    lpFeeBurnsData.feeDrivenBurns.forEach((burn: any) => {
+      const date = burn.date.split('T')[0]; // Extract date part
+      const torusBurned = parseFloat(burn.torusBurned);
+      // TitanX is NOT used for additional burns - it's kept by the contract
+      burnsByDate.set(date, {
+        torusBurned: (burnsByDate.get(date)?.torusBurned || 0) + torusBurned,
+        titanxForBurns: 0 // Always 0 because TitanX is retained, not used for burns
+      });
+    });
+    
+    // Convert to array and sort by date
+    return Array.from(burnsByDate.entries())
+      .map(([date, data]) => ({ date, ...data }))
+      .sort((a, b) => a.date.localeCompare(b.date));
+  };
+  
+  const lpFeeBurns = !lpFeeBurnsData ? [] : calculateLPFeeBurns();
   
   // Calculate TORUS releases with rewards
   console.log('Checking conditions for torusReleasesWithRewards calculation:', {
@@ -2057,7 +2118,11 @@ function App() {
         keyMetrics={[
           {
             label: "Total Burned",
-            value: buyProcessData ? `${parseFloat(buyProcessData.totals.torusBurnt).toLocaleString('en-US', { maximumFractionDigits: 0 })} TORUS` : "0 TORUS",
+            value: buyProcessData ? 
+              `${(parseFloat(buyProcessData.totals.torusBurnt) + 
+                (lpFeeBurnsData ? parseFloat(lpFeeBurnsData.totals.torusBurned) : 0))
+                .toLocaleString('en-US', { maximumFractionDigits: 0 })} TORUS` : 
+              "0 TORUS",
             trend: "up"
           },
           {
@@ -2109,7 +2174,7 @@ function App() {
           formatTooltip={(value: number) => `${value.toFixed(2)} TORUS burned`}
         />
         <div className="chart-note">
-          Shows daily TORUS burned through the Buy & Burn mechanism. Each bar represents the total amount of TORUS permanently removed from circulation on that day.
+          Shows daily TORUS burned through the Buy & Burn mechanism and LP fee collections. Each bar represents the total amount of TORUS permanently removed from circulation on that day.
         </div>
       </ExpandableChartSection>
 
@@ -2120,7 +2185,11 @@ function App() {
         keyMetrics={[
           {
             label: "Total Burned",
-            value: buyProcessData ? `${parseFloat(buyProcessData.totals.torusBurnt).toLocaleString('en-US', { maximumFractionDigits: 0 })} TORUS` : "0 TORUS",
+            value: buyProcessData ? 
+              `${(parseFloat(buyProcessData.totals.torusBurnt) + 
+                (lpFeeBurnsData ? parseFloat(lpFeeBurnsData.totals.torusBurned) : 0))
+                .toLocaleString('en-US', { maximumFractionDigits: 0 })} TORUS` : 
+              "0 TORUS",
             trend: "up"
           },
           {
@@ -2134,6 +2203,13 @@ function App() {
             label: "Total Operations",
             value: buyProcessData ? buyProcessData.eventCounts.buyAndBurn : 0,
             trend: "up"
+          },
+          {
+            label: "LP Fee Burns",
+            value: lpFeeBurnsData ? 
+              `${parseFloat(lpFeeBurnsData.totals.torusBurned).toLocaleString('en-US', { maximumFractionDigits: 0 })} TORUS` : 
+              "0 TORUS",
+            trend: "up"
           }
         ]}
         loading={!buyProcessData}
@@ -2145,7 +2221,11 @@ function App() {
         <PannableLineChart
           key="cumulative-torus-burned-chart"
           title="Cumulative TORUS Burned"
-          labels={cumulativeTorusBurned.map(d => d.date.substring(5))}
+          labels={cumulativeTorusBurned.map(d => {
+            const date = new Date(d.date);
+            const contractDay = getContractDay(date);
+            return `${d.date.substring(5)} (Day ${contractDay})`;
+          })}
           datasets={[
             {
               label: 'Total TORUS Burned',
@@ -2162,7 +2242,7 @@ function App() {
           formatTooltip={(value: number) => `${value.toFixed(2)} TORUS total`}
         />
         <div className="chart-note">
-          Shows the cumulative total of TORUS burned over time. The upward slope indicates the rate of TORUS being permanently removed from circulation.
+          Shows the cumulative total of TORUS burned over time including regular Buy & Burn operations and LP fee burns. The upward slope indicates the rate of TORUS being permanently removed from circulation.
         </div>
       </ExpandableChartSection>
 
@@ -2375,6 +2455,77 @@ function App() {
         />
         <div className="chart-note">
           Shows the daily amount of TitanX (left axis in billions) and ETH (right axis) used in Buy & Build operations. These operations purchase TORUS to add liquidity to the protocol rather than burning it. The remaining TORUS after liquidity provision is burned.
+        </div>
+      </ExpandableChartSection>
+
+      <ExpandableChartSection
+        id="lp-fee-burns"
+        title={<>Daily <span className="torus-text">TORUS</span> Burned from LP Fees</>}
+        subtitle="TORUS burned from protocol LP position fee collections"
+        keyMetrics={[
+          {
+            label: "Total LP Fee Burns",
+            value: lpFeeBurnsData ? 
+              `${parseFloat(lpFeeBurnsData.totals.torusBurned).toLocaleString('en-US', { maximumFractionDigits: 0 })} TORUS` : 
+              "0 TORUS",
+            trend: "up"
+          },
+          {
+            label: "Fee Collections",
+            value: lpFeeBurnsData ? lpFeeBurnsData.totals.feeCollections : 0,
+            trend: "up"
+          },
+          {
+            label: "TitanX Used for Burns",
+            value: "0 TitanX",
+            trend: "neutral"
+          },
+          {
+            label: "TitanX Collected (Retained)",
+            value: lpFeeBurnsData ? 
+              `${(parseFloat(lpFeeBurnsData.totals.titanxCollected) / 1e9).toFixed(2)}B TitanX` : 
+              "0 TitanX",
+            trend: "neutral"
+          }
+        ]}
+        loading={!lpFeeBurnsData}
+      >
+        <DateRangeButtons 
+          selectedDays={lpFeeBurnsDays}
+          onDaysChange={setLpFeeBurnsDays}
+        />
+        <PannableBarChart
+          key="lp-fee-burns-chart"
+          title="Daily LP Fee Burns"
+          labels={lpFeeBurns.map(d => {
+            const date = new Date(d.date);
+            const contractDay = getContractDay(date);
+            return [`${d.date.substring(5)}`, `Day ${contractDay}`];
+          })}
+          datasets={[
+            {
+              label: 'TORUS Burned from LP Fees',
+              data: lpFeeBurns.map(d => d.torusBurned),
+              // backgroundColor will be set by gradient plugin
+            },
+            {
+              label: 'TitanX Used for Additional Burns',
+              data: lpFeeBurns.map(d => d.titanxForBurns), // Always 0
+              // backgroundColor will be set by gradient plugin
+            },
+          ]}
+          height={600}
+          yAxisLabel="TORUS Burned"
+          xAxisLabel="Date / Contract Day"
+          windowSize={lpFeeBurnsDays}
+          showDataLabels={true}
+          formatTooltip={(value: number) => `${value.toFixed(2)} TORUS`}
+          stacked={false}
+        />
+        <div className="chart-note">
+          Shows TORUS burned from LP fee collections. The protocol owns Uniswap V3 position #1029195 and collects trading fees periodically. 
+          100% of collected TORUS is burned. TitanX fees are collected but retained by the contract (not used for additional burns), 
+          hence the second bar is always 0. Only 2 collections have occurred so far: 161.5 TORUS on Day 2 and 18.5 TORUS on Day 7.
         </div>
       </ExpandableChartSection>
 
