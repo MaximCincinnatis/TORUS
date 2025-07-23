@@ -50,7 +50,7 @@ body {
     radial-gradient(ellipse 700px 180px at 70% 45%, rgba(109, 40, 217, 0.55) 0%, transparent 100%),
     /* Ambient glow - pink core */
     radial-gradient(circle at 50% 50%, rgba(236, 72, 153, 0.2) 0%, transparent 50%);
-  animation: aurora 45s ease-in-out infinite, breathe 18s ease-in-out infinite;
+  animation: aurora 34.5s ease-in-out infinite, breathe 13.8s ease-in-out infinite;
   filter: blur(40px);
   pointer-events: none;
   z-index: 1;
@@ -68,7 +68,7 @@ body {
     /* Complementary aurora ribbons for depth */
     radial-gradient(ellipse 900px 250px at 80% 20%, rgba(251, 191, 36, 0.4) 0%, rgba(139, 92, 246, 0.3) 70%, transparent 100%),
     radial-gradient(ellipse 700px 200px at 20% 80%, rgba(236, 72, 153, 0.45) 0%, transparent 100%);
-  animation: aurora 50s ease-in-out infinite reverse, breathe 20s ease-in-out infinite;
+  animation: aurora 40.25s ease-in-out infinite reverse, breathe 17.25s ease-in-out infinite;
   filter: blur(60px);
   pointer-events: none;
   z-index: 2;
@@ -87,7 +87,7 @@ body {
     conic-gradient(from 45deg at 30% 30%, transparent, rgba(139, 92, 246, 0.1), transparent 120deg),
     conic-gradient(from 225deg at 70% 70%, transparent, rgba(236, 72, 153, 0.1), transparent 120deg),
     conic-gradient(from 135deg at 50% 50%, transparent, rgba(251, 191, 36, 0.05), transparent 120deg);
-  animation: rotate 90s linear infinite;
+  animation: rotate 69s linear infinite;
   pointer-events: none;
   z-index: 1;
   opacity: 0.5;
