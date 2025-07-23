@@ -91,6 +91,13 @@
   - Complementary ribbons: 0.3→0.4, 0.2→0.3, and 0.35→0.45
 - Subtle brightness increase maintains the dark theme while improving visibility
 
+### Background Movement Speed Adjustment ✓
+- Slowed down all background animations by 50%:
+  - Primary aurora layer: 30s→45s (aurora), 12s→18s (breathe)
+  - Secondary aurora layer: 35s→50s (aurora), 15s→20s (breathe)  
+  - Mesh gradient rotation: 60s→90s
+- Creates a more relaxed, elegant movement effect
+
 ## Historical Data Implementation Review (January 23, 2025)
 
 ### Summary of Changes
