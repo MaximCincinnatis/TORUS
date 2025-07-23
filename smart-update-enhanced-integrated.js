@@ -16,6 +16,7 @@ const fs = require('fs');
 const { performance } = require('perf_hooks');
 const { 
   calculatePositionAmounts, 
+  calculateClaimableFees,
   mapFieldNames, 
   mergeLPPositions,
   safeMergeLPPositions 
