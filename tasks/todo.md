@@ -81,6 +81,16 @@
 - Cleaner look without the small circle orbs
 - Added complementary aurora ribbons for depth instead
 
+### Background Brightness Adjustment ✓
+- Changed base background colors from #0a0a12 to #0d0d18 (slightly brighter)
+- Increased aurora ribbon opacity values:
+  - Primary ribbon: 0.5→0.6 and 0.4→0.5
+  - Secondary ribbon: 0.4→0.5 and 0.3→0.4
+  - Third ribbon: 0.45→0.55
+  - Ambient glow: 0.15→0.2
+  - Complementary ribbons: 0.3→0.4, 0.2→0.3, and 0.35→0.45
+- Subtle brightness increase maintains the dark theme while improving visibility
+
 ## Historical Data Implementation Review (January 23, 2025)
 
 ### Summary of Changes

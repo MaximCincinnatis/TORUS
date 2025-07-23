@@ -9,7 +9,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: #050507;
+  background: #0d0d18;
   color: #fff;
   min-height: 100vh;
   overflow-x: hidden;
@@ -29,7 +29,7 @@ body {
 .dashboard-container {
   position: relative;
   min-height: 100vh;
-  background: #050507;
+  background: #0d0d18;
   overflow: hidden;
 }
 
@@ -43,13 +43,13 @@ body {
   height: 200%;
   background: 
     /* Primary aurora ribbon - purple to pink */
-    radial-gradient(ellipse 800px 200px at 50% 30%, rgba(139, 92, 246, 0.4) 0%, rgba(236, 72, 153, 0.3) 50%, transparent 100%),
+    radial-gradient(ellipse 800px 200px at 50% 30%, rgba(139, 92, 246, 0.6) 0%, rgba(236, 72, 153, 0.5) 50%, transparent 100%),
     /* Secondary aurora ribbon - yellow to pink */
-    radial-gradient(ellipse 600px 150px at 30% 60%, rgba(251, 191, 36, 0.3) 0%, rgba(236, 72, 153, 0.2) 60%, transparent 100%),
+    radial-gradient(ellipse 600px 150px at 30% 60%, rgba(251, 191, 36, 0.5) 0%, rgba(236, 72, 153, 0.4) 60%, transparent 100%),
     /* Third aurora ribbon - deep purple */
-    radial-gradient(ellipse 700px 180px at 70% 45%, rgba(109, 40, 217, 0.35) 0%, transparent 100%),
+    radial-gradient(ellipse 700px 180px at 70% 45%, rgba(109, 40, 217, 0.55) 0%, transparent 100%),
     /* Ambient glow - pink core */
-    radial-gradient(circle at 50% 50%, rgba(236, 72, 153, 0.1) 0%, transparent 50%);
+    radial-gradient(circle at 50% 50%, rgba(236, 72, 153, 0.2) 0%, transparent 50%);
   animation: aurora 30s ease-in-out infinite, breathe 12s ease-in-out infinite;
   filter: blur(40px);
   pointer-events: none;
@@ -66,8 +66,8 @@ body {
   height: 200%;
   background: 
     /* Complementary aurora ribbons for depth */
-    radial-gradient(ellipse 900px 250px at 80% 20%, rgba(251, 191, 36, 0.2) 0%, rgba(139, 92, 246, 0.15) 70%, transparent 100%),
-    radial-gradient(ellipse 700px 200px at 20% 80%, rgba(236, 72, 153, 0.25) 0%, transparent 100%);
+    radial-gradient(ellipse 900px 250px at 80% 20%, rgba(251, 191, 36, 0.4) 0%, rgba(139, 92, 246, 0.3) 70%, transparent 100%),
+    radial-gradient(ellipse 700px 200px at 20% 80%, rgba(236, 72, 153, 0.45) 0%, transparent 100%);
   animation: aurora 35s ease-in-out infinite reverse, breathe 15s ease-in-out infinite;
   filter: blur(60px);
   pointer-events: none;
