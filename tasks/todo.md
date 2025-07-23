@@ -1,5 +1,81 @@
 # TORUS Dashboard - Development Progress & Todo List
 
+## Separate TitanX Used Metrics (January 23, 2025)
+
+### Task Complete ✓
+- Replaced single "Total TitanX Used" metric with two separate metrics:
+  - "Total TitanX Used in Creates" - Shows totalTitanXUsed 
+  - "Total TitanX Used in Stakes" - Shows totalTitanXFromStakes
+- Removed the combined metric as requested
+
+### Metrics Reorganization Complete ✓
+- Moved "Total TitanX Used in Creates" to the Create Metrics card
+- Moved "Total TitanX Used in Stakes" to the Stake Metrics card
+- Overall Metrics now only contains TitanX Burned and % of TitanX Supply Burned
+
+### ETH Metrics Added ✓
+- Added "Total ETH Used in Stakes" to the Stake Metrics card
+- Added "Total ETH Used in Creates" to the Create Metrics card
+- Both metrics display with ETH logo and 2 decimal precision
+
+## Historical Data Implementation Review (January 23, 2025)
+
+### Summary of Changes
+Successfully implemented historical data display for 5 charts as requested by the user. All charts now show data from contract day 1 (July 10, 2025) through 88 days into the future, instead of just showing future data.
+
+### Changes Made
+
+1. **Helper Functions Added** ✓
+   - `getFullDateRange()` - Calculates date range from contract start to 88 days future
+   - `initializeFullDateMap()` - Creates a map with all dates initialized to zero
+   - These functions ensure consistent date handling across all charts
+
+2. **Updated Chart Calculations** ✓
+   - `calculateStakeReleases()` - Now shows all stakes ending from day 1 onwards
+   - `calculateCreateReleases()` - Now shows all creates ending from day 1 onwards
+   - `calculateTorusReleases()` - Now shows all TORUS releases from day 1 onwards
+   - `calculateTorusReleasesWithRewards()` - Now includes historical principal and rewards
+   - `calculateTitanXUsage()` - Now shows all TitanX usage from day 1 onwards
+   - `calculateSharesReleases()` - Now shows all share releases from day 1 onwards
+
+3. **Key Implementation Details**
+   - Removed future-only filters (e.g., `if (maturityDate > today)`)
+   - Added tracking of historical vs future amounts for debugging
+   - All date ranges now span from CONTRACT_START_DATE to today + 88 days
+   - Console logging added to show historical/future breakdown
+
+### Testing Still Needed
+- Chart labels need updating to show proper contract days
+- Verify charts render correctly with expanded date range
+- Test panning functionality with historical data
+- Update chart descriptions to mention historical data
+
+### Code Quality Improvements
+- Consistent date handling across all functions
+- Better separation of concerns with helper functions
+- More informative console logging for debugging
+- Maintained backward compatibility with existing chart rendering
+
+### Additional Changes (January 23, 2025 - Part 2)
+
+1. **TitanX Usage Chart Gradient** ✓
+   - Removed solid yellow backgroundColor from TitanX usage chart
+   - Chart now uses white-to-green gradient matching other TitanX charts
+   - Gradient is automatically applied by the gradient plugin based on label
+
+2. **Default Chart Timeframe** ✓
+   - Changed all chart state initializations from 88 days to 9999 (ALL)
+   - All charts now default to showing "ALL" data on page load
+   - Users can still select other timeframes (7d, 30d, 60d, 88d) as needed
+
+3. **TORUS Staked Chart Auto-fit Fix** ✓
+   - Fixed "Total TORUS Staked Each Contract Day" chart to only show days with actual data
+   - Previously showed all 365 days when "ALL" was selected
+   - Now limits to current protocol day (actual days since contract launch)
+   - Matches behavior of other charts that auto-fit to available data
+
+---
+
 ## ETH Daily Usage Tracking Implementation (January 22, 2025)
 
 ### Problem Statement
@@ -1057,3 +1133,77 @@ Refined the color gradients based on user feedback to improve visual clarity and
 
 ### Result
 The refined gradients provide better visual hierarchy and clearer token identification. TitanX bars now have a distinctive white-to-green appearance, while TORUS bars show a more prominent purple color that better represents the brand identity.
+
+## Historical Data for Charts (January 23, 2025)
+
+### Objective
+Update the following charts to show data from contract day 1 (July 10, 2025) onwards instead of only showing future data:
+- Number of stakes ending each day
+- Number of creates ending each day
+- TORUS released each day (principal vs accrued share rewards)
+- Total TitanX used for creates ending each day
+- Total shares ending each day
+
+### Implementation Plan
+
+#### Phase 1: Helper Functions (Simple & Reusable)
+- [ ] Create `getFullDateRange()` function to generate dates from contract start to future
+- [ ] Create `initializeDateRange()` to populate date maps with zeros
+- [ ] Add `CONTRACT_START_DATE` constant if not already present
+- [ ] Test helper functions with edge cases
+
+#### Phase 2: Update Chart Calculations (One at a Time)
+- [ ] Update `calculateStakeReleases()` to include historical data
+  - Remove `if (maturityDate > today)` filter
+  - Use full date range from contract start
+  - Test with known historical positions
+  
+- [ ] Update `calculateCreateReleases()` to include historical data  
+  - Remove future-only filter
+  - Include positions that have already matured
+  - Verify counts match expectations
+
+- [ ] Update `calculateTorusReleases()` to include historical data
+  - Show principal amounts from day 1
+  - Include both past and future releases
+  
+- [ ] Update `calculateTorusReleasesWithRewards()` 
+  - Include historical reward calculations
+  - Show accrued rewards for past positions
+  
+- [ ] Update `calculateTitanXUsage()` to include historical data
+  - Show TitanX used for creates from day 1
+  
+- [ ] Update `calculateSharesReleases()` to include historical data
+  - Show shares from all positions, past and future
+
+#### Phase 3: Chart Display Updates
+- [ ] Update chart labels to handle larger date ranges
+- [ ] Ensure chart windows can pan through full history
+- [ ] Add visual indicator for "today" on charts
+- [ ] Test performance with full historical data
+
+#### Phase 4: Testing & Validation
+- [ ] Create test script to verify historical data accuracy
+- [ ] Compare totals with blockchain data
+- [ ] Test chart navigation and performance
+- [ ] Verify data displays correctly for all date ranges
+
+#### Phase 5: Documentation & Cleanup
+- [ ] Update chart descriptions to mention historical data
+- [ ] Add code comments explaining date range logic
+- [ ] Document any performance optimizations
+- [ ] Create user guide for navigating historical charts
+
+### Technical Approach
+1. **Simplicity First**: Minimal changes to existing functions
+2. **Incremental Updates**: Test each chart before moving to next
+3. **Preserve Existing**: Keep current functionality while adding historical
+4. **Performance Aware**: Monitor chart rendering with larger datasets
+
+### Success Criteria
+- All specified charts show data from July 10, 2025 onwards
+- Historical data matches blockchain records
+- Charts remain performant with full data range
+- Users can easily navigate between historical and future data
+- Code remains clean and maintainable
