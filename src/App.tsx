@@ -2742,6 +2742,7 @@ function App() {
                   rel="noopener noreferrer"
                   className="footer-link"
                 >
+                  <img src="/torus-logo.png" alt="TORUS" style={{ width: '16px', height: '16px', marginRight: '6px', verticalAlign: 'middle' }} />
                   TORUS Dashboard
                 </a>
                 <a 
@@ -2750,6 +2751,7 @@ function App() {
                   rel="noopener noreferrer"
                   className="footer-link"
                 >
+                  <img src="/torus-logo.png" alt="TORUS" style={{ width: '16px', height: '16px', marginRight: '6px', verticalAlign: 'middle' }} />
                   Documentation
                 </a>
                 <a 
@@ -2758,6 +2760,9 @@ function App() {
                   rel="noopener noreferrer"
                   className="footer-link"
                 >
+                  <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" style={{ marginRight: '6px', verticalAlign: 'middle' }}>
+                    <path d="M12 0C5.373 0 0 5.373 0 12s5.373 12 12 12 12-5.373 12-12S18.627 0 12 0zm5.894 8.221l-1.97 9.28c-.145.658-.537.818-1.084.508l-3-2.21-1.446 1.394c-.14.18-.357.295-.6.295-.002 0-.003 0-.005 0l.213-3.054 5.56-5.022c.24-.213-.054-.334-.373-.121l-6.869 4.326-2.96-.924c-.64-.203-.658-.64.135-.954l11.566-4.458c.538-.196 1.006.128.832.941z"/>
+                  </svg>
                   Telegram Community
                 </a>
               </div>
@@ -2773,6 +2778,7 @@ function App() {
                   rel="noopener noreferrer"
                   className="footer-link"
                 >
+                  <img src="https://dexscreener.com/favicon.png" alt="DexScreener" style={{ width: '16px', height: '16px', marginRight: '6px', verticalAlign: 'middle' }} />
                   TORUS/TitanX Chart
                 </a>
                 <a 
@@ -2781,6 +2787,7 @@ function App() {
                   rel="noopener noreferrer"
                   className="footer-link"
                 >
+                  <img src="/torus-logo.png" alt="TORUS" style={{ width: '16px', height: '16px', marginRight: '6px', verticalAlign: 'middle' }} />
                   Token Holders
                 </a>
                 <a 
@@ -2789,6 +2796,7 @@ function App() {
                   rel="noopener noreferrer"
                   className="footer-link"
                 >
+                  <img src="https://app.uniswap.org/favicon.png" alt="Uniswap" style={{ width: '16px', height: '16px', marginRight: '6px', verticalAlign: 'middle' }} />
                   Uniswap V3 Pool
                 </a>
                 <a 
@@ -2797,6 +2805,7 @@ function App() {
                   rel="noopener noreferrer"
                   className="footer-link"
                 >
+                  <img src="https://titanfarms.win/Logo.png" alt="TINC" style={{ width: '16px', height: '16px', marginRight: '6px', verticalAlign: 'middle' }} />
                   TINC Burn Info
                 </a>
               </div>
