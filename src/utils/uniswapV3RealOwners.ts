@@ -360,20 +360,29 @@ export async function fetchLPPositionsFromEvents(): Promise<SimpleLPPosition[]> 
                 console.log(`    🔍 Calculated claimableTitanX: ${claimableTitanX}`);
                 
                 // More accurate APR estimation based on position size and claimable fees
-                // Calculate position value in terms of TORUS equivalent
-                const positionValueTORUS = amounts.amount0 + (amounts.amount1 * 0.00001); // Convert TitanX to TORUS equivalent
+                // Calculate the actual pool price ratio from sqrtPriceX96
+                // sqrtPriceX96 represents sqrt(price) * 2^96, where price is token1/token0
+                const sqrtPrice = parseFloat(poolInfo.sqrtPriceX96) / Math.pow(2, 96);
+                const poolPrice = sqrtPrice * sqrtPrice; // This gives us TitanX per TORUS
+                const torusPerTitanX = 1 / poolPrice; // Invert to get TORUS per TitanX
+                
+                // Calculate position value in terms of TORUS equivalent using actual pool price
+                const positionValueTORUS = amounts.amount0 + (amounts.amount1 * torusPerTitanX);
                 
                 // Calculate total claimable fees in TORUS equivalent
-                const totalClaimableTORUS = claimableTorus + (claimableTitanX * 0.00001);
+                const totalClaimableTORUS = claimableTorus + (claimableTitanX * torusPerTitanX);
                 
                 // Estimate APR based on claimable fees (assuming they accumulated over ~7 days avg)
                 // More conservative estimate: assume claimable fees represent 1 week of accumulation
                 const weeklyYieldRate = positionValueTORUS > 0 ? totalClaimableTORUS / positionValueTORUS : 0;
                 const estimatedAPR = weeklyYieldRate * 52 * 100; // Annualize and convert to percentage
                 
+                console.log(`    💱 Pool price: 1 TORUS = ${poolPrice.toFixed(0)} TitanX`);
+                console.log(`    💱 Inverse: 1 TitanX = ${torusPerTitanX.toFixed(8)} TORUS`)
+                
                 console.log(`    💰 Claimable TORUS: ${claimableTorus.toFixed(4)}`);
                 console.log(`    💰 Claimable TitanX: ${claimableTitanX.toFixed(4)}`);
-                console.log(`    📈 Estimated APR: ${estimatedAPR.toFixed(2)}%`);
+                console.log(`    📈 Estimated APR: ${estimatedAPR.toFixed(2)}% (7-day accumulation assumed)`);
                 
                 // Determine which token is which based on pool configuration
                 const token0IsTorus = poolInfo.token0.toLowerCase() === '0xb47f575807fc5466285e1277ef8acfbb5c6686e8'.toLowerCase();

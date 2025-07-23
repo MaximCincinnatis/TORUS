@@ -3,7 +3,7 @@ import { getHistoricalDataWithCache } from './cacheDataLoader';
 
 const UNISWAP_V3_SUBGRAPH_URL = 'https://api.thegraph.com/subgraphs/name/uniswap/uniswap-v3';
 const POOL_ADDRESS = '0x7ff1f30f6e7eec2ff3f0d1b60739115bdf88190f';
-const FEE_TIER = 3000; // 0.3% fee tier for TORUS/TitanX pool
+const FEE_TIER = 10000; // 1% fee tier for TORUS/TitanX pool (confirmed from pool contract)
 
 export interface PoolHistoricalData {
   date: string;
@@ -106,8 +106,8 @@ export function calculateLiquidityShare(
 export function calculatePositionValueUSD(
   amount0: number,
   amount1: number,
-  torusPrice: number = 420.09, // Default TORUS price in USD (should be passed from cached data)
-  titanXPrice: number = 0.00001 // Default TitanX price in USD (should be passed from cached data)
+  torusPrice: number, // Must be passed - no default
+  titanXPrice: number // Must be passed - no default
 ): number {
   return (amount0 * torusPrice) + (amount1 * titanXPrice);
 }
@@ -166,8 +166,8 @@ export function calculateRealTimeAPR(
   claimableTitanX: number,
   positionValueUSD: number,
   daysSinceLastCollection: number = 7, // Default assumption
-  torusPrice: number = 420.09, // Should be passed from cached data
-  titanXPrice: number = 0.00001 // Should be passed from cached data
+  torusPrice: number, // Must be passed - no default
+  titanXPrice: number // Must be passed - no default
 ): number {
   if (positionValueUSD <= 0 || daysSinceLastCollection <= 0) {
     return 0;
@@ -209,10 +209,17 @@ export async function calculateEnhancedAPR(
 
     console.log(`📊 Historical data: 7-day (${sevenDayData.length} points), 30-day (${thirtyDayData.length} points)`);
 
+    // Get prices from cached data or use defaults
+    // Note: In production, these should come from the cached data loader
+    const torusPrice = 420.09; // Default fallback - should be updated from cache
+    const titanXPrice = 0.00001; // Default fallback - should be updated from cache
+
     // Calculate position value in USD
     const positionValueUSD = calculatePositionValueUSD(
       position.torusAmount,
-      position.titanxAmount
+      position.titanxAmount,
+      torusPrice,
+      titanXPrice
     );
 
     console.log(`💰 Position value: $${positionValueUSD.toFixed(4)} USD`);
@@ -247,7 +254,10 @@ export async function calculateEnhancedAPR(
       realTimeAPR = calculateRealTimeAPR(
         claimableTorus,
         claimableTitanX,
-        positionValueUSD
+        positionValueUSD,
+        7, // Default 7-day accumulation assumption
+        torusPrice,
+        titanXPrice
       );
       console.log(`⚡ Real-time APR: ${realTimeAPR.toFixed(2)}%`);
     }

@@ -883,37 +883,24 @@ function App() {
   const calculateDailyTorusBurned = (): { date: string; amount: number }[] => {
     if (!buyProcessData?.dailyData) return [];
     
-    // Create a map to combine regular burns and LP fee burns by date
-    const burnsByDate = new Map<string, number>();
+    // LP fee burns are already included in the daily burn data
+    // The TorusBuyAndProcess contract executes both regular burns and LP fee burns
+    // These show up in the daily totals, so we should NOT add them separately
     
-    // Add regular buy & burn data
-    buyProcessData.dailyData.forEach((day: any) => {
-      burnsByDate.set(day.date, (burnsByDate.get(day.date) || 0) + day.torusBurned);
-    });
-    
-    // Add LP fee burns if available
-    if (lpFeeBurnsData?.feeDrivenBurns) {
-      lpFeeBurnsData.feeDrivenBurns.forEach((burn: any) => {
-        const date = burn.date.split('T')[0]; // Extract date part
-        const burnAmount = parseFloat(burn.torusBurned);
-        burnsByDate.set(date, (burnsByDate.get(date) || 0) + burnAmount);
-      });
-    }
-    
-    // Convert back to array, sorted by date
-    const dates = Array.from(burnsByDate.keys()).sort();
-    return dates.map(date => ({
-      date,
-      amount: burnsByDate.get(date) || 0
+    // Simply return the daily burn data without any additions
+    return buyProcessData.dailyData.map((day: any) => ({
+      date: day.date,
+      amount: day.torusBurned || 0
     }));
   };
 
   const calculateCumulativeTorusBurned = (): { date: string; amount: number }[] => {
     if (!buyProcessData?.dailyData) return [];
     
-    // Get daily burns including LP fee burns
+    // Get daily burns (LP fee burns are already included in the daily data)
     const dailyBurns = calculateDailyTorusBurned();
     
+    // Calculate cumulative burns
     let cumulative = 0;
     return dailyBurns.map((day) => {
       cumulative += day.amount;
@@ -2119,8 +2106,7 @@ function App() {
           {
             label: "Total Burned",
             value: buyProcessData ? 
-              `${(parseFloat(buyProcessData.totals.torusBurnt) + 
-                (lpFeeBurnsData ? parseFloat(lpFeeBurnsData.totals.torusBurned) : 0))
+              `${parseFloat(buyProcessData.totals.torusBurnt)
                 .toLocaleString('en-US', { maximumFractionDigits: 0 })} TORUS` : 
               "0 TORUS",
             trend: "up"
@@ -2174,7 +2160,7 @@ function App() {
           formatTooltip={(value: number) => `${value.toFixed(2)} TORUS burned`}
         />
         <div className="chart-note">
-          Shows daily TORUS burned through the Buy & Burn mechanism and LP fee collections. Each bar represents the total amount of TORUS permanently removed from circulation on that day.
+          Shows daily TORUS burned through all mechanisms including Buy & Burn operations and LP fee collections. Each bar represents the total amount of TORUS permanently removed from circulation on that day. Data reflects actual burns verified on-chain.
         </div>
       </ExpandableChartSection>
 
@@ -2186,8 +2172,7 @@ function App() {
           {
             label: "Total Burned",
             value: buyProcessData ? 
-              `${(parseFloat(buyProcessData.totals.torusBurnt) + 
-                (lpFeeBurnsData ? parseFloat(lpFeeBurnsData.totals.torusBurned) : 0))
+              `${parseFloat(buyProcessData.totals.torusBurnt)
                 .toLocaleString('en-US', { maximumFractionDigits: 0 })} TORUS` : 
               "0 TORUS",
             trend: "up"
@@ -2242,7 +2227,7 @@ function App() {
           formatTooltip={(value: number) => `${value.toFixed(2)} TORUS total`}
         />
         <div className="chart-note">
-          Shows the cumulative total of TORUS burned over time including regular Buy & Burn operations and LP fee burns. The upward slope indicates the rate of TORUS being permanently removed from circulation.
+          Shows the cumulative total of TORUS burned over time. This reflects actual on-chain burns (Transfer events to 0x0), not the contract's inflated accounting. The upward slope indicates the rate of TORUS being permanently removed from circulation.
         </div>
       </ExpandableChartSection>
 

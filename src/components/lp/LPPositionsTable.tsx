@@ -213,6 +213,9 @@ const LPPositionsTable: React.FC<LPPositionsTableProps> = ({ positions, loading,
         <p className="disclaimer">
           * Data shows individual LP position holders with their actual TORUS and TitanX amounts, claimable yield, and estimated APR (not compounded).
         </p>
+        <p className="disclaimer">
+          ** APR values are calculated using real-time pool prices and a 7-day fee accumulation assumption. Actual APR may vary based on when fees were last collected.
+        </p>
       </div>
     </div>
   );
