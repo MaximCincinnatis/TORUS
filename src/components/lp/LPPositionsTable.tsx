@@ -174,11 +174,6 @@ const LPPositionsTable: React.FC<LPPositionsTableProps> = ({ positions, loading,
                 <tr key={`${position.owner}-${index}`} className={isTorusContract ? 'torus-contract-position' : ''}>
                   <td>
                     <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
-                      {isTorusContract && (
-                        <span className="torus-contract-badge" style={{ marginLeft: 0, marginBottom: '4px' }}>
-                          <span style={{ color: '#fbbf24' }}>TORUS</span> CONTRACT LP
-                        </span>
-                      )}
                       {position.tokenId && (
                         <a href={`https://app.uniswap.org/positions/v3/ethereum/${position.tokenId}`}
                            target="_blank"
@@ -186,6 +181,11 @@ const LPPositionsTable: React.FC<LPPositionsTableProps> = ({ positions, loading,
                            className="address-link">
                           {position.tokenId}
                         </a>
+                      )}
+                      {isTorusContract && (
+                        <span className="torus-contract-badge" style={{ marginLeft: 0, marginTop: '4px' }}>
+                          <span style={{ color: '#fbbf24' }}>TORUS</span> CONTRACT LP
+                        </span>
                       )}
                     </div>
                   </td>
