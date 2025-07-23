@@ -93,10 +93,10 @@
 
 ### Background Movement Speed Adjustment ✓
 - Adjusted background animation speeds:
-  - Primary aurora layer: 30s→45s (aurora), 12s→18s (breathe) - 50% slower
-  - Secondary aurora layer: 35s→52.5s (aurora), 15s→22.5s (breathe) - 50% slower
-  - Mesh gradient rotation: 60s→30s - 50% faster
-- Creates dynamic contrast with slow, graceful aurora effects over rapidly rotating mesh
+  - Primary aurora layer: 30s→45s (50% slower), breathe 12s→9.6s (20% faster)
+  - Secondary aurora layer: 35s→52.5s (50% slower), breathe 15s→12s (20% faster)
+  - Mesh gradient rotation: 60s→78s (30% slower)
+- Creates balanced movement with slow aurora drift, faster breathing pulse, and moderately slow mesh rotation
 
 ## Historical Data Implementation Review (January 23, 2025)
 
