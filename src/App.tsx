@@ -1007,16 +1007,16 @@ function App() {
   const titanXEthBuildUsage = !buyProcessData ? [] : calculateTitanXEthBuildUsage();
   
   // Calculate LP Fee Burns data
-  const calculateLPFeeBurns = (): { date: string; torusBurned: number; titanxForBurns: number }[] => {
+  const calculateLPFeeBurns = (): { date: string; torusBurned: number; titanxCollected: number }[] => {
     if (!lpFeeBurnsData?.feeDrivenBurns) return [];
     
     // Create a map to aggregate by date
-    const burnsByDate = new Map<string, { torusBurned: number; titanxForBurns: number }>();
+    const burnsByDate = new Map<string, { torusBurned: number; titanxCollected: number }>();
     
     // Initialize with dates from buy process data for consistent x-axis
     if (buyProcessData?.dailyData) {
       buyProcessData.dailyData.forEach((day: any) => {
-        burnsByDate.set(day.date, { torusBurned: 0, titanxForBurns: 0 });
+        burnsByDate.set(day.date, { torusBurned: 0, titanxCollected: 0 });
       });
     }
     
@@ -1024,10 +1024,12 @@ function App() {
     lpFeeBurnsData.feeDrivenBurns.forEach((burn: any) => {
       const date = burn.date.split('T')[0]; // Extract date part
       const torusBurned = parseFloat(burn.torusBurned);
-      // TitanX is NOT used for additional burns - it's kept by the contract
+      const titanxCollected = parseFloat(burn.titanxCollected) / 1e9; // Convert to billions
+      
+      const existing = burnsByDate.get(date) || { torusBurned: 0, titanxCollected: 0 };
       burnsByDate.set(date, {
-        torusBurned: (burnsByDate.get(date)?.torusBurned || 0) + torusBurned,
-        titanxForBurns: 0 // Always 0 because TitanX is retained, not used for burns
+        torusBurned: existing.torusBurned + torusBurned,
+        titanxCollected: existing.titanxCollected + titanxCollected
       });
     });
     
@@ -2445,8 +2447,8 @@ function App() {
 
       <ExpandableChartSection
         id="lp-fee-burns"
-        title={<>Daily <span className="torus-text">TORUS</span> Burned from LP Fees</>}
-        subtitle="TORUS burned from protocol LP position fee collections"
+        title={<>LP Fee Collections and Buy & Burn Activity</>}
+        subtitle="TitanX collected from LP fees and sent to buy & burn operations"
         keyMetrics={[
           {
             label: "Total LP Fee Burns",
@@ -2461,16 +2463,18 @@ function App() {
             trend: "up"
           },
           {
-            label: "TitanX Used for Burns",
-            value: "0 TitanX",
-            trend: "neutral"
-          },
-          {
-            label: "TitanX Collected (Retained)",
+            label: "Total TitanX Collected",
             value: lpFeeBurnsData ? 
               `${(parseFloat(lpFeeBurnsData.totals.titanxCollected) / 1e9).toFixed(2)}B TitanX` : 
               "0 TitanX",
-            trend: "neutral"
+            trend: "up"
+          },
+          {
+            label: "Avg TitanX per Collection",
+            value: lpFeeBurnsData && lpFeeBurnsData.totals.feeCollections > 0 ? 
+              `${(parseFloat(lpFeeBurnsData.totals.titanxCollected) / lpFeeBurnsData.totals.feeCollections / 1e9).toFixed(2)}B TitanX` : 
+              "0 TitanX",
+            trend: "up"
           }
         ]}
         loading={!lpFeeBurnsData}
@@ -2481,7 +2485,7 @@ function App() {
         />
         <PannableBarChart
           key="lp-fee-burns-chart"
-          title="Daily LP Fee Burns"
+          title="LP Fee Collections"
           labels={lpFeeBurns.map(d => {
             const date = new Date(d.date);
             const contractDay = getContractDay(date);
@@ -2489,28 +2493,32 @@ function App() {
           })}
           datasets={[
             {
-              label: 'TORUS Burned from LP Fees',
+              label: 'TORUS Burned',
               data: lpFeeBurns.map(d => d.torusBurned),
               // backgroundColor will be set by gradient plugin
             },
             {
-              label: 'TitanX Used for Additional Burns',
-              data: lpFeeBurns.map(d => d.titanxForBurns), // Always 0
+              label: 'TitanX Collected (Billions)',
+              data: lpFeeBurns.map(d => d.titanxCollected),
               // backgroundColor will be set by gradient plugin
             },
           ]}
           height={600}
-          yAxisLabel="TORUS Burned"
+          yAxisLabel="Amount"
           xAxisLabel="Date / Contract Day"
           windowSize={lpFeeBurnsDays}
           showDataLabels={true}
-          formatTooltip={(value: number) => `${value.toFixed(2)} TORUS`}
+          formatTooltip={(value: number, datasetIndex?: number) => {
+            if (datasetIndex === 0) {
+              return `${value.toFixed(2)} TORUS`;
+            } else {
+              return `${value.toFixed(2)}B TitanX`;
+            }
+          }}
           stacked={false}
         />
         <div className="chart-note">
-          Shows TORUS burned from LP fee collections. The protocol owns Uniswap V3 position #1029195 and collects trading fees periodically. 
-          100% of collected TORUS is burned. TitanX fees are collected but retained by the contract (not used for additional burns), 
-          hence the second bar is always 0. Only 2 collections have occurred so far: 161.5 TORUS on Day 2 and 18.5 TORUS on Day 7.
+          Shows LP fee collection activity from the protocol's Uniswap V3 position #1029195. When fees are collected, the TORUS portion is immediately burned (100% burn rate), while the TitanX portion is sent to the Buy & Process contract for future buy & burn operations. Fee collection is a manual, permissionless process that anyone can trigger.
         </div>
       </ExpandableChartSection>
 
