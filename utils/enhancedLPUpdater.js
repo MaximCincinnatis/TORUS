@@ -348,10 +348,10 @@ class EnhancedLPUpdater {
 
       // Calculate claimable fees
       const claimableFees = await calculateClaimableFees(
-        this.provider,
-        position,
         tokenId,
-        owner
+        owner,
+        position,
+        this.provider
       );
 
       // Check if position is in range
