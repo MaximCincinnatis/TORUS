@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2025-07-23T21:30:09.925Z",
+  "lastUpdated": "2025-07-23T22:00:15.678Z",
   "version": "1.0.0",
   "poolData": {
     "sqrtPriceX96": "518435183897510822631789296950520",
@@ -31,7 +31,14 @@
       "lastChecked": "2025-07-23T21:30:04.825Z",
       "torusAmount": 0,
       "titanxAmount": 114999999.99989024,
-      "claimableYield": 0
+      "claimableYield": 0,
+      "burned": false,
+      "token0": "0xB47f575807fC5466285e1277Ef8aCFBB5c6686E8",
+      "token1": "0xF19308F923582A6f7c465e5CE7a9Dc1BEC6665B1",
+      "nonce": "0",
+      "status": "inactive",
+      "lastUpdated": "2025-07-23T22:00:04.446Z",
+      "lastActivityBlock": 22984704
     },
     {
       "tokenId": "1031465",
@@ -42,8 +49,8 @@
       "lowerTitanxPerTorus": "31.30M",
       "upperTitanxPerTorus": "51.60M",
       "currentTitanxPerTorus": "43.84M",
-      "claimableTorus": 0.1052086775777435,
-      "claimableTitanX": 25358409.872219358,
+      "claimableTorus": 0,
+      "claimableTitanX": 0,
       "tokensOwed0": "0",
       "tokensOwed1": "0",
       "fee": 10000,
@@ -51,9 +58,16 @@
       "estimatedAPR": "50.00",
       "priceRange": "31.30M - 51.60M TITANX per TORUS",
       "lastChecked": "2025-07-23T21:30:05.341Z",
-      "torusAmount": 142.95908485722072,
-      "titanxAmount": 3700904013.3938413,
-      "claimableYield": 0
+      "torusAmount": 86.09777741630411,
+      "titanxAmount": 6000310435.015254,
+      "claimableYield": 0,
+      "burned": false,
+      "token0": "0xB47f575807fC5466285e1277Ef8aCFBB5c6686E8",
+      "token1": "0xF19308F923582A6f7c465e5CE7a9Dc1BEC6665B1",
+      "nonce": "0",
+      "status": "inactive",
+      "lastUpdated": "2025-07-23T22:00:05.176Z",
+      "lastActivityBlock": 22984704
     },
     {
       "tokenId": "1032346",
@@ -64,8 +78,8 @@
       "lowerTitanxPerTorus": "28.89M",
       "upperTitanxPerTorus": "35.29M",
       "currentTitanxPerTorus": "43.84M",
-      "claimableTorus": 0.1460776033756232,
-      "claimableTitanX": 5003826.698754727,
+      "claimableTorus": 0,
+      "claimableTitanX": 0,
       "tokensOwed0": "0",
       "tokensOwed1": "0",
       "fee": 10000,
@@ -75,7 +89,14 @@
       "lastChecked": "2025-07-23T21:30:05.968Z",
       "torusAmount": 0,
       "titanxAmount": 879002737.6988096,
-      "claimableYield": 0
+      "claimableYield": 0,
+      "burned": false,
+      "token0": "0xB47f575807fC5466285e1277Ef8aCFBB5c6686E8",
+      "token1": "0xF19308F923582A6f7c465e5CE7a9Dc1BEC6665B1",
+      "nonce": "0",
+      "status": "inactive",
+      "lastUpdated": "2025-07-23T22:00:05.984Z",
+      "lastActivityBlock": 22984704
     },
     {
       "tokenId": "1029195",
@@ -86,8 +107,8 @@
       "lowerTitanxPerTorus": "0.00M",
       "upperTitanxPerTorus": "Infinity",
       "currentTitanxPerTorus": "43.60M",
-      "claimableTorus": 28.775369465319077,
-      "claimableTitanX": 1421488661.3248188,
+      "claimableTorus": 0,
+      "claimableTitanX": 0,
       "tokensOwed0": "28775369465319077134",
       "tokensOwed1": "1415275328737081613018199354",
       "fee": 10000,
@@ -95,9 +116,16 @@
       "estimatedAPR": "12.50",
       "priceRange": "Full Range",
       "lastChecked": "2025-07-23T21:30:06.504Z",
-      "torusAmount": 10331.252155288586,
-      "titanxAmount": 394567210003.75946,
-      "claimableYield": 583858510.3099428
+      "torusAmount": 9880.423234495396,
+      "titanxAmount": 423063264075.79175,
+      "claimableYield": 0,
+      "burned": false,
+      "token0": "0xB47f575807fC5466285e1277Ef8aCFBB5c6686E8",
+      "token1": "0xF19308F923582A6f7c465e5CE7a9Dc1BEC6665B1",
+      "nonce": "0",
+      "status": "inactive",
+      "lastUpdated": "2025-07-23T22:00:06.690Z",
+      "lastActivityBlock": 22984704
     }
   ],
   "historicalData": {
@@ -39444,5 +39472,7 @@
   ],
   "totalSupply": 18702.83865291623,
   "totalTitanXBurnt": "146402620430850634035681599659",
-  "titanxTotalSupply": "105730748416061088473799240582820"
+  "titanxTotalSupply": "105730748416061088473799240582820",
+  "lastLPUpdate": 22984704,
+  "lastBlock": 22984704
 }
