@@ -54,8 +54,13 @@ async function main() {
   log('====================================', 'bright');
   
   // 1. Run smart update (preserves data)
-  if (!execCommand('node smart-update-fixed.js', 'Running smart update')) {
-    log('Smart update had issues, but continuing...', 'yellow');
+  // Using enhanced version that preserves closed LP positions
+  if (!execCommand('node smart-update-enhanced-integrated.js', 'Running smart update')) {
+    // Fall back to original if enhanced fails
+    log('Enhanced update failed, trying original...', 'yellow');
+    if (!execCommand('node smart-update-fixed.js', 'Running original smart update')) {
+      log('Smart update had issues, but continuing...', 'yellow');
+    }
   }
   
   // 2. Check if LP positions need detailed update

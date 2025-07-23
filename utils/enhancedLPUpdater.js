@@ -12,6 +12,7 @@ const {
   calculateClaimableFees,
   mapFieldNames
 } = require('../shared/lpCalculations');
+const { getLogger } = require('./logger');
 
 // NFT Position Manager ABI (minimal)
 const POSITION_MANAGER_ABI = [
@@ -34,6 +35,7 @@ class EnhancedLPUpdater {
     this.poolAddress = poolAddress;
     this.stateTransitions = [];
     this.closedPositions = new Set();
+    this.logger = getLogger({ logLevel: 'info' });
   }
 
   /**
@@ -43,14 +45,23 @@ class EnhancedLPUpdater {
     const startTime = Date.now();
     const currentBlock = await this.provider.getBlockNumber();
     
-    console.log(`Starting enhanced LP position update at block ${currentBlock}`);
+    await this.logger.info(`Starting enhanced LP position update at block ${currentBlock}`, {
+      existingPositions: currentData.lpPositions?.length || 0,
+      options
+    });
+    
+    this.logger.startTimer('updateAllPositions');
 
     // Get pool state for calculations
+    this.logger.startTimer('getPoolState');
     const poolState = await this.getPoolState();
+    await this.logger.endTimer('getPoolState', { tick: poolState.tick });
 
     // Create backup before updates
     if (options.createBackup !== false) {
+      this.logger.startTimer('backup');
       await backupLPData(currentData);
+      await this.logger.endTimer('backup');
     }
 
     const results = {
@@ -64,22 +75,33 @@ class EnhancedLPUpdater {
 
     try {
       // Step 1: Update existing positions
+      this.logger.startTimer('updateExistingPositions');
       const updatedPositions = await this.updateExistingPositions(
         currentData.lpPositions,
         currentBlock,
         poolState
       );
+      await this.logger.endTimer('updateExistingPositions', {
+        updated: updatedPositions.updated.length,
+        closed: updatedPositions.closed.length,
+        transferred: updatedPositions.transferred.length
+      });
       results.updated = updatedPositions.updated.length;
       results.closed = updatedPositions.closed.length;
       results.transferred = updatedPositions.transferred.length;
 
       // Step 2: Check for new positions
+      this.logger.startTimer('checkForNewPositions');
       const newPositions = await this.checkForNewPositions(
         currentData.lpPositions,
         currentBlock,
         poolState,
         options.scanBlocks || 1000
       );
+      await this.logger.endTimer('checkForNewPositions', {
+        found: newPositions.length,
+        scanBlocks: options.scanBlocks || 1000
+      });
       results.new = newPositions.length;
 
       // Step 3: Merge all positions
@@ -98,6 +120,16 @@ class EnhancedLPUpdater {
 
       // Step 5: Generate statistics
       const stats = this.generateUpdateStats(allPositions, startTime);
+      
+      const duration = await this.logger.endTimer('updateAllPositions');
+      
+      // Log update summary
+      await this.logger.logUpdateSummary({
+        ...results,
+        duration,
+        totalPositions: allPositions.length,
+        stateTransitions: this.stateTransitions.length
+      });
 
       return {
         success: true,
@@ -112,7 +144,12 @@ class EnhancedLPUpdater {
       };
 
     } catch (error) {
-      console.error('Enhanced LP update failed:', error);
+      await this.logger.error('Enhanced LP update failed', {
+        error: error.message,
+        stack: error.stack,
+        results
+      });
+      
       return {
         success: false,
         error: error.message,
@@ -165,6 +202,12 @@ class EnhancedLPUpdater {
         if (position.status !== statusResult.status) {
           const transition = trackStateTransition(position, { ...position, status: statusResult.status });
           this.stateTransitions.push(transition);
+          
+          await this.logger.logPositionChange(position.tokenId, {
+            previousStatus: position.status,
+            newStatus: statusResult.status,
+            reason: statusResult.reason
+          });
         }
 
         // Process based on status
@@ -209,7 +252,12 @@ class EnhancedLPUpdater {
         }
 
       } catch (error) {
-        console.error(`Failed to update position ${position.tokenId}:`, error.message);
+        await this.logger.error(`Failed to update position ${position.tokenId}`, {
+          tokenId: position.tokenId,
+          error: error.message,
+          stack: error.stack
+        });
+        
         // Keep the position with error flag
         updated.push({
           ...position,
@@ -439,4 +487,4 @@ class EnhancedLPUpdater {
   }
 }
 
-module.exports = EnhancedLPUpdater;
+module.exports = { EnhancedLPUpdater };
