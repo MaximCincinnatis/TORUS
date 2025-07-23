@@ -162,6 +162,35 @@
   font-weight: 600;
 }
 
+/* TORUS Contract Position Styling */
+.torus-contract-position {
+  background: linear-gradient(135deg, rgba(139, 92, 246, 0.1) 0%, rgba(168, 85, 247, 0.05) 100%);
+  border-left: 3px solid #8b5cf6;
+  position: relative;
+}
+
+.torus-contract-position:hover {
+  background: linear-gradient(135deg, rgba(139, 92, 246, 0.15) 0%, rgba(168, 85, 247, 0.1) 100%);
+}
+
+.torus-contract-position td {
+  font-weight: 500;
+}
+
+.torus-contract-badge {
+  display: inline-block;
+  margin-left: 8px;
+  padding: 2px 8px;
+  background: linear-gradient(135deg, #8b5cf6 0%, #a855f7 100%);
+  color: white;
+  border-radius: 4px;
+  font-size: 0.625rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  box-shadow: 0 2px 4px rgba(139, 92, 246, 0.3);
+}
+
 @media (max-width: 768px) {
   .lp-positions-table {
     font-size: 0.75rem;
@@ -175,5 +204,11 @@
   .status-badge {
     font-size: 0.625rem;
     padding: 2px 8px;
+  }
+  
+  .torus-contract-badge {
+    font-size: 0.5rem;
+    padding: 1px 6px;
+    margin-left: 4px;
   }
 }

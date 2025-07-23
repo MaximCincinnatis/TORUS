@@ -1,6 +1,7 @@
 import React from 'react';
 import { SimpleLPPosition } from '../../utils/uniswapV3RealOwners';
 import { tickToTitanXPrice } from '../../utils/uniswapV3Math';
+import { CONTRACTS } from '../../constants/contracts';
 import './LPPositionsTable.css';
 
 interface LPPositionsTableProps {
@@ -166,8 +167,11 @@ const LPPositionsTable: React.FC<LPPositionsTableProps> = ({ positions, loading,
                 ? "Full Range V3" 
                 : formatPriceRangeWithCommas((position as any).priceRange) || formatTitanXPriceRange(position.tickLower, position.tickUpper);
 
+              // Check if this position is owned by a TORUS contract
+              const isTorusContract = position.owner.toLowerCase() === CONTRACTS.TORUS_BUY_PROCESS.toLowerCase();
+
               return (
-                <tr key={`${position.owner}-${index}`}>
+                <tr key={`${position.owner}-${index}`} className={isTorusContract ? 'torus-contract-position' : ''}>
                   <td>
                     {position.tokenId && (
                       <a href={`https://app.uniswap.org/positions/v3/ethereum/${position.tokenId}`}
@@ -185,6 +189,9 @@ const LPPositionsTable: React.FC<LPPositionsTableProps> = ({ positions, loading,
                        className="address-link">
                       {formatAddress(position.owner)}
                     </a>
+                    {isTorusContract && (
+                      <span className="torus-contract-badge">TORUS Buy & Process</span>
+                    )}
                   </td>
                   <td>{formatTitanXAmount(titanXAmount)}</td>
                   <td>{formatAmount(torusAmount)}</td>

@@ -49,6 +49,8 @@ interface PannableBarChartProps {
   windowSize?: number;
   showDataLabels?: boolean;
   multipleYAxes?: boolean;
+  yAxis1Label?: string;
+  yAxis2Label?: string;
 }
 
 const PannableBarChart: React.FC<PannableBarChartProps> = ({
@@ -67,6 +69,8 @@ const PannableBarChart: React.FC<PannableBarChartProps> = ({
   windowSize = 30,
   showDataLabels = false,
   multipleYAxes = false,
+  yAxis1Label,
+  yAxis2Label,
 }) => {
   const chartRef = useRef<ChartJSOrUndefined<'bar'>>(null);
   const [startIndex, setStartIndex] = useState(0);
@@ -238,7 +242,7 @@ const PannableBarChart: React.FC<PannableBarChartProps> = ({
         position: 'left' as const,
         title: {
           display: true,
-          text: 'TitanX (Billions)',
+          text: yAxis1Label || yAxisLabel || 'Values',
         },
         grid: {
           display: true,
@@ -252,7 +256,7 @@ const PannableBarChart: React.FC<PannableBarChartProps> = ({
         position: 'right' as const,
         title: {
           display: true,
-          text: 'ETH',
+          text: yAxis2Label || 'Values',
         },
         grid: {
           drawOnChartArea: false,

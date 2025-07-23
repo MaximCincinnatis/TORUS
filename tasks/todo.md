@@ -923,3 +923,69 @@ The `smart-update-fixed.js` script had an incorrect event signature for Created 
 - ✅ Smart update script fixed for future
 - ✅ Monitoring in place to detect issues
 - ✅ Documentation created for future reference
+
+## Chart Improvements (January 23, 2025)
+
+### Tasks Completed
+
+#### 1. LP Fee Burns Chart Improvements ✅
+- **Dual Y-Axes**: Added dual Y-axes with TORUS on left and TitanX on right for better scaling
+- **Updated Title**: Changed to "LP Fee Collections and Buy & Burn Activity"
+- **Data Display**: Shows both TORUS burned and TitanX collected (in billions)
+- **Key Metrics**: Updated to show total and average TitanX collected
+- **Chart Note**: Clarified that TitanX is sent to Buy & Process contract for buy & burn operations
+
+#### 2. Added Color Legends ✅
+Added color legends to all multi-dataset charts for better data clarity:
+- LP Fee Burns chart
+- Daily Buy and Burn/Build Operations chart
+- Daily TitanX/ETH Used for Burns chart
+- Daily TitanX/ETH Used for Builds chart
+
+#### 3. Fixed Chart Display Issues ✅
+- **Cumulative TORUS Burned**: Fixed X-axis labels (kept single line due to PannableLineChart limitations)
+- **Removed APR Calculation**: Removed inaccurate Est. APR column from LP positions table
+- **Removed Supply Projection**: Commented out Future TORUS Supply Projection chart from frontend
+
+### Technical Details
+- Used `yAxisID` property to enable dual Y-axes on charts
+- Added `showLegend={true}` prop to display color legends
+- Maintained backend functionality while improving frontend display
+- All changes tested and build successful with only warnings
+
+### Development Standards Applied
+- **Simple Solutions**: Made minimal changes to achieve desired results
+- **Preserve Functionality**: Kept all backend code intact
+- **Clear Documentation**: Added comments explaining removed sections
+- **Test Everything**: Verified build success before committing
+
+## LP Position 1029195 Highlighting (January 23, 2025)
+
+### Task Completed
+Successfully implemented highlighting for LP position 1029195, which is owned by the TORUS Buy & Process contract (0xAa390a37006E22b5775A34f2147F81eBD6a63641).
+
+### Changes Made
+1. **Imported CONTRACTS**: Added import for the contracts constants to identify the Buy & Process address
+2. **Added Position Check**: Modified LPPositionsTable to check if position owner matches Buy & Process contract
+3. **Applied Special Styling**: Added `torus-contract-position` class to the table row for contract positions
+4. **Added Visual Badge**: Created "TORUS Buy & Process" badge next to the address for clear identification
+5. **Created Custom CSS**: Added purple gradient background, left border, and styled badge to make the position stand out
+
+### Technical Implementation
+- **Component**: `src/components/lp/LPPositionsTable.tsx`
+  - Added contract address comparison (case-insensitive)
+  - Conditionally applied CSS class and badge
+- **Styling**: `src/components/lp/LPPositionsTable.css`
+  - Purple gradient background matching TORUS branding
+  - 3px left border in TORUS purple (#8b5cf6)
+  - Gradient badge with shadow effect
+  - Responsive design for mobile devices
+
+### Result
+LP position 1029195 is now clearly highlighted as the TORUS Buy & Process contract position with:
+- Purple-tinted background row
+- Purple left border
+- "TORUS BUY & PROCESS" badge next to the address
+- Slightly bolder text for emphasis
+
+This makes it immediately obvious to users that this position is special and belongs to the TORUS protocol itself.

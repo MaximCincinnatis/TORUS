@@ -2365,6 +2365,8 @@ function App() {
           multipleYAxes={true}
           minBarHeight={2}
           showLegend={true}
+          yAxis1Label="TitanX (Billions)"
+          yAxis2Label="ETH"
         />
         <div className="chart-note">
           Shows the daily amount of TitanX (left axis in billions) and ETH (right axis) used specifically in Buy & Burn operations that permanently remove TORUS from circulation. This does not include TitanX/ETH used in Buy & Build operations which add liquidity to the protocol.
@@ -2444,6 +2446,8 @@ function App() {
           multipleYAxes={true}
           minBarHeight={2}
           showLegend={true}
+          yAxis1Label="TitanX (Billions)"
+          yAxis2Label="ETH"
         />
         <div className="chart-note">
           Shows the daily amount of TitanX (left axis in billions) and ETH (right axis) used in Buy & Build operations. These operations purchase TORUS to add liquidity to the protocol rather than burning it. The remaining TORUS after liquidity provision is burned.
@@ -2525,6 +2529,8 @@ function App() {
           stacked={false}
           multipleYAxes={true}
           showLegend={true}
+          yAxis1Label="TORUS Burned"
+          yAxis2Label="TitanX Collected (Billions)"
         />
         <div className="chart-note">
           Shows LP fee collection activity from the protocol's Uniswap V3 position #1029195. When fees are collected, the TORUS portion is immediately burned (100% burn rate), while the TitanX portion is sent to the Buy & Process contract for future buy & burn operations. Fee collection is a manual, permissionless process that anyone can trigger.
