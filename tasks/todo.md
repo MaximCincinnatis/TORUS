@@ -92,11 +92,11 @@
 - Subtle brightness increase maintains the dark theme while improving visibility
 
 ### Background Movement Speed Adjustment ✓
-- Slowed down all background animations by 15%:
-  - Primary aurora layer: 30s→34.5s (aurora), 12s→13.8s (breathe)
-  - Secondary aurora layer: 35s→40.25s (aurora), 15s→17.25s (breathe)  
-  - Mesh gradient rotation: 60s→69s
-- Creates a subtly slower, more refined movement effect
+- Slowed down all background animations by 20%:
+  - Primary aurora layer: 30s→36s (aurora), 12s→14.4s (breathe)
+  - Secondary aurora layer: 35s→42s (aurora), 15s→18s (breathe)  
+  - Mesh gradient rotation: 60s→72s
+- Creates a noticeably calmer, more elegant movement effect
 
 ## Historical Data Implementation Review (January 23, 2025)
 
