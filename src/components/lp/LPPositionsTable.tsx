@@ -133,7 +133,6 @@ const LPPositionsTable: React.FC<LPPositionsTableProps> = ({ positions, loading,
                 <span className="torus-text">TORUS</span> Amount
               </th>
               <th>Claimable Yield</th>
-              <th>Est. APR (24hr)</th>
               <th>TitanX Price Range (Millions per TORUS)</th>
               <th>Status</th>
             </tr>
@@ -193,9 +192,6 @@ const LPPositionsTable: React.FC<LPPositionsTableProps> = ({ positions, loading,
                     <div>{formatClaimableAmount(position.claimableTorus || 0)} TORUS</div>
                     <div>{formatTitanXAmount(position.claimableTitanX || 0)} TitanX</div>
                   </td>
-                  <td className="apr">
-                    {position.estimatedAPR ? `${parseFloat(position.estimatedAPR.toString()).toFixed(1)}%` : 'N/A'}
-                  </td>
                   <td className="price-range">{titanXPriceRange}</td>
                   <td>
                     <span className={`status-badge ${position.inRange ? 'in-range' : 'out-range'}`}>
@@ -211,10 +207,7 @@ const LPPositionsTable: React.FC<LPPositionsTableProps> = ({ positions, loading,
       
       <div className="lp-positions-footer">
         <p className="disclaimer">
-          * Data shows individual LP position holders with their actual TORUS and TitanX amounts, claimable yield, and estimated APR (not compounded).
-        </p>
-        <p className="disclaimer">
-          ** APR values are calculated using real-time pool prices and a 7-day fee accumulation assumption. Actual APR may vary based on when fees were last collected.
+          * Data shows individual LP position holders with their actual TORUS and TitanX amounts and current claimable yield.
         </p>
       </div>
     </div>
