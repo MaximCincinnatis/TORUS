@@ -116,15 +116,15 @@ const FutureMaxSupplyChart: React.FC<FutureMaxSupplyChartProps> = ({
         {
           label: 'From Stakes',
           data: adjustedProjections.map(p => Math.round(p.breakdown.fromStakes)),
-          borderColor: '#22C55E',
-          backgroundColor: 'rgba(34, 197, 94, 0.1)',
+          borderColor: '#EC4899',
+          backgroundColor: 'rgba(236, 72, 153, 0.1)',
           fill: false,
         },
         {
           label: 'From Creates',
           data: adjustedProjections.map(p => Math.round(p.breakdown.fromCreates)),
-          borderColor: '#3B82F6',
-          backgroundColor: 'rgba(59, 130, 246, 0.1)',
+          borderColor: '#8B5CF6',
+          backgroundColor: 'rgba(139, 92, 246, 0.1)',
           fill: false,
         },
         {

@@ -18,6 +18,54 @@
 - Added "Total ETH Used in Creates" to the Create Metrics card
 - Both metrics display with ETH logo and 2 decimal precision
 
+### Chart Color Update ✓
+- Changed "From Creates" line color from blue (#3B82F6) to purple (#8B5CF6) on Future TORUS Max Supply Projection chart
+- Updated background color to match (rgba(139, 92, 246, 0.1))
+
+### Daily TitanX Usage Chart Added ✓
+- Created new chart "Daily TitanX Usage - Creates vs Stakes" under the TitanX usage section
+- Shows two bars per day: one for TitanX from creates, one for TitanX from stakes
+- Displays data from Day 1 to current protocol day
+- Key metrics show totals and peak days for both creates and stakes
+- TitanX from Creates uses gradient (white to green), Stakes uses darker green
+
+### World-Class Purple/Yellow Gradient Background ✓
+- Redesigned dashboard background with purple-dominant gradient
+- Multiple layers of purple gradients (35%, 30%, 25%, 28%, 22% opacity)
+- Yellow highlight accents at strategic positions (12%, 10%, 8% opacity)
+- Maintained smooth floating animation (20s and 25s cycles)
+- Changed base background color from #101015 to #0a0a0f for better contrast
+- Purple colors: #8b5cf6, #7c3aed, #6d28d9, #9333ea, #a78bfa
+- Yellow colors: #fbbf24, #fcd34d, #f59e0b
+
+### Scrollbar Gradient Update ✓
+- Changed scrollbar from green-purple to yellow-purple gradient
+- Normal state: #fbbf24 (yellow) to #8b5cf6 (purple)
+- Hover state: #f59e0b (darker yellow) to #7c3aed (darker purple)
+- Matches the TORUS brand colors throughout the dashboard
+
+### Chart Bar Colors Changed to Pink ✓
+- Added pink gradient color scheme (#fbbdd5 to #ec4899)
+- Updated gradient plugin to use pink for:
+  - "Buy & Build" bars in Daily Buy and Burn/Build Operations chart
+  - "Accrued Rewards" bars in TORUS Released Each Day chart
+  - "Number of Creates" bars in Creates Ending Each Day chart
+- Updated chart legend and descriptions to reflect pink color
+- Removed hardcoded green color from Accrued Rewards
+
+### TORUS Gradient Enhanced with Pink ✓
+- Updated all TORUS bars to use yellow-pink-purple gradient instead of yellow-purple
+- Modified createGradient function to add pink (#ec4899) at 50% position
+- Gradient now flows: yellow (#fbbf24) → pink (#ec4899) → purple (#8b5cf6)
+- Updated all TORUS legend gradients to show three colors
+- Changed "From Stakes" line in Future TORUS Max Supply Projection from green to pink (#EC4899)
+
+### Fixed Remaining Color Issues ✓
+- Removed hardcoded green backgroundColor (#10b981) from Number of Creates chart
+- Now uses pink gradient from the gradient plugin
+- Updated Buy & Build legend color from blue gradient to pink gradient
+- Legend now matches the pink bars for Buy & Build operations
+
 ## Historical Data Implementation Review (January 23, 2025)
 
 ### Summary of Changes
@@ -73,6 +121,32 @@ Successfully implemented historical data display for 5 charts as requested by th
    - Previously showed all 365 days when "ALL" was selected
    - Now limits to current protocol day (actual days since contract launch)
    - Matches behavior of other charts that auto-fit to available data
+
+4. **Chart Descriptions Updated** ✓
+   - Updated 6 chart descriptions to reflect historical + future data display
+   - Changed from "over the next X days" to "from contract launch through 88 days ahead"
+   - Added proper description for TORUS Released chart which was missing one
+   - Updated TORUS Staked chart to clarify it shows Day 1 to current day
+   - Fixed contract launch date reference (July 10, not July 11)
+
+5. **Fixed Contract Day Calculation** ✓
+   - Fixed timezone issue causing July 10 to display as July 9
+   - Changed CONTRACT_START_DATE from string date to explicit date constructor
+   - Now correctly shows July 10 as Day 1 (not Day 0)
+   - Affects all charts showing contract days in labels
+
+6. **Fixed Tooltip Contract Days** ✓
+   - Fixed supplyProjection tooltip to use getContractDay() instead of index-based calculation
+   - Verified all charts use getContractDay() for consistent day numbering
+   - Ensured July 10 always shows as Day 1 in tooltips
+   - No data should exist before July 10 (Day 1)
+
+7. **Eliminated Day 0 from All Charts** ✓
+   - Added parseDateString helper to handle date string parsing in local timezone
+   - Updated getContractDay to handle both Date objects and date strings
+   - Added Math.max(1, daysDiff) to ensure no Day 0 can ever appear
+   - Updated 10+ chart label calculations to use date strings directly
+   - Fixed timezone mismatch that was causing July 10 to show as Day 0
 
 ---
 
@@ -1207,3 +1281,53 @@ Update the following charts to show data from contract day 1 (July 10, 2025) onw
 - Charts remain performant with full data range
 - Users can easily navigate between historical and future data
 - Code remains clean and maintainable
+
+## Day 0 Investigation Results (July 23, 2025)
+
+### Problem Statement
+User reported that many charts still show Day 0, even though July 10, 2025 should be Day 1.
+
+### Root Cause Found: Timezone Issue
+The issue is caused by a timezone mismatch when parsing dates:
+
+1. **CONTRACT_START_DATE** is created using the JavaScript Date constructor with local timezone:
+   ```javascript
+   const CONTRACT_START_DATE = new Date(2025, 6, 10); // July 10, 2025 in LOCAL timezone
+   CONTRACT_START_DATE.setHours(0, 0, 0, 0);
+   // Result: 2025-07-10T07:00:00.000Z (UTC) = July 10 00:00 PDT
+   ```
+
+2. **Date strings** from JSON data are parsed as UTC:
+   ```javascript
+   const dateFromString = new Date('2025-07-10');
+   // Result: 2025-07-10T00:00:00.000Z (UTC) = July 9 17:00 PDT
+   ```
+
+3. **Time difference**: 7 hours (PDT timezone offset)
+
+4. **Impact on getContractDay function**:
+   ```javascript
+   // July 10 string date appears 7 hours BEFORE CONTRACT_START_DATE
+   // This causes getContractDay('2025-07-10') to return Day 0 instead of Day 1
+   ```
+
+### Affected Components
+Charts that use date strings from JSON data and convert them using getContractDay():
+- Daily TORUS Burned chart (uses buyProcessData.dailyData)
+- Cumulative TORUS Burned chart
+- Daily Buy and Burn/Build Operations chart
+- Daily TitanX/ETH Used charts
+- LP Fee Collections chart
+
+### Solution Required
+Fix the timezone handling in one of these ways:
+1. Parse date strings with local timezone consideration
+2. Create CONTRACT_START_DATE in UTC
+3. Add timezone offset compensation in getContractDay function
+
+### Testing Confirmation
+```javascript
+// Current behavior:
+getContractDay(new Date('2025-07-10')) // Returns: Day 0 ❌
+getContractDay(new Date(2025, 6, 10)) // Returns: Day 1 ✅
+```

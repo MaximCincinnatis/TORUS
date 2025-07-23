@@ -9,12 +9,12 @@ export const createGradient = (ctx: CanvasRenderingContext2D, chartArea: any, co
     return `rgba(${r}, ${g}, ${b}, ${alpha})`;
   };
   
-  // Special handling for TORUS gradient to have more purple
+  // Special handling for TORUS gradient - yellow to pink to purple
   if (color1 === '#fbbf24' && color2 === '#8b5cf6') {
-    // TORUS gradient: more purple, less yellow
-    gradient.addColorStop(0, hexToRgba(color1, opacity * 0.5));  // Yellow at bottom
-    gradient.addColorStop(0.3, hexToRgba(color2, opacity * 0.7)); // Purple starts early
-    gradient.addColorStop(1, hexToRgba(color2, opacity));         // Full purple at top
+    // TORUS gradient: yellow to pink to purple
+    gradient.addColorStop(0, hexToRgba('#fbbf24', opacity * 0.5));   // Yellow at bottom
+    gradient.addColorStop(0.5, hexToRgba('#ec4899', opacity * 0.7)); // Pink in middle
+    gradient.addColorStop(1, hexToRgba('#8b5cf6', opacity));         // Purple at top
   } else if (color1 === '#ffffff' && color2 === '#16a34a') {
     // TitanX gradient: white to green with more green
     gradient.addColorStop(0, hexToRgba(color1, opacity * 0.4));  // White at bottom (less white)
@@ -85,6 +85,12 @@ export const chartColors = {
     start: '#60a5fa',  // Light blue
     end: '#2563eb',    // Darker blue
     border: '#1d4ed8'
+  },
+  // Pink gradient for special bars
+  pink: {
+    start: '#fbbdd5',  // Light pink
+    end: '#ec4899',    // Hot pink
+    border: '#db2777'
   }
 };
 
@@ -116,13 +122,17 @@ export const gradientPlugin = {
       } else if (dataset.label === 'Buy & Burn') {
         colorScheme = chartColors.torus; // TORUS colors for Buy & Burn
       } else if (dataset.label === 'Buy & Build') {
-        colorScheme = chartColors.secondary; // Cyan to Blue for Buy & Build
+        colorScheme = chartColors.pink; // Pink for Buy & Build
       } else if (dataset.label === 'Principal TORUS') {
         colorScheme = chartColors.torus; // TORUS colors for Principal
+      } else if (dataset.label === 'Accrued Rewards') {
+        colorScheme = chartColors.pink; // Pink for Accrued Rewards
       } else if (dataset.label === 'TORUS Staked') {
         colorScheme = chartColors.torus; // TORUS colors for Staked
       } else if (dataset.label === 'TitanX Amount') {
         colorScheme = chartColors.titanx; // White to Green for TitanX
+      } else if (dataset.label === 'Number of Creates') {
+        colorScheme = chartColors.pink; // Pink for Creates ending
       } else {
         // Default color scheme
         switch (i) {

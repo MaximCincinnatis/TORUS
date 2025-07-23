@@ -19,20 +19,20 @@ import { updateDailySnapshot } from './utils/historicalSupplyTracker';
 import './App.css';
 
 // Contract launch date - Day 1 (corrected to align with protocol days)
-const CONTRACT_START_DATE = new Date('2025-07-10');
+const CONTRACT_START_DATE = new Date(2025, 6, 10); // July 10, 2025 (month is 0-indexed)
 CONTRACT_START_DATE.setHours(0, 0, 0, 0);
 
 // Maximum days to calculate for all charts (for panning capability)
 const MAX_CHART_DAYS = 365; // Show up to 1 year of data for panning
 
 // Get current protocol day dynamically
-const getCurrentProtocolDay = () => {
+function getCurrentProtocolDay() {
   const today = new Date();
   today.setHours(0, 0, 0, 0);
   const msPerDay = 24 * 60 * 60 * 1000;
   const daysDiff = Math.floor((today.getTime() - CONTRACT_START_DATE.getTime()) / msPerDay) + 1;
   return Math.max(1, daysDiff); // Ensure at least day 1
-};
+}
 
 // Helper to determine if chart should be dynamic (forward-looking)
 const isForwardLookingChart = (chartId: string) => {
@@ -85,6 +85,7 @@ function App() {
   const [torusReleasesDays, setTorusReleasesDays] = useState<number>(9999);
   const [titanXUsageDays, setTitanXUsageDays] = useState<number>(9999);
   const [sharesReleasesDays, setSharesReleasesDays] = useState<number>(9999);
+  const [dailyTitanXUsageDays, setDailyTitanXUsageDays] = useState<number>(9999);
   const [futureMaxSupplyDays, setFutureMaxSupplyDays] = useState<number>(9999);
   const [torusStakedDays, setTorusStakedDays] = useState<number>(9999);
   const [torusRewardsDays, setTorusRewardsDays] = useState<number>(9999);
@@ -477,11 +478,31 @@ function App() {
     return result;
   };
 
+  // Helper function to parse date strings consistently in local timezone
+  const parseDateString = (dateStr: string): Date => {
+    // Parse YYYY-MM-DD format in local timezone (not UTC)
+    const [year, month, day] = dateStr.split('-').map(num => parseInt(num));
+    return new Date(year, month - 1, day); // month is 0-indexed
+  };
+
   // Calculate contract day for a given date
-  const getContractDay = (date: Date) => {
+  const getContractDay = (date: Date | string) => {
     const msPerDay = 24 * 60 * 60 * 1000;
-    const daysDiff = Math.floor((date.getTime() - CONTRACT_START_DATE.getTime()) / msPerDay) + 1;
-    return daysDiff;
+    
+    // Handle string dates
+    const dateObj = typeof date === 'string' ? parseDateString(date) : date;
+    
+    // Normalize both dates to midnight local time to avoid timezone issues
+    const normalizedDate = new Date(dateObj);
+    normalizedDate.setHours(0, 0, 0, 0);
+    
+    const normalizedStart = new Date(CONTRACT_START_DATE);
+    normalizedStart.setHours(0, 0, 0, 0);
+    
+    const daysDiff = Math.floor((normalizedDate.getTime() - normalizedStart.getTime()) / msPerDay) + 1;
+    
+    // Ensure we never return less than 1 (no Day 0)
+    return Math.max(1, daysDiff);
   };
 
   // Helper function to get full date range from contract start to future
@@ -834,6 +855,78 @@ function App() {
     }));
   };
 
+  const calculateDailyTitanXUsage = () => {
+    console.log('%c🔍 CALCULATING DAILY TITANX USAGE (CREATES + STAKES) 🔍', 'background: #16a34a; color: white; font-weight: bold; font-size: 20px; padding: 10px');
+    
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    
+    // Get the current protocol day to limit the range
+    const currentDay = getCurrentProtocolDay();
+    const maxDay = currentDay; // Only show up to current day for this chart
+    
+    // Initialize data structure for each day
+    const dailyUsage: { [key: string]: { creates: number; stakes: number } } = {};
+    
+    // Initialize all days from day 1 to current
+    for (let day = 1; day <= maxDay; day++) {
+      const date = new Date(CONTRACT_START_DATE);
+      date.setDate(date.getDate() + day - 1);
+      const dateKey = date.toISOString().split('T')[0];
+      dailyUsage[dateKey] = { creates: 0, stakes: 0 };
+    }
+    
+    console.log(`Processing ${createData.length} creates for daily TitanX usage...`);
+    
+    // Process creates - use the timestamp when TitanX was paid (not maturity)
+    createData.forEach((create) => {
+      if (create.titanAmount && create.titanAmount !== '0') {
+        const createDate = new Date(parseInt(create.timestamp) * 1000);
+        createDate.setHours(0, 0, 0, 0);
+        const dateKey = createDate.toISOString().split('T')[0];
+        
+        if (dailyUsage[dateKey]) {
+          const amount = parseFloat(create.titanAmount) / 1e18;
+          dailyUsage[dateKey].creates += amount;
+        }
+      }
+    });
+    
+    console.log(`Processing ${stakeData.length} stakes for daily TitanX usage...`);
+    
+    // Process stakes - use the timestamp when TitanX was paid
+    stakeData.forEach((stake) => {
+      if (stake.rawCostTitanX && stake.rawCostTitanX !== '0') {
+        const stakeDate = new Date(parseInt(stake.timestamp) * 1000);
+        stakeDate.setHours(0, 0, 0, 0);
+        const dateKey = stakeDate.toISOString().split('T')[0];
+        
+        if (dailyUsage[dateKey]) {
+          const amount = parseFloat(stake.rawCostTitanX) / 1e18;
+          dailyUsage[dateKey].stakes += amount;
+        }
+      }
+    });
+    
+    // Convert to array format
+    const result = Object.entries(dailyUsage).map(([date, usage]) => ({
+      date,
+      creates: usage.creates,
+      stakes: usage.stakes,
+      total: usage.creates + usage.stakes
+    }));
+    
+    // Log summary
+    const totalCreates = result.reduce((sum, day) => sum + day.creates, 0);
+    const totalStakes = result.reduce((sum, day) => sum + day.stakes, 0);
+    console.log(`Total TitanX from creates: ${totalCreates.toFixed(2)}`);
+    console.log(`Total TitanX from stakes: ${totalStakes.toFixed(2)}`);
+    console.log(`Total TitanX used: ${(totalCreates + totalStakes).toFixed(2)}`);
+    console.log('=== END DAILY TITANX USAGE ===\n');
+    
+    return result;
+  };
+
   const calculateTorusStakedPerDay = () => {
     console.log('%c🔍 CALCULATING TORUS STAKED PER CONTRACT DAY 🔍', 'background: #8b5cf6; color: white; font-weight: bold; font-size: 20px; padding: 10px');
     
@@ -1069,6 +1162,7 @@ function App() {
   
   // Move sharesReleases calculation AFTER createReleases
   const sharesReleases = loading || (stakeData.length === 0 && createData.length === 0) ? [] : calculateSharesReleases();
+  const dailyTitanXUsage = loading || (stakeData.length === 0 && createData.length === 0) ? [] : calculateDailyTitanXUsage();
   
   // Add function to calculate Build-specific TitanX/ETH usage
   const calculateTitanXEthBuildUsage = (): { date: string; titanX: number; eth: number }[] => {
@@ -1157,7 +1251,8 @@ function App() {
     releaseData.forEach((release, i) => {
       const dailyRelease = release.total || 0;
       cumulativeSupply += dailyRelease;
-      const contractDay = currentProtocolDay + i;
+      const releaseDate = new Date(release.date);
+      const contractDay = getContractDay(releaseDate);
       
       // Debug significant releases and September/October dates
       if (dailyRelease > 100 || release.date.includes('2025-09') || release.date.includes('2025-10') || i >= 85) {
@@ -1810,7 +1905,7 @@ function App() {
           showDataLabels={true}
         />
         <div className="chart-note">
-          Shows the total amount of TORUS staked each contract day over the last {torusStakedDays} days. This represents the cumulative principal amounts from all stakes created on each specific day. Contract days start from Day 1 (July 11, 2025) when the TORUS protocol launched.
+          Shows the total amount of TORUS staked on each contract day from Day 1 to the current day. This represents the cumulative principal amounts from all stakes created on each specific day. Contract days start from Day 1 (July 10, 2025) when the TORUS protocol launched. Days with no staking activity show zero values.
         </div>
       </ExpandableChartSection>
 
@@ -1854,8 +1949,7 @@ function App() {
           key="stakes-maturity-chart"
           title="Number of Stakes Ending Each Day"
           labels={stakeReleases.map(r => {
-            const date = new Date(r.date);
-            const contractDay = getContractDay(date);
+            const contractDay = getContractDay(r.date);
             return [`${r.date.substring(5)}`, `Day ${contractDay}`];
           })}
           datasets={[
@@ -1873,7 +1967,7 @@ function App() {
           showDataLabels={true}
         />
         <div className="chart-note">
-          Shows the number of stakes ending each day over the next {stakeMaturityDays} days. The numbers on top of each bar indicate the exact count of stakes maturing that day. Stakes can be created for 1-88 days, so the distribution shows when users originally chose to end their staking positions.
+          Shows the number of stakes that ended (historical) or will end (future) on each day from contract launch through 88 days into the future. The numbers on top of each bar indicate the exact count of stakes maturing that day. Stakes can be created for 1-88 days, so the distribution shows when users chose their maturity dates.
         </div>
       </ExpandableChartSection>
 
@@ -1917,15 +2011,14 @@ function App() {
           key="creates-maturity-chart"
           title="Number of Creates Ending Each Day"
           labels={createReleases.map(r => {
-            const date = new Date(r.date);
-            const contractDay = getContractDay(date);
+            const contractDay = getContractDay(r.date);
             return [`${r.date.substring(5)}`, `Day ${contractDay}`];
           })}
           datasets={[
             {
               label: 'Number of Creates',
               data: createReleases.map(r => r.count),
-              backgroundColor: '#10b981',
+              // backgroundColor will be set by gradient plugin (pink)
             },
           ]}
           height={600}
@@ -1936,7 +2029,7 @@ function App() {
           showDataLabels={true}
         />
         <div className="chart-note">
-          Shows the number of creates ending each day over the next {torusReleasesDays} days. The numbers on top of each bar indicate the exact count of creates maturing that day. Creates can be made for 1-88 days, similar to stakes, representing when users originally chose to end their create positions.
+          Shows the number of creates that ended (historical) or will end (future) on each day from contract launch through 88 days into the future. The numbers on top of each bar indicate the exact count of creates maturing that day. Creates can be made for 1-88 days, similar to stakes.
         </div>
       </ExpandableChartSection>
 
@@ -2003,7 +2096,7 @@ function App() {
               label: 'Accrued Rewards',
               data: torusReleasesWithRewards
                 .map(r => Math.round(r.rewards * 100) / 100),
-              backgroundColor: '#22c55e',
+              // backgroundColor will be set by gradient plugin (pink)
             },
           ]}
           height={600}
@@ -2018,17 +2111,17 @@ function App() {
           customLegendItems={[
             {
               label: 'Principal TORUS',
-              color: 'linear-gradient(to top, #fbbf24, #8b5cf6)',
+              color: 'linear-gradient(to top, #fbbf24, #ec4899, #8b5cf6)',
               logo: 'https://www.torus.win/torus.svg'
             },
             {
               label: 'Accrued Rewards',
-              color: '#22c55e'
+              color: 'linear-gradient(to top, #fbbdd5, #ec4899)'
             }
           ]}
         />
         <div className="chart-note">
-          Note: Purple bars show principal from stakes/creates ending. Green bars show accrued share rewards that have accumulated daily throughout the position's lifetime. Bars are shown side-by-side for easy comparison. Days with no releases show no bars. Rewards are estimated based on current pool data.
+          Shows total TORUS released each day from positions that matured (historical) or will mature (future), spanning from contract launch through 88 days ahead. Purple bars show principal from stakes/creates ending. Pink bars show accrued share rewards that accumulated daily throughout each position's lifetime. Bars are shown side-by-side for easy comparison. Days with no releases show no bars. Rewards are estimated based on current pool data.
         </div>
       </ExpandableChartSection>
 
@@ -2083,8 +2176,7 @@ function App() {
           key="titanx-usage-chart"
           title="Total TitanX Used for Creates Ending Each Day"
           labels={titanXUsage.map(r => {
-            const date = new Date(r.date);
-            const contractDay = getContractDay(date);
+            const contractDay = getContractDay(r.date);
             return [`${r.date.substring(5)}`, `Day ${contractDay}`];
           })}
           datasets={[
@@ -2102,7 +2194,84 @@ function App() {
           windowSize={titanXUsageDays}
         />
         <div className="chart-note">
-          Shows the total TitanX amounts that were used for creates ending each day. When users create positions, they pay TitanX as a fee. This chart displays the aggregate TitanX amounts from all creates maturing on each specific day over the next {titanXUsageDays} days.
+          Shows the total TitanX amounts that were used for creates ending on each day, from contract launch through 88 days into the future. When users create positions, they pay TitanX as a fee. This chart displays the aggregate TitanX amounts from all creates that matured (historical) or will mature (future) on each specific day.
+        </div>
+      </ExpandableChartSection>
+
+      <ExpandableChartSection
+        id="daily-titanx-usage"
+        title={
+          <>
+            <img 
+              src="https://coin-images.coingecko.com/coins/images/32762/large/TitanXpng_%281%29.png?1704456654" 
+              alt="TitanX Logo" 
+              style={{ width: '24px', height: '24px', marginRight: '8px', verticalAlign: 'middle', opacity: 0.8 }}
+            />
+            Daily TitanX Usage - Creates vs Stakes
+          </>
+        }
+        subtitle="TitanX used each day for creates and stakes"
+        keyMetrics={[
+          {
+            label: "Total from Creates",
+            value: `${dailyTitanXUsage.slice(0, dailyTitanXUsageDays).reduce((sum, r) => sum + r.creates, 0).toLocaleString('en-US', { maximumFractionDigits: 0 })} TITANX`,
+            trend: "up"
+          },
+          {
+            label: "Total from Stakes",
+            value: `${dailyTitanXUsage.slice(0, dailyTitanXUsageDays).reduce((sum, r) => sum + r.stakes, 0).toLocaleString('en-US', { maximumFractionDigits: 0 })} TITANX`,
+            trend: "up"
+          },
+          {
+            label: "Peak Day Creates",
+            value: dailyTitanXUsage.slice(0, dailyTitanXUsageDays).length > 0 ? 
+              `${Math.max(...dailyTitanXUsage.slice(0, dailyTitanXUsageDays).map(r => r.creates)).toLocaleString('en-US', { maximumFractionDigits: 0 })} TITANX` : 
+              "0",
+            trend: "up"
+          },
+          {
+            label: "Peak Day Stakes",
+            value: dailyTitanXUsage.slice(0, dailyTitanXUsageDays).length > 0 ? 
+              `${Math.max(...dailyTitanXUsage.slice(0, dailyTitanXUsageDays).map(r => r.stakes)).toLocaleString('en-US', { maximumFractionDigits: 0 })} TITANX` : 
+              "0",
+            trend: "up"
+          }
+        ]}
+        loading={loading}
+      >
+        <DateRangeButtons 
+          selectedDays={dailyTitanXUsageDays}
+          onDaysChange={setDailyTitanXUsageDays}
+        />
+        <PannableBarChart
+          key="daily-titanx-usage-chart"
+          title="Daily TitanX Usage Breakdown"
+          labels={dailyTitanXUsage.map(r => {
+            const contractDay = getContractDay(r.date);
+            return [`${r.date.substring(5)}`, `Day ${contractDay}`];
+          })}
+          datasets={[
+            {
+              label: 'TitanX from Creates',
+              data: dailyTitanXUsage.map(r => Math.round(r.creates * 100) / 100),
+              // backgroundColor will be set by gradient plugin (white to green)
+            },
+            {
+              label: 'TitanX from Stakes',
+              data: dailyTitanXUsage.map(r => Math.round(r.stakes * 100) / 100),
+              backgroundColor: 'rgba(34, 197, 94, 0.7)', // Darker green for stakes
+            },
+          ]}
+          height={600}
+          yAxisLabel="TitanX Amount"
+          xAxisLabel="Date / Contract Day"
+          formatTooltip={(value: number) => `TitanX: ${(value || 0).toLocaleString('en-US', { maximumFractionDigits: 2 })}`}
+          enableScaleToggle={true}
+          windowSize={dailyTitanXUsageDays}
+          showLegend={true}
+        />
+        <div className="chart-note">
+          Shows the TitanX amounts used each day for both creates and stakes. When users create or stake positions, they pay TitanX as a fee. This chart displays the daily breakdown of TitanX usage across both operation types, helping visualize which type of activity drives more TitanX consumption.
         </div>
       </ExpandableChartSection>
 
@@ -2154,8 +2323,7 @@ function App() {
           key="shares-releases-chart"
           title="Total Shares Ending Each Day"
           labels={sharesReleases.map(r => {
-            const date = new Date(r.date);
-            const contractDay = getContractDay(date);
+            const contractDay = getContractDay(r.date);
             return [`${r.date.substring(5)}`, `Day ${contractDay}`];
           })}
           datasets={[
@@ -2186,7 +2354,7 @@ function App() {
           minBarHeight={2}
         />
         <div className="chart-note">
-          Shows the total shares ending each day over the next {sharesReleasesDays} days. Shares represent the user's proportion of the reward pool and are earned from both stakes and creates. When positions mature, these shares are released and converted to TORUS rewards based on the current share-to-TORUS ratio.
+          Shows the total shares that ended (historical) or will end (future) on each day from contract launch through 88 days ahead. Shares represent the user's proportion of the reward pool and are earned from both stakes and creates. When positions mature, these shares are released and converted to TORUS rewards based on the share-to-TORUS ratio at maturity.
         </div>
       </ExpandableChartSection>
 
@@ -2234,8 +2402,7 @@ function App() {
           key="daily-torus-burned-chart"
           title="TORUS Burned Per Day"
           labels={dailyTorusBurned.map(d => {
-            const date = new Date(d.date);
-            const contractDay = getContractDay(date);
+            const contractDay = getContractDay(d.date);
             return [`${d.date.substring(5)}`, `Day ${contractDay}`];
           })}
           datasets={[
@@ -2300,8 +2467,7 @@ function App() {
           key="cumulative-torus-burned-chart"
           title="Cumulative TORUS Burned"
           labels={cumulativeTorusBurned.map(d => {
-            const date = new Date(d.date);
-            const contractDay = getContractDay(date);
+            const contractDay = getContractDay(d.date);
             return `${d.date.substring(5)} (Day ${contractDay})`;
           })}
           datasets={[
@@ -2357,8 +2523,7 @@ function App() {
           key="buy-burn-activity-chart"
           title="Daily Buy & Burn/Build Operations"
           labels={buyBurnActivity.map(d => {
-            const date = new Date(d.date);
-            const contractDay = getContractDay(date);
+            const contractDay = getContractDay(d.date);
             return [`${d.date.substring(5)}`, `Day ${contractDay}`];
           })}
           datasets={[
@@ -2383,12 +2548,12 @@ function App() {
           customLegendItems={[
             {
               label: 'Buy & Burn',
-              color: 'linear-gradient(to top, #fbbf24, #8b5cf6)',
+              color: 'linear-gradient(to top, #fbbf24, #ec4899, #8b5cf6)',
               logo: 'https://www.torus.win/torus.svg'
             },
             {
               label: 'Buy & Build',
-              color: 'linear-gradient(to top, #06b6d4, #3b82f6)'
+              color: 'linear-gradient(to top, #fbbdd5, #ec4899)'
             }
           ]}
         />
@@ -2432,8 +2597,7 @@ function App() {
           key="titanx-eth-usage-chart"
           title="Daily TitanX/ETH Used for Burns"
           labels={titanXEthUsage.map(d => {
-            const date = new Date(d.date);
-            const contractDay = getContractDay(date);
+            const contractDay = getContractDay(d.date);
             return [`${d.date.substring(5)}`, `Day ${contractDay}`];
           })}
           datasets={[
@@ -2525,8 +2689,7 @@ function App() {
           key="titanx-eth-build-usage-chart"
           title="Daily TitanX/ETH Used for Builds"
           labels={titanXEthBuildUsage.map(d => {
-            const date = new Date(d.date);
-            const contractDay = getContractDay(date);
+            const contractDay = getContractDay(d.date);
             return [`${d.date.substring(5)}`, `Day ${contractDay}`];
           })}
           datasets={[
@@ -2620,8 +2783,7 @@ function App() {
           key="lp-fee-burns-chart"
           title="LP Fee Collections"
           labels={lpFeeBurns.map(d => {
-            const date = new Date(d.date);
-            const contractDay = getContractDay(date);
+            const contractDay = getContractDay(d.date);
             return [`${d.date.substring(5)}`, `Day ${contractDay}`];
           })}
           datasets={[
@@ -2658,7 +2820,7 @@ function App() {
           customLegendItems={[
             {
               label: 'TORUS Burned',
-              color: 'linear-gradient(to top, #fbbf24, #8b5cf6)',
+              color: 'linear-gradient(to top, #fbbf24, #ec4899, #8b5cf6)',
               logo: 'https://www.torus.win/torus.svg'
             },
             {
