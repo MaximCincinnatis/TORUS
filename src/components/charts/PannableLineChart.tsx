@@ -282,9 +282,32 @@ const PannableLineChart: React.FC<PannableLineChartProps> = ({
     },
   };
 
+  // Apply gradients to datasets that need them
+  const processedDatasets = visibleDatasets.map(dataset => {
+    // Check if this is a TORUS-related dataset that should have gradient
+    if (dataset.label && dataset.label.toLowerCase().includes('torus') && dataset.fill) {
+      return {
+        ...dataset,
+        backgroundColor: (context: any) => {
+          const chart = context.chart;
+          const {ctx, chartArea} = chart;
+          if (!chartArea) {
+            return dataset.backgroundColor || 'rgba(139, 92, 246, 0.3)';
+          }
+          const gradient = ctx.createLinearGradient(0, chartArea.bottom, 0, chartArea.top);
+          gradient.addColorStop(0, 'rgba(251, 191, 36, 0.3)');  // Yellow at bottom (30% opacity)
+          gradient.addColorStop(0.5, 'rgba(195, 123, 141, 0.3)');  // Mid gradient
+          gradient.addColorStop(1, 'rgba(139, 92, 246, 0.3)');  // Purple at top (30% opacity)
+          return gradient;
+        }
+      };
+    }
+    return dataset;
+  });
+
   const data = {
     labels: visibleLabels,
-    datasets: visibleDatasets,
+    datasets: processedDatasets,
   };
 
   const navButtonStyle: React.CSSProperties = {

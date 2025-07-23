@@ -2219,8 +2219,8 @@ function App() {
             {
               label: 'Total TORUS Burned',
               data: cumulativeTorusBurned.map(d => d.amount),
-              borderColor: '#ec4899',
-              backgroundColor: 'rgba(236, 72, 153, 0.3)',
+              borderColor: '#8b5cf6',  // Purple border to match TORUS branding
+              backgroundColor: 'rgba(139, 92, 246, 0.3)',  // Purple fill with transparency
               fill: true,
             },
           ]}
