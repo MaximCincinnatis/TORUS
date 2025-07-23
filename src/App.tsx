@@ -1591,6 +1591,7 @@ function App() {
         </div>
       </ExpandableChartSection>
 
+      {/* Future TORUS Supply Projection chart - Removed per user request
       <ExpandableChartSection
         id="supply-projection"
         title={<>Future <span className="torus-text">TORUS</span> Supply Projection</>}
@@ -1671,6 +1672,7 @@ function App() {
           <strong>Current Scope:</strong> Shows releases from {torusReleasesWithRewards.slice(0, supplyProjectionDays).filter(r => r.total > 0).length} positions maturing over the next {supplyProjectionDays} days, including their original principal and accumulated share rewards.
         </div>
       </ExpandableChartSection>
+      */}
 
       <ExpandableChartSection
         id="torus-staked-per-day"
@@ -2288,6 +2290,7 @@ function App() {
           windowSize={buyBurnActivityDays}
           showDataLabels={true}
           stacked={false}
+          showLegend={true}
         />
         <div className="chart-note">
           Shows the daily count of Buy & Burn and Buy & Build operations. Buy & Burn permanently removes TORUS from circulation, while Buy & Build purchases TORUS for protocol development.
@@ -2361,6 +2364,7 @@ function App() {
           }}
           multipleYAxes={true}
           minBarHeight={2}
+          showLegend={true}
         />
         <div className="chart-note">
           Shows the daily amount of TitanX (left axis in billions) and ETH (right axis) used specifically in Buy & Burn operations that permanently remove TORUS from circulation. This does not include TitanX/ETH used in Buy & Build operations which add liquidity to the protocol.
@@ -2439,6 +2443,7 @@ function App() {
           }}
           multipleYAxes={true}
           minBarHeight={2}
+          showLegend={true}
         />
         <div className="chart-note">
           Shows the daily amount of TitanX (left axis in billions) and ETH (right axis) used in Buy & Build operations. These operations purchase TORUS to add liquidity to the protocol rather than burning it. The remaining TORUS after liquidity provision is burned.
@@ -2495,16 +2500,18 @@ function App() {
             {
               label: 'TORUS Burned',
               data: lpFeeBurns.map(d => d.torusBurned),
+              yAxisID: 'y',
               // backgroundColor will be set by gradient plugin
             },
             {
               label: 'TitanX Collected (Billions)',
               data: lpFeeBurns.map(d => d.titanxCollected),
+              yAxisID: 'y1',
               // backgroundColor will be set by gradient plugin
             },
           ]}
           height={600}
-          yAxisLabel="Amount"
+          yAxisLabel="TORUS Burned"
           xAxisLabel="Date / Contract Day"
           windowSize={lpFeeBurnsDays}
           showDataLabels={true}
@@ -2516,6 +2523,8 @@ function App() {
             }
           }}
           stacked={false}
+          multipleYAxes={true}
+          showLegend={true}
         />
         <div className="chart-note">
           Shows LP fee collection activity from the protocol's Uniswap V3 position #1029195. When fees are collected, the TORUS portion is immediately burned (100% burn rate), while the TitanX portion is sent to the Buy & Process contract for future buy & burn operations. Fee collection is a manual, permissionless process that anyone can trigger.
