@@ -190,7 +190,7 @@ const LPPositionsTable: React.FC<LPPositionsTableProps> = ({ positions, loading,
                       {formatAddress(position.owner)}
                     </a>
                     {isTorusContract && (
-                      <span className="torus-contract-badge">TORUS Buy & Process</span>
+                      <span className="torus-contract-badge"><span style={{ color: '#fbbf24' }}>TORUS</span> CONTRACT LP</span>
                     )}
                   </td>
                   <td>{formatTitanXAmount(titanXAmount)}</td>
