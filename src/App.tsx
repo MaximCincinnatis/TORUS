@@ -1514,7 +1514,7 @@ function App() {
                 suffix={totalShares > 1e6 ? "" : "SHARES"}
               />
               <MetricCard
-                title={<><img src="/ethereum-logo.png" alt="Ethereum" style={{ width: '16px', height: '16px', marginRight: '6px', verticalAlign: 'middle', backgroundColor: 'transparent' }} />Total ETH Input</>}
+                title={<><img src="/eth-logo.svg" alt="Ethereum" style={{ width: '16px', height: '16px', marginRight: '6px', verticalAlign: 'middle', backgroundColor: 'transparent' }} />Total ETH Input</>}
                 value={totalETHInput.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                 suffix="ETH"
               />
@@ -1941,7 +1941,7 @@ function App() {
             {
               label: 'Principal TORUS',
               color: 'linear-gradient(to top, #fbbf24, #8b5cf6)',
-              logo: '/torus-logo.png'
+              logo: '/logo192.png'
             },
             {
               label: 'Accrued Rewards',
@@ -2306,7 +2306,7 @@ function App() {
             {
               label: 'Buy & Burn',
               color: 'linear-gradient(to top, #fbbf24, #8b5cf6)',
-              logo: '/torus-logo.png'
+              logo: '/logo192.png'
             },
             {
               label: 'Buy & Build',
@@ -2398,7 +2398,7 @@ function App() {
             {
               label: 'ETH Used',
               color: 'linear-gradient(to top, #60a5fa, #2563eb)',
-              logo: '/ethereum-logo.png'
+              logo: '/eth-logo.svg'
             }
           ]}
         />
@@ -2491,7 +2491,7 @@ function App() {
             {
               label: 'ETH Used',
               color: 'linear-gradient(to top, #60a5fa, #2563eb)',
-              logo: '/ethereum-logo.png'
+              logo: '/eth-logo.svg'
             }
           ]}
         />
@@ -2581,7 +2581,7 @@ function App() {
             {
               label: 'TORUS Burned',
               color: 'linear-gradient(to top, #fbbf24, #8b5cf6)',
-              logo: '/torus-logo.png'
+              logo: '/logo192.png'
             },
             {
               label: 'TitanX Collected (Billions)',
@@ -2742,7 +2742,7 @@ function App() {
                   rel="noopener noreferrer"
                   className="footer-link"
                 >
-                  <img src="/torus-logo.png" alt="TORUS" style={{ width: '16px', height: '16px', marginRight: '6px', verticalAlign: 'middle' }} />
+                  <img src="/logo192.png" alt="TORUS" style={{ width: '16px', height: '16px', marginRight: '6px', verticalAlign: 'middle' }} />
                   TORUS Dashboard
                 </a>
                 <a 
@@ -2751,7 +2751,7 @@ function App() {
                   rel="noopener noreferrer"
                   className="footer-link"
                 >
-                  <img src="/torus-logo.png" alt="TORUS" style={{ width: '16px', height: '16px', marginRight: '6px', verticalAlign: 'middle' }} />
+                  <img src="/logo192.png" alt="TORUS" style={{ width: '16px', height: '16px', marginRight: '6px', verticalAlign: 'middle' }} />
                   Documentation
                 </a>
                 <a 
@@ -2787,7 +2787,7 @@ function App() {
                   rel="noopener noreferrer"
                   className="footer-link"
                 >
-                  <img src="/torus-logo.png" alt="TORUS" style={{ width: '16px', height: '16px', marginRight: '6px', verticalAlign: 'middle' }} />
+                  <img src="/logo192.png" alt="TORUS" style={{ width: '16px', height: '16px', marginRight: '6px', verticalAlign: 'middle' }} />
                   Token Holders
                 </a>
                 <a 
