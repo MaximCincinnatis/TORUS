@@ -9,7 +9,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: #0a0a0f;
+  background: #050507;
   color: #fff;
   min-height: 100vh;
   overflow-x: hidden;
@@ -21,65 +21,107 @@ body {
   --grow-duration: 16s;
   --color-shift-duration: 24s;
   --breathing-duration: 12s;
+  --pulse-duration: 4s;
+  --float-duration: 20s;
 }
 
-/* TORUS world-class purple/yellow gradient background */
+/* TORUS world-class aurora-inspired background */
 .dashboard-container {
   position: relative;
   min-height: 100vh;
-  background: #0a0a0f;
+  background: #050507;
   overflow: hidden;
 }
 
+/* Base aurora layer - flowing ribbons of color */
 .dashboard-container::before {
   content: '';
   position: fixed;
-  top: -100%;
-  left: -100%;
-  width: 300%;
-  height: 300%;
+  top: -50%;
+  left: -50%;
+  width: 200%;
+  height: 200%;
   background: 
-    /* Deep purple core gradients */
-    radial-gradient(circle at 25% 35%, rgba(139, 92, 246, 0.35) 0%, transparent 35%),
-    radial-gradient(circle at 75% 65%, rgba(124, 58, 237, 0.3) 0%, transparent 40%),
-    radial-gradient(circle at 50% 50%, rgba(109, 40, 217, 0.25) 0%, transparent 45%),
-    /* Purple accent layers */
-    radial-gradient(circle at 15% 75%, rgba(147, 51, 234, 0.28) 0%, transparent 40%),
-    radial-gradient(circle at 85% 25%, rgba(167, 139, 250, 0.22) 0%, transparent 45%),
-    /* Yellow highlight accents */
-    radial-gradient(circle at 40% 20%, rgba(251, 191, 36, 0.12) 0%, transparent 30%),
-    radial-gradient(circle at 60% 80%, rgba(252, 211, 77, 0.1) 0%, transparent 35%),
-    /* Subtle warm golden touches */
-    radial-gradient(circle at 90% 50%, rgba(245, 158, 11, 0.08) 0%, transparent 40%);
-  animation: float 20s ease-in-out infinite;
+    /* Primary aurora ribbon - purple to pink */
+    radial-gradient(ellipse 800px 200px at 50% 30%, rgba(139, 92, 246, 0.4) 0%, rgba(236, 72, 153, 0.3) 50%, transparent 100%),
+    /* Secondary aurora ribbon - yellow to pink */
+    radial-gradient(ellipse 600px 150px at 30% 60%, rgba(251, 191, 36, 0.3) 0%, rgba(236, 72, 153, 0.2) 60%, transparent 100%),
+    /* Third aurora ribbon - deep purple */
+    radial-gradient(ellipse 700px 180px at 70% 45%, rgba(109, 40, 217, 0.35) 0%, transparent 100%),
+    /* Ambient glow - pink core */
+    radial-gradient(circle at 50% 50%, rgba(236, 72, 153, 0.1) 0%, transparent 50%);
+  animation: aurora 30s ease-in-out infinite, breathe 12s ease-in-out infinite;
+  filter: blur(40px);
   pointer-events: none;
   z-index: 1;
 }
 
-@keyframes float {
-  0%, 100% { transform: translate(0, 0) rotate(0deg) scale(1); }
-  33% { transform: translate(30px, -30px) rotate(120deg) scale(1.1); }
-  66% { transform: translate(-20px, 20px) rotate(240deg) scale(0.9); }
-}
-
-/* Additional floating overlay for depth - purple dominant with yellow highlights */
+/* Additional aurora depth layer */
 .dashboard-container::after {
   content: '';
   position: fixed;
-  top: -100%;
-  right: -100%;
-  width: 300%;
-  height: 300%;
+  top: -50%;
+  right: -50%;
+  width: 200%;
+  height: 200%;
   background: 
-    /* Purple depth layers */
-    radial-gradient(circle at 65% 30%, rgba(139, 92, 246, 0.2) 0%, transparent 35%),
-    radial-gradient(circle at 35% 70%, rgba(124, 58, 237, 0.25) 0%, transparent 40%),
-    /* Golden yellow accents for contrast */
-    radial-gradient(circle at 20% 45%, rgba(251, 191, 36, 0.1) 0%, transparent 25%),
-    radial-gradient(circle at 80% 55%, rgba(245, 158, 11, 0.08) 0%, transparent 30%);
-  animation: float 25s ease-in-out infinite reverse;
+    /* Complementary aurora ribbons for depth */
+    radial-gradient(ellipse 900px 250px at 80% 20%, rgba(251, 191, 36, 0.2) 0%, rgba(139, 92, 246, 0.15) 70%, transparent 100%),
+    radial-gradient(ellipse 700px 200px at 20% 80%, rgba(236, 72, 153, 0.25) 0%, transparent 100%);
+  animation: aurora 35s ease-in-out infinite reverse, breathe 15s ease-in-out infinite;
+  filter: blur(60px);
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* Dynamic mesh gradient overlay with soft edges */
+.dashboard-container > .dashboard::before {
+  content: '';
+  position: fixed;
+  top: -20%;
+  left: -20%;
+  width: 140%;
+  height: 140%;
+  background: 
+    radial-gradient(circle at center, transparent 0%, transparent 30%, rgba(0, 0, 0, 0.8) 80%, black 100%),
+    conic-gradient(from 45deg at 30% 30%, transparent, rgba(139, 92, 246, 0.1), transparent 120deg),
+    conic-gradient(from 225deg at 70% 70%, transparent, rgba(236, 72, 153, 0.1), transparent 120deg),
+    conic-gradient(from 135deg at 50% 50%, transparent, rgba(251, 191, 36, 0.05), transparent 120deg);
+  animation: rotate 60s linear infinite;
   pointer-events: none;
   z-index: 1;
+  opacity: 0.5;
+  mask-image: radial-gradient(ellipse at center, black 40%, transparent 70%);
+  -webkit-mask-image: radial-gradient(ellipse at center, black 40%, transparent 70%);
+}
+
+@keyframes aurora {
+  0%, 100% { 
+    transform: translate(0, 0) scale(1) rotate(0deg);
+    filter: blur(40px) brightness(1);
+  }
+  25% { 
+    transform: translate(-10%, 5%) scale(1.1) rotate(5deg);
+    filter: blur(50px) brightness(1.1);
+  }
+  50% { 
+    transform: translate(5%, -10%) scale(0.9) rotate(-5deg);
+    filter: blur(30px) brightness(0.9);
+  }
+  75% { 
+    transform: translate(10%, 10%) scale(1.05) rotate(3deg);
+    filter: blur(45px) brightness(1.05);
+  }
+}
+
+@keyframes breathe {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
+@keyframes rotate {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
 }
 
 /* Clean layout without orbs */
