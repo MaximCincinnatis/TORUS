@@ -9,7 +9,7 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background: #12121f;
+  background: #18182a;
   color: #fff;
   min-height: 100vh;
   overflow-x: hidden;
@@ -29,7 +29,7 @@ body {
 .dashboard-container {
   position: relative;
   min-height: 100vh;
-  background: #12121f;
+  background: #18182a;
   overflow: hidden;
 }
 
@@ -50,7 +50,7 @@ body {
     radial-gradient(ellipse 700px 180px at 70% 45%, rgba(109, 40, 217, 0.55) 0%, transparent 100%),
     /* Ambient glow - pink core */
     radial-gradient(circle at 50% 50%, rgba(236, 72, 153, 0.2) 0%, transparent 50%);
-  animation: aurora 67.5s ease-in-out infinite, breathe 8.4s ease-in-out infinite;
+  animation: aurora 101.25s ease-in-out infinite, breathe 8.4s ease-in-out infinite;
   filter: blur(40px);
   pointer-events: none;
   z-index: 1;
@@ -68,7 +68,7 @@ body {
     /* Complementary aurora ribbons for depth */
     radial-gradient(ellipse 900px 250px at 80% 20%, rgba(251, 191, 36, 0.4) 0%, rgba(139, 92, 246, 0.3) 70%, transparent 100%),
     radial-gradient(ellipse 700px 200px at 20% 80%, rgba(236, 72, 153, 0.45) 0%, transparent 100%);
-  animation: aurora 78.75s ease-in-out infinite reverse, breathe 10.5s ease-in-out infinite;
+  animation: aurora 118.125s ease-in-out infinite reverse, breathe 10.5s ease-in-out infinite;
   filter: blur(60px);
   pointer-events: none;
   z-index: 2;

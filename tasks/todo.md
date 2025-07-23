@@ -108,9 +108,16 @@
 - Uses official TORUS logo from https://www.torus.win/torus.svg
 
 ### Background Base Color Brightness Upgrade ✓
-- Increased base background color brightness
-- Changed from #0d0d18 to #12121f
-- Subtle increase maintains dark theme while improving visibility
+- Increased base background color brightness twice for optimal visibility
+- Changed from #0d0d18 to #12121f, then to #18182a
+- Progressive brightening maintains dark theme while significantly improving readability
+
+### Aurora Movement Further Slowed ✓
+- Made aurora movement 50% slower than previous speed
+- Primary aurora: 67.5s → 101.25s
+- Secondary aurora: 78.75s → 118.125s
+- Kept breathe animations at current speed (8.4s and 10.5s)
+- Creates very slow, graceful drifting with maintained pulsing energy
 
 ## Historical Data Implementation Review (January 23, 2025)
 
