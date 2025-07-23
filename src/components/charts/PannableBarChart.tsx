@@ -14,6 +14,7 @@ import ChartDataLabels from 'chartjs-plugin-datalabels';
 import { Bar } from 'react-chartjs-2';
 import type { ChartJSOrUndefined } from 'react-chartjs-2/dist/types';
 import { gradientPlugin } from '../../utils/chartGradients';
+import ChartLegend from './ChartLegend';
 
 ChartJS.register(
   CategoryScale,
@@ -51,6 +52,11 @@ interface PannableBarChartProps {
   multipleYAxes?: boolean;
   yAxis1Label?: string;
   yAxis2Label?: string;
+  customLegendItems?: Array<{
+    label: string;
+    color: string;
+    logo?: string;
+  }>;
 }
 
 const PannableBarChart: React.FC<PannableBarChartProps> = ({
@@ -71,6 +77,7 @@ const PannableBarChart: React.FC<PannableBarChartProps> = ({
   multipleYAxes = false,
   yAxis1Label,
   yAxis2Label,
+  customLegendItems,
 }) => {
   const chartRef = useRef<ChartJSOrUndefined<'bar'>>(null);
   const [startIndex, setStartIndex] = useState(0);
@@ -204,7 +211,7 @@ const PannableBarChart: React.FC<PannableBarChartProps> = ({
     },
     plugins: {
       legend: {
-        display: showLegend,
+        display: showLegend && !customLegendItems,
         position: 'bottom' as const,
       },
       title: {
@@ -466,6 +473,7 @@ const PannableBarChart: React.FC<PannableBarChartProps> = ({
           <Bar ref={chartRef} options={options} data={data} plugins={showDataLabels ? [ChartDataLabels] : []} />
         </div>
       </div>
+      {customLegendItems && <ChartLegend items={customLegendItems} />}
     </div>
   );
 };

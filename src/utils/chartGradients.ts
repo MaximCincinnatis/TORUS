@@ -15,6 +15,11 @@ export const createGradient = (ctx: CanvasRenderingContext2D, chartArea: any, co
     gradient.addColorStop(0, hexToRgba(color1, opacity * 0.5));  // Yellow at bottom
     gradient.addColorStop(0.3, hexToRgba(color2, opacity * 0.7)); // Purple starts early
     gradient.addColorStop(1, hexToRgba(color2, opacity));         // Full purple at top
+  } else if (color1 === '#ffffff' && color2 === '#16a34a') {
+    // TitanX gradient: white to green with more green
+    gradient.addColorStop(0, hexToRgba(color1, opacity * 0.4));  // White at bottom (less white)
+    gradient.addColorStop(0.4, hexToRgba(color2, opacity * 0.6)); // Green starts earlier
+    gradient.addColorStop(1, hexToRgba(color2, opacity));         // Full green at top
   } else {
     // Default gradient
     gradient.addColorStop(0, hexToRgba(color1, opacity * 0.3));

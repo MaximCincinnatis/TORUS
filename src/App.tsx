@@ -1720,7 +1720,7 @@ function App() {
             {
               label: 'TORUS Staked',
               data: torusStakedPerDay.map(d => Math.round(d.amount * 100) / 100),
-              backgroundColor: 'rgba(139, 92, 246, 0.8)',
+              // backgroundColor will be set by gradient plugin
             },
           ]}
           height={600}
@@ -1919,7 +1919,7 @@ function App() {
               label: 'Principal TORUS',
               data: torusReleasesWithRewards
                 .map(r => Math.round(r.principal * 100) / 100),
-              backgroundColor: '#8b5cf6',
+              // backgroundColor will be set by gradient plugin
             },
             {
               label: 'Accrued Rewards',
@@ -1937,6 +1937,17 @@ function App() {
           formatTooltip={(value: number) => `TORUS: ${value.toLocaleString('en-US', { maximumFractionDigits: 2 })}`}
           minBarHeight={0}
           windowSize={torusRewardsDays}
+          customLegendItems={[
+            {
+              label: 'Principal TORUS',
+              color: 'linear-gradient(to top, #fbbf24, #8b5cf6)',
+              logo: '/torus-logo.png'
+            },
+            {
+              label: 'Accrued Rewards',
+              color: '#22c55e'
+            }
+          ]}
         />
         <div className="chart-note">
           Note: Purple bars show principal from stakes/creates ending. Green bars show accrued share rewards that have accumulated daily throughout the position's lifetime. Bars are shown side-by-side for easy comparison. Days with no releases show no bars. Rewards are estimated based on current pool data.
@@ -2291,6 +2302,17 @@ function App() {
           showDataLabels={true}
           stacked={false}
           showLegend={true}
+          customLegendItems={[
+            {
+              label: 'Buy & Burn',
+              color: 'linear-gradient(to top, #fbbf24, #8b5cf6)',
+              logo: '/torus-logo.png'
+            },
+            {
+              label: 'Buy & Build',
+              color: 'linear-gradient(to top, #06b6d4, #3b82f6)'
+            }
+          ]}
         />
         <div className="chart-note">
           Shows the daily count of Buy & Burn and Buy & Build operations. Buy & Burn permanently removes TORUS from circulation, while Buy & Build purchases TORUS for protocol development.
@@ -2367,6 +2389,18 @@ function App() {
           showLegend={true}
           yAxis1Label="TitanX (Billions)"
           yAxis2Label="ETH"
+          customLegendItems={[
+            {
+              label: 'TitanX Used',
+              color: 'linear-gradient(to top, #ffffff, #16a34a)',
+              logo: 'https://coin-images.coingecko.com/coins/images/32762/large/TitanXpng_%281%29.png?1704456654'
+            },
+            {
+              label: 'ETH Used',
+              color: 'linear-gradient(to top, #60a5fa, #2563eb)',
+              logo: '/ethereum-logo.png'
+            }
+          ]}
         />
         <div className="chart-note">
           Shows the daily amount of TitanX (left axis in billions) and ETH (right axis) used specifically in Buy & Burn operations that permanently remove TORUS from circulation. This does not include TitanX/ETH used in Buy & Build operations which add liquidity to the protocol.
@@ -2448,6 +2482,18 @@ function App() {
           showLegend={true}
           yAxis1Label="TitanX (Billions)"
           yAxis2Label="ETH"
+          customLegendItems={[
+            {
+              label: 'TitanX Used',
+              color: 'linear-gradient(to top, #ffffff, #16a34a)',
+              logo: 'https://coin-images.coingecko.com/coins/images/32762/large/TitanXpng_%281%29.png?1704456654'
+            },
+            {
+              label: 'ETH Used',
+              color: 'linear-gradient(to top, #60a5fa, #2563eb)',
+              logo: '/ethereum-logo.png'
+            }
+          ]}
         />
         <div className="chart-note">
           Shows the daily amount of TitanX (left axis in billions) and ETH (right axis) used in Buy & Build operations. These operations purchase TORUS to add liquidity to the protocol rather than burning it. The remaining TORUS after liquidity provision is burned.
@@ -2531,6 +2577,18 @@ function App() {
           showLegend={true}
           yAxis1Label="TORUS Burned"
           yAxis2Label="TitanX Collected (Billions)"
+          customLegendItems={[
+            {
+              label: 'TORUS Burned',
+              color: 'linear-gradient(to top, #fbbf24, #8b5cf6)',
+              logo: '/torus-logo.png'
+            },
+            {
+              label: 'TitanX Collected (Billions)',
+              color: 'linear-gradient(to top, #ffffff, #16a34a)',
+              logo: 'https://coin-images.coingecko.com/coins/images/32762/large/TitanXpng_%281%29.png?1704456654'
+            }
+          ]}
         />
         <div className="chart-note">
           Shows LP fee collection activity from the protocol's Uniswap V3 position #1029195. When fees are collected, the TORUS portion is immediately burned (100% burn rate), while the TitanX portion is sent to the Buy & Process contract for future buy & burn operations. Fee collection is a manual, permissionless process that anyone can trigger.
