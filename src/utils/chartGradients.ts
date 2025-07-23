@@ -9,9 +9,18 @@ export const createGradient = (ctx: CanvasRenderingContext2D, chartArea: any, co
     return `rgba(${r}, ${g}, ${b}, ${alpha})`;
   };
   
-  gradient.addColorStop(0, hexToRgba(color1, opacity * 0.3));
-  gradient.addColorStop(0.5, hexToRgba(color1, opacity * 0.6));
-  gradient.addColorStop(1, hexToRgba(color2, opacity));
+  // Special handling for TORUS gradient to have more purple
+  if (color1 === '#fbbf24' && color2 === '#8b5cf6') {
+    // TORUS gradient: more purple, less yellow
+    gradient.addColorStop(0, hexToRgba(color1, opacity * 0.5));  // Yellow at bottom
+    gradient.addColorStop(0.3, hexToRgba(color2, opacity * 0.7)); // Purple starts early
+    gradient.addColorStop(1, hexToRgba(color2, opacity));         // Full purple at top
+  } else {
+    // Default gradient
+    gradient.addColorStop(0, hexToRgba(color1, opacity * 0.3));
+    gradient.addColorStop(0.5, hexToRgba(color1, opacity * 0.6));
+    gradient.addColorStop(1, hexToRgba(color2, opacity));
+  }
   
   return gradient;
 };
@@ -54,16 +63,16 @@ export const chartColors = {
     end: '#8b5cf6',
     border: '#7c3aed'
   },
-  // TORUS: Yellow to Purple gradient
+  // TORUS: Yellow to Purple gradient (more purple)
   torus: {
     start: '#fbbf24',  // Yellow
     end: '#8b5cf6',    // Purple
     border: '#a855f7'
   },
-  // TitanX: Green gradient
+  // TitanX: White to Green gradient
   titanx: {
-    start: '#22c55e',  // Light green
-    end: '#16a34a',    // Darker green
+    start: '#ffffff',  // White
+    end: '#16a34a',    // Green
     border: '#15803d'
   },
   // ETH: Blue gradient
@@ -96,13 +105,19 @@ export const gradientPlugin = {
       if (dataset.label && dataset.label.toLowerCase().includes('torus')) {
         colorScheme = chartColors.torus; // Yellow to Purple for TORUS
       } else if (dataset.label && dataset.label.toLowerCase().includes('titanx')) {
-        colorScheme = chartColors.titanx; // Green for TitanX
+        colorScheme = chartColors.titanx; // White to Green for TitanX
       } else if (dataset.label === 'ETH Used' || dataset.label === 'ETH') {
         colorScheme = chartColors.ethBlue; // Blue for ETH
       } else if (dataset.label === 'Buy & Burn') {
         colorScheme = chartColors.torus; // TORUS colors for Buy & Burn
       } else if (dataset.label === 'Buy & Build') {
         colorScheme = chartColors.secondary; // Cyan to Blue for Buy & Build
+      } else if (dataset.label === 'Principal TORUS') {
+        colorScheme = chartColors.torus; // TORUS colors for Principal
+      } else if (dataset.label === 'TORUS Staked') {
+        colorScheme = chartColors.torus; // TORUS colors for Staked
+      } else if (dataset.label === 'TitanX Amount') {
+        colorScheme = chartColors.titanx; // White to Green for TitanX
       } else {
         // Default color scheme
         switch (i) {

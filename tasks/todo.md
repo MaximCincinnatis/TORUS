@@ -1026,3 +1026,34 @@ Updated bar chart colors throughout the dashboard to use token-specific gradient
 
 ### Result
 All bar charts now have visually distinct, token-specific color gradients that immediately identify which token is being represented. The yellow-to-purple TORUS gradient creates strong brand recognition, while the green TitanX and blue ETH gradients provide clear visual separation between different token types.
+
+## Gradient Refinements Update - January 23, 2025
+
+### Summary
+Refined the color gradients based on user feedback to improve visual clarity and brand consistency.
+
+### Changes Made
+
+1. **TitanX Gradient Update**:
+   - Changed from pure green gradient to white-to-green gradient
+   - Starts with white (#ffffff) and transitions to green (#16a34a)
+   - Creates a cleaner, more distinctive look for TitanX bars
+   - Applied to all TitanX-related charts including "Total TitanX Used for Creates"
+
+2. **TORUS Gradient Enhancement**:
+   - Adjusted gradient to have more purple and less yellow
+   - Yellow now transitions to purple at 30% instead of 50%
+   - Creates a more purple-dominant appearance while maintaining the yellow accent
+   - Applied to:
+     - "Total TORUS Staked Each Contract Day" 
+     - "Principal TORUS" bars in the rewards chart
+     - All other TORUS-related bars
+     - Cumulative TORUS Burned line chart
+
+3. **Technical Improvements**:
+   - Modified gradient stop positions for better color distribution
+   - Added specific label detection for "Principal TORUS" and "TORUS Staked"
+   - Enhanced opacity settings for line chart gradients
+
+### Result
+The refined gradients provide better visual hierarchy and clearer token identification. TitanX bars now have a distinctive white-to-green appearance, while TORUS bars show a more prominent purple color that better represents the brand identity.
