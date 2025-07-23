@@ -107,6 +107,11 @@
 - Consistent with existing TitanX and ETH logo styling
 - Uses official TORUS logo from https://www.torus.win/torus.svg
 
+### Background Base Color Brightness Upgrade ✓
+- Increased base background color brightness
+- Changed from #0d0d18 to #12121f
+- Subtle increase maintains dark theme while improving visibility
+
 ## Historical Data Implementation Review (January 23, 2025)
 
 ### Summary of Changes
