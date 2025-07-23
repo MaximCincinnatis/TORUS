@@ -1587,7 +1587,7 @@ function App() {
             <>
               {/* First row */}
               <MetricCard
-                title={<>Current <span className="torus-text">TORUS</span> Supply</>}
+                title={<><img src="https://www.torus.win/torus.svg" alt="TORUS" style={{ width: '16px', height: '16px', marginRight: '6px', verticalAlign: 'middle' }} />Current <span className="torus-text">TORUS</span> Supply</>}
                 value={totalSupply.toLocaleString('en-US', { maximumFractionDigits: 0 })}
                 suffix={<span className="torus-text">TORUS</span>}
               />
@@ -1641,12 +1641,12 @@ function App() {
           ) : (
             <>
               <MetricCard
-                title={<>% of Current <span className="torus-text">TORUS</span> Supply Staked</>}
+                title={<><img src="https://www.torus.win/torus.svg" alt="TORUS" style={{ width: '16px', height: '16px', marginRight: '6px', verticalAlign: 'middle' }} />% of <span className="torus-text">TORUS</span> Supply Staked</>}
                 value={percentStaked.toFixed(2)}
                 suffix="%"
               />
               <MetricCard
-                title={<>Total <span className="torus-text">TORUS</span> Staked</>}
+                title={<><img src="https://www.torus.win/torus.svg" alt="TORUS" style={{ width: '16px', height: '16px', marginRight: '6px', verticalAlign: 'middle' }} />Total <span className="torus-text">TORUS</span> Staked</>}
                 value={totalStaked.toLocaleString()}
                 suffix={<span className="torus-text">TORUS</span>}
               />
@@ -1655,7 +1655,7 @@ function App() {
                 value={activeStakes.toLocaleString()}
               />
               <MetricCard
-                title="Average Stake Size"
+                title={<><img src="https://www.torus.win/torus.svg" alt="TORUS" style={{ width: '16px', height: '16px', marginRight: '6px', verticalAlign: 'middle' }} />Average Stake Size</>}
                 value={avgStakeSize.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
                 suffix={<span className="torus-text">TORUS</span>}
               />

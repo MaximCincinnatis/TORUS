@@ -98,6 +98,15 @@
   - Mesh gradient rotation: 60s→78s (30% slower)
 - Creates elegant movement with very slow aurora drift and rapid breathing pulses
 
+### Added TORUS Logos to Metrics ✓
+- Added TORUS logo icon (16x16px) to four key metrics:
+  - Current TORUS Supply
+  - % of TORUS Supply Staked
+  - Total TORUS Staked
+  - Average Stake Size
+- Consistent with existing TitanX and ETH logo styling
+- Uses official TORUS logo from https://www.torus.win/torus.svg
+
 ## Historical Data Implementation Review (January 23, 2025)
 
 ### Summary of Changes
