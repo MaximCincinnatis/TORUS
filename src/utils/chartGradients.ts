@@ -53,6 +53,24 @@ export const chartColors = {
     start: '#6366f1',
     end: '#8b5cf6',
     border: '#7c3aed'
+  },
+  // TORUS: Yellow to Purple gradient
+  torus: {
+    start: '#fbbf24',  // Yellow
+    end: '#8b5cf6',    // Purple
+    border: '#a855f7'
+  },
+  // TitanX: Green gradient
+  titanx: {
+    start: '#22c55e',  // Light green
+    end: '#16a34a',    // Darker green
+    border: '#15803d'
+  },
+  // ETH: Blue gradient
+  ethBlue: {
+    start: '#60a5fa',  // Light blue
+    end: '#2563eb',    // Darker blue
+    border: '#1d4ed8'
   }
 };
 
@@ -74,11 +92,17 @@ export const gradientPlugin = {
       
       let colorScheme;
       
-      // Special handling for TitanX/ETH chart
-      if (dataset.label === 'TitanX Used') {
-        colorScheme = chartColors.quaternary; // Orange for TitanX
-      } else if (dataset.label === 'ETH Used') {
-        colorScheme = chartColors.eth; // Violet for ETH
+      // Special handling based on dataset labels
+      if (dataset.label && dataset.label.toLowerCase().includes('torus')) {
+        colorScheme = chartColors.torus; // Yellow to Purple for TORUS
+      } else if (dataset.label && dataset.label.toLowerCase().includes('titanx')) {
+        colorScheme = chartColors.titanx; // Green for TitanX
+      } else if (dataset.label === 'ETH Used' || dataset.label === 'ETH') {
+        colorScheme = chartColors.ethBlue; // Blue for ETH
+      } else if (dataset.label === 'Buy & Burn') {
+        colorScheme = chartColors.torus; // TORUS colors for Buy & Burn
+      } else if (dataset.label === 'Buy & Build') {
+        colorScheme = chartColors.secondary; // Cyan to Blue for Buy & Build
       } else {
         // Default color scheme
         switch (i) {

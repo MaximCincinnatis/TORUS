@@ -989,3 +989,40 @@ LP position 1029195 is now clearly highlighted as the TORUS Buy & Process contra
 - Slightly bolder text for emphasis
 
 This makes it immediately obvious to users that this position is special and belongs to the TORUS protocol itself.
+
+## Review of Chart Color Gradients Update - January 23, 2025
+
+### Summary
+Updated bar chart colors throughout the dashboard to use token-specific gradients for better visual clarity and brand consistency.
+
+### Changes Made
+
+1. **Added New Color Schemes** in `chartGradients.ts`:
+   - **TORUS**: Yellow (#fbbf24) to Purple (#8b5cf6) gradient - matches TORUS brand colors
+   - **TitanX**: Light Green (#22c55e) to Dark Green (#16a34a) gradient
+   - **ETH**: Light Blue (#60a5fa) to Dark Blue (#2563eb) gradient
+
+2. **Updated Gradient Plugin Logic**:
+   - Automatically detects dataset labels and applies appropriate gradients
+   - TORUS gradient applied to any dataset with "TORUS" in the label
+   - TitanX gradient applied to datasets with "TitanX" in the label
+   - ETH blue gradient applied to "ETH Used" or "ETH" datasets
+   - Buy & Burn operations use TORUS colors (yellow to purple)
+   - Buy & Build operations use cyan to blue gradient
+
+3. **Affected Charts**:
+   - LP Fee Collections chart (TORUS burned = yellow/purple, TitanX collected = green)
+   - Daily Buy & Burn/Build Operations chart (Buy & Burn = yellow/purple, Buy & Build = cyan/blue)
+   - Daily TitanX/ETH Used for Burns chart (TitanX = green, ETH = blue)
+   - Daily TitanX/ETH Used for Builds chart (TitanX = green, ETH = blue)
+   - All TORUS-related charts now use the yellow to purple gradient
+
+### Technical Details
+- Modified `src/utils/chartGradients.ts` to add three new color schemes
+- Enhanced gradient plugin to use label-based color selection
+- Gradient opacity set to 0.85 for better visibility
+- Border colors match the gradient theme for consistency
+- No changes needed to individual chart components - the gradient plugin handles all coloring automatically
+
+### Result
+All bar charts now have visually distinct, token-specific color gradients that immediately identify which token is being represented. The yellow-to-purple TORUS gradient creates strong brand recognition, while the green TitanX and blue ETH gradients provide clear visual separation between different token types.
