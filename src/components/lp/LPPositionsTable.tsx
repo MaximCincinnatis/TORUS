@@ -183,15 +183,19 @@ const LPPositionsTable: React.FC<LPPositionsTableProps> = ({ positions, loading,
                     )}
                   </td>
                   <td>
-                    <a href={`https://etherscan.io/address/${position.owner}`} 
-                       target="_blank" 
-                       rel="noopener noreferrer"
-                       className="address-link">
-                      {formatAddress(position.owner)}
-                    </a>
-                    {isTorusContract && (
-                      <span className="torus-contract-badge"><span style={{ color: '#fbbf24' }}>TORUS</span> CONTRACT LP</span>
-                    )}
+                    <div style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+                      <a href={`https://etherscan.io/address/${position.owner}`} 
+                         target="_blank" 
+                         rel="noopener noreferrer"
+                         className="address-link">
+                        {formatAddress(position.owner)}
+                      </a>
+                      {isTorusContract && (
+                        <span className="torus-contract-badge" style={{ marginLeft: 0, marginTop: '4px' }}>
+                          <span style={{ color: '#fbbf24' }}>TORUS</span> CONTRACT LP
+                        </span>
+                      )}
+                    </div>
                   </td>
                   <td>{formatTitanXAmount(titanXAmount)}</td>
                   <td>{formatAmount(torusAmount)}</td>
