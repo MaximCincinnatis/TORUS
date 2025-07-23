@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2025-07-23T00:30:11.129Z",
+  "lastUpdated": "2025-07-23T00:50:14.918Z",
   "version": "1.0.0",
   "poolData": {
     "sqrtPriceX96": "511893091786775200069227639132681",
@@ -36967,6 +36967,31 @@
         "costTitanX": "0",
         "rawCostETH": "0",
         "rawCostTitanX": "0"
+      },
+      {
+        "user": "0x069db8e0c5776f6072518c50402dab95759512fa",
+        "owner": "0x069db8e0c5776f6072518c50402dab95759512fa",
+        "createId": "1",
+        "torusAmount": "123804113492556815933",
+        "principal": "123804113492556815933",
+        "timestamp": 1753230947,
+        "endTime": 1760834147,
+        "blockNumber": 22978328,
+        "id": "1",
+        "createDays": 88,
+        "stakingDays": 88,
+        "maturityDate": "2025-10-19T00:35:47.000Z",
+        "startDate": "2025-07-23T00:35:47.000Z",
+        "titanXAmount": "0",
+        "ethAmount": "0",
+        "shares": "0",
+        "power": "0",
+        "claimedCreate": false,
+        "claimedStake": false,
+        "costETH": "0",
+        "costTitanX": "0",
+        "rawCostETH": "0",
+        "rawCostTitanX": "0"
       }
     ],
     "rewardPoolData": [
@@ -37576,21 +37601,21 @@
     "burnedSupply": 0,
     "lastUpdated": "2025-07-16T19:25:33.217Z",
     "metadata": {
-      "currentBlock": 22977801,
+      "currentBlock": 22978399,
       "lastUpdate": "2025-07-16T19:14:31.015Z",
       "stakesRefreshed": "2025-07-16T18:54:18.007Z",
       "dailySupplySnapshot": {
         "day": 8,
         "totalSupply": 18871.259438463436,
         "burnedSupply": 0,
-        "timestamp": "2025-07-23T00:30:03.856Z"
+        "timestamp": "2025-07-23T00:50:08.763Z"
       },
       "lastCreateBlock": 22969998,
       "lastFullRebuild": "2025-07-21T22:29:04.583Z",
       "totalCreates": 1013,
       "rebuildBlock": 22970545
     },
-    "lastBlock": 22977801
+    "lastBlock": 22978399
   },
   "contractData": {
     "torusToken": {
@@ -38720,6 +38745,6 @@
     }
   ],
   "totalSupply": 18871.259438463436,
-  "totalTitanXBurnt": "141084138983503687251709155610",
+  "totalTitanXBurnt": "141138013983503687251709155610",
   "titanxTotalSupply": "105729196173152384778189009402163"
 }
