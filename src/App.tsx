@@ -1941,7 +1941,7 @@ function App() {
             {
               label: 'Principal TORUS',
               color: 'linear-gradient(to top, #fbbf24, #8b5cf6)',
-              logo: '/logo192.png'
+              logo: 'https://www.torus.win/torus.svg'
             },
             {
               label: 'Accrued Rewards',
@@ -2306,7 +2306,7 @@ function App() {
             {
               label: 'Buy & Burn',
               color: 'linear-gradient(to top, #fbbf24, #8b5cf6)',
-              logo: '/logo192.png'
+              logo: 'https://www.torus.win/torus.svg'
             },
             {
               label: 'Buy & Build',
@@ -2581,7 +2581,7 @@ function App() {
             {
               label: 'TORUS Burned',
               color: 'linear-gradient(to top, #fbbf24, #8b5cf6)',
-              logo: '/logo192.png'
+              logo: 'https://www.torus.win/torus.svg'
             },
             {
               label: 'TitanX Collected (Billions)',
@@ -2742,7 +2742,7 @@ function App() {
                   rel="noopener noreferrer"
                   className="footer-link"
                 >
-                  <img src="/logo192.png" alt="TORUS" style={{ width: '16px', height: '16px', marginRight: '6px', verticalAlign: 'middle' }} />
+                  <img src="https://www.torus.win/torus.svg" alt="TORUS" style={{ width: '16px', height: '16px', marginRight: '6px', verticalAlign: 'middle' }} />
                   TORUS Dashboard
                 </a>
                 <a 
@@ -2751,7 +2751,7 @@ function App() {
                   rel="noopener noreferrer"
                   className="footer-link"
                 >
-                  <img src="/logo192.png" alt="TORUS" style={{ width: '16px', height: '16px', marginRight: '6px', verticalAlign: 'middle' }} />
+                  <img src="https://www.torus.win/torus.svg" alt="TORUS" style={{ width: '16px', height: '16px', marginRight: '6px', verticalAlign: 'middle' }} />
                   Documentation
                 </a>
                 <a 
@@ -2787,7 +2787,7 @@ function App() {
                   rel="noopener noreferrer"
                   className="footer-link"
                 >
-                  <img src="/logo192.png" alt="TORUS" style={{ width: '16px', height: '16px', marginRight: '6px', verticalAlign: 'middle' }} />
+                  <img src="https://www.torus.win/torus.svg" alt="TORUS" style={{ width: '16px', height: '16px', marginRight: '6px', verticalAlign: 'middle' }} />
                   Token Holders
                 </a>
                 <a 
