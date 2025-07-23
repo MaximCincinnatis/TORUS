@@ -119,6 +119,30 @@
 - Kept breathe animations at current speed (8.4s and 10.5s)
 - Creates very slow, graceful drifting with maintained pulsing energy
 
+### Heading Changed to TORUS Info.fyi ✓
+- Updated main heading from "TORUS Dashboard" to "TORUS Info.fyi"
+- Changed browser tab title to match
+- Maintained same styling with TORUS in yellow and Info.fyi in bold white
+- Kept "ANALYTICS & INSIGHTS" subtitle
+
+### Fixed Heading Alignment and Size ✓
+- Changed header alignment from center to left (flex-start)
+- Increased title font size from 56px to 64px
+- Increased container padding from 32px to 48px for better edge spacing
+- Improved visual balance and readability
+
+### Removed Footer Links and Updated Copyright ✓
+- Removed GitHub link and icon from footer
+- Removed Vercel link and icon from footer
+- Simplified copyright text by removing "All data sourced from Ethereum blockchain"
+- Cleaner, more minimal footer design
+
+### Centered Heading Text with Logo ✓
+- Centered the container with justify-content: center
+- Added left offset of -44px to shift group left (half of logo width)
+- This centers the text portion while keeping logo beside it
+- Logo and text remain together as a unit
+
 ## Historical Data Implementation Review (January 23, 2025)
 
 ### Summary of Changes
