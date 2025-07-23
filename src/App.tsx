@@ -1391,35 +1391,67 @@ function App() {
       </div>
 
 
-      {/* Supply Metrics */}
-      <div className="supply-metrics">
-        <div className="supply-metrics-grid">
+      {/* Overall Metrics - MOVED TO TOP */}
+      <div className="chart-section">
+        <h2 className="section-title">Overall Metrics</h2>
+        <div className="metrics-grid">
           {loading ? (
             <>
+              <SkeletonCard />
+              <SkeletonCard />
+              <SkeletonCard />
+              <SkeletonCard />
               <SkeletonCard />
               <SkeletonCard />
             </>
           ) : (
             <>
-              <div className="supply-metric-card">
-                <div className="supply-metric-title">Current <span className="torus-text">TORUS</span> Supply</div>
-                <div className="supply-metric-value">
-                  {totalSupply.toLocaleString('en-US', { maximumFractionDigits: 0 })}
-                  <span className="supply-metric-suffix torus-text">TORUS</span>
-                </div>
-              </div>
-              <div className="supply-metric-card">
-                <div className="supply-metric-title">% of Current <span className="torus-text">TORUS</span> Supply Staked</div>
-                <div className="supply-metric-value">
-                  {percentStaked.toFixed(2)}
-                  <span className="supply-metric-suffix">%</span>
-                </div>
-              </div>
+              {/* First row */}
+              <MetricCard
+                title={<>Current <span className="torus-text">TORUS</span> Supply</>}
+                value={totalSupply.toLocaleString('en-US', { maximumFractionDigits: 0 })}
+                suffix={<span className="torus-text">TORUS</span>}
+              />
+              <MetricCard
+                title="Total Active Shares"
+                value={totalShares > 1e12 ? 
+                  `${(totalShares / 1e12).toLocaleString('en-US', { maximumFractionDigits: 2 })}T` :
+                  totalShares > 1e9 ? 
+                  `${(totalShares / 1e9).toLocaleString('en-US', { maximumFractionDigits: 2 })}B` :
+                  totalShares > 1e6 ? 
+                  `${(totalShares / 1e6).toLocaleString('en-US', { maximumFractionDigits: 2 })}M` :
+                  totalShares.toLocaleString('en-US', { maximumFractionDigits: 0 })
+                }
+                suffix={totalShares > 1e6 ? "" : "SHARES"}
+              />
+              <MetricCard
+                title={<><img src="/eth-logo.svg" alt="Ethereum" style={{ width: '16px', height: '16px', marginRight: '6px', verticalAlign: 'middle', backgroundColor: 'transparent' }} />Total ETH Input</>}
+                value={totalETHInput.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
+                suffix="ETH"
+              />
+              {/* Second row - TitanX metrics */}
+              <MetricCard
+                title={<><img src="https://coin-images.coingecko.com/coins/images/32762/large/TitanXpng_%281%29.png?1704456654" alt="TitanX" style={{ width: '16px', height: '16px', marginRight: '6px', verticalAlign: 'middle', opacity: 0.8 }} />Total TitanX Used</>}
+                value={totalTitanXInput.toLocaleString('en-US', { maximumFractionDigits: 0 })}
+                suffix="TITANX"
+              />
+              <MetricCard
+                title={<><img src="https://coin-images.coingecko.com/coins/images/32762/large/TitanXpng_%281%29.png?1704456654" alt="TitanX" style={{ width: '16px', height: '16px', marginRight: '6px', verticalAlign: 'middle', opacity: 0.8 }} />Total TitanX Burned</>}
+                value={totalTitanXBurned > 1e9 ? 
+                  `${(totalTitanXBurned / 1e9).toFixed(3)}B` : 
+                  totalTitanXBurned.toLocaleString('en-US', { maximumFractionDigits: 0 })
+                }
+                suffix={totalTitanXBurned > 1e9 ? "" : "TITANX"}
+              />
+              <MetricCard
+                title={<><img src="https://coin-images.coingecko.com/coins/images/32762/large/TitanXpng_%281%29.png?1704456654" alt="TitanX" style={{ width: '16px', height: '16px', marginRight: '6px', verticalAlign: 'middle', opacity: 0.8 }} />% of TitanX Supply Burned</>}
+                value={percentTitanXBurned.toFixed(4)}
+                suffix="%"
+              />
             </>
           )}
         </div>
       </div>
-
 
       {/* Stake Metrics */}
       <div className="chart-section">
@@ -1430,9 +1462,15 @@ function App() {
               <SkeletonCard />
               <SkeletonCard />
               <SkeletonCard />
+              <SkeletonCard />
             </>
           ) : (
             <>
+              <MetricCard
+                title={<>% of Current <span className="torus-text">TORUS</span> Supply Staked</>}
+                value={percentStaked.toFixed(2)}
+                suffix="%"
+              />
               <MetricCard
                 title={<>Total <span className="torus-text">TORUS</span> Staked</>}
                 value={totalStaked.toLocaleString()}
@@ -1482,65 +1520,6 @@ function App() {
           )}
         </div>
       </div>
-
-      {/* Overall Metrics */}
-      <div className="chart-section">
-        <h2 className="section-title">Overall Metrics</h2>
-        <div className="metrics-grid">
-          {loading ? (
-            <>
-              <SkeletonCard />
-              <SkeletonCard />
-              <SkeletonCard />
-              <SkeletonCard />
-            </>
-          ) : (
-            <>
-              <MetricCard
-                title={<>Total <span className="torus-text">TORUS</span> Locked</>}
-                value={totalTorusLocked.toLocaleString('en-US', { maximumFractionDigits: 2 })}
-                suffix={<span className="torus-text">TORUS</span>}
-              />
-              <MetricCard
-                title="Total Active Shares"
-                value={totalShares > 1e12 ? 
-                  `${(totalShares / 1e12).toLocaleString('en-US', { maximumFractionDigits: 2 })}T` :
-                  totalShares > 1e9 ? 
-                  `${(totalShares / 1e9).toLocaleString('en-US', { maximumFractionDigits: 2 })}B` :
-                  totalShares > 1e6 ? 
-                  `${(totalShares / 1e6).toLocaleString('en-US', { maximumFractionDigits: 2 })}M` :
-                  totalShares.toLocaleString('en-US', { maximumFractionDigits: 0 })
-                }
-                suffix={totalShares > 1e6 ? "" : "SHARES"}
-              />
-              <MetricCard
-                title={<><img src="/eth-logo.svg" alt="Ethereum" style={{ width: '16px', height: '16px', marginRight: '6px', verticalAlign: 'middle', backgroundColor: 'transparent' }} />Total ETH Input</>}
-                value={totalETHInput.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-                suffix="ETH"
-              />
-              <MetricCard
-                title={<><img src="https://coin-images.coingecko.com/coins/images/32762/large/TitanXpng_%281%29.png?1704456654" alt="TitanX" style={{ width: '16px', height: '16px', marginRight: '6px', verticalAlign: 'middle', opacity: 0.8 }} />Total TitanX Used</>}
-                value={totalTitanXInput.toLocaleString('en-US', { maximumFractionDigits: 0 })}
-                suffix="TITANX"
-              />
-              <MetricCard
-                title={<><img src="https://coin-images.coingecko.com/coins/images/32762/large/TitanXpng_%281%29.png?1704456654" alt="TitanX" style={{ width: '16px', height: '16px', marginRight: '6px', verticalAlign: 'middle', opacity: 0.8 }} />Total TitanX Burned</>}
-                value={totalTitanXBurned > 1e9 ? 
-                  `${(totalTitanXBurned / 1e9).toFixed(3)}B` : 
-                  totalTitanXBurned.toLocaleString('en-US', { maximumFractionDigits: 0 })
-                }
-                suffix={totalTitanXBurned > 1e9 ? "" : "TITANX"}
-              />
-              <MetricCard
-                title={<><img src="https://coin-images.coingecko.com/coins/images/32762/large/TitanXpng_%281%29.png?1704456654" alt="TitanX" style={{ width: '16px', height: '16px', marginRight: '6px', verticalAlign: 'middle', opacity: 0.8 }} />% of TitanX Supply Burned</>}
-                value={percentTitanXBurned.toFixed(4)}
-                suffix="%"
-              />
-            </>
-          )}
-        </div>
-      </div>
-
 
       {/* Charts Section */}
       <ExpandableChartSection
