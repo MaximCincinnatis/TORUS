@@ -372,9 +372,18 @@ async function updateAllDashboardData() {
       const userPos = userPositions.get(event.user);
       if (userPos) {
         const eventMaturityTime = Math.floor(new Date(event.maturityDate).getTime() / 1000);
+        // Use wider time window (48 hours instead of 24) for better matching
         const matchingPosition = userPos.find(pos => 
-          Math.abs(Number(pos.endTime) - eventMaturityTime) < 86400 && pos.isCreate
+          Math.abs(Number(pos.endTime) - eventMaturityTime) < 172800 && pos.isCreate
         );
+        
+        if (!matchingPosition && (!event.costTitanX || event.costTitanX === "0" || event.costTitanX === "0.0")) {
+          // Log positions that couldn't be matched for debugging
+          console.log(`\n  ⚠️  No position match for create by ${event.user.slice(0,10)}...`);
+          console.log(`     TORUS: ${(parseFloat(event.torusAmount) / 1e18).toFixed(2)}`);
+          console.log(`     Maturity: ${event.maturityDate}`);
+          console.log(`     Available positions: ${userPos.filter(p => p.isCreate).length} creates`);
+        }
         
         if (matchingPosition) {
           // Users pay EITHER ETH OR TitanX, not both

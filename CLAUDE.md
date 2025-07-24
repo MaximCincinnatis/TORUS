@@ -54,3 +54,26 @@ Document the completed work with:
 ## Memory
 
 - Always follow claud.md when working on the TORUS Dashboard project
+
+## TORUS Burn Tracking Fix (2025-07-24)
+
+### Issue Identified
+The TorusBuyAndProcess contract's `totalTorusBurnt()` function double-counts burns:
+- It adds the burn amount when a BuyAndBurn event is emitted (the intent to burn)
+- Then adds again when tokens are actually transferred to address 0x0
+- This resulted in showing ~2,563 TORUS burned instead of the actual ~1,496 TORUS
+
+### Solution Implemented
+Modified `update-buy-process-data.js` to:
+- Track actual TORUS Transfer events from the Buy & Process contract to address 0x0
+- Ignore the inflated `totalTorusBurnt()` contract value for burn amounts
+- Use only the sum of actual Transfer event values for accurate burn tracking
+- Continue using contract values for other totals (TitanX burned, ETH burned, etc.)
+
+### Files Modified
+- `scripts/update-buy-process-data.js` - Added Transfer event tracking for accurate burns
+- `smart-update-fixed.js` - Already calls the correct update script
+- `public/data/buy-process-data.json` - Now shows correct burn amount of ~1,496 TORUS
+
+### Frontend Impact
+The "Cumulative TORUS Burned" chart now displays accurate historical and future burn data based on actual token transfers to the zero address, not the contract's inflated accounting.
