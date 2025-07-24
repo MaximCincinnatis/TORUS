@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2025-07-24T18:00:02.504Z",
+  "lastUpdated": "2025-07-24T18:30:22.255Z",
   "version": "1.0.0",
   "poolData": {
     "sqrtPriceX96": "520758589457209203368793558384894",
@@ -37,8 +37,8 @@
       "token1": "0xF19308F923582A6f7c465e5CE7a9Dc1BEC6665B1",
       "nonce": "0",
       "status": "active",
-      "lastUpdated": "2025-07-24T17:00:04.426Z",
-      "lastActivityBlock": 22990362
+      "lastUpdated": "2025-07-24T18:30:04.459Z",
+      "lastActivityBlock": 22990810
     },
     {
       "tokenId": "1031465",
@@ -50,7 +50,7 @@
       "upperTitanxPerTorus": "51.60M",
       "currentTitanxPerTorus": "43.84M",
       "claimableTorus": 0.263014113817975,
-      "claimableTitanX": 34110580.610489964,
+      "claimableTitanX": 34551809.60751298,
       "tokensOwed0": "0",
       "tokensOwed1": "0",
       "fee": 10000,
@@ -58,16 +58,16 @@
       "estimatedAPR": "50.00",
       "priceRange": "31.30M - 51.60M TITANX per TORUS",
       "lastChecked": "2025-07-23T21:30:05.341Z",
-      "torusAmount": 81.78632866787397,
-      "titanxAmount": 6185746827.509546,
-      "claimableYield": 34110580.87350408,
+      "torusAmount": 80.77631016310711,
+      "titanxAmount": 6229428498.214825,
+      "claimableYield": 34551809.870527096,
       "burned": false,
       "token0": "0xB47f575807fC5466285e1277Ef8aCFBB5c6686E8",
       "token1": "0xF19308F923582A6f7c465e5CE7a9Dc1BEC6665B1",
       "nonce": "0",
       "status": "active",
-      "lastUpdated": "2025-07-24T17:00:05.216Z",
-      "lastActivityBlock": 22990362
+      "lastUpdated": "2025-07-24T18:30:05.569Z",
+      "lastActivityBlock": 22990810
     },
     {
       "tokenId": "1032346",
@@ -95,37 +95,37 @@
       "token1": "0xF19308F923582A6f7c465e5CE7a9Dc1BEC6665B1",
       "nonce": "0",
       "status": "active",
-      "lastUpdated": "2025-07-24T17:00:06.014Z",
-      "lastActivityBlock": 22990362
+      "lastUpdated": "2025-07-24T18:30:06.357Z",
+      "lastActivityBlock": 22990810
     },
     {
       "tokenId": "1029195",
       "owner": "0xAa390a37006E22b5775A34f2147F81eBD6a63641",
-      "liquidity": "64975471659379968530839952",
+      "liquidity": "65001141238293208160323752",
       "tickLower": -887200,
       "tickUpper": 887200,
       "lowerTitanxPerTorus": "0.00M",
       "upperTitanxPerTorus": "Infinity",
       "currentTitanxPerTorus": "43.60M",
       "claimableTorus": 30.39527904496166,
-      "claimableTitanX": 1511200475.7807674,
+      "claimableTitanX": 1515734292.4760313,
       "tokensOwed0": "30395279044961661780",
-      "tokensOwed1": "1511200475780767404421599924",
+      "tokensOwed1": "1515734292476031204560589822",
       "fee": 10000,
       "inRange": true,
       "estimatedAPR": "12.50",
       "priceRange": "Full Range",
       "lastChecked": "2025-07-23T21:30:06.504Z",
-      "torusAmount": 9885.362108834372,
-      "titanxAmount": 427077113703.9006,
-      "claimableYield": 1511200506.1760464,
+      "torusAmount": 9878.885003795558,
+      "titanxAmount": 427694862391.5755,
+      "claimableYield": 1515734322.8713102,
       "burned": false,
       "token0": "0xB47f575807fC5466285e1277Ef8aCFBB5c6686E8",
       "token1": "0xF19308F923582A6f7c465e5CE7a9Dc1BEC6665B1",
       "nonce": "0",
       "status": "active",
-      "lastUpdated": "2025-07-24T17:00:06.775Z",
-      "lastActivityBlock": 22990362
+      "lastUpdated": "2025-07-24T18:30:07.279Z",
+      "lastActivityBlock": 22990810
     }
   ],
   "historicalData": {
@@ -41352,6 +41352,6 @@
   "totalSupply": 18526.503412257065,
   "totalTitanXBurnt": "149127931598319318653428711031",
   "titanxTotalSupply": "105731955600519161158372495146799",
-  "lastLPUpdate": 22990362,
-  "lastBlock": 22990662
+  "lastLPUpdate": 22990810,
+  "lastBlock": 22990810
 }
