@@ -2,13 +2,13 @@
 
 /**
  * Updates Buy & Process data incrementally
- * FIXED VERSION: Tracks actual TORUS burns from Transfer events to 0x0
- * This avoids the double-counting issue in the contract's totalTorusBurnt
+ * This script is called by the auto-update routine
  */
 
 const { ethers } = require('ethers');
 const fs = require('fs');
 const path = require('path');
+// ETH tracking now done directly from events (BuyAndBuild.tokenAllocated)
 
 // RPC endpoints
 const RPC_ENDPOINTS = [
@@ -18,30 +18,25 @@ const RPC_ENDPOINTS = [
 ];
 
 async function updateBuyProcessData() {
-  console.log('💰 Updating Buy & Process data (with accurate burn tracking)...\n');
+  console.log('💰 Updating Buy & Process data...\n');
   
   try {
     const provider = new ethers.providers.JsonRpcProvider(RPC_ENDPOINTS[0]);
     const BUY_PROCESS_CONTRACT = '0xaa390a37006e22b5775a34f2147f81ebd6a63641';
-    const TORUS_CONTRACT = '0xb47f575807fc5466285e1277ef8acfbb5c6686e8';
     
-    // Contract ABIs
-    const buyProcessABI = [
+    // Contract ABI
+    const contractABI = [
       'event BuyAndBurn(uint256 indexed titanXAmount, uint256 indexed torusBurnt, address indexed caller)',
       'event BuyAndBuild(uint256 indexed tokenAllocated, uint256 indexed torusPurchased, address indexed caller)',
       'event FractalFundsReleased(uint256 releasedTitanX, uint256 releasedETH)',
+      'function totalTorusBurnt() view returns (uint256)',
       'function totalTitanXBurnt() view returns (uint256)',
       'function totalETHBurn() view returns (uint256)',
       'function titanXUsedForBurns() view returns (uint256)',
       'function ethUsedForBurns() view returns (uint256)'
     ];
     
-    const torusABI = [
-      'event Transfer(address indexed from, address indexed to, uint256 value)'
-    ];
-    
-    const buyProcessContract = new ethers.Contract(BUY_PROCESS_CONTRACT, buyProcessABI, provider);
-    const torusContract = new ethers.Contract(TORUS_CONTRACT, torusABI, provider);
+    const contract = new ethers.Contract(BUY_PROCESS_CONTRACT, contractABI, provider);
     
     // Load existing data
     const dataPath = path.join(__dirname, '../public/data/buy-process-data.json');
@@ -50,8 +45,10 @@ async function updateBuyProcessData() {
     
     if (fs.existsSync(dataPath)) {
       existingData = JSON.parse(fs.readFileSync(dataPath, 'utf8'));
-      if (existingData.metadata?.lastBlock) {
-        lastProcessedBlock = existingData.metadata.lastBlock;
+      // Find the highest block number from existing events
+      if (existingData.dailyData && existingData.dailyData.length > 0) {
+        // Get last update block from metadata if available
+        lastProcessedBlock = existingData.metadata?.lastBlock || 22890272;
       }
     }
     
@@ -68,32 +65,21 @@ async function updateBuyProcessData() {
     const newBuyAndBurnEvents = [];
     const newBuyAndBuildEvents = [];
     const newFractalEvents = [];
-    const newBurnTransfers = []; // Track actual TORUS burns to 0x0
     
-    const chunkSize = 2000; // Reduced to avoid RPC limits
+    const chunkSize = 5000;
     for (let start = lastProcessedBlock + 1; start <= currentBlock; start += chunkSize) {
       const end = Math.min(start + chunkSize - 1, currentBlock);
       
       try {
-        const [burnEvents, buildEvents, fractals, torusBurns] = await Promise.all([
-          buyProcessContract.queryFilter(buyProcessContract.filters.BuyAndBurn(), start, end),
-          buyProcessContract.queryFilter(buyProcessContract.filters.BuyAndBuild(), start, end),
-          buyProcessContract.queryFilter(buyProcessContract.filters.FractalFundsReleased(), start, end),
-          // Get actual TORUS burns (transfers from Buy & Process to 0x0)
-          torusContract.queryFilter(
-            torusContract.filters.Transfer(
-              BUY_PROCESS_CONTRACT,
-              '0x0000000000000000000000000000000000000000'
-            ),
-            start,
-            end
-          )
+        const [burnEvents, buildEvents, fractals] = await Promise.all([
+          contract.queryFilter(contract.filters.BuyAndBurn(), start, end),
+          contract.queryFilter(contract.filters.BuyAndBuild(), start, end),
+          contract.queryFilter(contract.filters.FractalFundsReleased(), start, end)
         ]);
         
         newBuyAndBurnEvents.push(...burnEvents);
         newBuyAndBuildEvents.push(...buildEvents);
         newFractalEvents.push(...fractals);
-        newBurnTransfers.push(...torusBurns);
       } catch (e) {
         console.log(`Error fetching blocks ${start}-${end}, skipping...`);
       }
@@ -102,14 +88,12 @@ async function updateBuyProcessData() {
     console.log(`Found ${newBuyAndBurnEvents.length} new Buy & Burn events`);
     console.log(`Found ${newBuyAndBuildEvents.length} new Buy & Build events`);
     console.log(`Found ${newFractalEvents.length} new Fractal events`);
-    console.log(`Found ${newBurnTransfers.length} new TORUS burn transfers to 0x0`);
     
     // Get block timestamps for new events
     const allBlocks = new Set([
       ...newBuyAndBurnEvents.map(e => e.blockNumber),
       ...newBuyAndBuildEvents.map(e => e.blockNumber),
-      ...newFractalEvents.map(e => e.blockNumber),
-      ...newBurnTransfers.map(e => e.blockNumber)
+      ...newFractalEvents.map(e => e.blockNumber)
     ]);
     
     const blockTimestamps = new Map();
@@ -131,23 +115,8 @@ async function updateBuyProcessData() {
     // Process new events into daily data
     const newDailyData = {};
     
-    // First, process TORUS burn transfers to get accurate burn amounts by date
-    const burnsByDate = {};
-    
-    for (const transfer of newBurnTransfers) {
-      const timestamp = blockTimestamps.get(transfer.blockNumber);
-      const date = new Date(timestamp * 1000);
-      const dateKey = date.toISOString().split('T')[0];
-      
-      if (!burnsByDate[dateKey]) {
-        burnsByDate[dateKey] = ethers.BigNumber.from(0);
-      }
-      
-      burnsByDate[dateKey] = burnsByDate[dateKey].add(transfer.args.value);
-    }
-    
-    // Process Buy & Burn events (for counts and TitanX amounts)
-    for (const event of newBuyAndBurnEvents) {
+    // Process new Buy & Burn events
+    newBuyAndBurnEvents.forEach(event => {
       const timestamp = blockTimestamps.get(event.blockNumber);
       const date = new Date(timestamp * 1000);
       const dateKey = date.toISOString().split('T')[0];
@@ -172,59 +141,15 @@ async function updateBuyProcessData() {
       }
       
       newDailyData[dateKey].buyAndBurnCount++;
+      newDailyData[dateKey].torusBurned += parseFloat(ethers.utils.formatEther(event.args.torusBurnt));
       const titanXAmount = parseFloat(ethers.utils.formatEther(event.args.titanXAmount));
       newDailyData[dateKey].titanXUsed += titanXAmount;
       newDailyData[dateKey].titanXUsedForBurns += titanXAmount;
-      
-      // Check if this is an ETH burn and get actual ETH amount
-      const tx = await provider.getTransaction(event.transactionHash);
-      const functionSelector = tx.data.slice(0, 10);
-      
-      if (functionSelector === '0x39b6ce64') {
-        // ETH burn - get WETH deposit amount
-        const receipt = await provider.getTransactionReceipt(event.transactionHash);
-        const WETH = '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2';
-        const depositTopic = ethers.utils.id('Deposit(address,uint256)');
-        
-        const wethDeposits = receipt.logs.filter(log => 
-          log.address.toLowerCase() === WETH.toLowerCase() &&
-          log.topics[0] === depositTopic
-        );
-        
-        if (wethDeposits.length > 0) {
-          const ethAmount = parseFloat(ethers.utils.formatEther(ethers.BigNumber.from(wethDeposits[0].data)));
-          newDailyData[dateKey].ethUsed += ethAmount;
-          newDailyData[dateKey].ethUsedForBurns += ethAmount;
-        }
-      }
-    }
+    });
     
-    // Set actual TORUS burned amounts from Transfer events
-    for (const [dateKey, burnAmount] of Object.entries(burnsByDate)) {
-      if (!newDailyData[dateKey]) {
-        newDailyData[dateKey] = {
-          date: dateKey,
-          buyAndBurnCount: 0,
-          buyAndBuildCount: 0,
-          fractalCount: 0,
-          torusBurned: 0,
-          titanXUsed: 0,
-          ethUsed: 0,
-          titanXUsedForBurns: 0,
-          ethUsedForBurns: 0,
-          titanXUsedForBuilds: 0,
-          ethUsedForBuilds: 0,
-          torusPurchased: 0,
-          fractalTitanX: 0,
-          fractalETH: 0
-        };
-      }
-      
-      // Use actual burn amount from Transfer events
-      newDailyData[dateKey].torusBurned = parseFloat(ethers.utils.formatEther(burnAmount));
-    }
-    
-    // Process Buy & Build events
+    // Process new Buy & Build events
+    // Need to fetch transactions to determine if tokenAllocated is ETH or TitanX
+    console.log('Processing Buy & Build events...');
     for (const event of newBuyAndBuildEvents) {
       const timestamp = blockTimestamps.get(event.blockNumber);
       const date = new Date(timestamp * 1000);
@@ -250,28 +175,36 @@ async function updateBuyProcessData() {
       }
       
       newDailyData[dateKey].buyAndBuildCount++;
-      const torusPurchased = parseFloat(ethers.utils.formatEther(event.args.torusPurchased));
-      newDailyData[dateKey].torusPurchased += torusPurchased;
+      newDailyData[dateKey].torusPurchased += parseFloat(ethers.utils.formatEther(event.args.torusPurchased));
       
-      // Check transaction type for builds
-      const tx = await provider.getTransaction(event.transactionHash);
-      const functionSelector = tx.data.slice(0, 10);
-      
-      if (functionSelector === '0x53ad9b96') {
-        // ETH build
-        const ethAmount = parseFloat(ethers.utils.formatEther(event.args.tokenAllocated));
-        newDailyData[dateKey].ethUsed += ethAmount;
-        newDailyData[dateKey].ethUsedForBuilds += ethAmount;
-      } else {
-        // TitanX build
-        const titanXAmount = parseFloat(ethers.utils.formatEther(event.args.tokenAllocated));
-        newDailyData[dateKey].titanXUsed += titanXAmount;
-        newDailyData[dateKey].titanXUsedForBuilds += titanXAmount;
+      // Get transaction to determine if it's ETH or TitanX
+      try {
+        const tx = await provider.getTransaction(event.transactionHash);
+        const functionSelector = tx.data.slice(0, 10);
+        
+        // Function selectors (CORRECTED):
+        // swapETHForTorusAndBuild: 0x53ad9b96
+        // swapTitanXForTorusAndBuild: 0xfc9b61ae
+        const amount = parseFloat(ethers.utils.formatEther(event.args.tokenAllocated));
+        
+        if (functionSelector === '0x53ad9b96') {
+          // ETH build
+          newDailyData[dateKey].ethUsed += amount;
+          newDailyData[dateKey].ethUsedForBuilds += amount;
+        } else if (functionSelector === '0xfc9b61ae') {
+          // TitanX build
+          newDailyData[dateKey].titanXUsed += amount;
+          newDailyData[dateKey].titanXUsedForBuilds += amount;
+        } else {
+          console.warn(`Unknown function selector for BuyAndBuild: ${functionSelector}`);
+        }
+      } catch (error) {
+        console.error(`Error fetching transaction ${event.transactionHash}:`, error);
       }
     }
     
-    // Process Fractal events
-    for (const event of newFractalEvents) {
+    // Process new Fractal events
+    newFractalEvents.forEach(event => {
       const timestamp = blockTimestamps.get(event.blockNumber);
       const date = new Date(timestamp * 1000);
       const dateKey = date.toISOString().split('T')[0];
@@ -298,36 +231,35 @@ async function updateBuyProcessData() {
       newDailyData[dateKey].fractalCount++;
       newDailyData[dateKey].fractalTitanX += parseFloat(ethers.utils.formatEther(event.args.releasedTitanX));
       newDailyData[dateKey].fractalETH += parseFloat(ethers.utils.formatEther(event.args.releasedETH));
-    }
-    
-    // Merge with existing data
-    let mergedDailyData = existingData?.dailyData || [];
-    const dailyDataMap = new Map();
-    
-    // Add existing data to map
-    mergedDailyData.forEach(day => {
-      dailyDataMap.set(day.date, day);
     });
     
-    // Merge new data
+    // Merge with existing daily data
+    let mergedDailyData = existingData?.dailyData || [];
+    
+    // Convert to map for easier merging
+    const dailyDataMap = new Map();
+    mergedDailyData.forEach(day => dailyDataMap.set(day.date, day));
+    
+    // Add or update with new data
     Object.entries(newDailyData).forEach(([date, data]) => {
       if (dailyDataMap.has(date)) {
+        // Merge with existing
         const existing = dailyDataMap.get(date);
         dailyDataMap.set(date, {
-          ...existing,
+          date: date,
           buyAndBurnCount: existing.buyAndBurnCount + data.buyAndBurnCount,
           buyAndBuildCount: existing.buyAndBuildCount + data.buyAndBuildCount,
           fractalCount: existing.fractalCount + data.fractalCount,
           torusBurned: existing.torusBurned + data.torusBurned,
           titanXUsed: existing.titanXUsed + data.titanXUsed,
-          ethUsed: existing.ethUsed + data.ethUsed,
+          ethUsed: existing.ethUsed + data.ethUsed,  // ETH from BuyAndBuild events
           titanXUsedForBurns: (existing.titanXUsedForBurns || 0) + (data.titanXUsedForBurns || 0),
           ethUsedForBurns: (existing.ethUsedForBurns || 0) + (data.ethUsedForBurns || 0),
           titanXUsedForBuilds: (existing.titanXUsedForBuilds || 0) + (data.titanXUsedForBuilds || 0),
           ethUsedForBuilds: (existing.ethUsedForBuilds || 0) + (data.ethUsedForBuilds || 0),
           torusPurchased: existing.torusPurchased + data.torusPurchased,
           fractalTitanX: existing.fractalTitanX + data.fractalTitanX,
-          fractalETH: existing.fractalETH + data.fractalETH
+          fractalETH: existing.fractalETH + data.fractalETH  // ETH from Fractal events
         });
       } else {
         dailyDataMap.set(date, data);
@@ -337,43 +269,25 @@ async function updateBuyProcessData() {
     // Convert back to array and sort
     mergedDailyData = Array.from(dailyDataMap.values()).sort((a, b) => a.date.localeCompare(b.date));
     
-    // Calculate actual totals from Transfer events
-    // Need to fetch in chunks to avoid RPC limits
-    const allBurnTransfers = [];
-    for (let start = 22890272; start <= currentBlock; start += chunkSize) {
-      const end = Math.min(start + chunkSize - 1, currentBlock);
-      try {
-        const transfers = await torusContract.queryFilter(
-          torusContract.filters.Transfer(
-            BUY_PROCESS_CONTRACT,
-            '0x0000000000000000000000000000000000000000'
-          ),
-          start,
-          end
-        );
-        allBurnTransfers.push(...transfers);
-      } catch (e) {
-        console.log(`Error fetching total burns for blocks ${start}-${end}, skipping...`);
-      }
-    }
-    
-    let totalTorusBurnt = ethers.BigNumber.from(0);
-    for (const transfer of allBurnTransfers) {
-      totalTorusBurnt = totalTorusBurnt.add(transfer.args.value);
-    }
-    
-    // Get other totals from contract
+    // Get updated totals from contract first (needed for ETH estimation)
     const [
+      totalTorusBurnt,
       totalTitanXBurnt,
       totalETHBurn,
       titanXUsedForBurns,
       ethUsedForBurns
     ] = await Promise.all([
-      buyProcessContract.totalTitanXBurnt(),
-      buyProcessContract.totalETHBurn(),
-      buyProcessContract.titanXUsedForBurns(),
-      buyProcessContract.ethUsedForBurns()
+      contract.totalTorusBurnt(),
+      contract.totalTitanXBurnt(),
+      contract.totalETHBurn(),
+      contract.titanXUsedForBurns(),
+      contract.ethUsedForBurns()
     ]);
+    
+    // Note: ETH tracking is now done directly from events
+    // - BuyAndBuild events include ETH in tokenAllocated parameter
+    // - FractalFundsReleased events include ETH amounts
+    // - BuyAndBurn events don't include ETH directly, handled separately
     
     // Update event counts
     const eventCounts = existingData?.eventCounts || { buyAndBurn: 0, buyAndBuild: 0, fractal: 0 };
@@ -381,16 +295,18 @@ async function updateBuyProcessData() {
     eventCounts.buyAndBuild += newBuyAndBuildEvents.length;
     eventCounts.fractal += newFractalEvents.length;
     
+    // Note: ETH validation - we're tracking ETH from BuyAndBuild events
+    // The ethUsedForBurns contract value includes burn ETH which we don't track from events
+    
     // Save updated data
     const outputData = {
       lastUpdated: new Date().toISOString(),
       totals: {
-        torusBurnt: ethers.utils.formatEther(totalTorusBurnt), // Use actual burn amount
+        torusBurnt: ethers.utils.formatEther(totalTorusBurnt),
         titanXBurnt: ethers.utils.formatEther(totalTitanXBurnt),
         ethBurn: ethers.utils.formatEther(totalETHBurn),
         titanXUsedForBurns: ethers.utils.formatEther(titanXUsedForBurns),
-        ethUsedForBurns: ethers.utils.formatEther(ethUsedForBurns),
-        ethUsedForBuilds: mergedDailyData.reduce((sum, day) => sum + (day.ethUsedForBuilds || 0), 0).toFixed(18)
+        ethUsedForBurns: ethers.utils.formatEther(ethUsedForBurns)
       },
       dailyData: mergedDailyData,
       eventCounts: eventCounts,
@@ -403,7 +319,6 @@ async function updateBuyProcessData() {
     
     console.log(`\n✅ Buy & Process data updated successfully`);
     console.log(`📊 Total days with data: ${mergedDailyData.length}`);
-    console.log(`🔥 Total TORUS burned (actual): ${ethers.utils.formatEther(totalTorusBurnt)} TORUS`);
     
   } catch (error) {
     console.error('❌ Error updating Buy & Process data:', error);
@@ -412,4 +327,4 @@ async function updateBuyProcessData() {
 }
 
 // Run the update
-updateBuyProcessData();
+updateBuyProcessData().catch(console.error);

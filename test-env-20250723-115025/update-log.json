@@ -1,0 +1,25 @@
+{
+  "startTime": 1753296636684,
+  "rpcCalls": 0,
+  "lastBlockNumber": 22983763,
+  "lastUpdateTime": "2025-07-23T18:50:37.303Z",
+  "updateHistory": [
+    {
+      "timestamp": "2025-07-23T18:50:36.684Z",
+      "rpcCalls": 0,
+      "dataChanged": false,
+      "errors": [],
+      "stats": {
+        "lpPositions": {
+          "newPositions": 0,
+          "updatedPositions": 0,
+          "closedPositions": 0,
+          "errors": [
+            "EnhancedLPUpdater is not a constructor"
+          ],
+          "removedPositions": 0
+        }
+      }
+    }
+  ]
+}

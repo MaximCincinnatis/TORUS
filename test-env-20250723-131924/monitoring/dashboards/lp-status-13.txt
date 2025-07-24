@@ -1,0 +1,10 @@
+LP Position Update Monitor
+==================================================
+Time: 2025-07-24T17:00:01.852Z
+==================================================
+Failed to load monitoring data: ENOENT: no such file or directory, open '/home/wsl/projects/TORUSspecs/torus-dashboard/test-env-20250723-131924/data/cached-data.json'
+
+Usage:
+  node monitor-lp-updates.js         - Show current status
+  node monitor-lp-updates.js watch   - Watch mode (refresh every 30s)
+  node monitor-lp-updates.js report  - Generate weekly report
