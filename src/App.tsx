@@ -1749,8 +1749,8 @@ function App() {
       {/* Charts Section */}
       <ExpandableChartSection
         id="max-supply-projection"
-        title={<>Future <span className="torus-text">TORUS</span> Max Supply Projection</>}
-        subtitle="Maximum possible supply if all positions maintain their share percentages"
+        title="Maximum possible supply if all positions maintain their share percentages"
+        subtitle={<>Future <span className="torus-text">TORUS</span> Max Supply Projection</>}
         chartType="line"
         keyMetrics={[
           {
@@ -1800,8 +1800,8 @@ function App() {
       {/* Daily Creates vs Stakes Activity */}
       <ExpandableChartSection
         id="daily-creates-stakes"
-        title="Daily Creates vs Stakes Activity"
-        subtitle="Number of creates and stakes initiated each protocol day"
+        title="Number of creates and stakes initiated each protocol day"
+        subtitle="Daily Creates vs Stakes Activity"
         chartType="bar"
         keyMetrics={[
           {
@@ -1870,8 +1870,8 @@ function App() {
       {/* Future TORUS Supply Projection chart - Removed per user request
       <ExpandableChartSection
         id="supply-projection"
-        title={<>Future <span className="torus-text">TORUS</span> Supply Projection</>}
-        subtitle="Projected supply growth from current staked positions only - does not include future daily TORUS share pool distributions"
+        title="Projected supply growth from current staked positions only - does not include future daily TORUS share pool distributions"
+        subtitle={<>Future <span className="torus-text">TORUS</span> Supply Projection</>}
         keyMetrics={[
           {
             label: "Current Supply",
@@ -1952,8 +1952,8 @@ function App() {
 
       <ExpandableChartSection
         id="torus-staked-per-day"
-        title={<>Total <span className="torus-text">TORUS</span> Staked Each Contract Day</>}
-        subtitle="Historical staking activity by day"
+        title="Historical staking activity by day"
+        subtitle={<>Total <span className="torus-text">TORUS</span> Staked Each Contract Day</>}
         chartType="bar"
         keyMetrics={[
           {
@@ -2015,8 +2015,8 @@ function App() {
 
       <ExpandableChartSection
         id="stake-maturity"
-        title="Number of Stakes Ending Each Day"
-        subtitle="Stakes ending by future date"
+        title="Stakes ending by future date"
+        subtitle="Number of Stakes Ending Each Day"
         keyMetrics={[
           {
             label: "Active Stakes",
@@ -2077,8 +2077,8 @@ function App() {
 
       <ExpandableChartSection
         id="create-maturity"
-        title="Number of Creates Ending Each Day"
-        subtitle="Creates ending by future date"
+        title="Creates ending by future date"
+        subtitle="Number of Creates Ending Each Day"
         keyMetrics={[
           {
             label: "Active Creates",
@@ -2140,8 +2140,8 @@ function App() {
 
       <ExpandableChartSection
         id="torus-rewards"
-        title={<><span className="torus-text">TORUS</span> Released Each Day: Principal vs Accrued Share Rewards</>}
-        subtitle="Principal vs rewards releasing daily"
+        title="Principal vs rewards releasing daily"
+        subtitle={<><span className="torus-text">TORUS</span> Released Each Day: Principal vs Accrued Share Rewards</>}
         keyMetrics={[
           {
             label: "Total Principal",
@@ -2231,7 +2231,8 @@ function App() {
 
       <ExpandableChartSection
         id="titanx-usage"
-        title={
+        title="TitanX amounts from creates ending"
+        subtitle={
           <>
             <img 
               src="https://coin-images.coingecko.com/coins/images/32762/large/TitanXpng_%281%29.png?1704456654" 
@@ -2241,7 +2242,6 @@ function App() {
             Total TitanX Used for Creates Ending Each Day
           </>
         }
-        subtitle="TitanX amounts from creates ending"
         keyMetrics={[
           {
             label: "Total TitanX",
@@ -2304,7 +2304,8 @@ function App() {
 
       <ExpandableChartSection
         id="daily-titanx-usage"
-        title={
+        title="TitanX used each day for creates and stakes"
+        subtitle={
           <>
             <img 
               src="https://coin-images.coingecko.com/coins/images/32762/large/TitanXpng_%281%29.png?1704456654" 
@@ -2314,7 +2315,6 @@ function App() {
             Daily TitanX Usage - Creates vs Stakes
           </>
         }
-        subtitle="TitanX used each day for creates and stakes"
         keyMetrics={[
           {
             label: "Total from Creates",
@@ -2381,8 +2381,8 @@ function App() {
 
       <ExpandableChartSection
         id="shares-releases"
-        title="Total Shares Ending Each Day"
-        subtitle="Shares ending by future date"
+        title="Shares ending by future date"
+        subtitle="Total Shares Ending Each Day"
         keyMetrics={[
           {
             label: `Total in ${sharesReleasesDays}d`,
@@ -2465,8 +2465,8 @@ function App() {
       {/* Buy & Process Charts Section */}
       <ExpandableChartSection
         id="daily-torus-burned"
-        title={<><span className="torus-text">TORUS</span> Burned Per Day</>}
-        subtitle="TORUS burned through Buy & Burn operations"
+        title="TORUS burned through Buy & Burn operations"
+        subtitle={<><span className="torus-text">TORUS</span> Burned Per Day</>}
         keyMetrics={[
           {
             label: "Total Burned",
@@ -2530,8 +2530,8 @@ function App() {
 
       <ExpandableChartSection
         id="cumulative-torus-burned"
-        title={<>Cumulative <span className="torus-text">TORUS</span> Burned</>}
-        subtitle="Total TORUS burned over time"
+        title="Total TORUS burned over time"
+        subtitle={<>Cumulative <span className="torus-text">TORUS</span> Burned</>}
         keyMetrics={[
           {
             label: "Total Burned",
@@ -2596,8 +2596,8 @@ function App() {
 
       <ExpandableChartSection
         id="buy-burn-activity"
-        title="Daily Buy & Burn/Build Operations"
-        subtitle="Daily operations count"
+        title="Daily operations count"
+        subtitle="Daily Buy & Burn/Build Operations"
         keyMetrics={[
           {
             label: "Total Buy & Burn",
@@ -2668,8 +2668,8 @@ function App() {
 
       <ExpandableChartSection
         id="titanx-eth-usage"
-        title="Daily TitanX/ETH Used for Burns"
-        subtitle="Resources used in Buy & Burn operations"
+        title="Resources used in Buy & Burn operations"
+        subtitle="Daily TitanX/ETH Used for Burns"
         keyMetrics={[
           {
             label: "Total TitanX Used",
@@ -2760,8 +2760,8 @@ function App() {
 
       <ExpandableChartSection
         id="titanx-eth-build-usage"
-        title="Daily TitanX/ETH Used for Buy & Build"
-        subtitle="Resources used in Buy & Build operations"
+        title="Resources used in Buy & Build operations"
+        subtitle="Daily TitanX/ETH Used for Buy & Build"
         keyMetrics={[
           {
             label: "Total TitanX Used",
@@ -2847,8 +2847,8 @@ function App() {
 
       <ExpandableChartSection
         id="lp-fee-burns"
-        title={<>LP Fee Collections and Buy & Burn Activity</>}
-        subtitle="TitanX collected from LP fees and sent to buy & burn operations"
+        title="TitanX collected from LP fees and sent to buy & burn operations"
+        subtitle={<>LP Fee Collections and Buy & Burn Activity</>}
         keyMetrics={[
           {
             label: "Total LP Fee Burns",
@@ -2942,8 +2942,8 @@ function App() {
       {/* LP Positions Section */}
       <ExpandableChartSection
         id="lp-positions"
-        title="Uniswap V3 Liquidity Providers"
-        subtitle="Active liquidity positions on Uniswap V3"
+        title="Active liquidity positions on Uniswap V3"
+        subtitle="Uniswap V3 Liquidity Providers"
         keyMetrics={[
           {
             label: "Total Positions",
