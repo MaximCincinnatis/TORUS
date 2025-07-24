@@ -28,7 +28,7 @@ ChartJS.register(
 );
 
 interface PannableBarChartProps {
-  title: string;
+  title: React.ReactNode;
   labels: (string | string[])[];
   datasets: {
     label: string;

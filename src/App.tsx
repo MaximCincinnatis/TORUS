@@ -1749,8 +1749,8 @@ function App() {
       {/* Charts Section */}
       <ExpandableChartSection
         id="max-supply-projection"
-        title="Maximum possible supply if all positions maintain their share percentages"
-        subtitle={<>Future <span className="torus-text">TORUS</span> Max Supply Projection</>}
+        title="Maximum Possible Supply If All Positions Maintain Their Share Percentages"
+        subtitle="Future TORUS Max Supply Projection"
         chartType="line"
         keyMetrics={[
           {
@@ -1800,7 +1800,7 @@ function App() {
       {/* Daily Creates vs Stakes Activity */}
       <ExpandableChartSection
         id="daily-creates-stakes"
-        title="Number of creates and stakes initiated each protocol day"
+        title="Number of Creates and Stakes Initiated Each Protocol Day"
         subtitle="Daily Creates vs Stakes Activity"
         chartType="bar"
         keyMetrics={[
@@ -1870,8 +1870,8 @@ function App() {
       {/* Future TORUS Supply Projection chart - Removed per user request
       <ExpandableChartSection
         id="supply-projection"
-        title="Projected supply growth from current staked positions only - does not include future daily TORUS share pool distributions"
-        subtitle={<>Future <span className="torus-text">TORUS</span> Supply Projection</>}
+        title={<>Projected Supply Growth From Current Staked Positions Only - Does Not Include Future Daily <span className="torus-text">TORUS</span> Share Pool Distributions</>}
+        subtitle="Future TORUS Supply Projection"
         keyMetrics={[
           {
             label: "Current Supply",
@@ -1906,7 +1906,7 @@ function App() {
         />
         <PannableLineChart
           key={`supply-projection-chart-pannable-${supplyProjection.length}-${supplyProjectionDays}`}
-          title={`TORUS Supply from Current Share Pool (${supplyProjection.length} data points)`}
+          title={<><span className="torus-text">TORUS</span> Supply from Current Share Pool ({supplyProjection.length} data points)</>}
           labels={supplyProjection.map(p => {
             const date = new Date(p.date);
             return date.toLocaleDateString('en-US', { month: 'short', day: 'numeric' });
@@ -1952,8 +1952,8 @@ function App() {
 
       <ExpandableChartSection
         id="torus-staked-per-day"
-        title="Historical staking activity by day"
-        subtitle={<>Total <span className="torus-text">TORUS</span> Staked Each Contract Day</>}
+        title="Historical Staking Activity by Day"
+        subtitle="Total TORUS Staked Each Contract Day"
         chartType="bar"
         keyMetrics={[
           {
@@ -1991,7 +1991,7 @@ function App() {
         />
         <PannableBarChart
           key="torus-staked-per-day-chart"
-          title="Total TORUS Staked Each Contract Day"
+          title={<>Total <span className="torus-text">TORUS</span> Staked Each Contract Day</>}
           labels={torusStakedPerDay.map(d => [`Day ${d.day}`])}
           datasets={[
             {
@@ -2015,7 +2015,7 @@ function App() {
 
       <ExpandableChartSection
         id="stake-maturity"
-        title="Stakes ending by future date"
+        title="Stakes Ending by Future Date"
         subtitle="Number of Stakes Ending Each Day"
         keyMetrics={[
           {
@@ -2077,7 +2077,7 @@ function App() {
 
       <ExpandableChartSection
         id="create-maturity"
-        title="Creates ending by future date"
+        title="Creates Ending by Future Date"
         subtitle="Number of Creates Ending Each Day"
         keyMetrics={[
           {
@@ -2140,8 +2140,8 @@ function App() {
 
       <ExpandableChartSection
         id="torus-rewards"
-        title="Principal vs rewards releasing daily"
-        subtitle={<><span className="torus-text">TORUS</span> Released Each Day: Principal vs Accrued Share Rewards</>}
+        title="Principal vs Rewards Releasing Daily"
+        subtitle="TORUS Released Each Day: Principal vs Accrued Share Rewards"
         keyMetrics={[
           {
             label: "Total Principal",
@@ -2182,7 +2182,7 @@ function App() {
         />
         <PannableBarChart
           key="torus-rewards-chart"
-          title="TORUS Released Each Day: Principal vs Accrued Share Rewards"
+          title={<><span className="torus-text">TORUS</span> Released Each Day: Principal vs Accrued Share Rewards</>}
           labels={torusReleasesWithRewards
             .map(r => {
               const date = new Date(r.date);
@@ -2231,17 +2231,8 @@ function App() {
 
       <ExpandableChartSection
         id="titanx-usage"
-        title="TitanX amounts from creates ending"
-        subtitle={
-          <>
-            <img 
-              src="https://coin-images.coingecko.com/coins/images/32762/large/TitanXpng_%281%29.png?1704456654" 
-              alt="TitanX Logo" 
-              style={{ width: '24px', height: '24px', marginRight: '8px', verticalAlign: 'middle', opacity: 0.8 }}
-            />
-            Total TitanX Used for Creates Ending Each Day
-          </>
-        }
+        title={<><span style={{color: '#16a34a'}}>TitanX</span> Amounts From Creates Ending</>}
+        subtitle="Total TitanX Used for Creates Ending Each Day"
         keyMetrics={[
           {
             label: "Total TitanX",
@@ -2278,7 +2269,7 @@ function App() {
         />
         <PannableBarChart
           key="titanx-usage-chart"
-          title="Total TitanX Used for Creates Ending Each Day"
+          title={<>Total <span style={{color: '#16a34a'}}>TitanX</span> Used for Creates Ending Each Day</>}
           labels={titanXUsage.map(r => {
             const contractDay = getContractDay(r.date);
             return [`${r.date.substring(5)}`, `Day ${contractDay}`];
@@ -2304,17 +2295,8 @@ function App() {
 
       <ExpandableChartSection
         id="daily-titanx-usage"
-        title="TitanX used each day for creates and stakes"
-        subtitle={
-          <>
-            <img 
-              src="https://coin-images.coingecko.com/coins/images/32762/large/TitanXpng_%281%29.png?1704456654" 
-              alt="TitanX Logo" 
-              style={{ width: '24px', height: '24px', marginRight: '8px', verticalAlign: 'middle', opacity: 0.8 }}
-            />
-            Daily TitanX Usage - Creates vs Stakes
-          </>
-        }
+        title={<><span style={{color: '#16a34a'}}>TitanX</span> Used Each Day for Creates and Stakes</>}
+        subtitle="Daily TitanX Usage - Creates vs Stakes"
         keyMetrics={[
           {
             label: "Total from Creates",
@@ -2349,7 +2331,7 @@ function App() {
         />
         <PannableBarChart
           key="daily-titanx-usage-chart"
-          title="Daily TitanX Usage Breakdown"
+          title={<>Daily <span style={{color: '#16a34a'}}>TitanX</span> Usage Breakdown</>}
           labels={dailyTitanXUsage.map(r => {
             const contractDay = getContractDay(r.date);
             return [`${r.date.substring(5)}`, `Day ${contractDay}`];
@@ -2381,7 +2363,7 @@ function App() {
 
       <ExpandableChartSection
         id="shares-releases"
-        title="Shares ending by future date"
+        title="Shares Ending by Future Date"
         subtitle="Total Shares Ending Each Day"
         keyMetrics={[
           {
@@ -2465,8 +2447,8 @@ function App() {
       {/* Buy & Process Charts Section */}
       <ExpandableChartSection
         id="daily-torus-burned"
-        title="TORUS burned through Buy & Burn operations"
-        subtitle={<><span className="torus-text">TORUS</span> Burned Per Day</>}
+        title={<><span className="torus-text">TORUS</span> Burned Through <span style={{color: '#f97316'}}>Buy & Burn</span> Operations</>}
+        subtitle="TORUS Burned Per Day"
         keyMetrics={[
           {
             label: "Total Burned",
@@ -2504,7 +2486,7 @@ function App() {
         />
         <PannableBarChart
           key="daily-torus-burned-chart"
-          title="TORUS Burned Per Day"
+          title={<><span className="torus-text">TORUS</span> <span style={{color: '#f97316'}}>Burned</span> Per Day</>}
           labels={dailyTorusBurned.map(d => {
             const contractDay = getContractDay(d.date);
             return [`${d.date.substring(5)}`, `Day ${contractDay}`];
@@ -2530,8 +2512,8 @@ function App() {
 
       <ExpandableChartSection
         id="cumulative-torus-burned"
-        title="Total TORUS burned over time"
-        subtitle={<>Cumulative <span className="torus-text">TORUS</span> Burned</>}
+        title={<>Total <span className="torus-text">TORUS</span> Burned Over Time</>}
+        subtitle="Cumulative TORUS Burned"
         keyMetrics={[
           {
             label: "Total Burned",
@@ -2569,7 +2551,7 @@ function App() {
         />
         <PannableLineChart
           key="cumulative-torus-burned-chart"
-          title="Cumulative TORUS Burned"
+          title={<>Cumulative <span className="torus-text">TORUS</span> <span style={{color: '#f97316'}}>Burned</span></>}
           labels={cumulativeTorusBurned.map(d => {
             const contractDay = getContractDay(d.date);
             return `${d.date.substring(5)} (Day ${contractDay})`;
@@ -2596,7 +2578,7 @@ function App() {
 
       <ExpandableChartSection
         id="buy-burn-activity"
-        title="Daily operations count"
+        title={<>Daily <span style={{color: '#f97316'}}>Buy & Burn</span>/<span style={{color: '#f97316'}}>Build</span> Operations Count</>}
         subtitle="Daily Buy & Burn/Build Operations"
         keyMetrics={[
           {
@@ -2625,7 +2607,7 @@ function App() {
         />
         <PannableBarChart
           key="buy-burn-activity-chart"
-          title="Daily Buy & Burn/Build Operations"
+          title={<>Daily <span style={{color: '#f97316'}}>Buy & Burn</span>/<span style={{color: '#f97316'}}>Build</span> Operations</>}
           labels={buyBurnActivity.map(d => {
             const contractDay = getContractDay(d.date);
             return [`${d.date.substring(5)}`, `Day ${contractDay}`];
@@ -2668,7 +2650,7 @@ function App() {
 
       <ExpandableChartSection
         id="titanx-eth-usage"
-        title="Resources used in Buy & Burn operations"
+        title={<>Resources Used in <span style={{color: '#f97316'}}>Buy & Burn</span> Operations</>}
         subtitle="Daily TitanX/ETH Used for Burns"
         keyMetrics={[
           {
@@ -2699,7 +2681,7 @@ function App() {
         />
         <PannableBarChart
           key="titanx-eth-usage-chart"
-          title="Daily TitanX/ETH Used for Burns"
+          title={<>Daily <span style={{color: '#16a34a'}}>TitanX</span>/ETH Used for <span style={{color: '#f97316'}}>Burns</span></>}
           labels={titanXEthUsage.map(d => {
             const contractDay = getContractDay(d.date);
             return [`${d.date.substring(5)}`, `Day ${contractDay}`];
@@ -2760,7 +2742,7 @@ function App() {
 
       <ExpandableChartSection
         id="titanx-eth-build-usage"
-        title="Resources used in Buy & Build operations"
+        title={<>Resources Used in <span style={{color: '#f97316'}}>Buy & Build</span> Operations</>}
         subtitle="Daily TitanX/ETH Used for Buy & Build"
         keyMetrics={[
           {
@@ -2791,7 +2773,7 @@ function App() {
         />
         <PannableBarChart
           key="titanx-eth-build-usage-chart"
-          title="Daily TitanX/ETH Used for Buy & Build"
+          title={<>Daily <span style={{color: '#16a34a'}}>TitanX</span>/ETH Used for <span style={{color: '#f97316'}}>Buy & Build</span></>}
           labels={titanXEthBuildUsage.map(d => {
             const contractDay = getContractDay(d.date);
             return [`${d.date.substring(5)}`, `Day ${contractDay}`];
@@ -2847,8 +2829,8 @@ function App() {
 
       <ExpandableChartSection
         id="lp-fee-burns"
-        title="TitanX collected from LP fees and sent to buy & burn operations"
-        subtitle={<>LP Fee Collections and Buy & Burn Activity</>}
+        title={<><span style={{color: '#16a34a'}}>TitanX</span> Collected From LP Fees and Sent to <span style={{color: '#f97316'}}>Buy & Burn</span> Operations</>}
+        subtitle="LP Fee Collections and Buy & Burn Activity"
         keyMetrics={[
           {
             label: "Total LP Fee Burns",
@@ -2885,7 +2867,7 @@ function App() {
         />
         <PannableBarChart
           key="lp-fee-burns-chart"
-          title="LP Fee Collections"
+          title={<>LP Fee Collections and <span style={{color: '#f97316'}}>Buy & Burn</span> Activity</>}
           labels={lpFeeBurns.map(d => {
             const contractDay = getContractDay(d.date);
             return [`${d.date.substring(5)}`, `Day ${contractDay}`];
@@ -2942,7 +2924,7 @@ function App() {
       {/* LP Positions Section */}
       <ExpandableChartSection
         id="lp-positions"
-        title="Active liquidity positions on Uniswap V3"
+        title={<>Active Liquidity Positions on <span style={{color: '#3b82f6'}}>Uniswap V3</span></>}
         subtitle="Uniswap V3 Liquidity Providers"
         keyMetrics={[
           {

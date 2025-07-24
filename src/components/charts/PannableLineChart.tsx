@@ -26,7 +26,7 @@ ChartJS.register(
 );
 
 interface PannableLineChartProps {
-  title: string;
+  title: React.ReactNode;
   labels: string[];
   datasets: {
     label: string;
