@@ -86,7 +86,7 @@ function App() {
   const [titanXUsageDays, setTitanXUsageDays] = useState<number>(9999);
   const [sharesReleasesDays, setSharesReleasesDays] = useState<number>(9999);
   const [dailyTitanXUsageDays, setDailyTitanXUsageDays] = useState<number>(9999);
-  const [futureMaxSupplyDays, setFutureMaxSupplyDays] = useState<number>(9999);
+  const [futureMaxSupplyDays, setFutureMaxSupplyDays] = useState<number>(30);
   const [torusStakedDays, setTorusStakedDays] = useState<number>(9999);
   const [torusRewardsDays, setTorusRewardsDays] = useState<number>(9999);
   const [supplyProjectionDays, setSupplyProjectionDays] = useState<number>(9999);
