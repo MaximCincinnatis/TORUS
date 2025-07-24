@@ -1,155 +1,93 @@
-#!/usr/bin/env node
-
-/**
- * Updates TitanX/ETH cost information for creates
- * The Created event doesn't include payment info, so we need to fetch it from position data
- */
-
 const { ethers } = require('ethers');
 const fs = require('fs');
-const path = require('path');
-
-// Contract configuration
-const STAKE_CONTRACT = '0xc7cc775b21f9df85e043c7fdd9dac60af0b69507';
-const CONTRACT_ABI = [
-  'function getStakePositions(address user) view returns (tuple(uint256 principal, uint256 power, uint24 stakingDays, uint256 startTime, uint24 startDayIndex, uint256 endTime, uint256 shares, bool claimedCreate, bool claimedStake, uint256 costTitanX, uint256 costETH, uint256 rewards, uint256 penalties, uint256 claimedAt, bool isCreate)[])'
-];
-
-// RPC endpoints
-const RPC_ENDPOINTS = [
-  'https://eth.drpc.org',
-  'https://ethereum.publicnode.com',
-  'https://eth.llamarpc.com'
-];
 
 async function updateCreateCosts() {
-  console.log('💰 Updating TitanX/ETH costs for creates...\n');
+  console.log('🔄 Updating create costs from blockchain...\n');
   
-  try {
-    // Connect to Ethereum
-    const provider = new ethers.providers.JsonRpcProvider(RPC_ENDPOINTS[0]);
-    const contract = new ethers.Contract(STAKE_CONTRACT, CONTRACT_ABI, provider);
+  const provider = new ethers.providers.JsonRpcProvider('https://eth.drpc.org');
+  const data = JSON.parse(fs.readFileSync('public/data/cached-data.json', 'utf8'));
+  
+  // Contract setup
+  const CREATE_STAKE_CONTRACT = '0xc7cc775b21f9df85e043c7fdd9dac60af0b69507';
+  
+  const contractABI = [
+    'function userCreates(address user, uint256 index) view returns (uint256 torusAmount, uint256 duration, uint256 timestamp, uint256 titanAmount, uint256 ethAmount, bool claimed)',
+    'function userCreateCount(address user) view returns (uint256)'
+  ];
+  
+  const contract = new ethers.Contract(CREATE_STAKE_CONTRACT, contractABI, provider);
+  
+  let updated = 0;
+  let errors = 0;
+  
+  // Process all creates
+  for (let i = 0; i < data.stakingData.createEvents.length; i++) {
+    const event = data.stakingData.createEvents[i];
     
-    // Load cached data
-    const dataPath = path.join(__dirname, '../public/data/cached-data.json');
-    const cachedData = JSON.parse(fs.readFileSync(dataPath, 'utf8'));
-    
-    // Get all unique users from creates
-    const createUsers = new Set();
-    cachedData.stakingData.createEvents.forEach(c => {
-      if (c.user) createUsers.add(c.user.toLowerCase());
-    });
-    
-    console.log(`Found ${createUsers.size} unique users with creates`);
-    console.log('Fetching position data...\n');
-    
-    // Fetch positions for all users
-    const userPositions = new Map();
-    let processed = 0;
-    const batchSize = 5;
-    const users = Array.from(createUsers);
-    
-    for (let i = 0; i < users.length; i += batchSize) {
-      const batch = users.slice(i, i + batchSize);
+    try {
+      // Get the actual data from the contract
+      const createData = await contract.userCreates(event.user, event.createId || event.id);
       
-      const promises = batch.map(async (user) => {
-        try {
-          const positions = await contract.getStakePositions(user);
-          return { user, positions };
-        } catch (error) {
-          console.error(`  Error fetching positions for ${user}:`, error.message);
-          return { user, positions: [] };
-        }
-      });
+      // Update payment data
+      const oldTitanAmount = event.titanAmount || '0';
+      const oldEthAmount = event.ethAmount || '0';
       
-      const results = await Promise.all(promises);
-      results.forEach(({ user, positions }) => {
-        userPositions.set(user, positions);
-      });
+      event.titanAmount = createData.titanAmount.toString();
+      event.ethAmount = createData.ethAmount.toString();
       
-      processed = Math.min(i + batchSize, users.length);
-      process.stdout.write(`\r  Processing users: ${processed}/${users.length} (${((processed / users.length) * 100).toFixed(1)}%)`);
+      // Also update the duplicate field
+      if (event.titanXAmount !== undefined) {
+        event.titanXAmount = createData.titanAmount.toString();
+      }
       
-      // Rate limiting
-      await new Promise(resolve => setTimeout(resolve, 200));
+      if (oldTitanAmount !== event.titanAmount || oldEthAmount !== event.ethAmount) {
+        updated++;
+        const titanX = parseFloat(ethers.utils.formatEther(createData.titanAmount));
+        const eth = parseFloat(ethers.utils.formatEther(createData.ethAmount));
+        console.log(`Updated create ${event.createId} by ${event.user.substring(0, 10)}...`);
+        console.log(`  TitanX: ${titanX.toLocaleString()} (was ${parseFloat(ethers.utils.formatEther(oldTitanAmount)).toLocaleString()})`);
+        console.log(`  ETH: ${eth} (was ${parseFloat(ethers.utils.formatEther(oldEthAmount))})`);
+      }
+      
+      // Rate limit to avoid overwhelming RPC
+      if (i % 10 === 0) {
+        console.log(`Progress: ${i}/${data.stakingData.createEvents.length}`);
+        await new Promise(resolve => setTimeout(resolve, 100));
+      }
+      
+    } catch (error) {
+      errors++;
+      console.log(`Error updating create ${event.createId}: ${error.message}`);
     }
-    
-    console.log('\n\n📊 Updating create costs...');
-    
-    let updatedCount = 0;
-    let notFoundCount = 0;
-    
-    // Update each create with cost information
-    cachedData.stakingData.createEvents.forEach(event => {
-      const userPos = userPositions.get(event.user?.toLowerCase());
-      if (userPos && userPos.length > 0) {
-        const eventMaturityTime = Math.floor(new Date(event.maturityDate).getTime() / 1000);
-        
-        // Find matching position (isCreate = true, similar end time)
-        const matchingPosition = userPos.find(pos => 
-          Math.abs(Number(pos.endTime) - eventMaturityTime) < 86400 && pos.isCreate
-        );
-        
-        if (matchingPosition) {
-          // Users pay EITHER ETH OR TitanX, not both
-          if (matchingPosition.costETH.gt(0)) {
-            event.costETH = ethers.utils.formatEther(matchingPosition.costETH);
-            event.costTitanX = "0.0";
-            event.rawCostETH = matchingPosition.costETH.toString();
-            event.rawCostTitanX = "0";
-            event.titanAmount = "0";
-            event.ethAmount = matchingPosition.costETH.toString();
-          } else {
-            event.costETH = "0.0";
-            event.costTitanX = ethers.utils.formatEther(matchingPosition.costTitanX);
-            event.rawCostETH = "0";
-            event.rawCostTitanX = matchingPosition.costTitanX.toString();
-            event.titanAmount = matchingPosition.costTitanX.toString();
-            event.titanXAmount = matchingPosition.costTitanX.toString();
-            event.ethAmount = "0";
-          }
-          event.shares = matchingPosition.shares.toString();
-          updatedCount++;
-        } else {
-          notFoundCount++;
-        }
-      }
-    });
-    
-    console.log(`\n✅ Updated ${updatedCount} creates with cost information`);
-    console.log(`⚠️  Could not find position data for ${notFoundCount} creates`);
-    
-    // Show sample of updated creates
-    const updatedCreates = cachedData.stakingData.createEvents.filter(c => 
-      (c.rawCostTitanX && c.rawCostTitanX !== "0") || (c.rawCostETH && c.rawCostETH !== "0")
-    );
-    
-    console.log(`\n📊 Sample of creates with costs:`);
-    updatedCreates.slice(-5).forEach(c => {
-      const date = new Date(c.timestamp * 1000);
-      if (c.rawCostTitanX && c.rawCostTitanX !== "0") {
-        console.log(`  ${date.toISOString()} - ${(parseFloat(c.rawCostTitanX) / 1e18).toFixed(2)} TitanX`);
-      } else if (c.rawCostETH && c.rawCostETH !== "0") {
-        console.log(`  ${date.toISOString()} - ${(parseFloat(c.rawCostETH) / 1e18).toFixed(4)} ETH`);
-      }
-    });
-    
-    // Update last modified time
-    cachedData.lastUpdated = new Date().toISOString();
-    
-    // Backup and save
-    const backupPath = dataPath.replace('.json', `-backup-${Date.now()}.json`);
-    fs.writeFileSync(backupPath, fs.readFileSync(dataPath));
-    fs.writeFileSync(dataPath, JSON.stringify(cachedData, null, 2));
-    
-    console.log(`\n✅ Successfully updated create costs`);
-    console.log(`📁 Backup saved to: ${path.basename(backupPath)}`);
-    
-  } catch (error) {
-    console.error('❌ Error:', error.message);
-    process.exit(1);
   }
+  
+  // Save updated data
+  fs.writeFileSync('public/data/cached-data.json', JSON.stringify(data, null, 2));
+  
+  console.log(`\n✅ Completed! Updated ${updated} creates, ${errors} errors`);
+  console.log('📁 Saved to cached-data.json');
+  
+  // Show summary of TitanX usage by day
+  console.log('\n=== TITANX USAGE BY DAY ===');
+  const usageByDay = {};
+  
+  data.stakingData.createEvents.forEach(c => {
+    const date = new Date(parseInt(c.timestamp) * 1000).toISOString().split('T')[0];
+    if (!usageByDay[date]) {
+      usageByDay[date] = { count: 0, titanX: 0, eth: 0 };
+    }
+    usageByDay[date].count++;
+    if (c.titanAmount && c.titanAmount !== '0') {
+      usageByDay[date].titanX += parseFloat(ethers.utils.formatEther(c.titanAmount));
+    }
+    if (c.ethAmount && c.ethAmount !== '0') {
+      usageByDay[date].eth += parseFloat(ethers.utils.formatEther(c.ethAmount));
+    }
+  });
+  
+  Object.entries(usageByDay).sort().slice(-10).forEach(([date, usage]) => {
+    console.log(`${date}: ${usage.count} creates, ${usage.titanX.toFixed(0)} TitanX, ${usage.eth.toFixed(4)} ETH`);
+  });
 }
 
-// Run the script
 updateCreateCosts().catch(console.error);

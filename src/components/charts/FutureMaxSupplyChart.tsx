@@ -16,6 +16,19 @@ interface FutureMaxSupplyChartProps {
   contractStartDate: Date;
   currentProtocolDay: number;
   days?: number;
+  preCalculatedProjection?: Array<{
+    day: number;
+    date: string;
+    totalMaxSupply: number;
+    activePositions: number;
+    dailyRewardPool: number;
+    totalShares: number;
+    breakdown: {
+      fromStakes: number;
+      fromCreates: number;
+      fromExisting: number;
+    };
+  }>;
 }
 
 const FutureMaxSupplyChart: React.FC<FutureMaxSupplyChartProps> = ({
@@ -25,7 +38,8 @@ const FutureMaxSupplyChart: React.FC<FutureMaxSupplyChartProps> = ({
   currentSupply,
   contractStartDate,
   currentProtocolDay,
-  days = 88
+  days = 88,
+  preCalculatedProjection
 }) => {
   
   const chartData = useMemo(() => {
@@ -35,34 +49,58 @@ const FutureMaxSupplyChart: React.FC<FutureMaxSupplyChartProps> = ({
     console.log('rewardPoolData:', rewardPoolData?.length || 0);
     console.log('currentSupply:', currentSupply, 'TORUS (this should reflect burns)');
     console.log('contractStartDate:', contractStartDate);
+    console.log('preCalculatedProjection:', preCalculatedProjection?.length || 0, 'days');
     
     // Force console output to show
     console.log('🚀 FutureMaxSupplyChart component is loading...');
     
-    if (!stakeEvents?.length || !createEvents?.length || !rewardPoolData?.length) {
+    // Check if we have pre-calculated projection data
+    if (preCalculatedProjection && preCalculatedProjection.length > 0) {
+      console.log('✅ Using pre-calculated projection data');
+      // Use pre-calculated data directly
+      const projections = preCalculatedProjection;
+      
+      // Apply same filtering and processing as before
+      let filteredProjections = projections.filter(p => p.day >= currentProtocolDay);
+      
+      console.log(`📊 Pre-calculated: ${projections.length} days total`);
+      console.log(`📊 After filtering from day ${currentProtocolDay}: ${filteredProjections.length} days`);
+      
+      // Continue with same chart data formatting...
+      // Skip to line 98 for the rest of the logic
+    
+    } else if (!stakeEvents?.length || !createEvents?.length || !rewardPoolData?.length) {
       console.log('❌ Missing required data for chart');
       return {
         labels: [],
         datasets: [],
         customTooltipData: []
       };
+    } else {
+      console.log('📊 Calculating projection from raw data (no pre-calculated data available)');
     }
 
     try {
-      // Convert events to positions
-      const positions = convertToPositions(stakeEvents, createEvents);
-      console.log('📊 Converted positions:', positions.length);
-      console.log('First position:', positions[0]);
+      // Only calculate if no pre-calculated data
+      let projections;
+      if (preCalculatedProjection && preCalculatedProjection.length > 0) {
+        projections = preCalculatedProjection;
+      } else {
+        // Convert events to positions
+        const positions = convertToPositions(stakeEvents, createEvents);
+        console.log('📊 Converted positions:', positions.length);
+        console.log('First position:', positions[0]);
+        
+        // Calculate max supply projections
+        projections = calculateFutureMaxSupply(
+          positions,
+          rewardPoolData,
+          currentSupply,
+          contractStartDate
+        );
+      }
       
-      // Calculate max supply projections
-      const projections = calculateFutureMaxSupply(
-        positions,
-        rewardPoolData,
-        currentSupply,
-        contractStartDate
-      );
-      
-      console.log('📈 Projections calculated:', projections.length);
+      console.log('📈 Projections loaded:', projections.length);
       console.log('First projection:', projections[0]);
       console.log('Last projection:', projections[projections.length - 1]);
       
@@ -96,9 +134,10 @@ const FutureMaxSupplyChart: React.FC<FutureMaxSupplyChartProps> = ({
       
       // Format data for Chart.js using adjusted projections
       const labels = adjustedProjections.map(projection => 
-        `Day ${projection.day} (${new Date(projection.date).toLocaleDateString('en-US', {
+        `Day ${projection.day} (${new Date(projection.date + 'T00:00:00Z').toLocaleDateString('en-US', {
           month: 'short',
-          day: 'numeric'
+          day: 'numeric',
+          timeZone: 'UTC'
         })})`
       );
       
@@ -170,7 +209,7 @@ const FutureMaxSupplyChart: React.FC<FutureMaxSupplyChartProps> = ({
         customTooltipData: []
       };
     }
-  }, [stakeEvents, createEvents, rewardPoolData, currentSupply, contractStartDate, currentProtocolDay, days]);
+  }, [stakeEvents, createEvents, rewardPoolData, currentSupply, contractStartDate, currentProtocolDay, days, preCalculatedProjection]);
 
   if (!chartData.labels.length) {
     return (

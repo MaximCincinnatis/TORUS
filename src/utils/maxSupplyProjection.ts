@@ -122,7 +122,7 @@ export function calculateSharePoolPercentages(
       }
       
       const date = new Date(contractStartDate);
-      date.setDate(date.getDate() + day - 1);
+      date.setUTCDate(date.getUTCDate() + day - 1);
       
       // Position is active if it was created before this day and hasn't matured
       const positionStart = new Date(parseInt(position.timestamp) * 1000);
@@ -293,7 +293,7 @@ export function calculateFutureMaxSupply(
     }
     
     const date = new Date(contractStartDate);
-    date.setDate(date.getDate() + day - 1);
+    date.setUTCDate(date.getUTCDate() + day - 1);
     
     let activePositions = 0;
     let dailyFromStakes = 0;

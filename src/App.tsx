@@ -96,6 +96,7 @@ function App() {
   const [titanXEthUsageDays, setTitanXEthUsageDays] = useState<number>(9999);
   const [titanXEthBuildUsageDays, setTitanXEthBuildUsageDays] = useState<number>(9999);
   const [lpFeeBurnsDays, setLpFeeBurnsDays] = useState<number>(9999);
+  const [preCalculatedProjection, setPreCalculatedProjection] = useState<any[]>([]);
 
   useEffect(() => {
     loadData();
@@ -268,6 +269,12 @@ function App() {
       setLoadingDetails(prev => [...prev, `Total supply: ${dashboardResult.data.totalSupply?.toLocaleString() || 0} TORUS`]);
       setLoadingDetails(prev => [...prev, `Current protocol day: ${dashboardResult.data.currentProtocolDay || 0}`]);
       setLoadingDetails(prev => [...prev, `Loaded ${dashboardResult.data.rewardPoolData?.length || 0} days of reward data`]);
+      
+      // Set pre-calculated projection data if available
+      if (dashboardResult.data.chartData?.futureSupplyProjection) {
+        setPreCalculatedProjection(dashboardResult.data.chartData.futureSupplyProjection);
+        console.log('✅ Loaded pre-calculated projection:', dashboardResult.data.chartData.futureSupplyProjection.length, 'days');
+      }
       
       setLoadingProgress(85);
       setLoadingMessage('Processing data...');
@@ -1758,6 +1765,7 @@ function App() {
           contractStartDate={CONTRACT_START_DATE}
           currentProtocolDay={currentProtocolDay}
           days={futureMaxSupplyDays}
+          preCalculatedProjection={preCalculatedProjection}
         />
         <div className="chart-note">
           This projection shows the accrued future supply based on existing positions only. It includes principal returns from stakes and new tokens from creates that will be added when positions mature. This does NOT project future share rewards beyond what current positions have already earned. New positions created after today will dilute existing share percentages and reduce actual rewards.

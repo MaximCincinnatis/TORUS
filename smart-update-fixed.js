@@ -25,6 +25,7 @@ const {
   mapFieldNames,
   mergeLPPositions 
 } = require('./shared/lpCalculations');
+const { generateFutureSupplyProjection, shouldUpdateProjection } = require('./scripts/generate-future-supply-projection');
 
 // Configuration
 const UPDATE_LOG_FILE = 'update-log.json';
@@ -129,7 +130,8 @@ function loadUpdateLog() {
     lastBlockNumber: 0,
     lastUpdateTime: 0,
     totalRpcCalls: 0,
-    updates: []
+    updates: [],
+    updateHistory: []
   };
 }
 
@@ -626,12 +628,15 @@ async function performSmartUpdate(provider, updateLog, currentBlock, blocksSince
           }
           
           // Process and merge new events
-          const processedStakes = newStakeEvents.map(event => {
+          // Process new stakes and fetch payment data
+          const processedStakes = [];
+          
+          for (const event of newStakeEvents) {
             const blockTimestamp = blockTimestamps.get(event.blockNumber) || Math.floor(Date.now() / 1000);
             const stakingDays = parseInt(event.args.stakingDays.toString());
             const maturityTimestamp = blockTimestamp + (stakingDays * 86400);
             
-            return {
+            const stakeData = {
               user: event.args.user,
               id: event.args.stakeIndex.toString(),
               principal: event.args.principal.toString(),
@@ -643,7 +648,7 @@ async function performSmartUpdate(provider, updateLog, currentBlock, blocksSince
               stakingDays: stakingDays,
               maturityDate: new Date(maturityTimestamp * 1000).toISOString(),
               startDate: new Date(blockTimestamp * 1000).toISOString(),
-              // Add placeholders for missing fields
+              // Initialize payment fields
               power: "0",
               claimedCreate: false,
               claimedStake: false,
@@ -656,15 +661,37 @@ async function performSmartUpdate(provider, updateLog, currentBlock, blocksSince
               claimedAt: "0",
               isCreate: false
             };
-          });
+            
+            // Fetch actual payment data from contract
+            try {
+              const userStakeABI = ['function userStakes(address user, uint256 index) view returns (uint256 principal, uint256 shares, uint256 duration, uint256 timestamp, uint256 titanAmount, uint256 ethAmount, uint256 status, uint256 payout)'];
+              const stakeContract = new ethers.Contract(CONTRACTS.TORUS_CREATE_STAKE, userStakeABI, provider);
+              const stakeInfo = await stakeContract.userStakes(event.args.user, event.args.stakeIndex);
+              
+              // Update payment fields with actual data
+              stakeData.rawCostTitanX = stakeInfo.titanAmount.toString();
+              stakeData.rawCostETH = stakeInfo.ethAmount.toString();
+              stakeData.costTitanX = stakeInfo.titanAmount.toString();
+              stakeData.costETH = stakeInfo.ethAmount.toString();
+              
+              updateStats.rpcCalls++;
+            } catch (e) {
+              log(`  Warning: Could not fetch payment data for stake ${stakeData.id}: ${e.message}`, 'yellow');
+            }
+            
+            processedStakes.push(stakeData);
+          }
           
-          const processedCreates = newCreateEvents.map(event => {
+          // Process new creates and fetch payment data
+          const processedCreates = [];
+          
+          for (const event of newCreateEvents) {
             const blockTimestamp = blockTimestamps.get(event.blockNumber) || Math.floor(Date.now() / 1000);
             const endTime = parseInt(event.args.endTime.toString());
             // Calculate duration from start to end time
             const duration = Math.round((endTime - blockTimestamp) / 86400);
             
-            return {
+            const createData = {
               user: event.args.user.toLowerCase(),
               owner: event.args.user.toLowerCase(),
               createId: event.args.stakeIndex.toString(),
@@ -679,7 +706,8 @@ async function performSmartUpdate(provider, updateLog, currentBlock, blocksSince
               stakingDays: duration, // For compatibility
               maturityDate: new Date(endTime * 1000).toISOString(),
               startDate: new Date(blockTimestamp * 1000).toISOString(),
-              // Add required fields with defaults
+              // Initialize payment fields
+              titanAmount: "0",
               titanXAmount: "0",
               ethAmount: "0",
               shares: "0",
@@ -691,7 +719,25 @@ async function performSmartUpdate(provider, updateLog, currentBlock, blocksSince
               rawCostETH: "0",
               rawCostTitanX: "0"
             };
-          });
+            
+            // Fetch actual payment data from contract
+            try {
+              const userCreateABI = ['function userCreates(address user, uint256 index) view returns (uint256 torusAmount, uint256 duration, uint256 timestamp, uint256 titanAmount, uint256 ethAmount, bool claimed)'];
+              const createContract = new ethers.Contract(CONTRACTS.TORUS_CREATE_STAKE, userCreateABI, provider);
+              const createInfo = await createContract.userCreates(event.args.user, event.args.stakeIndex);
+              
+              // Update payment fields with actual data
+              createData.titanAmount = createInfo.titanAmount.toString();
+              createData.titanXAmount = createInfo.titanAmount.toString();
+              createData.ethAmount = createInfo.ethAmount.toString();
+              
+              updateStats.rpcCalls++;
+            } catch (e) {
+              log(`  Warning: Could not fetch payment data for create ${createData.createId}: ${e.message}`, 'yellow');
+            }
+            
+            processedCreates.push(createData);
+          }
           
           // Merge with existing events
           cachedData.stakingData.stakeEvents = [
@@ -752,10 +798,29 @@ async function performSmartUpdate(provider, updateLog, currentBlock, blocksSince
       log(`Failed to update Buy & Process data: ${e.message}`, 'yellow');
     }
     
-    // 8. Update timestamp
+    // 8. Update Future Supply Projection if day changed
+    log('Checking future supply projection...', 'cyan');
+    try {
+      if (shouldUpdateProjection(cachedData)) {
+        log('Protocol day changed, updating future supply projection...', 'yellow');
+        generateFutureSupplyProjection();
+        // Reload cached data to get the updated projection
+        const updatedData = JSON.parse(fs.readFileSync(CACHE_FILE, 'utf8'));
+        cachedData.chartData = updatedData.chartData;
+        updateStats.dataChanged = true;
+        log('Future supply projection updated', 'green');
+      } else {
+        log('Future supply projection is up to date', 'green');
+      }
+    } catch (e) {
+      updateStats.errors.push(`Future supply projection update: ${e.message}`);
+      log(`Failed to update future supply projection: ${e.message}`, 'yellow');
+    }
+    
+    // 9. Update timestamp
     cachedData.lastUpdated = new Date().toISOString();
     
-    // 9. Check if we need more comprehensive updates
+    // 10. Check if we need more comprehensive updates
     const needsFullUpdate = lpUpdateResult.stats.newPositions > 5 || updateStats.errors.length > 3;
     
     if (needsFullUpdate) {
@@ -850,7 +915,9 @@ async function main() {
     updateLog.lastBlockNumber = currentBlock;
     updateLog.lastUpdateTime = Date.now();
     updateLog.totalRpcCalls += updateResult.rpcCalls;
-    updateLog.updates.push({
+    // Use updateHistory if it exists, otherwise use updates
+    const historyArray = updateLog.updateHistory || updateLog.updates || [];
+    historyArray.push({
       timestamp: new Date().toISOString(),
       block: currentBlock,
       rpcCalls: updateResult.rpcCalls,
@@ -859,8 +926,15 @@ async function main() {
     });
     
     // Keep only last 100 updates
-    if (updateLog.updates.length > 100) {
-      updateLog.updates = updateLog.updates.slice(-100);
+    if (historyArray.length > 100) {
+      updateLog.updateHistory = historyArray.slice(-100);
+    } else {
+      updateLog.updateHistory = historyArray;
+    }
+    
+    // Clean up old field if exists
+    if (updateLog.updates) {
+      delete updateLog.updates;
     }
     
     saveUpdateLog(updateLog);

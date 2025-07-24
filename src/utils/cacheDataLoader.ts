@@ -124,6 +124,25 @@ export interface CachedData {
   };
   totalTitanXBurnt?: string;
   titanxTotalSupply?: string;
+  chartData?: {
+    futureSupplyProjection?: Array<{
+      day: number;
+      date: string;
+      totalMaxSupply: number;
+      activePositions: number;
+      dailyRewardPool: number;
+      totalShares: number;
+      breakdown: {
+        fromStakes: number;
+        fromCreates: number;
+        fromExisting: number;
+      };
+    }>;
+    futureSupplyProjectionLastUpdate?: {
+      timestamp: string;
+      protocolDay: number;
+    };
+  };
 }
 
 /**
@@ -398,7 +417,8 @@ export async function getMainDashboardDataWithCache(
         burnedSupply: finalData.stakingData.burnedSupply || 0,
         totalTitanXBurnt: finalData.totalTitanXBurnt || "0",
         titanxTotalSupply: finalData.titanxTotalSupply || "0",
-        totals: finalData.totals
+        totals: finalData.totals,
+        chartData: finalData.chartData
       },
       source
     };
