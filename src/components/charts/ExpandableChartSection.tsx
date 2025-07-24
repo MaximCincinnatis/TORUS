@@ -5,7 +5,7 @@ import SkeletonChart from '../loading/SkeletonChart';
 interface ExpandableChartSectionProps {
   id: string;
   title: React.ReactNode;
-  subtitle?: string;
+  subtitle?: React.ReactNode;
   keyMetrics?: Array<{
     label: string;
     value: string | number;
