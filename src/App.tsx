@@ -2760,7 +2760,7 @@ function App() {
 
       <ExpandableChartSection
         id="titanx-eth-build-usage"
-        title="Daily TitanX/ETH Used for Builds"
+        title="Daily TitanX/ETH Used for Buy & Build"
         subtitle="Resources used in Buy & Build operations"
         keyMetrics={[
           {
@@ -2791,7 +2791,7 @@ function App() {
         />
         <PannableBarChart
           key="titanx-eth-build-usage-chart"
-          title="Daily TitanX/ETH Used for Builds"
+          title="Daily TitanX/ETH Used for Buy & Build"
           labels={titanXEthBuildUsage.map(d => {
             const contractDay = getContractDay(d.date);
             return [`${d.date.substring(5)}`, `Day ${contractDay}`];
