@@ -7,7 +7,6 @@ import LineChart from './components/charts/LineChart';
 import PannableLineChart from './components/charts/PannableLineChart';
 import PannableBarChart from './components/charts/PannableBarChart';
 import ExpandableChartSection from './components/charts/ExpandableChartSection';
-import LoadingBar from './components/loading/LoadingBar';
 import SkeletonCard from './components/loading/SkeletonCard';
 import LPPositionsTable from './components/lp/LPPositionsTable';
 import FutureMaxSupplyChart from './components/charts/FutureMaxSupplyChart';
@@ -62,9 +61,12 @@ console.log('Deployment trigger:', '2025-07-16T18:55:00Z');
 
 function App() {
   const [loading, setLoading] = useState(true);
-  const [loadingProgress, setLoadingProgress] = useState(0);
-  const [loadingMessage, setLoadingMessage] = useState('Initializing...');
-  const [loadingDetails, setLoadingDetails] = useState<string[]>([]);
+  
+  // Individual loading states for progressive display
+  const [totalsLoading, setTotalsLoading] = useState(true);
+  const [chartsLoading, setChartsLoading] = useState(true);
+  const [projectionLoading, setProjectionLoading] = useState(true);
+  
   const [stakeData, setStakeData] = useState<any[]>([]);
   const [createData, setCreateData] = useState<any[]>([]);
   const [rewardPoolData, setRewardPoolData] = useState<RewardPoolData[]>([]);
@@ -96,6 +98,7 @@ function App() {
   const [titanXEthUsageDays, setTitanXEthUsageDays] = useState<number>(9999);
   const [titanXEthBuildUsageDays, setTitanXEthBuildUsageDays] = useState<number>(9999);
   const [lpFeeBurnsDays, setLpFeeBurnsDays] = useState<number>(9999);
+  const [dailyCreatesStakesDays, setDailyCreatesStakesDays] = useState<number>(9999);
   const [preCalculatedProjection, setPreCalculatedProjection] = useState<any[]>([]);
 
   useEffect(() => {
@@ -192,29 +195,15 @@ function App() {
   const loadData = async (forceFullRefresh: boolean = false) => {
     console.log('🔄 LOADDATA CALLED - Loading from cached JSON only');
     setLoading(true);
-    setLoadingProgress(0);
     
     // Always load from cache only - no more RPC calls
-    setLoadingMessage('Loading dashboard data...');
     
     try {
       console.log('📡 Starting data fetch...');
       // First, verify contract connectivity
-      setLoadingProgress(10);
-      setLoadingMessage('Verifying smart contract...');
       const contractInfo = await getContractInfo();
       console.log('Contract info:', contractInfo);
       setContractInfo(contractInfo);
-      
-      setLoadingProgress(20);
-      setLoadingMessage('Fetching stake events from blockchain...');
-      setLoadingDetails(['Scanning blockchain for Staked events...']);
-      
-      // Simulate progress updates during stake fetch
-      const stakeProgressInterval = setInterval(() => {
-        setLoadingProgress(prev => Math.min(prev + 2, 45));
-        setLoadingDetails(prev => [...prev.slice(-3), `Processing stake events... ${Math.floor(Math.random() * 100)}%`]);
-      }, 300);
       
       console.log('📊 About to fetch dashboard data with cache...');
       
@@ -232,7 +221,6 @@ function App() {
         };
       });
       
-      clearInterval(stakeProgressInterval);
       
       console.log(`✅ Dashboard data loaded from ${dashboardResult.source}:`, {
         stakes: dashboardResult.data.stakeEvents?.length || 0,
@@ -240,8 +228,6 @@ function App() {
         rewardPool: dashboardResult.data.rewardPoolData?.length || 0
       });
       
-      setLoadingDetails(prev => [...prev, `Found ${dashboardResult.data.stakeEvents?.length || 0} stake events from ${dashboardResult.source}`]);
-      setLoadingDetails(prev => [...prev, `Found ${dashboardResult.data.createEvents?.length || 0} create events from ${dashboardResult.source}`]);
       
       // Set all the data from cache or RPC
       setStakeData(dashboardResult.data.stakeEvents || []);
@@ -250,6 +236,9 @@ function App() {
       setCurrentProtocolDay(dashboardResult.data.currentProtocolDay || 0);
       setTotalSupply(dashboardResult.data.totalSupply || 0);
       setBurnedSupply(dashboardResult.data.burnedSupply || 0);
+      
+      // Totals can display as soon as basic data is available
+      setTotalsLoading(false);
       
       // Update contract info with cached TitanX burn data
       console.log('🔥 TitanX Burn Data Check:', {
@@ -265,10 +254,6 @@ function App() {
         }));
       }
       
-      setLoadingProgress(55);
-      setLoadingDetails(prev => [...prev, `Total supply: ${dashboardResult.data.totalSupply?.toLocaleString() || 0} TORUS`]);
-      setLoadingDetails(prev => [...prev, `Current protocol day: ${dashboardResult.data.currentProtocolDay || 0}`]);
-      setLoadingDetails(prev => [...prev, `Loaded ${dashboardResult.data.rewardPoolData?.length || 0} days of reward data`]);
       
       // Set pre-calculated projection data if available
       if (dashboardResult.data.chartData?.futureSupplyProjection) {
@@ -276,9 +261,12 @@ function App() {
         console.log('✅ Loaded pre-calculated projection:', dashboardResult.data.chartData.futureSupplyProjection.length, 'days');
       }
       
-      setLoadingProgress(85);
-      setLoadingMessage('Processing data...');
-      setLoadingDetails(prev => [...prev, 'Calculating maturity schedules and projections...']);
+      // Charts can display once we have stake/create data
+      setChartsLoading(false);
+      
+      // Projection can display once we have all necessary data
+      setProjectionLoading(false);
+      
       
       console.log(`Fetched ${dashboardResult.data.stakeEvents?.length || 0} stake events and ${dashboardResult.data.createEvents?.length || 0} create events`);
       
@@ -290,15 +278,10 @@ function App() {
         console.log('Sample create event:', dashboardResult.data.createEvents[0]);
       }
       
-      setLoadingProgress(90);
-      setLoadingMessage('Fetching LP positions...');
-      setLoadingDetails(prev => [...prev, 'Loading Uniswap V3 liquidity positions...']);
       
       // Load LP positions separately (non-blocking)
       loadLPPositions();
       
-      setLoadingProgress(95);
-      setLoadingMessage('Calculating projections...');
       
       // Update historical supply snapshot if available
       if (dashboardResult.data.metadata?.dailySupplySnapshot) {
@@ -314,8 +297,6 @@ function App() {
       // Data already set from cache above
       console.log('Data loaded - Stakes:', dashboardResult.data.stakeEvents?.length || 0, 'Creates:', dashboardResult.data.createEvents?.length || 0);
       
-      setLoadingProgress(100);
-      setLoadingMessage('Complete!');
       
       // Small delay to show completion
       setTimeout(() => {
@@ -323,10 +304,15 @@ function App() {
       }, 500);
     } catch (error) {
       console.error('Error loading data:', error);
-      setLoadingMessage('Error loading data. Please refresh.');
       // No data on error - only show live data
       setStakeData([]);
       setCreateData([]);
+      
+      // Set all loading states to false on error
+      setTotalsLoading(false);
+      setChartsLoading(false);
+      setProjectionLoading(false);
+      
       setTimeout(() => {
         setLoading(false);
       }, 2000);
@@ -1167,6 +1153,47 @@ function App() {
   const titanXUsage = loading || (stakeData.length === 0 && createData.length === 0) ? [] : calculateTitanXUsage();
   const torusStakedPerDay = loading || (stakeData.length === 0 && createData.length === 0) ? [] : calculateTorusStakedPerDay();
   
+  // Calculate daily creates and stakes count
+  const calculateDailyCreatesStakes = (): { day: number; creates: number; stakes: number }[] => {
+    const dailyData: { [key: number]: { creates: number; stakes: number } } = {};
+    
+    // Count creates per day
+    createData.forEach(event => {
+      const eventDate = new Date(event.startDate);
+      const dayNum = Math.floor((eventDate.getTime() - CONTRACT_START_DATE.getTime()) / (24 * 60 * 60 * 1000)) + 1;
+      if (!dailyData[dayNum]) {
+        dailyData[dayNum] = { creates: 0, stakes: 0 };
+      }
+      dailyData[dayNum].creates++;
+    });
+    
+    // Count stakes per day
+    stakeData.forEach(event => {
+      const eventDate = new Date(event.startDate);
+      const dayNum = Math.floor((eventDate.getTime() - CONTRACT_START_DATE.getTime()) / (24 * 60 * 60 * 1000)) + 1;
+      if (!dailyData[dayNum]) {
+        dailyData[dayNum] = { creates: 0, stakes: 0 };
+      }
+      dailyData[dayNum].stakes++;
+    });
+    
+    // Convert to array and fill gaps
+    const result = [];
+    // Use actual current day (15) instead of cached value
+    const actualCurrentDay = Math.max(currentProtocolDay, 15);
+    for (let day = 1; day <= actualCurrentDay; day++) {
+      result.push({
+        day,
+        creates: dailyData[day]?.creates || 0,
+        stakes: dailyData[day]?.stakes || 0
+      });
+    }
+    
+    return result;
+  };
+  
+  const dailyCreatesStakes = loading || (stakeData.length === 0 && createData.length === 0) ? [] : calculateDailyCreatesStakes();
+  
   // Move sharesReleases calculation AFTER createReleases
   const sharesReleases = loading || (stakeData.length === 0 && createData.length === 0) ? [] : calculateSharesReleases();
   const dailyTitanXUsage = loading || (stakeData.length === 0 && createData.length === 0) ? [] : calculateDailyTitanXUsage();
@@ -1528,9 +1555,6 @@ function App() {
   return (
     <>
       <Analytics />
-      {loading && (
-        <LoadingBar progress={loadingProgress} message={loadingMessage} details={loadingDetails} />
-      )}
       <Dashboard>
       {/* Dashboard Header */}
       <div className="dashboard-header">
@@ -1581,7 +1605,7 @@ function App() {
       <div className="chart-section">
         <h2 className="section-title">Overall Metrics</h2>
         <div className="metrics-grid">
-          {loading ? (
+          {totalsLoading ? (
             <>
               <SkeletonCard />
               <SkeletonCard />
@@ -1727,6 +1751,7 @@ function App() {
         id="max-supply-projection"
         title={<>Future <span className="torus-text">TORUS</span> Max Supply Projection</>}
         subtitle="Maximum possible supply if all positions maintain their share percentages"
+        chartType="line"
         keyMetrics={[
           {
             label: "Active Positions",
@@ -1750,7 +1775,7 @@ function App() {
           }
         ]}
 
-        loading={loading}
+        loading={projectionLoading}
 
       >
         <DateRangeButtons 
@@ -1769,6 +1794,76 @@ function App() {
         />
         <div className="chart-note">
           This projection shows the accrued future supply based on existing positions only. It includes principal returns from stakes and new tokens from creates that will be added when positions mature. This does NOT project future share rewards beyond what current positions have already earned. New positions created after today will dilute existing share percentages and reduce actual rewards.
+        </div>
+      </ExpandableChartSection>
+
+      {/* Daily Creates vs Stakes Activity */}
+      <ExpandableChartSection
+        id="daily-creates-stakes"
+        title="Daily Creates vs Stakes Activity"
+        subtitle="Number of creates and stakes initiated each protocol day"
+        chartType="bar"
+        keyMetrics={[
+          {
+            label: "Total Creates",
+            value: createData.length.toString(),
+            trend: "up"
+          },
+          {
+            label: "Total Stakes", 
+            value: stakeData.length.toString(),
+            trend: "up"
+          },
+          {
+            label: "Most Active Day",
+            value: dailyCreatesStakes.length > 0 ? 
+              `Day ${dailyCreatesStakes.reduce((max, day) => 
+                (day.creates + day.stakes) > (max.creates + max.stakes) ? day : max
+              ).day}` : "N/A",
+            trend: "neutral"
+          },
+          {
+            label: "Total Days",
+            value: currentProtocolDay.toString(),
+            trend: "neutral"
+          }
+        ]}
+        loading={chartsLoading}
+      >
+        <DateRangeButtons 
+          selectedDays={dailyCreatesStakesDays}
+          onDaysChange={setDailyCreatesStakesDays}
+        />
+        <PannableBarChart
+          title="Daily Creates vs Stakes"
+          labels={dailyCreatesStakes.map(d => [`Day ${d.day}`])}
+          datasets={[
+            {
+              label: 'Creates',
+              data: dailyCreatesStakes.map(d => d.creates),
+              // backgroundColor will be set by gradient plugin
+            },
+            {
+              label: 'Stakes',
+              data: dailyCreatesStakes.map(d => d.stakes),
+              // backgroundColor will be set by gradient plugin
+            }
+          ]}
+          height={600}
+          yAxisLabel="Number of Positions"
+          xAxisLabel="Contract Day"
+          windowSize={dailyCreatesStakesDays}
+          showLegend={true}
+          stacked={false}
+          showDataLabels={true}
+          formatTooltip={(value: number, datasetIndex?: number) => {
+            const type = datasetIndex === 0 ? 'Creates' : 'Stakes';
+            return `${value} ${type}`;
+          }}
+          formatYAxis={(value: number) => value.toString()}
+        />
+        <div className="chart-note">
+          Shows the number of new create and stake positions initiated on each protocol day. Creates are positions that mint new TORUS tokens, while stakes are positions that lock existing TORUS tokens. Day 1 corresponds to the contract launch on July 10, 2025.
         </div>
       </ExpandableChartSection>
 
@@ -1802,7 +1897,7 @@ function App() {
             trend: "up"
           }
         ]}
-        loading={loading}
+        loading={chartsLoading}
 
       >
         <DateRangeButtons 
@@ -1859,6 +1954,7 @@ function App() {
         id="torus-staked-per-day"
         title={<>Total <span className="torus-text">TORUS</span> Staked Each Contract Day</>}
         subtitle="Historical staking activity by day"
+        chartType="bar"
         keyMetrics={[
           {
             label: "Total Staked",
@@ -1886,7 +1982,7 @@ function App() {
           }
         ]}
 
-        loading={loading}
+        loading={chartsLoading}
 
       >
         <DateRangeButtons 
@@ -1946,7 +2042,7 @@ function App() {
           }
         ]}
 
-        loading={loading}
+        loading={chartsLoading}
 
       >
         <DateRangeButtons 
@@ -2008,7 +2104,7 @@ function App() {
           }
         ]}
 
-        loading={loading}
+        loading={chartsLoading}
 
       >
         <DateRangeButtons 
@@ -2077,7 +2173,7 @@ function App() {
           }
         ]}
 
-        loading={loading}
+        loading={chartsLoading}
 
       >
         <DateRangeButtons 
@@ -2173,7 +2269,7 @@ function App() {
           }
         ]}
 
-        loading={loading}
+        loading={chartsLoading}
 
       >
         <DateRangeButtons 
@@ -2245,7 +2341,7 @@ function App() {
             trend: "up"
           }
         ]}
-        loading={loading}
+        loading={chartsLoading}
       >
         <DateRangeButtons 
           selectedDays={dailyTitanXUsageDays}
@@ -2320,7 +2416,7 @@ function App() {
           }
         ]}
 
-        loading={loading}
+        loading={chartsLoading}
 
       >
         <DateRangeButtons 

@@ -1,5 +1,6 @@
 import React, { useRef } from 'react';
 import './ExpandableChartSection.css';
+import SkeletonChart from '../loading/SkeletonChart';
 
 interface ExpandableChartSectionProps {
   id: string;
@@ -16,6 +17,7 @@ interface ExpandableChartSectionProps {
   defaultExpanded?: boolean;
   loading?: boolean;
   onToggle?: (expanded: boolean) => void;
+  chartType?: 'line' | 'bar' | 'area';
 }
 
 const ExpandableChartSection: React.FC<ExpandableChartSectionProps> = ({
@@ -27,7 +29,8 @@ const ExpandableChartSection: React.FC<ExpandableChartSectionProps> = ({
   children,
   defaultExpanded = false,
   loading = false,
-  onToggle
+  onToggle,
+  chartType = 'line'
 }) => {
   // Always expanded - removed state management
   const contentRef = useRef<HTMLDivElement>(null);
@@ -51,10 +54,7 @@ const ExpandableChartSection: React.FC<ExpandableChartSectionProps> = ({
         <div ref={contentRef} className={`content-inner visible`}>
           {loading ? (
             <div className="chart-loading-container">
-              <div className="chart-skeleton">
-                <div className="skeleton-header"></div>
-                <div className="skeleton-chart"></div>
-              </div>
+              <SkeletonChart type={chartType} showAxes={true} showLegend={false} />
             </div>
           ) : (
             <div className="chart-content-wrapper">

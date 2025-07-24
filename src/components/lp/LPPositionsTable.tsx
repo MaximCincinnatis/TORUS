@@ -3,6 +3,7 @@ import { SimpleLPPosition } from '../../utils/uniswapV3RealOwners';
 import { tickToTitanXPrice } from '../../utils/uniswapV3Math';
 import { CONTRACTS } from '../../constants/contracts';
 import './LPPositionsTable.css';
+import SkeletonTable from '../loading/SkeletonTable';
 
 interface LPPositionsTableProps {
   positions: SimpleLPPosition[];
@@ -17,12 +18,7 @@ interface LPPositionsTableProps {
 
 const LPPositionsTable: React.FC<LPPositionsTableProps> = ({ positions, loading, tokenInfo }) => {
   if (loading) {
-    return (
-      <div className="lp-positions-loading">
-        <div className="loading-spinner"></div>
-        <p>Loading LP positions...</p>
-      </div>
-    );
+    return <SkeletonTable rows={5} columns={6} />;
   }
 
   if (positions.length === 0) {

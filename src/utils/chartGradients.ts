@@ -133,6 +133,14 @@ export const gradientPlugin = {
         colorScheme = chartColors.titanx; // White to Green for TitanX
       } else if (dataset.label === 'Number of Creates') {
         colorScheme = chartColors.pink; // Pink for Creates ending
+      } else if (dataset.label === 'Creates') {
+        colorScheme = chartColors.primary; // Purple to pink for Creates
+      } else if (dataset.label === 'Stakes') {
+        colorScheme = {
+          start: '#ec4899',  // Pink
+          end: '#fbbf24',    // Yellow
+          border: '#f97316'
+        }; // Pink to yellow for Stakes
       } else {
         // Default color scheme
         switch (i) {
