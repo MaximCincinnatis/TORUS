@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2025-07-24T17:30:02.123Z",
+  "lastUpdated": "2025-07-24T17:54:16.893Z",
   "version": "1.0.0",
   "poolData": {
     "sqrtPriceX96": "520758589457209203368793558384894",
@@ -38301,17 +38301,17 @@
         "stakingDays": 88,
         "maturityDate": "2025-10-20T07:42:23.000Z",
         "startDate": "2025-07-24T07:42:23.000Z",
-        "titanAmount": "0",
-        "titanXAmount": "0",
+        "titanAmount": "20000000000000000000000000000",
+        "titanXAmount": "20000000000000000000000000000",
         "ethAmount": "0",
         "shares": "0",
         "power": "0",
         "claimedCreate": false,
         "claimedStake": false,
-        "costETH": "0",
-        "costTitanX": "0",
+        "costETH": "0.0",
+        "costTitanX": "20000000000.0",
         "rawCostETH": "0",
-        "rawCostTitanX": "0"
+        "rawCostTitanX": "20000000000000000000000000000"
       },
       {
         "user": "0xe649bf6e4ddae04b60e015937a631d7d89dbcac2",
@@ -38327,17 +38327,17 @@
         "stakingDays": 88,
         "maturityDate": "2025-10-20T08:46:59.000Z",
         "startDate": "2025-07-24T08:46:59.000Z",
-        "titanAmount": "0",
-        "titanXAmount": "0",
+        "titanAmount": "100000000000000000000000000",
+        "titanXAmount": "100000000000000000000000000",
         "ethAmount": "0",
         "shares": "0",
         "power": "0",
         "claimedCreate": false,
         "claimedStake": false,
-        "costETH": "0",
-        "costTitanX": "0",
+        "costETH": "0.0",
+        "costTitanX": "100000000.0",
         "rawCostETH": "0",
-        "rawCostTitanX": "0"
+        "rawCostTitanX": "100000000000000000000000000"
       },
       {
         "user": "0x8599a6cab9617ffb12e6f11ad119caee7323a2c4",
@@ -38353,17 +38353,17 @@
         "stakingDays": 88,
         "maturityDate": "2025-10-20T13:44:11.000Z",
         "startDate": "2025-07-24T13:44:11.000Z",
-        "titanAmount": "0",
-        "titanXAmount": "0",
-        "ethAmount": "0",
+        "titanAmount": "400000000000000000000000000",
+        "titanXAmount": "400000000000000000000000000",
+        "ethAmount": "21351000000000000",
         "shares": "0",
         "power": "0",
         "claimedCreate": false,
         "claimedStake": false,
-        "costETH": "0",
-        "costTitanX": "0",
-        "rawCostETH": "0",
-        "rawCostTitanX": "0"
+        "costETH": "0.021351",
+        "costTitanX": "400000000.0",
+        "rawCostETH": "21351000000000000",
+        "rawCostTitanX": "400000000000000000000000000"
       },
       {
         "user": "0xb9f85ff5cf8ba0c5b6af8394d00740862b7db3c7",
@@ -39136,7 +39136,7 @@
         "day": 8,
         "totalSupply": 18526.503412257065,
         "burnedSupply": 0,
-        "timestamp": "2025-07-24T17:21:51.569Z"
+        "timestamp": "2025-07-24T17:53:54.229Z"
       },
       "lastCreateBlock": 22969998,
       "lastFullRebuild": "2025-07-21T22:29:04.583Z",
@@ -39171,7 +39171,12 @@
     "dataComplete": true,
     "description": "Complete TORUS dashboard data with all frontend requirements",
     "fallbackToRPC": false,
-    "cacheExpiryMinutes": 60
+    "cacheExpiryMinutes": 60,
+    "day15ManualPatch": {
+      "applied": "2025-07-24T17:53:45.308Z",
+      "reason": "Day 15 creates missing TitanX payment data",
+      "patchedCount": 3
+    }
   },
   "currentProtocolDay": 8,
   "totals": {
