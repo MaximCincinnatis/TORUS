@@ -1,0 +1,67 @@
+🚀 UPDATING ALL DASHBOARD DATA (COMPLETE VERSION)
+================================================
+⚠️  WARNING: This script takes 10+ MINUTES to complete!
+    - Processes 251 users for ETH/TitanX costs
+    - Searches 36k+ blocks for LP positions
+    - Fetches 89 days of reward pool data
+    - DO NOT expect completion in 2 minutes!
+    - Monitor progress by checking backup files
+================================================
+✅ Connected to https://eth.drpc.org - Block: 22991372
+📁 Backup created: public/data/backups/cached-data-2025-07-24T20-23-22.539Z.json
+
+📊 1. FETCHING CONTRACT DATA...
+  ✅ Contract data fetched
+
+📊 2. UPDATING STAKE/CREATE ETH & TITANX COSTS...
+  Processing users: 5/420 (1.2%)  Processing users: 10/420 (2.4%)  Processing users: 15/420 (3.6%)  Processing users: 20/420 (4.8%)  Processing users: 25/420 (6.0%)  Processing users: 30/420 (7.1%)  Processing users: 35/420 (8.3%)  Processing users: 40/420 (9.5%)  Processing users: 45/420 (10.7%)  Processing users: 50/420 (11.9%)  Processing users: 55/420 (13.1%)  Processing users: 60/420 (14.3%)  Processing users: 65/420 (15.5%)  Processing users: 70/420 (16.7%)  Processing users: 75/420 (17.9%)  Processing users: 80/420 (19.0%)  Processing users: 85/420 (20.2%)  Processing users: 90/420 (21.4%)  Processing users: 95/420 (22.6%)  Processing users: 100/420 (23.8%)  Processing users: 105/420 (25.0%)  Processing users: 110/420 (26.2%)  Processing users: 115/420 (27.4%)  Processing users: 120/420 (28.6%)  Processing users: 125/420 (29.8%)  Processing users: 130/420 (31.0%)  Processing users: 135/420 (32.1%)  Processing users: 140/420 (33.3%)  Processing users: 145/420 (34.5%)  Processing users: 150/420 (35.7%)  Processing users: 155/420 (36.9%)  Processing users: 160/420 (38.1%)  Processing users: 165/420 (39.3%)  Processing users: 170/420 (40.5%)  Processing users: 175/420 (41.7%)  Processing users: 180/420 (42.9%)  Processing users: 185/420 (44.0%)  Processing users: 190/420 (45.2%)  Processing users: 195/420 (46.4%)  Processing users: 200/420 (47.6%)  Processing users: 205/420 (48.8%)  Processing users: 210/420 (50.0%)  Processing users: 215/420 (51.2%)  Processing users: 220/420 (52.4%)  Processing users: 225/420 (53.6%)  Processing users: 230/420 (54.8%)  Processing users: 235/420 (56.0%)  Processing users: 240/420 (57.1%)  Processing users: 245/420 (58.3%)  Processing users: 250/420 (59.5%)  Processing users: 255/420 (60.7%)  Processing users: 260/420 (61.9%)  Processing users: 265/420 (63.1%)  Processing users: 270/420 (64.3%)  Processing users: 275/420 (65.5%)  Processing users: 280/420 (66.7%)  Processing users: 285/420 (67.9%)  Processing users: 290/420 (69.0%)  Processing users: 295/420 (70.2%)  Processing users: 300/420 (71.4%)  Processing users: 305/420 (72.6%)  Processing users: 310/420 (73.8%)  Processing users: 315/420 (75.0%)  Processing users: 320/420 (76.2%)  Processing users: 325/420 (77.4%)  Processing users: 330/420 (78.6%)  Processing users: 335/420 (79.8%)  Processing users: 340/420 (81.0%)  Processing users: 345/420 (82.1%)  Processing users: 350/420 (83.3%)  Processing users: 355/420 (84.5%)  Processing users: 360/420 (85.7%)  Processing users: 365/420 (86.9%)  Processing users: 370/420 (88.1%)  Processing users: 375/420 (89.3%)  Processing users: 380/420 (90.5%)  Processing users: 385/420 (91.7%)  Processing users: 390/420 (92.9%)  Processing users: 395/420 (94.0%)  Processing users: 400/420 (95.2%)  Processing users: 405/420 (96.4%)  Processing users: 410/420 (97.6%)  Processing users: 415/420 (98.8%)  Processing users: 420/420 (100.0%)
+  ✅ Updated stake/create costs and totals
+
+🔗 3. UPDATING UNISWAP V3 DATA WITH LP DETAILS...
+  🔍 Discovering LP positions using Mint event analysis...
+  📊 Current block: 22991379
+  📊 Scanning broader 50000 blocks (22941379 to 22991379)...
+  ⚠️  Broad range failed, trying smaller 10k range...
+  ✅ Found 15 Mint events in small range
+  🔄 Found 0 positions via events, now searching from pool creation forward...
+  📅 Pool creation block: 22890272
+  📊 Current block: 22991379
+  📏 Total blocks to search: 101107
+  📊 Searching blocks 22890272 to 22895272 (0.0% complete)...
+    Found 3 Mint events
+  📊 Searching blocks 22895272 to 22900272 (4.9% complete)...
+    Found 2 Mint events
+  📊 Searching blocks 22900272 to 22905272 (9.9% complete)...
+    Found 3 Mint events
+      ✅ Found valid TORUS position 1030759!
+    ✅ Found TORUS position 1030759 owned by 0x9BBb45e1...
+  📊 Searching blocks 22905272 to 22910272 (14.8% complete)...
+    Found 3 Mint events
+  📊 Searching blocks 22910272 to 22915272 (19.8% complete)...
+    Found 4 Mint events
+  📊 Searching blocks 22915272 to 22920272 (24.7% complete)...
+    Found 1 Mint events
+      ✅ Found valid TORUS position 1032346!
+    ✅ Found TORUS position 1032346 owned by 0x16221e4e...
+  📊 Searching blocks 22920272 to 22925272 (29.7% complete)...
+    Found 1 Mint events
+  📊 Searching blocks 22925272 to 22930272 (34.6% complete)...
+    Found 7 Mint events
+  📊 Searching blocks 22930272 to 22935272 (39.6% complete)...
+    Found 2 Mint events
+  📊 Searching blocks 22935272 to 22940272 (44.5% complete)...
+    Found 1 Mint events
+  📊 Searching blocks 22940272 to 22945272 (49.5% complete)...
+    Found 1 Mint events
+  📊 Searching blocks 22945272 to 22950272 (54.4% complete)...
+    Found 3 Mint events
+  📊 Searching blocks 22950272 to 22955272 (59.3% complete)...
+    Found 2 Mint events
+  📊 Searching blocks 22955272 to 22960272 (64.3% complete)...
+    Found 7 Mint events
+      ✅ Found valid TORUS position 1037264!
+    ✅ Found TORUS position 1037264 owned by 0xe7B7c59C...
+  📊 Searching blocks 22960272 to 22965272 (69.2% complete)...
+    Found 2 Mint events
+  📊 Searching blocks 22965272 to 22970272 (74.2% complete)...
+    Found 3 Mint events
