@@ -3047,15 +3047,6 @@ function App() {
                   <img src="https://app.uniswap.org/favicon.png" alt="Uniswap" style={{ width: '16px', height: '16px', marginRight: '6px', verticalAlign: 'middle' }} />
                   Uniswap V3 Pool
                 </a>
-                <a 
-                  href="https://www.tincburn.fyi/" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="footer-link"
-                >
-                  <img src="https://titanfarms.win/Logo.png" alt="TINC" style={{ width: '16px', height: '16px', marginRight: '6px', verticalAlign: 'middle' }} />
-                  TINC Burn Info
-                </a>
               </div>
             </div>
           </div>
