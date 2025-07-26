@@ -1366,36 +1366,52 @@ function App() {
   const calculateLPFeeBurns = (): { date: string; torusBurned: number; titanxCollected: number; day: number }[] => {
     if (!lpFeeBurnsData?.feeDrivenBurns) return [];
     
-    // Create a map to aggregate by date
-    const burnsByDate = new Map<string, { torusBurned: number; titanxCollected: number }>();
+    // Create a map to aggregate by protocol day
+    const burnsByDay = new Map<number, { torusBurned: number; titanxCollected: number; date: string }>();
     
-    // Initialize with dates from buy process data for consistent x-axis
+    // Initialize with protocol days from buy process data for consistent x-axis
     if (buyProcessData?.dailyData) {
       buyProcessData.dailyData.forEach((day: any) => {
-        burnsByDate.set(day.date, { torusBurned: 0, titanxCollected: 0 });
+        if (day.protocolDay && !burnsByDay.has(day.protocolDay)) {
+          burnsByDay.set(day.protocolDay, { 
+            torusBurned: 0, 
+            titanxCollected: 0,
+            date: day.date 
+          });
+        }
       });
     }
     
     // Add LP fee burns
     lpFeeBurnsData.feeDrivenBurns.forEach((burn: any) => {
-      const date = burn.date.split('T')[0]; // Extract date part
+      const protocolDay = burn.protocolDay;
       const torusBurned = parseFloat(burn.torusBurned);
       const titanxCollected = parseFloat(burn.titanxCollected) / 1e9; // Convert to billions
       
-      const existing = burnsByDate.get(date) || { torusBurned: 0, titanxCollected: 0 };
-      burnsByDate.set(date, {
+      const existing = burnsByDay.get(protocolDay) || { 
+        torusBurned: 0, 
+        titanxCollected: 0,
+        date: burn.date.split('T')[0]
+      };
+      
+      burnsByDay.set(protocolDay, {
         torusBurned: existing.torusBurned + torusBurned,
-        titanxCollected: existing.titanxCollected + titanxCollected
+        titanxCollected: existing.titanxCollected + titanxCollected,
+        date: existing.date
       });
     });
     
-    // Convert to array and sort by date
-    const dateBasedData = Array.from(burnsByDate.entries())
-      .map(([date, data]) => ({ date, ...data }))
-      .sort((a, b) => a.date.localeCompare(b.date));
+    // Convert to array with proper structure
+    const result = Array.from(burnsByDay.entries())
+      .map(([day, data]) => ({
+        date: getProtocolDayUserDate(day),
+        day,
+        torusBurned: data.torusBurned,
+        titanxCollected: data.titanxCollected
+      }))
+      .sort((a, b) => a.day - b.day);
     
-    // Convert from date-based to protocol day-based with user timezone
-    return convertToProtocolDayData(dateBasedData);
+    return result;
   };
   
   const lpFeeBurns = !lpFeeBurnsData ? [] : calculateLPFeeBurns();
@@ -1766,12 +1782,12 @@ function App() {
         <div className="metrics-grid">
           {totalsLoading ? (
             <>
-              <SkeletonCard />
-              <SkeletonCard />
-              <SkeletonCard />
-              <SkeletonCard />
-              <SkeletonCard />
-              <SkeletonCard />
+              <SkeletonCard delay={0} />
+              <SkeletonCard delay={0.1} />
+              <SkeletonCard delay={0.2} />
+              <SkeletonCard delay={0.3} />
+              <SkeletonCard delay={0.4} />
+              <SkeletonCard delay={0.5} />
             </>
           ) : (
             <>
@@ -1823,10 +1839,10 @@ function App() {
         <div className="metrics-grid">
           {loading ? (
             <>
-              <SkeletonCard />
-              <SkeletonCard />
-              <SkeletonCard />
-              <SkeletonCard />
+              <SkeletonCard delay={0} showTrend />
+              <SkeletonCard delay={0.1} showTrend />
+              <SkeletonCard delay={0.2} />
+              <SkeletonCard delay={0.3} />
             </>
           ) : (
             <>
@@ -1870,10 +1886,10 @@ function App() {
         <div className="metrics-grid">
           {loading ? (
             <>
-              <SkeletonCard />
-              <SkeletonCard />
-              <SkeletonCard />
-              <SkeletonCard />
+              <SkeletonCard delay={0} showTrend />
+              <SkeletonCard delay={0.1} showTrend />
+              <SkeletonCard delay={0.2} />
+              <SkeletonCard delay={0.3} />
             </>
           ) : (
             <>
