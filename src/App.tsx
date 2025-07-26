@@ -1,7 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useMemo } from 'react';
 import { Analytics } from "@vercel/analytics/react";
 import Dashboard from './components/layout/Dashboard';
 import MetricCard from './components/metrics/MetricCard';
+import SmartMetricCard from './components/metrics/SmartMetricCard';
 // import BarChart from './components/charts/BarChart'; // Replaced with PannableBarChart
 import LineChart from './components/charts/LineChart';
 import PannableLineChart from './components/charts/PannableLineChart';
@@ -230,16 +231,27 @@ function App() {
       });
       
       
-      // Set all the data from cache or RPC
-      setStakeData(dashboardResult.data.stakeEvents || []);
-      setCreateData(dashboardResult.data.createEvents || []);
-      setRewardPoolData(dashboardResult.data.rewardPoolData || []);
-      setCurrentProtocolDay(dashboardResult.data.currentProtocolDay || 0);
+      // STAGGERED LOADING FOR GRANULAR BUBBLES
+      // 1. Basic metrics load immediately
       setTotalSupply(dashboardResult.data.totalSupply || 0);
       setBurnedSupply(dashboardResult.data.burnedSupply || 0);
-      
-      // Totals can display as soon as basic data is available
+      setCurrentProtocolDay(dashboardResult.data.currentProtocolDay || 0);
       setTotalsLoading(false);
+      console.log('✅ Basic metrics loaded');
+      
+      // 2. Stake data loads immediately to test bubble loading
+      setStakeData(dashboardResult.data.stakeEvents || []);
+      console.log('✅ Stake metrics loaded');
+      
+      // 3. Create data loads immediately to test bubble loading
+      setCreateData(dashboardResult.data.createEvents || []);
+      console.log('✅ Create metrics loaded');
+      
+      // 4. Reward pool data loads after 150ms
+      setTimeout(() => {
+        setRewardPoolData(dashboardResult.data.rewardPoolData || []);
+        console.log('✅ Reward pool data loaded');
+      }, 150);
       
       // Update contract info with cached TitanX burn data
       console.log('🔥 TitanX Burn Data Check:', {
@@ -1717,6 +1729,86 @@ function App() {
     percentTitanXBurned
   });
   
+  // MEMOIZED CALCULATIONS FOR GRANULAR LOADING
+  const memoizedTotalSupply = useMemo(() => totalSupply, [totalSupply]);
+  
+  const memoizedTotalShares = useMemo(() => {
+    if (stakeData.length === 0 && createData.length === 0) return null;
+    return totalShares;
+  }, [stakeData, createData]);
+
+  const memoizedTotalETHInput = useMemo(() => {
+    if (stakeData.length === 0 && createData.length === 0) return null;
+    return totalETHInput;
+  }, [stakeData, createData]);
+
+  const memoizedTitanXBurned = useMemo(() => {
+    if (!cachedTitanXData.totalTitanXBurnt) return null;
+    return totalTitanXBurned;
+  }, [cachedTitanXData.totalTitanXBurnt]);
+
+  const memoizedPercentTitanXBurned = useMemo(() => {
+    if (!cachedTitanXData.totalTitanXBurnt || !cachedTitanXData.titanxTotalSupply) return null;
+    return percentTitanXBurned;
+  }, [cachedTitanXData.totalTitanXBurnt, cachedTitanXData.titanxTotalSupply]);
+
+  // Stake metrics with useMemo
+  const memoizedTotalStaked = useMemo(() => {
+    if (stakeData.length === 0) return null;
+    return totalStaked;
+  }, [stakeData]);
+
+  const memoizedActiveStakes = useMemo(() => {
+    if (stakeData.length === 0) return null;
+    return activeStakes;
+  }, [stakeData]);
+
+  const memoizedPercentStaked = useMemo(() => {
+    if (stakeData.length === 0 || totalSupply === 0) return null;
+    return percentStaked;
+  }, [stakeData, totalSupply]);
+
+  const memoizedAvgStakeSize = useMemo(() => {
+    if (stakeData.length === 0) return null;
+    return avgStakeSize;
+  }, [stakeData]);
+
+  const memoizedTotalTitanXFromStakes = useMemo(() => {
+    if (stakeData.length === 0) return null;
+    return totalTitanXFromStakes;
+  }, [stakeData]);
+
+  const memoizedTotalETHFromStakes = useMemo(() => {
+    if (stakeData.length === 0) return null;
+    return totalETHFromStakes;
+  }, [stakeData]);
+
+  // Create metrics with useMemo
+  const memoizedTotalCreates = useMemo(() => {
+    if (createData.length === 0) return null;
+    return createData.length;
+  }, [createData]);
+
+  const memoizedActiveCreates = useMemo(() => {
+    if (createData.length === 0) return null;
+    return activeCreates;
+  }, [createData]);
+
+  const memoizedAvgTitanXPerCreate = useMemo(() => {
+    if (createData.length === 0) return null;
+    return avgTitanXPerCreate;
+  }, [createData]);
+
+  const memoizedTotalTitanXUsed = useMemo(() => {
+    if (createData.length === 0) return null;
+    return totalTitanXUsed;
+  }, [createData]);
+
+  const memoizedTotalETHFromCreates = useMemo(() => {
+    if (createData.length === 0) return null;
+    return totalETHFromCreates;
+  }, [createData]);
+
   console.log('Supply metrics:', { totalSupply, totalStaked, totalTorusLocked, burnedSupply, percentStaked, percentBurned });
   
   console.log(`Total active shares: ${totalShares}`);
@@ -1780,56 +1872,48 @@ function App() {
       <div className="chart-section">
         <h2 className="section-title">Overall Metrics</h2>
         <div className="metrics-grid">
-          {totalsLoading ? (
-            <>
-              <SkeletonCard delay={0} />
-              <SkeletonCard delay={0.1} />
-              <SkeletonCard delay={0.2} />
-              <SkeletonCard delay={0.3} />
-              <SkeletonCard delay={0.4} />
-              <SkeletonCard delay={0.5} />
-            </>
-          ) : (
-            <>
-              {/* First row */}
-              <MetricCard
-                title={<><img src="https://www.torus.win/torus.svg" alt="TORUS" style={{ width: '16px', height: '16px', marginRight: '6px', verticalAlign: 'middle' }} />Current <span className="torus-text">TORUS</span> Supply</>}
-                value={totalSupply.toLocaleString('en-US', { maximumFractionDigits: 0 })}
-                suffix={<span className="torus-text">TORUS</span>}
-              />
-              <MetricCard
-                title="Total Active Shares"
-                value={totalShares > 1e12 ? 
-                  `${(totalShares / 1e12).toLocaleString('en-US', { maximumFractionDigits: 2 })}T` :
-                  totalShares > 1e9 ? 
-                  `${(totalShares / 1e9).toLocaleString('en-US', { maximumFractionDigits: 2 })}B` :
-                  totalShares > 1e6 ? 
-                  `${(totalShares / 1e6).toLocaleString('en-US', { maximumFractionDigits: 2 })}M` :
-                  totalShares.toLocaleString('en-US', { maximumFractionDigits: 0 })
-                }
-                suffix={totalShares > 1e6 ? "" : "SHARES"}
-              />
-              <MetricCard
-                title={<><img src="/eth-logo.svg" alt="Ethereum" style={{ width: '16px', height: '16px', marginRight: '6px', verticalAlign: 'middle', backgroundColor: 'transparent' }} />Total ETH Input</>}
-                value={totalETHInput.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-                suffix="ETH"
-              />
-              {/* Second row - TitanX metrics */}
-              <MetricCard
-                title={<><img src="https://coin-images.coingecko.com/coins/images/32762/large/TitanXpng_%281%29.png?1704456654" alt="TitanX" style={{ width: '16px', height: '16px', marginRight: '6px', verticalAlign: 'middle', opacity: 0.8 }} />Total TitanX Burned</>}
-                value={totalTitanXBurned > 1e9 ? 
-                  `${(totalTitanXBurned / 1e9).toFixed(3)}B` : 
-                  totalTitanXBurned.toLocaleString('en-US', { maximumFractionDigits: 0 })
-                }
-                suffix={totalTitanXBurned > 1e9 ? "" : "TITANX"}
-              />
-              <MetricCard
-                title={<><img src="https://coin-images.coingecko.com/coins/images/32762/large/TitanXpng_%281%29.png?1704456654" alt="TitanX" style={{ width: '16px', height: '16px', marginRight: '6px', verticalAlign: 'middle', opacity: 0.8 }} />% of TitanX Supply Burned</>}
-                value={percentTitanXBurned.toFixed(4)}
-                suffix="%"
-              />
-            </>
-          )}
+          <SmartMetricCard
+            title={<><img src="https://www.torus.win/torus.svg" alt="TORUS" style={{ width: '16px', height: '16px', marginRight: '6px', verticalAlign: 'middle' }} />Current <span className="torus-text">TORUS</span> Supply</>}
+            value={memoizedTotalSupply > 0 ? memoizedTotalSupply.toLocaleString('en-US', { maximumFractionDigits: 0 }) : null}
+            suffix={<span className="torus-text">TORUS</span>}
+            delay={0}
+          />
+          <SmartMetricCard
+            title="Total Active Shares"
+            value={memoizedTotalShares ? (
+              memoizedTotalShares > 1e12 ? 
+                `${(memoizedTotalShares / 1e12).toLocaleString('en-US', { maximumFractionDigits: 2 })}T` :
+                memoizedTotalShares > 1e9 ? 
+                `${(memoizedTotalShares / 1e9).toLocaleString('en-US', { maximumFractionDigits: 2 })}B` :
+                memoizedTotalShares > 1e6 ? 
+                `${(memoizedTotalShares / 1e6).toLocaleString('en-US', { maximumFractionDigits: 2 })}M` :
+                memoizedTotalShares.toLocaleString('en-US', { maximumFractionDigits: 0 })
+            ) : null}
+            suffix={memoizedTotalShares && memoizedTotalShares > 1e6 ? "" : "SHARES"}
+            delay={0.1}
+          />
+          <SmartMetricCard
+            title={<><img src="/eth-logo.svg" alt="Ethereum" style={{ width: '16px', height: '16px', marginRight: '6px', verticalAlign: 'middle', backgroundColor: 'transparent' }} />Total ETH Input</>}
+            value={memoizedTotalETHInput ? memoizedTotalETHInput.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : null}
+            suffix="ETH"
+            delay={0.2}
+          />
+          <SmartMetricCard
+            title={<><img src="https://coin-images.coingecko.com/coins/images/32762/large/TitanXpng_%281%29.png?1704456654" alt="TitanX" style={{ width: '16px', height: '16px', marginRight: '6px', verticalAlign: 'middle', opacity: 0.8 }} />Total TitanX Burned</>}
+            value={memoizedTitanXBurned ? (
+              memoizedTitanXBurned > 1e9 ? 
+                `${(memoizedTitanXBurned / 1e9).toFixed(3)}B` : 
+                memoizedTitanXBurned.toLocaleString('en-US', { maximumFractionDigits: 0 })
+            ) : null}
+            suffix={memoizedTitanXBurned && memoizedTitanXBurned > 1e9 ? "" : "TITANX"}
+            delay={0.3}
+          />
+          <SmartMetricCard
+            title={<><img src="https://coin-images.coingecko.com/coins/images/32762/large/TitanXpng_%281%29.png?1704456654" alt="TitanX" style={{ width: '16px', height: '16px', marginRight: '6px', verticalAlign: 'middle', opacity: 0.8 }} />% of TitanX Supply Burned</>}
+            value={memoizedPercentTitanXBurned ? memoizedPercentTitanXBurned.toFixed(4) : null}
+            suffix="%"
+            delay={0.4}
+          />
         </div>
       </div>
 
@@ -1837,46 +1921,41 @@ function App() {
       <div className="chart-section">
         <h2 className="section-title">Stake Metrics</h2>
         <div className="metrics-grid">
-          {loading ? (
-            <>
-              <SkeletonCard delay={0} showTrend />
-              <SkeletonCard delay={0.1} showTrend />
-              <SkeletonCard delay={0.2} />
-              <SkeletonCard delay={0.3} />
-            </>
-          ) : (
-            <>
-              <MetricCard
-                title={<><img src="https://www.torus.win/torus.svg" alt="TORUS" style={{ width: '16px', height: '16px', marginRight: '6px', verticalAlign: 'middle' }} />% of <span className="torus-text">TORUS</span> Supply Staked</>}
-                value={percentStaked.toFixed(2)}
-                suffix="%"
-              />
-              <MetricCard
-                title={<><img src="https://www.torus.win/torus.svg" alt="TORUS" style={{ width: '16px', height: '16px', marginRight: '6px', verticalAlign: 'middle' }} />Total <span className="torus-text">TORUS</span> Staked</>}
-                value={totalStaked.toLocaleString()}
-                suffix={<span className="torus-text">TORUS</span>}
-              />
-              <MetricCard
-                title="Active Stakes"
-                value={activeStakes.toLocaleString()}
-              />
-              <MetricCard
-                title={<><img src="https://www.torus.win/torus.svg" alt="TORUS" style={{ width: '16px', height: '16px', marginRight: '6px', verticalAlign: 'middle' }} />Average Stake Size</>}
-                value={avgStakeSize.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-                suffix={<span className="torus-text">TORUS</span>}
-              />
-              <MetricCard
-                title={<><img src="https://coin-images.coingecko.com/coins/images/32762/large/TitanXpng_%281%29.png?1704456654" alt="TitanX" style={{ width: '16px', height: '16px', marginRight: '6px', verticalAlign: 'middle', opacity: 0.8 }} />Total TitanX Used in Stakes</>}
-                value={totalTitanXFromStakes.toLocaleString('en-US', { maximumFractionDigits: 0 })}
-                suffix="TITANX"
-              />
-              <MetricCard
-                title={<><img src="/eth-logo.svg" alt="Ethereum" style={{ width: '16px', height: '16px', marginRight: '6px', verticalAlign: 'middle', backgroundColor: 'transparent' }} />Total ETH Used in Stakes</>}
-                value={totalETHFromStakes.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-                suffix="ETH"
-              />
-            </>
-          )}
+          <SmartMetricCard
+            title={<><img src="https://www.torus.win/torus.svg" alt="TORUS" style={{ width: '16px', height: '16px', marginRight: '6px', verticalAlign: 'middle' }} />% of <span className="torus-text">TORUS</span> Supply Staked</>}
+            value={memoizedPercentStaked ? memoizedPercentStaked.toFixed(2) : null}
+            suffix="%"
+            delay={0}
+          />
+          <SmartMetricCard
+            title={<><img src="https://www.torus.win/torus.svg" alt="TORUS" style={{ width: '16px', height: '16px', marginRight: '6px', verticalAlign: 'middle' }} />Total <span className="torus-text">TORUS</span> Staked</>}
+            value={memoizedTotalStaked ? memoizedTotalStaked.toLocaleString() : null}
+            suffix={<span className="torus-text">TORUS</span>}
+            delay={0.1}
+          />
+          <SmartMetricCard
+            title="Active Stakes"
+            value={memoizedActiveStakes ? memoizedActiveStakes.toLocaleString() : null}
+            delay={0.2}
+          />
+          <SmartMetricCard
+            title={<><img src="https://www.torus.win/torus.svg" alt="TORUS" style={{ width: '16px', height: '16px', marginRight: '6px', verticalAlign: 'middle' }} />Average Stake Size</>}
+            value={memoizedAvgStakeSize ? memoizedAvgStakeSize.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : null}
+            suffix={<span className="torus-text">TORUS</span>}
+            delay={0.3}
+          />
+          <SmartMetricCard
+            title={<><img src="https://coin-images.coingecko.com/coins/images/32762/large/TitanXpng_%281%29.png?1704456654" alt="TitanX" style={{ width: '16px', height: '16px', marginRight: '6px', verticalAlign: 'middle', opacity: 0.8 }} />Total TitanX Used in Stakes</>}
+            value={memoizedTotalTitanXFromStakes ? memoizedTotalTitanXFromStakes.toLocaleString('en-US', { maximumFractionDigits: 0 }) : null}
+            suffix="TITANX"
+            delay={0.4}
+          />
+          <SmartMetricCard
+            title={<><img src="/eth-logo.svg" alt="Ethereum" style={{ width: '16px', height: '16px', marginRight: '6px', verticalAlign: 'middle', backgroundColor: 'transparent' }} />Total ETH Used in Stakes</>}
+            value={memoizedTotalETHFromStakes ? memoizedTotalETHFromStakes.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : null}
+            suffix="ETH"
+            delay={0.5}
+          />
         </div>
       </div>
 
@@ -1884,40 +1963,34 @@ function App() {
       <div className="chart-section">
         <h2 className="section-title">Create Metrics</h2>
         <div className="metrics-grid">
-          {loading ? (
-            <>
-              <SkeletonCard delay={0} showTrend />
-              <SkeletonCard delay={0.1} showTrend />
-              <SkeletonCard delay={0.2} />
-              <SkeletonCard delay={0.3} />
-            </>
-          ) : (
-            <>
-              <MetricCard
-                title="Total Creates"
-                value={totalCreates.toLocaleString()}
-              />
-              <MetricCard
-                title="Active Creates"
-                value={activeCreates.toLocaleString()}
-              />
-              <MetricCard
-                title={<><img src="https://coin-images.coingecko.com/coins/images/32762/large/TitanXpng_%281%29.png?1704456654" alt="TitanX" style={{ width: '16px', height: '16px', marginRight: '6px', verticalAlign: 'middle', opacity: 0.8 }} />Avg TitanX per Create</>}
-                value={avgTitanXPerCreate.toLocaleString('en-US', { maximumFractionDigits: 2 })}
-                suffix="TITANX"
-              />
-              <MetricCard
-                title={<><img src="https://coin-images.coingecko.com/coins/images/32762/large/TitanXpng_%281%29.png?1704456654" alt="TitanX" style={{ width: '16px', height: '16px', marginRight: '6px', verticalAlign: 'middle', opacity: 0.8 }} />Total TitanX Used in Creates</>}
-                value={totalTitanXUsed.toLocaleString('en-US', { maximumFractionDigits: 0 })}
-                suffix="TITANX"
-              />
-              <MetricCard
-                title={<><img src="/eth-logo.svg" alt="Ethereum" style={{ width: '16px', height: '16px', marginRight: '6px', verticalAlign: 'middle', backgroundColor: 'transparent' }} />Total ETH Used in Creates</>}
-                value={totalETHFromCreates.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}
-                suffix="ETH"
-              />
-            </>
-          )}
+          <SmartMetricCard
+            title="Total Creates"
+            value={memoizedTotalCreates ? memoizedTotalCreates.toLocaleString() : null}
+            delay={0}
+          />
+          <SmartMetricCard
+            title="Active Creates"
+            value={memoizedActiveCreates ? memoizedActiveCreates.toLocaleString() : null}
+            delay={0.1}
+          />
+          <SmartMetricCard
+            title={<><img src="https://coin-images.coingecko.com/coins/images/32762/large/TitanXpng_%281%29.png?1704456654" alt="TitanX" style={{ width: '16px', height: '16px', marginRight: '6px', verticalAlign: 'middle', opacity: 0.8 }} />Avg TitanX per Create</>}
+            value={memoizedAvgTitanXPerCreate ? memoizedAvgTitanXPerCreate.toLocaleString('en-US', { maximumFractionDigits: 2 }) : null}
+            suffix="TITANX"
+            delay={0.2}
+          />
+          <SmartMetricCard
+            title={<><img src="https://coin-images.coingecko.com/coins/images/32762/large/TitanXpng_%281%29.png?1704456654" alt="TitanX" style={{ width: '16px', height: '16px', marginRight: '6px', verticalAlign: 'middle', opacity: 0.8 }} />Total TitanX Used in Creates</>}
+            value={memoizedTotalTitanXUsed ? memoizedTotalTitanXUsed.toLocaleString('en-US', { maximumFractionDigits: 0 }) : null}
+            suffix="TITANX"
+            delay={0.3}
+          />
+          <SmartMetricCard
+            title={<><img src="/eth-logo.svg" alt="Ethereum" style={{ width: '16px', height: '16px', marginRight: '6px', verticalAlign: 'middle', backgroundColor: 'transparent' }} />Total ETH Used in Creates</>}
+            value={memoizedTotalETHFromCreates ? memoizedTotalETHFromCreates.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : null}
+            suffix="ETH"
+            delay={0.4}
+          />
         </div>
       </div>
 
