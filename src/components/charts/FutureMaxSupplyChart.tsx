@@ -91,12 +91,13 @@ const FutureMaxSupplyChart: React.FC<FutureMaxSupplyChartProps> = ({
         console.log('📊 Converted positions:', positions.length);
         console.log('First position:', positions[0]);
         
-        // Calculate max supply projections
+        // Calculate max supply projections (starting from current protocol day)
         projections = calculateFutureMaxSupply(
           positions,
           rewardPoolData,
           currentSupply,
-          contractStartDate
+          contractStartDate,
+          currentProtocolDay
         );
       }
       

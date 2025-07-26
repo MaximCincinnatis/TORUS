@@ -798,7 +798,7 @@ async function updateAllDashboardData() {
     console.log(`  🎯 Pool creation search complete! Found ${lpPositions.length} positions from Mint events.`);
     
     // Check TORUS positions (both discovered and known from working implementation)
-    const knownTORUSTokenIds = ['1029195', '1032346', '780889', '797216', '798833']; // Test positions from working impl
+    const knownTORUSTokenIds = ['1029195', '1030759', '1032346']; // Active TORUS/TitanX positions only
     console.log(`  🔄 Checking ${knownTORUSTokenIds.length} known TORUS positions...`);
       
     for (const tokenId of knownTORUSTokenIds) {

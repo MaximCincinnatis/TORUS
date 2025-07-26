@@ -188,7 +188,8 @@ export function calculateFutureMaxSupply(
   positions: Position[],
   rewardPoolData: RewardPoolData[],
   currentSupply: number,
-  contractStartDate: Date
+  contractStartDate: Date,
+  currentProtocolDay?: number
 ): MaxSupplyProjection[] {
   console.log('🔍 calculateFutureMaxSupply called with:');
   console.log('positions:', positions.length);
@@ -279,13 +280,17 @@ export function calculateFutureMaxSupply(
   const minDay = Math.min(...extendedRewardPoolData.map(data => data.day));
   const maxDay = Math.max(...extendedRewardPoolData.map(data => data.day));
   
-  console.log(`🔍 Processing days ${minDay} to ${maxDay} (${extendedRewardPoolData.length} total days)`);
+  // Start from current protocol day to avoid double counting past positions
+  const startDay = currentProtocolDay || minDay;
   
-  // Track cumulative rewards across all days
+  console.log(`🔍 Processing days ${startDay} to ${maxDay} (starting from current protocol day)`);
+  console.log(`🔍 Current supply already includes positions matured before day ${startDay}`);
+  
+  // Track cumulative rewards from current day forward only
   let cumulativeFromStakes = 0;
   let cumulativeFromCreates = 0;
   
-  for (let day = minDay; day <= maxDay; day++) {
+  for (let day = startDay; day <= maxDay; day++) {
     const rewardData = rewardPoolMap.get(day);
     if (!rewardData) {
       console.warn(`⚠️ No reward data for day ${day}, skipping`);
@@ -400,7 +405,8 @@ export function simulateDilutionEffect(
     existingPositions,
     rewardPoolData,
     0, // Using 0 for comparison
-    contractStartDate
+    contractStartDate,
+    1 // Start from day 1 for dilution analysis
   );
   
   // Calculate projections after new positions are added
@@ -409,7 +415,8 @@ export function simulateDilutionEffect(
     allPositions,
     rewardPoolData,
     0, // Using 0 for comparison
-    contractStartDate
+    contractStartDate,
+    1 // Start from day 1 for dilution analysis
   );
   
   // Calculate dilution impact

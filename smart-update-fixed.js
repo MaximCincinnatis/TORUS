@@ -26,6 +26,13 @@ const {
   mergeLPPositions 
 } = require('./shared/lpCalculations');
 const { generateFutureSupplyProjection, shouldUpdateProjection } = require('./scripts/generate-future-supply-projection');
+const {
+  fetchUserStakeData,
+  fetchUserCreateData,
+  fetchBlockData,
+  logRpcStats,
+  resetRpcStats
+} = require('./shared/rpcUtils');
 
 // Configuration
 const UPDATE_LOG_FILE = 'update-log.json';
@@ -611,21 +618,14 @@ async function performSmartUpdate(provider, updateLog, currentBlock, blocksSince
         }
         
         if (newStakeEvents.length > 0 || newCreateEvents.length > 0) {
-          // Fetch block timestamps for new events
-          const blockNumbers = new Set([
+          // Fetch block timestamps for new events using optimized batch processing
+          const blockNumbers = Array.from(new Set([
             ...newStakeEvents.map(e => e.blockNumber),
             ...newCreateEvents.map(e => e.blockNumber)
-          ]);
+          ]));
           
-          const blockTimestamps = new Map();
-          for (const blockNumber of blockNumbers) {
-            try {
-              const block = await provider.getBlock(blockNumber);
-              blockTimestamps.set(blockNumber, block.timestamp);
-            } catch (e) {
-              log(`  Error fetching block ${blockNumber}: ${e.message}`, 'yellow');
-            }
-          }
+          log(`  Fetching timestamps for ${blockNumbers.length} blocks...`, 'cyan');
+          const blockTimestamps = await fetchBlockData(provider, blockNumbers, true);
           
           // Process and merge new events
           // Process new stakes and fetch payment data
@@ -662,22 +662,22 @@ async function performSmartUpdate(provider, updateLog, currentBlock, blocksSince
               isCreate: false
             };
             
-            // Fetch actual payment data from contract
-            try {
-              const userStakeABI = ['function userStakes(address user, uint256 index) view returns (uint256 principal, uint256 shares, uint256 duration, uint256 timestamp, uint256 titanAmount, uint256 ethAmount, uint256 status, uint256 payout)'];
-              const stakeContract = new ethers.Contract(CONTRACTS.TORUS_CREATE_STAKE, userStakeABI, provider);
-              const stakeInfo = await stakeContract.userStakes(event.args.user, event.args.stakeIndex);
-              
+            // Fetch actual payment data from contract using optimized RPC
+            const userStakeABI = ['function userStakes(address user, uint256 index) view returns (uint256 principal, uint256 shares, uint256 duration, uint256 timestamp, uint256 titanAmount, uint256 ethAmount, uint256 status, uint256 payout)'];
+            const stakeContract = new ethers.Contract(CONTRACTS.TORUS_CREATE_STAKE, userStakeABI, provider);
+            const stakeResult = await fetchUserStakeData(stakeContract, event.args.user, event.args.stakeIndex, true);
+            
+            if (stakeResult.success) {
               // Update payment fields with actual data
+              const stakeInfo = stakeResult.data;
               stakeData.rawCostTitanX = stakeInfo.titanAmount.toString();
               stakeData.rawCostETH = stakeInfo.ethAmount.toString();
               stakeData.costTitanX = stakeInfo.titanAmount.toString();
               stakeData.costETH = stakeInfo.ethAmount.toString();
-              
-              updateStats.rpcCalls++;
-            } catch (e) {
-              log(`  Warning: Could not fetch payment data for stake ${stakeData.id}: ${e.message}`, 'yellow');
             }
+            // Note: Silent failure - no error logging for payment data
+            
+            updateStats.rpcCalls++;
             
             processedStakes.push(stakeData);
           }
@@ -720,21 +720,21 @@ async function performSmartUpdate(provider, updateLog, currentBlock, blocksSince
               rawCostTitanX: "0"
             };
             
-            // Fetch actual payment data from contract
-            try {
-              const userCreateABI = ['function userCreates(address user, uint256 index) view returns (uint256 torusAmount, uint256 duration, uint256 timestamp, uint256 titanAmount, uint256 ethAmount, bool claimed)'];
-              const createContract = new ethers.Contract(CONTRACTS.TORUS_CREATE_STAKE, userCreateABI, provider);
-              const createInfo = await createContract.userCreates(event.args.user, event.args.stakeIndex);
-              
+            // Fetch actual payment data from contract using optimized RPC
+            const userCreateABI = ['function userCreates(address user, uint256 index) view returns (uint256 torusAmount, uint256 duration, uint256 timestamp, uint256 titanAmount, uint256 ethAmount, bool claimed)'];
+            const createContract = new ethers.Contract(CONTRACTS.TORUS_CREATE_STAKE, userCreateABI, provider);
+            const createResult = await fetchUserCreateData(createContract, event.args.user, event.args.stakeIndex, true);
+            
+            if (createResult.success) {
               // Update payment fields with actual data
+              const createInfo = createResult.data;
               createData.titanAmount = createInfo.titanAmount.toString();
               createData.titanXAmount = createInfo.titanAmount.toString();
               createData.ethAmount = createInfo.ethAmount.toString();
-              
-              updateStats.rpcCalls++;
-            } catch (e) {
-              log(`  Warning: Could not fetch payment data for create ${createData.createId}: ${e.message}`, 'yellow');
             }
+            // Note: Silent failure - no error logging for payment data
+            
+            updateStats.rpcCalls++;
             
             processedCreates.push(createData);
           }
@@ -888,6 +888,9 @@ Incremental data refresh with proper data preservation
 async function main() {
   log('🔄 TORUS Smart Update (Fixed) Starting', 'bright');
   
+  // Initialize RPC monitoring
+  resetRpcStats();
+  
   const updateLog = loadUpdateLog();
   
   try {
@@ -941,8 +944,12 @@ async function main() {
     
     log(`✅ Update complete. RPC calls: ${updateResult.rpcCalls}, Data changed: ${updateResult.dataChanged}`, 'green');
     
+    // Log RPC performance statistics
+    logRpcStats();
+    
   } catch (e) {
     log(`Fatal error: ${e.message}`, 'red');
+    logRpcStats(); // Log stats even on error for debugging
     process.exit(1);
   }
 }
