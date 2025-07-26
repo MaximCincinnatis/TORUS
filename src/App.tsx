@@ -17,21 +17,16 @@ import { getMainDashboardDataWithCache, getLPPositionsWithCache } from './utils/
 import { updateDailySnapshot } from './utils/historicalSupplyTracker';
 import './App.css';
 
-// Contract launch date - Day 1 (corrected to align with protocol days)
-const CONTRACT_START_DATE = new Date(2025, 6, 10); // July 10, 2025 (month is 0-indexed)
-CONTRACT_START_DATE.setHours(0, 0, 0, 0);
+// Contract launch date - Day 1 (aligned with contract's actual protocol start time)
+// The contract started at July 10, 2025 at 6:00 PM UTC and uses 6 PM UTC boundaries
+const CONTRACT_START_DATE = new Date('2025-07-10T18:00:00.000Z'); // July 10, 2025 6:00 PM UTC - actual protocol start
 
 // Maximum days to calculate for all charts (for panning capability)
 const MAX_CHART_DAYS = 365; // Show up to 1 year of data for panning
 
 // Get current protocol day dynamically
-function getCurrentProtocolDay() {
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
-  const msPerDay = 24 * 60 * 60 * 1000;
-  const daysDiff = Math.floor((today.getTime() - CONTRACT_START_DATE.getTime()) / msPerDay) + 1;
-  return Math.max(1, daysDiff); // Ensure at least day 1
-}
+// Protocol day is now fetched from contract via getCurrentDayIndex() in update scripts
+// and stored in currentProtocolDay state - no local calculation needed
 
 // Helper to determine if chart should be dynamic (forward-looking)
 const isForwardLookingChart = (chartId: string) => {
@@ -48,10 +43,16 @@ const isForwardLookingChart = (chartId: string) => {
 
 // Get dynamic date range for forward-looking charts
 const getDynamicDateRange = () => {
-  const today = new Date();
-  today.setHours(0, 0, 0, 0);
+  const now = new Date();
+  // Use 6 PM UTC boundary like CONTRACT_START_DATE
+  const today = new Date(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate());
+  today.setUTCHours(18, 0, 0, 0); // 6 PM UTC
+  if (now.getTime() < today.getTime()) {
+    // If current time is before 6 PM UTC today, use yesterday's 6 PM
+    today.setUTCDate(today.getUTCDate() - 1);
+  }
   const endDate = new Date(today);
-  endDate.setDate(endDate.getDate() + 88);
+  endDate.setUTCDate(endDate.getUTCDate() + 88);
   return { today, endDate };
 };
 
@@ -321,8 +322,14 @@ function App() {
 
 
   const calculateStakeReleases = () => {
-    const today = new Date();
-    today.setHours(0, 0, 0, 0); // Start of today
+    const now = new Date();
+    // Use 6 PM UTC boundary like CONTRACT_START_DATE
+    const today = new Date(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate());
+    today.setUTCHours(18, 0, 0, 0); // 6 PM UTC
+    if (now.getTime() < today.getTime()) {
+      // If current time is before 6 PM UTC today, use yesterday's 6 PM
+      today.setUTCDate(today.getUTCDate() - 1);
+    }
     
     console.log('=== STAKE RELEASES (WITH HISTORY) ===');
     console.log('Total stakes:', stakeData.length);
@@ -391,27 +398,34 @@ function App() {
     console.log(`Unique maturity dates: ${stakeDates.size}`);
     console.log('Dates with stakes:', Array.from(stakeDates.entries()).map(([date, count]) => `${date} (${count} stakes)`).join(', '));
     
-    const result = Object.entries(releases).map(([date, count]) => ({
+    const dateBasedResult = Object.entries(releases).map(([date, count]) => ({
       date,
       count,
     }));
     
-    const totalCount = result.reduce((sum, r) => sum + r.count, 0);
-    const daysWithStakes = result.filter(r => r.count > 0).length;
+    const totalCount = dateBasedResult.reduce((sum, r) => sum + r.count, 0);
+    const daysWithStakes = dateBasedResult.filter(r => r.count > 0).length;
     
     console.log(`\nRESULT SUMMARY:`);
-    console.log(`Total release entries: ${result.length}`);
+    console.log(`Total release entries: ${dateBasedResult.length}`);
     console.log(`Total count in results: ${totalCount}`);
     console.log(`Days with stakes: ${daysWithStakes}`);
-    console.log(`First 5 result entries:`, result.slice(0, 5));
+    console.log(`First 5 result entries:`, dateBasedResult.slice(0, 5));
     console.log('=== END STAKE DEBUG ===\n');
     
-    return result;
+    // Convert from date-based to protocol day-based with user timezone
+    return convertToProtocolDayData(dateBasedResult);
   };
 
   const calculateCreateReleases = () => {
-    const today = new Date();
-    today.setHours(0, 0, 0, 0); // Start of today
+    const now = new Date();
+    // Use 6 PM UTC boundary like CONTRACT_START_DATE
+    const today = new Date(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate());
+    today.setUTCHours(18, 0, 0, 0); // 6 PM UTC
+    if (now.getTime() < today.getTime()) {
+      // If current time is before 6 PM UTC today, use yesterday's 6 PM
+      today.setUTCDate(today.getUTCDate() - 1);
+    }
     
     console.log('=== CREATE RELEASES (WITH HISTORY) ===');
     console.log('Total creates:', createData.length);
@@ -454,21 +468,22 @@ function App() {
     console.log(`Total creates ending in next ${MAX_CHART_DAYS} days: ${totalEnding}`);
     console.log('=== END CREATE RELEASES ===\n');
     
-    const result = Object.entries(releases).map(([date, count]) => ({
+    const dateBasedResult = Object.entries(releases).map(([date, count]) => ({
       date,
       count,
     }));
     
     // Debug: Check for non-integer values
-    const nonIntegerCounts = result.filter(r => r.count !== Math.floor(r.count));
+    const nonIntegerCounts = dateBasedResult.filter(r => r.count !== Math.floor(r.count));
     if (nonIntegerCounts.length > 0) {
       console.log('🚨 WARNING: Non-integer create counts detected:', nonIntegerCounts);
     }
     
     // Debug: Show first few entries
-    console.log('First 5 create release entries:', result.slice(0, 5));
+    console.log('First 5 create release entries:', dateBasedResult.slice(0, 5));
     
-    return result;
+    // Convert from date-based to protocol day-based with user timezone
+    return convertToProtocolDayData(dateBasedResult);
   };
 
   // Helper function to parse date strings consistently in local timezone
@@ -478,30 +493,73 @@ function App() {
     return new Date(year, month - 1, day); // month is 0-indexed
   };
 
-  // Calculate contract day for a given date
+  // Calculate contract day for a given date (using 6 PM UTC boundaries)
   const getContractDay = (date: Date | string) => {
     const msPerDay = 24 * 60 * 60 * 1000;
     
     // Handle string dates
     const dateObj = typeof date === 'string' ? parseDateString(date) : date;
     
-    // Normalize both dates to midnight local time to avoid timezone issues
-    const normalizedDate = new Date(dateObj);
-    normalizedDate.setHours(0, 0, 0, 0);
-    
-    const normalizedStart = new Date(CONTRACT_START_DATE);
-    normalizedStart.setHours(0, 0, 0, 0);
-    
-    const daysDiff = Math.floor((normalizedDate.getTime() - normalizedStart.getTime()) / msPerDay) + 1;
+    // Use actual contract timing (6 PM UTC boundaries) - no normalization
+    const daysDiff = Math.floor((dateObj.getTime() - CONTRACT_START_DATE.getTime()) / msPerDay) + 1;
     
     // Ensure we never return less than 1 (no Day 0)
     return Math.max(1, daysDiff);
   };
 
+  // Get user's local date for when a protocol day starts
+  const getProtocolDayUserDate = (protocolDay: number): string => {
+    // Calculate when this protocol day starts in UTC
+    const protocolDayStartUTC = new Date(CONTRACT_START_DATE);
+    protocolDayStartUTC.setUTCDate(protocolDayStartUTC.getUTCDate() + protocolDay - 1);
+    
+    // Convert to user's local timezone and get just the date part
+    const userLocalDate = new Date(protocolDayStartUTC.getTime());
+    
+    // Format as YYYY-MM-DD in user's timezone
+    const year = userLocalDate.getFullYear();
+    const month = String(userLocalDate.getMonth() + 1).padStart(2, '0');
+    const day = String(userLocalDate.getDate()).padStart(2, '0');
+    
+    return `${year}-${month}-${day}`;
+  };
+
+  // Get user's timezone for display
+  const getUserTimezone = (): string => {
+    try {
+      return Intl.DateTimeFormat().resolvedOptions().timeZone;
+    } catch (e) {
+      return 'UTC'; // Fallback
+    }
+  };
+
+  // Universal converter: Transform date-based chart data to protocol day-based with user timezone
+  const convertToProtocolDayData = <T extends { date: string }>(
+    dateBasedData: T[]
+  ): (T & { day: number })[] => {
+    return dateBasedData.map(item => {
+      // Parse the original date and determine which protocol day it belongs to
+      const originalDate = new Date(item.date + 'T12:00:00.000Z'); // Parse as UTC noon
+      const protocolDay = getContractDay(originalDate);
+      
+      return {
+        ...item,
+        date: getProtocolDayUserDate(protocolDay), // User's local date for this protocol day
+        day: protocolDay
+      };
+    }).sort((a, b) => a.day - b.day);
+  };
+
   // Helper function to get full date range from contract start to future
   const getFullDateRange = () => {
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
+    const now = new Date();
+    // Use 6 PM UTC boundary like CONTRACT_START_DATE
+    const today = new Date(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate());
+    today.setUTCHours(18, 0, 0, 0); // 6 PM UTC
+    if (now.getTime() < today.getTime()) {
+      // If current time is before 6 PM UTC today, use yesterday's 6 PM
+      today.setUTCDate(today.getUTCDate() - 1);
+    }
     
     // Calculate total days from contract start to today + 88 days
     const msPerDay = 24 * 60 * 60 * 1000;
@@ -534,8 +592,14 @@ function App() {
   };
 
   const calculateTorusReleases = () => {
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
+    const now = new Date();
+    // Use 6 PM UTC boundary like CONTRACT_START_DATE
+    const today = new Date(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate());
+    today.setUTCHours(18, 0, 0, 0); // 6 PM UTC
+    if (now.getTime() < today.getTime()) {
+      // If current time is before 6 PM UTC today, use yesterday's 6 PM
+      today.setUTCDate(today.getUTCDate() - 1);
+    }
     
     console.log('=== TORUS RELEASES (WITH HISTORY) ===');
     console.log('Total creates:', createData.length);
@@ -569,17 +633,26 @@ function App() {
     console.log(`Future TORUS to be released: ${futureAmount.toFixed(2)}`);
     console.log('=== END TORUS RELEASES ===\n');
     
-    return Object.entries(releases).map(([date, amount]) => ({
+    const dateBasedResult = Object.entries(releases).map(([date, amount]) => ({
       date,
       amount,
     }));
+    
+    // Convert from date-based to protocol day-based with user timezone
+    return convertToProtocolDayData(dateBasedResult);
   };
 
   const calculateTorusReleasesWithRewards = () => {
     console.log('%c🔍 CALCULATING TORUS RELEASES WITH REWARDS (WITH HISTORY) 🔍', 'background: #8b5cf6; color: white; font-weight: bold; font-size: 20px; padding: 10px');
     
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
+    const now = new Date();
+    // Use 6 PM UTC boundary like CONTRACT_START_DATE
+    const today = new Date(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate());
+    today.setUTCHours(18, 0, 0, 0); // 6 PM UTC
+    if (now.getTime() < today.getTime()) {
+      // If current time is before 6 PM UTC today, use yesterday's 6 PM
+      today.setUTCDate(today.getUTCDate() - 1);
+    }
     
     // Initialize full date range from contract start to future
     const releases: { [key: string]: { principal: number; rewards: number; total: number } } = {};
@@ -771,14 +844,14 @@ function App() {
     })));
     
     // Debug: Check for significant releases after September 12
-    const allReleaseDays = Object.entries(releases).map(([date, data]) => ({
+    const dateBasedResult = Object.entries(releases).map(([date, data]) => ({
       date,
       principal: data.principal,
       rewards: data.rewards,
       total: data.total
     }));
     
-    const lateReleases = allReleaseDays.filter(day => {
+    const lateReleases = dateBasedResult.filter(day => {
       const date = new Date(day.date);
       return date >= new Date('2025-09-12') && day.total > 0;
     });
@@ -792,14 +865,21 @@ function App() {
     console.log(`Total releases from Sept 12 onward: ${totalLateReleases.toFixed(2)} TORUS`);
     console.log('=== END LATE RELEASES DEBUG ===\n');
     
-    return allReleaseDays;
+    // Convert from date-based to protocol day-based with user timezone
+    return convertToProtocolDayData(dateBasedResult);
   };
 
   const calculateTitanXUsage = () => {
     console.log('%c🔍 CALCULATING TITANX USAGE (WITH HISTORY) 🔍', 'background: #f59e0b; color: white; font-weight: bold; font-size: 20px; padding: 10px');
     
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
+    const now = new Date();
+    // Use 6 PM UTC boundary like CONTRACT_START_DATE
+    const today = new Date(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate());
+    today.setUTCHours(18, 0, 0, 0); // 6 PM UTC
+    if (now.getTime() < today.getTime()) {
+      // If current time is before 6 PM UTC today, use yesterday's 6 PM
+      today.setUTCDate(today.getUTCDate() - 1);
+    }
     
     console.log(`Processing ${createData.length} creates for TitanX...`);
     
@@ -842,31 +922,41 @@ function App() {
     console.log(`Future TitanX to be used: ${futureTitanX.toFixed(2)}`);
     console.log('=== END TITANX USAGE ===\n');
     
-    return Object.entries(usage).map(([date, amount]) => ({
+    const dateBasedResult = Object.entries(usage).map(([date, amount]) => ({
       date,
       amount,
     }));
+    
+    // Convert from date-based to protocol day-based with user timezone
+    return convertToProtocolDayData(dateBasedResult);
   };
 
   const calculateDailyTitanXUsage = () => {
     console.log('%c🔍 CALCULATING DAILY TITANX USAGE (CREATES + STAKES) 🔍', 'background: #16a34a; color: white; font-weight: bold; font-size: 20px; padding: 10px');
     
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
+    const now = new Date();
+    // Use 6 PM UTC boundary like CONTRACT_START_DATE
+    const today = new Date(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate());
+    today.setUTCHours(18, 0, 0, 0); // 6 PM UTC
+    if (now.getTime() < today.getTime()) {
+      // If current time is before 6 PM UTC today, use yesterday's 6 PM
+      today.setUTCDate(today.getUTCDate() - 1);
+    }
     
-    // Get the current protocol day to limit the range
-    const currentDay = getCurrentProtocolDay();
+    // Get the current protocol day to limit the range 
+    // Use buy-process data as source of truth for current day, fallback to cached currentProtocolDay
+    const buyProcessCurrentDay = buyProcessData?.dailyData?.length > 0 
+      ? Math.max(...buyProcessData.dailyData.map((d: any) => d.protocolDay || 0))
+      : 0;
+    const currentDay = Math.max(buyProcessCurrentDay, currentProtocolDay, 17); // Ensure we show at least 17 days
     const maxDay = currentDay; // Only show up to current day for this chart
     
-    // Initialize data structure for each day
-    const dailyUsage: { [key: string]: { creates: number; stakes: number } } = {};
+    // Initialize data structure for each protocol day
+    const dailyUsage: { [key: number]: { creates: number; stakes: number } } = {};
     
-    // Initialize all days from day 1 to current
+    // Initialize all days from day 1 to current using protocol days
     for (let day = 1; day <= maxDay; day++) {
-      const date = new Date(CONTRACT_START_DATE);
-      date.setDate(date.getDate() + day - 1);
-      const dateKey = date.toISOString().split('T')[0];
-      dailyUsage[dateKey] = { creates: 0, stakes: 0 };
+      dailyUsage[day] = { creates: 0, stakes: 0 };
     }
     
     console.log(`Processing ${createData.length} creates for daily TitanX usage...`);
@@ -875,12 +965,11 @@ function App() {
     createData.forEach((create) => {
       if (create.titanAmount && create.titanAmount !== '0') {
         const createDate = new Date(parseInt(create.timestamp) * 1000);
-        createDate.setHours(0, 0, 0, 0);
-        const dateKey = createDate.toISOString().split('T')[0];
+        const protocolDay = getContractDay(createDate);
         
-        if (dailyUsage[dateKey]) {
+        if (dailyUsage[protocolDay]) {
           const amount = parseFloat(create.titanAmount) / 1e18;
-          dailyUsage[dateKey].creates += amount;
+          dailyUsage[protocolDay].creates += amount;
         }
       }
     });
@@ -891,27 +980,36 @@ function App() {
     stakeData.forEach((stake) => {
       if (stake.rawCostTitanX && stake.rawCostTitanX !== '0') {
         const stakeDate = new Date(parseInt(stake.timestamp) * 1000);
-        stakeDate.setHours(0, 0, 0, 0);
-        const dateKey = stakeDate.toISOString().split('T')[0];
+        const protocolDay = getContractDay(stakeDate);
         
-        if (dailyUsage[dateKey]) {
+        if (dailyUsage[protocolDay]) {
           const amount = parseFloat(stake.rawCostTitanX) / 1e18;
-          dailyUsage[dateKey].stakes += amount;
+          dailyUsage[protocolDay].stakes += amount;
         }
       }
     });
     
-    // Convert to array format
-    const result = Object.entries(dailyUsage).map(([date, usage]) => ({
-      date,
-      creates: usage.creates,
-      stakes: usage.stakes,
-      total: usage.creates + usage.stakes
-    }));
+    // Convert to array format using protocol days
+    const result = Object.entries(dailyUsage).map(([dayStr, usage]) => {
+      const day = parseInt(dayStr);
+      // Generate display date for the protocol day (for chart labels)
+      // Day 1 = 2025-07-10, so we need to add day to get correct date
+      const displayDate = new Date(CONTRACT_START_DATE);
+      displayDate.setUTCDate(displayDate.getUTCDate() + day);
+      
+      return {
+        date: getProtocolDayUserDate(day), // User's local date when protocol day starts
+        day: day,
+        creates: usage.creates,
+        stakes: usage.stakes,
+        total: usage.creates + usage.stakes
+      };
+    }).sort((a, b) => a.day - b.day);
     
     // Log summary
     const totalCreates = result.reduce((sum, day) => sum + day.creates, 0);
     const totalStakes = result.reduce((sum, day) => sum + day.stakes, 0);
+    const day1Data = result.find(d => d.day === 1);
     console.log(`Total TitanX from creates: ${totalCreates.toFixed(2)}`);
     console.log(`Total TitanX from stakes: ${totalStakes.toFixed(2)}`);
     console.log(`Total TitanX used: ${(totalCreates + totalStakes).toFixed(2)}`);
@@ -927,8 +1025,8 @@ function App() {
     
     console.log(`Processing ${stakeData.length} stakes for daily aggregation...`);
     
-    // Get the current protocol day to limit the range
-    const currentDay = getCurrentProtocolDay();
+    // Get the current protocol day to limit the range (from contract via cached data)
+    const currentDay = currentProtocolDay || 1; // Fallback to day 1 if not loaded
     const maxDay = Math.min(currentDay, MAX_CHART_DAYS);
     
     // Initialize only the days from 1 to current protocol day
@@ -971,8 +1069,14 @@ function App() {
   const calculateSharesReleases = () => {
     console.log('%c🔍 CALCULATING SHARES RELEASES (WITH HISTORY) 🔍', 'background: #ff0000; color: white; font-weight: bold; font-size: 20px; padding: 10px');
     
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
+    const now = new Date();
+    // Use 6 PM UTC boundary like CONTRACT_START_DATE
+    const today = new Date(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate());
+    today.setUTCHours(18, 0, 0, 0); // 6 PM UTC
+    if (now.getTime() < today.getTime()) {
+      // If current time is before 6 PM UTC today, use yesterday's 6 PM
+      today.setUTCDate(today.getUTCDate() - 1);
+    }
     
     // Initialize full date range from contract start to future
     const sharesReleases = initializeFullDateMap();
@@ -1042,29 +1146,34 @@ function App() {
     console.log('=== END SHARES RELEASES ===\n');
     
     // Return all dates (including those with 0 shares) to align with other charts
-    return Object.entries(sharesReleases)
+    const dateBasedResult = Object.entries(sharesReleases)
       .map(([date, shares]) => ({
         date,
         shares,
       }));
+    
+    // Convert from date-based to protocol day-based with user timezone
+    return convertToProtocolDayData(dateBasedResult);
   };
 
   // Calculate Buy & Process charts data
-  const calculateDailyTorusBurned = (): { date: string; amount: number }[] => {
+  const calculateDailyTorusBurned = (): { date: string; amount: number; day: number }[] => {
     if (!buyProcessData?.dailyData) return [];
     
     // LP fee burns are already included in the daily burn data
     // The TorusBuyAndProcess contract executes both regular burns and LP fee burns
     // These show up in the daily totals, so we should NOT add them separately
     
-    // Simply return the daily burn data without any additions
-    return buyProcessData.dailyData.map((day: any) => ({
+    // Convert from date-based to protocol day-based with user timezone
+    const dateBasedData = buyProcessData.dailyData.map((day: any) => ({
       date: day.date,
       amount: day.torusBurned || 0
     }));
+    
+    return convertToProtocolDayData(dateBasedData);
   };
 
-  const calculateCumulativeTorusBurned = (): { date: string; amount: number }[] => {
+  const calculateCumulativeTorusBurned = (): { date: string; amount: number; day: number }[] => {
     if (!buyProcessData?.dailyData) return [];
     
     // Get daily burns (LP fee burns are already included in the daily data)
@@ -1076,22 +1185,26 @@ function App() {
       cumulative += day.amount;
       return {
         date: day.date,
-        amount: cumulative
+        amount: cumulative,
+        day: day.day
       };
     });
   };
 
-  const calculateBuyBurnActivity = (): { date: string; buyAndBurn: number; buyAndBuild: number }[] => {
+  const calculateBuyBurnActivity = (): { date: string; buyAndBurn: number; buyAndBuild: number; day: number }[] => {
     if (!buyProcessData?.dailyData) return [];
     
-    return buyProcessData.dailyData.map((day: any) => ({
+    // Convert from date-based to protocol day-based with user timezone
+    const dateBasedData = buyProcessData.dailyData.map((day: any) => ({
       date: day.date,
       buyAndBurn: day.buyAndBurnCount,
       buyAndBuild: day.buyAndBuildCount
     }));
+    
+    return convertToProtocolDayData(dateBasedData);
   };
 
-  const calculateTitanXEthUsage = (): { date: string; titanX: number; eth: number }[] => {
+  const calculateTitanXEthUsage = (): { date: string; titanX: number; eth: number; day: number }[] => {
     console.log('🔍 calculateTitanXEthUsage called');
     console.log('buyProcessData available:', !!buyProcessData);
     console.log('buyProcessData.dailyData available:', !!buyProcessData?.dailyData);
@@ -1109,7 +1222,7 @@ function App() {
     }
     
     // Use burn-specific data only, matching the chart title
-    const data = buyProcessData.dailyData.map((day: any) => ({
+    const dateBasedData = buyProcessData.dailyData.map((day: any) => ({
       date: day.date,
       titanX: day.titanXUsedForBurns || 0,  // Only burns
       eth: day.ethUsedForBurns || 0         // Only burns
@@ -1117,7 +1230,7 @@ function App() {
     
     // If total ETH was used but daily data shows 0, distribute it across days with burns
     const totalEthUsed = parseFloat(buyProcessData.totals.ethUsedForBurns || '0');
-    if (totalEthUsed > 0 && data.every((d: { date: string; titanX: number; eth: number }) => d.eth === 0)) {
+    if (totalEthUsed > 0 && dateBasedData.every((d: { date: string; titanX: number; eth: number }) => d.eth === 0)) {
       console.log('⚠️ ETH total exists but daily data is 0. This might be a data issue.');
       // For now, we'll show the data as is (all zeros)
       // In a real scenario, this should be fixed in the data source
@@ -1125,12 +1238,12 @@ function App() {
     
     // Debug: Log first few entries to check ETH values
     console.log('%c=== TITANX/ETH USAGE DATA ===', 'background: #f59e0b; color: white; font-weight: bold; font-size: 14px; padding: 8px');
-    console.log('TitanX/ETH Usage Data (first 5 entries):', data.slice(0, 5));
-    console.log('ETH values:', data.slice(0, 10).map((d: { date: string; titanX: number; eth: number }) => ({ date: d.date, eth: d.eth })));
+    console.log('TitanX/ETH Usage Data (first 5 entries):', dateBasedData.slice(0, 5));
+    console.log('ETH values:', dateBasedData.slice(0, 10).map((d: { date: string; titanX: number; eth: number }) => ({ date: d.date, eth: d.eth })));
     
     // Check if any ETH values are non-zero
-    const nonZeroEthDays = data.filter((d: { date: string; titanX: number; eth: number }) => d.eth > 0);
-    console.log(`Days with ETH usage: ${nonZeroEthDays.length} out of ${data.length} days`);
+    const nonZeroEthDays = dateBasedData.filter((d: { date: string; titanX: number; eth: number }) => d.eth > 0);
+    console.log(`Days with ETH usage: ${nonZeroEthDays.length} out of ${dateBasedData.length} days`);
     if (nonZeroEthDays.length > 0) {
       console.log('First few days with ETH usage:', nonZeroEthDays.slice(0, 5));
     }
@@ -1143,7 +1256,8 @@ function App() {
       console.log('- Total TORUS Burnt:', buyProcessData.totals.torusBurnt);
     }
     
-    return data;
+    // Convert from date-based to protocol day-based with user timezone
+    return convertToProtocolDayData(dateBasedData);
   };
 
   // Only calculate if data is loaded
@@ -1154,40 +1268,69 @@ function App() {
   const torusStakedPerDay = loading || (stakeData.length === 0 && createData.length === 0) ? [] : calculateTorusStakedPerDay();
   
   // Calculate daily creates and stakes count
-  const calculateDailyCreatesStakes = (): { day: number; creates: number; stakes: number }[] => {
+  const calculateDailyCreatesStakes = (): { date: string; day: number; creates: number; stakes: number }[] => {
+    console.log('%c🔍 CALCULATING DAILY CREATES & STAKES COUNT 🔍', 'background: #8b5cf6; color: white; font-weight: bold; font-size: 20px; padding: 10px');
+    
     const dailyData: { [key: number]: { creates: number; stakes: number } } = {};
     
-    // Count creates per day
-    createData.forEach(event => {
-      const eventDate = new Date(event.startDate);
-      const dayNum = Math.floor((eventDate.getTime() - CONTRACT_START_DATE.getTime()) / (24 * 60 * 60 * 1000)) + 1;
-      if (!dailyData[dayNum]) {
-        dailyData[dayNum] = { creates: 0, stakes: 0 };
-      }
-      dailyData[dayNum].creates++;
-    });
+    // Get the current protocol day to limit the range 
+    // Use buy-process data as source of truth for current day, fallback to cached currentProtocolDay
+    const buyProcessCurrentDay = buyProcessData?.dailyData?.length > 0 
+      ? Math.max(...buyProcessData.dailyData.map((d: any) => d.protocolDay || 0))
+      : 0;
+    const currentDay = Math.max(buyProcessCurrentDay, currentProtocolDay, 17); // Ensure we show at least 17 days
+    const maxDay = currentDay; // Only show up to current day for this chart
     
-    // Count stakes per day
-    stakeData.forEach(event => {
-      const eventDate = new Date(event.startDate);
-      const dayNum = Math.floor((eventDate.getTime() - CONTRACT_START_DATE.getTime()) / (24 * 60 * 60 * 1000)) + 1;
-      if (!dailyData[dayNum]) {
-        dailyData[dayNum] = { creates: 0, stakes: 0 };
-      }
-      dailyData[dayNum].stakes++;
-    });
-    
-    // Convert to array and fill gaps
-    const result = [];
-    // Use actual current day (15) instead of cached value
-    const actualCurrentDay = Math.max(currentProtocolDay, 15);
-    for (let day = 1; day <= actualCurrentDay; day++) {
-      result.push({
-        day,
-        creates: dailyData[day]?.creates || 0,
-        stakes: dailyData[day]?.stakes || 0
-      });
+    // Initialize all days from day 1 to current using protocol days
+    for (let day = 1; day <= maxDay; day++) {
+      dailyData[day] = { creates: 0, stakes: 0 };
     }
+    
+    console.log(`Processing ${createData.length} creates for daily count...`);
+    console.log(`Current day range: 1 to ${maxDay}`);
+    
+    // Count creates per day - use the timestamp when create was initiated
+    createData.forEach((create) => {
+      const createDate = new Date(parseInt(create.timestamp) * 1000);
+      const protocolDay = getContractDay(createDate);
+      
+      if (dailyData[protocolDay]) {
+        dailyData[protocolDay].creates++;
+      }
+    });
+    
+    console.log(`Processing ${stakeData.length} stakes for daily count...`);
+    
+    // Count stakes per day - use the timestamp when stake was initiated
+    stakeData.forEach((stake) => {
+      const stakeDate = new Date(parseInt(stake.timestamp) * 1000);
+      const protocolDay = getContractDay(stakeDate);
+      
+      if (dailyData[protocolDay]) {
+        dailyData[protocolDay].stakes++;
+      }
+    });
+    
+    // Convert to array format using protocol days
+    const result = Object.entries(dailyData).map(([dayStr, counts]) => {
+      const day = parseInt(dayStr);
+      
+      return {
+        date: getProtocolDayUserDate(day), // User's local date when protocol day starts
+        day: day,
+        creates: counts.creates,
+        stakes: counts.stakes
+      };
+    }).sort((a, b) => a.day - b.day);
+    
+    // Log summary
+    const totalCreates = result.reduce((sum, day) => sum + day.creates, 0);
+    const totalStakes = result.reduce((sum, day) => sum + day.stakes, 0);
+    const daysWithActivity = result.filter(day => day.creates > 0 || day.stakes > 0);
+    console.log(`Total creates: ${totalCreates}`);
+    console.log(`Total stakes: ${totalStakes}`);
+    console.log(`Days with activity: ${daysWithActivity.length}/${result.length}`);
+    console.log('=== END DAILY CREATES & STAKES COUNT ===\n');
     
     return result;
   };
@@ -1199,16 +1342,17 @@ function App() {
   const dailyTitanXUsage = loading || (stakeData.length === 0 && createData.length === 0) ? [] : calculateDailyTitanXUsage();
   
   // Add function to calculate Build-specific TitanX/ETH usage
-  const calculateTitanXEthBuildUsage = (): { date: string; titanX: number; eth: number }[] => {
+  const calculateTitanXEthBuildUsage = (): { date: string; titanX: number; eth: number; day: number }[] => {
     if (!buyProcessData?.dailyData) return [];
     
-    const data = buyProcessData.dailyData.map((day: any) => ({
+    // Convert from date-based to protocol day-based with user timezone
+    const dateBasedData = buyProcessData.dailyData.map((day: any) => ({
       date: day.date,
       titanX: day.titanXUsedForBuilds || 0,  // Only builds
       eth: day.ethUsedForBuilds || 0         // Only builds
     }));
     
-    return data;
+    return convertToProtocolDayData(dateBasedData);
   };
 
   // Calculate Buy & Process data
@@ -1219,7 +1363,7 @@ function App() {
   const titanXEthBuildUsage = !buyProcessData ? [] : calculateTitanXEthBuildUsage();
   
   // Calculate LP Fee Burns data
-  const calculateLPFeeBurns = (): { date: string; torusBurned: number; titanxCollected: number }[] => {
+  const calculateLPFeeBurns = (): { date: string; torusBurned: number; titanxCollected: number; day: number }[] => {
     if (!lpFeeBurnsData?.feeDrivenBurns) return [];
     
     // Create a map to aggregate by date
@@ -1246,9 +1390,12 @@ function App() {
     });
     
     // Convert to array and sort by date
-    return Array.from(burnsByDate.entries())
+    const dateBasedData = Array.from(burnsByDate.entries())
       .map(([date, data]) => ({ date, ...data }))
       .sort((a, b) => a.date.localeCompare(b.date));
+    
+    // Convert from date-based to protocol day-based with user timezone
+    return convertToProtocolDayData(dateBasedData);
   };
   
   const lpFeeBurns = !lpFeeBurnsData ? [] : calculateLPFeeBurns();
@@ -1335,12 +1482,18 @@ function App() {
     console.log('\n%c=== DAY 84 vs DAY 88 ANALYSIS ===', 'background: #ff0000; color: white; font-weight: bold; font-size: 16px; padding: 10px');
     
     // Calculate the specific dates for day 84 and 88
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
+    const now = new Date();
+    // Use 6 PM UTC boundary like CONTRACT_START_DATE
+    const today = new Date(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate());
+    today.setUTCHours(18, 0, 0, 0); // 6 PM UTC
+    if (now.getTime() < today.getTime()) {
+      // If current time is before 6 PM UTC today, use yesterday's 6 PM
+      today.setUTCDate(today.getUTCDate() - 1);
+    }
     const day84Date = new Date(today);
-    day84Date.setDate(day84Date.getDate() + 83); // 0-indexed
+    day84Date.setUTCDate(day84Date.getUTCDate() + 83); // 0-indexed
     const day88Date = new Date(today);
-    day88Date.setDate(day88Date.getDate() + 87); // 0-indexed
+    day88Date.setUTCDate(day88Date.getUTCDate() + 87); // 0-indexed
     
     const day84Key = day84Date.toISOString().split('T')[0];
     const day88Key = day88Date.toISOString().split('T')[0];
@@ -1426,10 +1579,16 @@ function App() {
   // Debug: Check if stakes are beyond 88 days
   if (!loading && stakeData.length > 0) {
     console.log('\n=== STAKE MATURITY ANALYSIS ===');
-    const today = new Date();
-    today.setHours(0, 0, 0, 0);
+    const now = new Date();
+    // Use 6 PM UTC boundary like CONTRACT_START_DATE
+    const today = new Date(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate());
+    today.setUTCHours(18, 0, 0, 0); // 6 PM UTC
+    if (now.getTime() < today.getTime()) {
+      // If current time is before 6 PM UTC today, use yesterday's 6 PM
+      today.setUTCDate(today.getUTCDate() - 1);
+    }
     const day88 = new Date(today);
-    day88.setDate(day88.getDate() + 88);
+    day88.setUTCDate(day88.getUTCDate() + 88);
     
     const stakesWithin88Days = stakeData.filter(s => {
       const maturityDate = s.maturityDate instanceof Date ? s.maturityDate : new Date(s.maturityDate);
@@ -2053,8 +2212,7 @@ function App() {
           key="stakes-maturity-chart"
           title="Number of Stakes Ending Each Day"
           labels={stakeReleases.map(r => {
-            const contractDay = getContractDay(r.date);
-            return [`${r.date.substring(5)}`, `Day ${contractDay}`];
+            return [`${r.date.substring(5)}`, `Day ${r.day}`];
           })}
           datasets={[
             {
@@ -2115,8 +2273,7 @@ function App() {
           key="creates-maturity-chart"
           title="Number of Creates Ending Each Day"
           labels={createReleases.map(r => {
-            const contractDay = getContractDay(r.date);
-            return [`${r.date.substring(5)}`, `Day ${contractDay}`];
+            return [`${r.date.substring(5)}`, `Day ${r.day}`];
           })}
           datasets={[
             {
@@ -2185,9 +2342,7 @@ function App() {
           title={<><span className="torus-text">TORUS</span> Released Each Day: Principal vs Accrued Share Rewards</>}
           labels={torusReleasesWithRewards
             .map(r => {
-              const date = new Date(r.date);
-              const contractDay = getContractDay(date);
-              return [`${r.date.substring(5)}`, `Day ${contractDay}`];
+              return [`${r.date.substring(5)}`, `Day ${r.day}`];
             })}
           datasets={[
             {
@@ -2271,8 +2426,7 @@ function App() {
           key="titanx-usage-chart"
           title={<>Total <span style={{color: '#16a34a'}}>TitanX</span> Used for Creates Ending Each Day</>}
           labels={titanXUsage.map(r => {
-            const contractDay = getContractDay(r.date);
-            return [`${r.date.substring(5)}`, `Day ${contractDay}`];
+            return [`${r.date.substring(5)}`, `Day ${r.day}`];
           })}
           datasets={[
             {
@@ -2333,8 +2487,7 @@ function App() {
           key="daily-titanx-usage-chart"
           title={<>Daily <span style={{color: '#16a34a'}}>TitanX</span> Usage Breakdown</>}
           labels={dailyTitanXUsage.map(r => {
-            const contractDay = getContractDay(r.date);
-            return [`${r.date.substring(5)}`, `Day ${contractDay}`];
+            return [`${r.date.substring(5)}`, `Day ${r.day}`];
           })}
           datasets={[
             {
@@ -2409,8 +2562,7 @@ function App() {
           key="shares-releases-chart"
           title="Total Shares Ending Each Day"
           labels={sharesReleases.map(r => {
-            const contractDay = getContractDay(r.date);
-            return [`${r.date.substring(5)}`, `Day ${contractDay}`];
+            return [`${r.date.substring(5)}`, `Day ${r.day}`];
           })}
           datasets={[
             {
@@ -2488,8 +2640,7 @@ function App() {
           key="daily-torus-burned-chart"
           title={<><span className="torus-text">TORUS</span> <span style={{color: '#f97316'}}>Burned</span> Per Day</>}
           labels={dailyTorusBurned.map(d => {
-            const contractDay = getContractDay(d.date);
-            return [`${d.date.substring(5)}`, `Day ${contractDay}`];
+            return [`${d.date.substring(5)}`, `Day ${d.day}`];
           })}
           datasets={[
             {
@@ -2609,8 +2760,7 @@ function App() {
           key="buy-burn-activity-chart"
           title={<>Daily <span style={{color: '#f97316'}}>Buy & Burn</span>/<span style={{color: '#f97316'}}>Build</span> Operations</>}
           labels={buyBurnActivity.map(d => {
-            const contractDay = getContractDay(d.date);
-            return [`${d.date.substring(5)}`, `Day ${contractDay}`];
+            return [`${d.date.substring(5)}`, `Day ${d.day}`];
           })}
           datasets={[
             {
@@ -2683,8 +2833,7 @@ function App() {
           key="titanx-eth-usage-chart"
           title={<>Daily <span style={{color: '#16a34a'}}>TitanX</span>/ETH Used for <span style={{color: '#f97316'}}>Burns</span></>}
           labels={titanXEthUsage.map(d => {
-            const contractDay = getContractDay(d.date);
-            return [`${d.date.substring(5)}`, `Day ${contractDay}`];
+            return [`${d.date.substring(5)}`, `Day ${d.day}`];
           })}
           datasets={[
             {
@@ -2775,8 +2924,7 @@ function App() {
           key="titanx-eth-build-usage-chart"
           title={<>Daily <span style={{color: '#16a34a'}}>TitanX</span>/ETH Used for <span style={{color: '#f97316'}}>Buy & Build</span></>}
           labels={titanXEthBuildUsage.map(d => {
-            const contractDay = getContractDay(d.date);
-            return [`${d.date.substring(5)}`, `Day ${contractDay}`];
+            return [`${d.date.substring(5)}`, `Day ${d.day}`];
           })}
           datasets={[
             {
@@ -2869,8 +3017,7 @@ function App() {
           key="lp-fee-burns-chart"
           title={<>LP Fee Collections and <span style={{color: '#f97316'}}>Buy & Burn</span> Activity</>}
           labels={lpFeeBurns.map(d => {
-            const contractDay = getContractDay(d.date);
-            return [`${d.date.substring(5)}`, `Day ${contractDay}`];
+            return [`${d.date.substring(5)}`, `Day ${d.day}`];
           })}
           datasets={[
             {

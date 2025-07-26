@@ -25,6 +25,25 @@ async function updateBuyProcessData() {
     const BUY_PROCESS_CONTRACT = '0xaa390a37006e22b5775a34f2147f81ebd6a63641';
     const TORUS_CONTRACT = '0xb47f575807fc5466285e1277ef8acfbb5c6686e8';
     
+    // Contract start date (6 PM UTC - actual protocol start time)
+    const CONTRACT_START_DATE = new Date('2025-07-10T18:00:00.000Z');
+    
+    // Helper function to calculate protocol day from date
+    function getProtocolDay(date) {
+      const msPerDay = 24 * 60 * 60 * 1000;
+      let dateObj;
+      
+      if (typeof date === 'string') {
+        // For date strings like "2025-07-12", assume 12:00 UTC (noon) to avoid timezone issues
+        dateObj = new Date(date + 'T12:00:00.000Z');
+      } else {
+        dateObj = date;
+      }
+      
+      const daysDiff = Math.floor((dateObj.getTime() - CONTRACT_START_DATE.getTime()) / msPerDay) + 1;
+      return Math.max(1, daysDiff);
+    }
+    
     // Contract ABIs
     const buyProcessABI = [
       'event BuyAndBurn(uint256 indexed titanXAmount, uint256 indexed torusBurnt, address indexed caller)',
@@ -155,6 +174,7 @@ async function updateBuyProcessData() {
       if (!newDailyData[dateKey]) {
         newDailyData[dateKey] = {
           date: dateKey,
+          protocolDay: getProtocolDay(dateKey),
           buyAndBurnCount: 0,
           buyAndBuildCount: 0,
           fractalCount: 0,
@@ -204,6 +224,7 @@ async function updateBuyProcessData() {
       if (!newDailyData[dateKey]) {
         newDailyData[dateKey] = {
           date: dateKey,
+          protocolDay: getProtocolDay(dateKey),
           buyAndBurnCount: 0,
           buyAndBuildCount: 0,
           fractalCount: 0,
@@ -233,6 +254,7 @@ async function updateBuyProcessData() {
       if (!newDailyData[dateKey]) {
         newDailyData[dateKey] = {
           date: dateKey,
+          protocolDay: getProtocolDay(dateKey),
           buyAndBurnCount: 0,
           buyAndBuildCount: 0,
           fractalCount: 0,
@@ -279,6 +301,7 @@ async function updateBuyProcessData() {
       if (!newDailyData[dateKey]) {
         newDailyData[dateKey] = {
           date: dateKey,
+          protocolDay: getProtocolDay(dateKey),
           buyAndBurnCount: 0,
           buyAndBuildCount: 0,
           fractalCount: 0,
@@ -315,6 +338,7 @@ async function updateBuyProcessData() {
         const existing = dailyDataMap.get(date);
         dailyDataMap.set(date, {
           ...existing,
+          protocolDay: existing.protocolDay || data.protocolDay, // Preserve existing or use new
           buyAndBurnCount: existing.buyAndBurnCount + data.buyAndBurnCount,
           buyAndBuildCount: existing.buyAndBuildCount + data.buyAndBuildCount,
           fractalCount: existing.fractalCount + data.fractalCount,
@@ -336,6 +360,11 @@ async function updateBuyProcessData() {
     
     // Convert back to array and sort
     mergedDailyData = Array.from(dailyDataMap.values()).sort((a, b) => a.date.localeCompare(b.date));
+    
+    // Recalculate all protocolDay fields to ensure consistency with corrected start date
+    mergedDailyData.forEach(day => {
+      day.protocolDay = getProtocolDay(day.date);
+    });
     
     // Calculate actual totals from Transfer events
     // Need to fetch in chunks to avoid RPC limits

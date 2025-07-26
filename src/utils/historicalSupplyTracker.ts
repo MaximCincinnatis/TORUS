@@ -33,11 +33,11 @@ export function loadHistoricalSupplyData(): HistoricalSupplyData {
     }
   }
   
-  // Initialize with contract start date
+  // Initialize with contract start date (6 PM UTC boundary like App.tsx)
   return {
     snapshots: [],
     lastUpdated: new Date().toISOString(),
-    contractStartDate: '2025-07-11T00:00:00Z' // TORUS contract start date
+    contractStartDate: '2025-07-10T18:00:00.000Z' // TORUS contract start date (6 PM UTC - actual protocol start)
   };
 }
 
@@ -105,12 +105,13 @@ export function getLatestSnapshotBeforeDay(day: number): DailySupplySnapshot | n
 }
 
 /**
- * Calculate date for a protocol day
+ * Calculate date for a protocol day (using 6 PM UTC boundaries)
  */
 function calculateDateForDay(day: number, contractStartDate: string): Date {
   const startDate = new Date(contractStartDate);
   const targetDate = new Date(startDate);
-  targetDate.setDate(startDate.getDate() + day - 1); // Day 1 is contract start date
+  // Use UTC date methods to maintain the 6 PM UTC boundary
+  targetDate.setUTCDate(startDate.getUTCDate() + day - 1); // Day 1 is contract start date
   return targetDate;
 }
 
