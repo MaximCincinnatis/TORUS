@@ -28,16 +28,20 @@ async function updateBuyProcessData() {
     // Contract start date (6 PM UTC - actual protocol start time)
     const CONTRACT_START_DATE = new Date('2025-07-10T18:00:00.000Z');
     
-    // Helper function to calculate protocol day from date
-    function getProtocolDay(date) {
+    // Helper function to calculate protocol day from timestamp
+    function getProtocolDay(timestamp) {
       const msPerDay = 24 * 60 * 60 * 1000;
       let dateObj;
       
-      if (typeof date === 'string') {
-        // For date strings like "2025-07-12", assume 12:00 UTC (noon) to avoid timezone issues
-        dateObj = new Date(date + 'T12:00:00.000Z');
+      if (typeof timestamp === 'number') {
+        // Unix timestamp in seconds
+        dateObj = new Date(timestamp * 1000);
+      } else if (typeof timestamp === 'string') {
+        // Date string - but this should be avoided for protocol day calculation
+        // Only use this as fallback for historical data
+        dateObj = new Date(timestamp + 'T12:00:00.000Z');
       } else {
-        dateObj = date;
+        dateObj = timestamp;
       }
       
       const daysDiff = Math.floor((dateObj.getTime() - CONTRACT_START_DATE.getTime()) / msPerDay) + 1;
@@ -174,7 +178,7 @@ async function updateBuyProcessData() {
       if (!newDailyData[dateKey]) {
         newDailyData[dateKey] = {
           date: dateKey,
-          protocolDay: getProtocolDay(dateKey),
+          protocolDay: getProtocolDay(timestamp),
           buyAndBurnCount: 0,
           buyAndBuildCount: 0,
           fractalCount: 0,
@@ -224,7 +228,7 @@ async function updateBuyProcessData() {
       if (!newDailyData[dateKey]) {
         newDailyData[dateKey] = {
           date: dateKey,
-          protocolDay: getProtocolDay(dateKey),
+          protocolDay: getProtocolDay(timestamp),
           buyAndBurnCount: 0,
           buyAndBuildCount: 0,
           fractalCount: 0,
@@ -254,7 +258,7 @@ async function updateBuyProcessData() {
       if (!newDailyData[dateKey]) {
         newDailyData[dateKey] = {
           date: dateKey,
-          protocolDay: getProtocolDay(dateKey),
+          protocolDay: getProtocolDay(timestamp),
           buyAndBurnCount: 0,
           buyAndBuildCount: 0,
           fractalCount: 0,
@@ -301,7 +305,7 @@ async function updateBuyProcessData() {
       if (!newDailyData[dateKey]) {
         newDailyData[dateKey] = {
           date: dateKey,
-          protocolDay: getProtocolDay(dateKey),
+          protocolDay: getProtocolDay(timestamp),
           buyAndBurnCount: 0,
           buyAndBuildCount: 0,
           fractalCount: 0,
@@ -361,9 +365,14 @@ async function updateBuyProcessData() {
     // Convert back to array and sort
     mergedDailyData = Array.from(dailyDataMap.values()).sort((a, b) => a.date.localeCompare(b.date));
     
-    // Recalculate all protocolDay fields to ensure consistency with corrected start date
+    // For existing data without timestamps, we need to determine protocol day based on date
+    // This is a best effort - assumes activity happened after 6 PM UTC on that date
     mergedDailyData.forEach(day => {
-      day.protocolDay = getProtocolDay(day.date);
+      if (!day.protocolDay || day.protocolDay === 0) {
+        // For historical data, assume events happened after protocol day start
+        const dateAtProtocolStart = new Date(day.date + 'T18:00:00.000Z');
+        day.protocolDay = getProtocolDay(dateAtProtocolStart.getTime() / 1000);
+      }
     });
     
     // Calculate actual totals from Transfer events

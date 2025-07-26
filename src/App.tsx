@@ -2704,8 +2704,7 @@ function App() {
           key="cumulative-torus-burned-chart"
           title={<>Cumulative <span className="torus-text">TORUS</span> <span style={{color: '#f97316'}}>Burned</span></>}
           labels={cumulativeTorusBurned.map(d => {
-            const contractDay = getContractDay(d.date);
-            return `${d.date.substring(5)} (Day ${contractDay})`;
+            return `${d.date.substring(5)} (Day ${d.day})`;
           })}
           datasets={[
             {
