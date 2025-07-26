@@ -3,7 +3,6 @@ import { SimpleLPPosition } from '../../utils/uniswapV3RealOwners';
 import { tickToTitanXPrice } from '../../utils/uniswapV3Math';
 import { CONTRACTS } from '../../constants/contracts';
 import './LPPositionsTable.css';
-import SkeletonTable from '../loading/SkeletonTable';
 
 interface LPPositionsTableProps {
   positions: SimpleLPPosition[];
@@ -17,9 +16,7 @@ interface LPPositionsTableProps {
 }
 
 const LPPositionsTable: React.FC<LPPositionsTableProps> = ({ positions, loading, tokenInfo }) => {
-  if (loading) {
-    return <SkeletonTable rows={5} columns={6} />;
-  }
+  // Note: Loading state is now handled by ExpandableChartSection
 
   if (positions.length === 0) {
     return (

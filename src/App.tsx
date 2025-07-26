@@ -76,7 +76,7 @@ function App() {
   const [burnedSupply, setBurnedSupply] = useState<number>(0);
   const [lpPositions, setLpPositions] = useState<SimpleLPPosition[]>([]);
   const [lpTokenInfo, setLpTokenInfo] = useState<any>(null);
-  const [lpLoading, setLpLoading] = useState(false);
+  const [lpLoading, setLpLoading] = useState(true);
   const [contractInfo, setContractInfo] = useState<any>(null);
   const [cachedTitanXData, setCachedTitanXData] = useState<{totalTitanXBurnt?: string, titanxTotalSupply?: string}>({});
   const [lastUpdatedTime, setLastUpdatedTime] = useState<string | null>(null);
@@ -2047,6 +2047,7 @@ function App() {
         id="supply-projection"
         title={<>Projected Supply Growth From Current Staked Positions Only - Does Not Include Future Daily <span className="torus-text">TORUS</span> Share Pool Distributions</>}
         subtitle="Future TORUS Supply Projection"
+        chartType="line"
         keyMetrics={[
           {
             label: "Current Supply",
@@ -2191,6 +2192,7 @@ function App() {
       <ExpandableChartSection
         id="stake-maturity"
         title="Stakes Ending by Future Date"
+        chartType="bar"
         subtitle="Number of Stakes Ending Each Day"
         keyMetrics={[
           {
@@ -2252,6 +2254,7 @@ function App() {
       <ExpandableChartSection
         id="create-maturity"
         title="Creates Ending by Future Date"
+        chartType="bar"
         subtitle="Number of Creates Ending Each Day"
         keyMetrics={[
           {
@@ -2314,6 +2317,7 @@ function App() {
       <ExpandableChartSection
         id="torus-rewards"
         title="Principal vs Rewards Releasing Daily"
+        chartType="bar"
         subtitle="TORUS Released Each Day: Principal vs Accrued Share Rewards"
         keyMetrics={[
           {
@@ -2403,6 +2407,7 @@ function App() {
       <ExpandableChartSection
         id="titanx-usage"
         title={<><span style={{color: '#16a34a'}}>TitanX</span> Amounts From Creates Ending</>}
+        chartType="bar"
         subtitle="Total TitanX Used for Creates Ending Each Day"
         keyMetrics={[
           {
@@ -2466,6 +2471,7 @@ function App() {
       <ExpandableChartSection
         id="daily-titanx-usage"
         title={<><span style={{color: '#16a34a'}}>TitanX</span> Used Each Day for Creates and Stakes</>}
+        chartType="bar"
         subtitle="Daily TitanX Usage - Creates vs Stakes"
         keyMetrics={[
           {
@@ -2533,6 +2539,7 @@ function App() {
       <ExpandableChartSection
         id="shares-releases"
         title="Shares Ending by Future Date"
+        chartType="bar"
         subtitle="Total Shares Ending Each Day"
         keyMetrics={[
           {
@@ -2616,6 +2623,7 @@ function App() {
       <ExpandableChartSection
         id="daily-torus-burned"
         title={<><span className="torus-text">TORUS</span> Burned Through <span style={{color: '#f97316'}}>Buy & Burn</span> Operations</>}
+        chartType="bar"
         subtitle="TORUS Burned Per Day"
         keyMetrics={[
           {
@@ -2680,6 +2688,7 @@ function App() {
       <ExpandableChartSection
         id="cumulative-torus-burned"
         title={<>Total <span className="torus-text">TORUS</span> Burned Over Time</>}
+        chartType="line"
         subtitle="Cumulative TORUS Burned"
         keyMetrics={[
           {
@@ -2745,6 +2754,7 @@ function App() {
       <ExpandableChartSection
         id="buy-burn-activity"
         title={<>Daily <span style={{color: '#f97316'}}>Buy & Burn</span>/<span style={{color: '#f97316'}}>Build</span> Operations Count</>}
+        chartType="bar"
         subtitle="Daily Buy & Burn/Build Operations"
         keyMetrics={[
           {
@@ -2816,6 +2826,7 @@ function App() {
       <ExpandableChartSection
         id="titanx-eth-usage"
         title={<>Resources Used in <span style={{color: '#f97316'}}>Buy & Burn</span> Operations</>}
+        chartType="bar"
         subtitle="Daily TitanX/ETH Used for Burns"
         keyMetrics={[
           {
@@ -2907,6 +2918,7 @@ function App() {
       <ExpandableChartSection
         id="titanx-eth-build-usage"
         title={<>Resources Used in <span style={{color: '#f97316'}}>Buy & Build</span> Operations</>}
+        chartType="bar"
         subtitle="Daily TitanX/ETH Used for Buy & Build"
         keyMetrics={[
           {
@@ -2993,6 +3005,7 @@ function App() {
       <ExpandableChartSection
         id="lp-fee-burns"
         title={<><span style={{color: '#16a34a'}}>TitanX</span> Collected From LP Fees and Sent to <span style={{color: '#f97316'}}>Buy & Burn</span> Operations</>}
+        chartType="bar"
         subtitle="LP Fee Collections and Buy & Burn Activity"
         keyMetrics={[
           {
@@ -3087,6 +3100,7 @@ function App() {
       <ExpandableChartSection
         id="lp-positions"
         title={<>Active Liquidity Positions on <span style={{color: '#3b82f6'}}>Uniswap V3</span></>}
+        chartType="table"
         subtitle="Uniswap V3 Liquidity Providers"
         keyMetrics={[
           {
