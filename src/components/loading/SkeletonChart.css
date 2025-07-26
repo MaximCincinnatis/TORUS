@@ -208,59 +208,266 @@
   }
 }
 
-/* Line Chart Skeleton */
+/* World-Class Line Chart Skeleton */
 .skeleton-line-container {
   position: absolute;
   inset: 0;
+  overflow: hidden;
 }
 
 .skeleton-line-svg {
   position: absolute;
   width: 100%;
   height: 100%;
+  filter: drop-shadow(0 2px 8px rgba(139, 92, 246, 0.1));
 }
 
-.skeleton-line-path {
-  opacity: 0.6;
-  filter: blur(1px);
-  animation: skeleton-line-draw 3s ease-in-out infinite;
+/* Area fill animation */
+.skeleton-area-path {
+  opacity: 0.4;
+  animation: skeleton-area-breathe 4s ease-in-out infinite;
 }
 
-@keyframes skeleton-line-draw {
-  0% {
-    stroke-dasharray: 0 200;
-    opacity: 0.3;
+@keyframes skeleton-area-breathe {
+  0%, 100% {
+    opacity: 0.2;
+    transform: scaleY(0.95);
   }
   50% {
-    stroke-dasharray: 200 0;
-    opacity: 0.8;
+    opacity: 0.6;
+    transform: scaleY(1.05);
+  }
+}
+
+/* Primary line animation - sophisticated drawing effect */
+.skeleton-line-primary {
+  stroke-dasharray: 300;
+  stroke-dashoffset: 300;
+  animation: skeleton-line-draw-smooth 6s ease-in-out infinite;
+  filter: drop-shadow(0 0 3px rgba(139, 92, 246, 0.3));
+}
+
+@keyframes skeleton-line-draw-smooth {
+  0% {
+    stroke-dashoffset: 300;
+    opacity: 0.3;
+  }
+  30% {
+    stroke-dashoffset: 0;
+    opacity: 0.9;
+  }
+  70% {
+    stroke-dashoffset: 0;
+    opacity: 0.9;
   }
   100% {
-    stroke-dasharray: 0 200;
+    stroke-dashoffset: -300;
     opacity: 0.3;
   }
 }
 
-.skeleton-data-point {
-  position: absolute;
-  width: 8px;
-  height: 8px;
-  background: rgba(139, 92, 246, 0.3);
-  border: 2px solid rgba(139, 92, 246, 0.5);
-  border-radius: 50%;
-  transform: translate(-50%, -50%);
-  animation: skeleton-point-pulse 1.5s ease-in-out infinite;
+/* Secondary line animation - offset timing */
+.skeleton-line-secondary {
+  stroke-dasharray: 200;
+  stroke-dashoffset: 200;
+  animation: skeleton-line-draw-secondary 5s ease-in-out infinite 1s;
+  filter: drop-shadow(0 0 2px rgba(236, 72, 153, 0.2));
 }
 
-@keyframes skeleton-point-pulse {
+@keyframes skeleton-line-draw-secondary {
+  0% {
+    stroke-dashoffset: 200;
+    opacity: 0.2;
+  }
+  40% {
+    stroke-dashoffset: 0;
+    opacity: 0.7;
+  }
+  60% {
+    stroke-dashoffset: 0;
+    opacity: 0.7;
+  }
+  100% {
+    stroke-dashoffset: -200;
+    opacity: 0.2;
+  }
+}
+
+/* Enhanced data points */
+.skeleton-data-point {
+  position: absolute;
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+}
+
+.skeleton-point-primary {
+  width: 10px;
+  height: 10px;
+  background: radial-gradient(circle, rgba(139, 92, 246, 0.8) 0%, rgba(139, 92, 246, 0.3) 70%);
+  border: 2px solid rgba(139, 92, 246, 0.6);
+  box-shadow: 0 0 8px rgba(139, 92, 246, 0.4), inset 0 0 3px rgba(255, 255, 255, 0.3);
+  animation: skeleton-point-primary-pulse 2.5s ease-in-out infinite;
+}
+
+.skeleton-point-secondary {
+  width: 7px;
+  height: 7px;
+  background: radial-gradient(circle, rgba(236, 72, 153, 0.7) 0%, rgba(236, 72, 153, 0.2) 70%);
+  border: 1.5px solid rgba(236, 72, 153, 0.5);
+  box-shadow: 0 0 6px rgba(236, 72, 153, 0.3);
+  animation: skeleton-point-secondary-pulse 2s ease-in-out infinite;
+}
+
+@keyframes skeleton-point-primary-pulse {
   0%, 100% {
     transform: translate(-50%, -50%) scale(0.8);
+    opacity: 0.4;
+    box-shadow: 0 0 8px rgba(139, 92, 246, 0.2), inset 0 0 3px rgba(255, 255, 255, 0.1);
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.3);
+    opacity: 1;
+    box-shadow: 0 0 16px rgba(139, 92, 246, 0.6), inset 0 0 6px rgba(255, 255, 255, 0.4);
+  }
+}
+
+@keyframes skeleton-point-secondary-pulse {
+  0%, 100% {
+    transform: translate(-50%, -50%) scale(0.7);
     opacity: 0.3;
   }
   50% {
-    transform: translate(-50%, -50%) scale(1.2);
+    transform: translate(-50%, -50%) scale(1.1);
     opacity: 0.8;
   }
+}
+
+/* Trend indicators */
+.skeleton-trend-indicators {
+  position: absolute;
+  top: 10%;
+  right: 8%;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.skeleton-trend-up {
+  width: 24px;
+  height: 24px;
+  background: linear-gradient(135deg, rgba(34, 197, 94, 0.2) 0%, rgba(34, 197, 94, 0.4) 100%);
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: skeleton-trend-glow 3s ease-in-out infinite;
+}
+
+.skeleton-trend-arrow {
+  width: 0;
+  height: 0;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-bottom: 8px solid rgba(34, 197, 94, 0.7);
+}
+
+.skeleton-trend-steady {
+  width: 24px;
+  height: 24px;
+  background: linear-gradient(135deg, rgba(156, 163, 175, 0.2) 0%, rgba(156, 163, 175, 0.4) 100%);
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  animation: skeleton-trend-glow 3s ease-in-out infinite 1.5s;
+}
+
+.skeleton-trend-line {
+  width: 12px;
+  height: 2px;
+  background: rgba(156, 163, 175, 0.7);
+  border-radius: 1px;
+}
+
+@keyframes skeleton-trend-glow {
+  0%, 100% {
+    opacity: 0.4;
+    transform: scale(0.9);
+  }
+  50% {
+    opacity: 0.9;
+    transform: scale(1.05);
+  }
+}
+
+/* Simulated tooltips */
+.skeleton-tooltip {
+  position: absolute;
+  width: 60px;
+  height: 32px;
+  background: linear-gradient(135deg, 
+    rgba(30, 30, 40, 0.9) 0%, 
+    rgba(50, 50, 60, 0.9) 100%
+  );
+  border-radius: 8px;
+  border: 1px solid rgba(139, 92, 246, 0.3);
+  opacity: 0;
+  animation: skeleton-tooltip-appear 4s ease-in-out infinite;
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+}
+
+.skeleton-tooltip::before {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 4px solid transparent;
+  border-right: 4px solid transparent;
+  border-top: 4px solid rgba(50, 50, 60, 0.9);
+}
+
+.skeleton-tooltip-1 {
+  top: 25%;
+  left: 35%;
+  animation-delay: 2s;
+}
+
+.skeleton-tooltip-2 {
+  top: 45%;
+  left: 70%;
+  animation-delay: 4s;
+}
+
+@keyframes skeleton-tooltip-appear {
+  0%, 70% {
+    opacity: 0;
+    transform: translateY(8px) scale(0.8);
+  }
+  80%, 90% {
+    opacity: 0.9;
+    transform: translateY(0) scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: translateY(-4px) scale(0.9);
+  }
+}
+
+/* Enhanced hover effects for the entire container */
+.skeleton-line-container:hover .skeleton-line-primary {
+  animation-duration: 3s;
+}
+
+.skeleton-line-container:hover .skeleton-point-primary {
+  animation-duration: 1.5s;
+}
+
+.skeleton-line-container:hover .skeleton-area-path {
+  opacity: 0.8;
 }
 
 /* Area Chart Skeleton */
