@@ -248,7 +248,53 @@ async function performSmartUpdate() {
     
     // Update total supply (same as original)
     log('📊 Updating total supply...', 'cyan');
-    // ... [Supply update code - same as original] ...
+    try {
+      const torusContract = new ethers.Contract(
+        '0xb47f575807fc5466285e1277ef8acfbb5c6686e8',
+        ['function totalSupply() view returns (uint256)'],
+        provider
+      );
+      const totalSupply = await torusContract.totalSupply();
+      const formattedSupply = parseFloat(ethers.utils.formatEther(totalSupply));
+      
+      const oldSupply = cachedData.totalSupply || 0;
+      if (Math.abs(oldSupply - formattedSupply) > 0.000001) {
+        cachedData.totalSupply = formattedSupply;
+        updateResult.dataChanged = true;
+        log(`Total supply updated: ${formattedSupply.toFixed(6)} TORUS (was ${oldSupply.toFixed(6)})`, 'green');
+      }
+      
+      // Also update in stakingData section (where frontend reads from)
+      if (cachedData.stakingData) {
+        const oldStakingSupply = cachedData.stakingData.totalSupply || 0;
+        if (Math.abs(oldStakingSupply - formattedSupply) > 0.000001) {
+          cachedData.stakingData.totalSupply = formattedSupply;
+          updateResult.dataChanged = true;
+          log(`Staking data total supply updated: ${formattedSupply.toFixed(6)} TORUS (was ${oldStakingSupply.toFixed(6)})`, 'green');
+        }
+        
+        // Track daily supply snapshot
+        if (cachedData.stakingData.currentProtocolDay) {
+          const snapshotData = {
+            day: cachedData.stakingData.currentProtocolDay,
+            totalSupply: formattedSupply,
+            burnedSupply: cachedData.stakingData.burnedSupply || 0,
+            timestamp: new Date().toISOString()
+          };
+          
+          // Store in metadata for frontend to process
+          if (!cachedData.stakingData.metadata) {
+            cachedData.stakingData.metadata = {};
+          }
+          cachedData.stakingData.metadata.dailySupplySnapshot = snapshotData;
+          log(`Daily supply snapshot recorded for day ${snapshotData.day}`, 'green');
+        }
+      }
+      updateResult.stats.rpcCalls++;
+    } catch (e) {
+      log(`Failed to update total supply: ${e.message}`, 'yellow');
+      updateResult.errors.push(`Total supply update: ${e.message}`);
+    }
     
     // ENHANCED: Update LP positions with lifecycle tracking
     if (blocksSinceLastUpdate > 50) {

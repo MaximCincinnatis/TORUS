@@ -67,3 +67,33 @@
 
 ## Status: ✅ COMPLETE
 The Maximum Supply chart now correctly starts from the current protocol day (17) as fetched directly from the smart contract, and the auto-update system ensures this stays current every 30 minutes.
+
+---
+
+# TORUS Token Total Supply Check - 2025-07-27
+
+## Task: Check totalSupply() on TORUS Token Contract
+
+### Summary:
+Successfully queried the totalSupply() function on the TORUS token contract at address 0xb47f575807fc5466285e1277ef8acfbb5c6686e8 on Ethereum mainnet.
+
+### Results:
+- **Total Supply in Wei**: 17979638583984640637183
+- **Total Supply in TORUS tokens**: 17979.638583984640637183
+- **Formatted**: 17,979.64 TORUS tokens (approximately)
+
+### Implementation Details:
+1. Created a simple Node.js script using ethers.js v5
+2. Connected to Ethereum mainnet using a public RPC endpoint
+3. Called the totalSupply() view function on the TORUS token contract
+4. Converted the result from wei to tokens using 18 decimal places
+
+### Files Created:
+- `/home/wsl/projects/TORUSspecs/torus-dashboard/check-total-supply.js` - Script to query totalSupply
+
+### Technical Notes:
+- Used ethers.js v5.7.2 (already installed in the project)
+- The TORUS token uses standard 18 decimal places
+- Total supply is approximately 17,979.64 TORUS tokens as of 2025-07-27
+
+## Status: ✅ COMPLETE

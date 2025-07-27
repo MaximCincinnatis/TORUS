@@ -1,0 +1,53 @@
+    log('Updating total supply...', 'cyan');
+    try {
+      const torusContract = new ethers.Contract(
+        '0xb47f575807fc5466285e1277ef8acfbb5c6686e8',
+        ['function totalSupply() view returns (uint256)'],
+        provider
+      );
+      const totalSupply = await torusContract.totalSupply();
+      const formattedSupply = parseFloat(ethers.utils.formatEther(totalSupply));
+      
+      const oldSupply = cachedData.totalSupply || 0;
+      if (Math.abs(oldSupply - formattedSupply) > 0.000001) {
+        cachedData.totalSupply = formattedSupply;
+        updateStats.dataChanged = true;
+        log(`Total supply updated: ${formattedSupply.toFixed(6)} TORUS (was ${oldSupply.toFixed(6)})`, 'green');
+      }
+      
+      // Also update in stakingData section (where frontend reads from)
+      if (cachedData.stakingData) {
+        const oldStakingSupply = cachedData.stakingData.totalSupply || 0;
+        if (Math.abs(oldStakingSupply - formattedSupply) > 0.000001) {
+          cachedData.stakingData.totalSupply = formattedSupply;
+          updateStats.dataChanged = true;
+          log(`Staking data total supply updated: ${formattedSupply.toFixed(6)} TORUS (was ${oldStakingSupply.toFixed(6)})`, 'green');
+        }
+        
+        // Track daily supply snapshot
+        if (cachedData.stakingData.currentProtocolDay) {
+          const snapshotData = {
+            day: cachedData.stakingData.currentProtocolDay,
+            totalSupply: formattedSupply,
+            burnedSupply: cachedData.stakingData.burnedSupply || 0,
+            timestamp: new Date().toISOString()
+          };
+          
+          // Store in metadata for frontend to process
+          if (!cachedData.stakingData.metadata) {
+            cachedData.stakingData.metadata = {};
+          }
+          cachedData.stakingData.metadata.dailySupplySnapshot = snapshotData;
+          log(`Daily supply snapshot recorded for day ${snapshotData.day}`, 'green');
+        }
+      }
+      updateStats.rpcCalls++;
+    } catch (e) {
+      log(`Failed to update total supply: ${e.message}`, 'yellow');
+    }
+    
+    // 3. Update TitanX data
+    log('Updating TitanX data...', 'cyan');
+    try {
+      // TitanX contract addresses
+      const TITANX_CONTRACT = '0xf19308f923582a6f7c465e5ce7a9dc1bec6665b1';
