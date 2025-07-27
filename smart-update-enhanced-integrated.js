@@ -319,6 +319,12 @@ async function performSmartUpdate() {
     cachedData.lastUpdated = new Date().toISOString();
     cachedData.lastBlock = currentBlock;
     
+    // Save the updated data
+    if (updateResult.dataChanged) {
+      fs.writeFileSync('./public/data/cached-data.json', JSON.stringify(cachedData, null, 2));
+      log('✅ Data updated and saved', 'green');
+    }
+    
     // Save if changed
     if (updateResult.dataChanged || originalDataHash !== JSON.stringify(cachedData)) {
       fs.writeFileSync('./public/data/cached-data.json', JSON.stringify(cachedData, null, 2));
