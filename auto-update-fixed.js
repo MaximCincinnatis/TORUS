@@ -86,7 +86,7 @@ async function main() {
     execCommand('node force-vercel-rebuild.js', 'Forcing Vercel rebuild');
     
     // 5. Add and commit
-    execCommand('git add public/data/cached-data.json update-log.json src/constants/buildTimestamp.ts', 'Staging changes');
+    execCommand('git add public/data/cached-data.json public/data/buy-process-data.json update-log.json src/constants/buildTimestamp.ts', 'Staging changes');
     
     const timestamp = new Date().toISOString();
     const commitMessage = `Auto-update (fixed) - ${timestamp}
