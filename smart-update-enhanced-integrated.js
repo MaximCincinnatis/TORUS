@@ -311,6 +311,55 @@ async function performSmartUpdate() {
     log('📊 Checking for new staking events...', 'cyan');
     // ... [Staking update code - same as original] ...
     
+    // Update TitanX data
+    log('📊 Updating TitanX data...', 'cyan');
+    try {
+      // TitanX contract addresses
+      const TITANX_CONTRACT = '0xf19308f923582a6f7c465e5ce7a9dc1bec6665b1';
+      const TORUS_STAKE_CONTRACT = '0xc7cc775b21f9df85e043c7fdd9dac60af0b69507';
+      
+      const titanXContract = new ethers.Contract(
+        TITANX_CONTRACT,
+        ['function totalSupply() view returns (uint256)'],
+        provider
+      );
+      
+      // Get TitanX burned by TORUS contract specifically
+      const torusStakeContract = new ethers.Contract(
+        TORUS_STAKE_CONTRACT,
+        ['function totalTitanXBurnt() view returns (uint256)'],
+        provider
+      );
+      
+      // Get TitanX total supply and TORUS-specific burn amount
+      const [titanXTotalSupply, torusBurnedAmount] = await Promise.all([
+        titanXContract.totalSupply(),
+        torusStakeContract.totalTitanXBurnt()
+      ]);
+      
+      // Update TitanX total supply
+      const oldTitanXSupply = cachedData.titanxTotalSupply || "0";
+      if (oldTitanXSupply !== titanXTotalSupply.toString()) {
+        cachedData.titanxTotalSupply = titanXTotalSupply.toString();
+        updateResult.dataChanged = true;
+        log(`TitanX total supply updated: ${ethers.utils.formatEther(titanXTotalSupply)} TITANX`, 'green');
+      }
+      
+      // Update TitanX burned amount (TORUS-specific)
+      const oldBurned = cachedData.totalTitanXBurnt || "0";
+      if (oldBurned !== torusBurnedAmount.toString()) {
+        cachedData.totalTitanXBurnt = torusBurnedAmount.toString();
+        updateResult.dataChanged = true;
+        log(`TitanX burned by TORUS updated: ${ethers.utils.formatEther(torusBurnedAmount)} TITANX`, 'green');
+        log(`In billions: ${(parseFloat(ethers.utils.formatEther(torusBurnedAmount)) / 1e9).toFixed(3)}B`, 'green');
+      }
+      
+      updateResult.stats.rpcCalls += 2;
+    } catch (e) {
+      log(`Failed to update TitanX data: ${e.message}`, 'yellow');
+      updateResult.errors.push(`TitanX update: ${e.message}`);
+    }
+    
     // Update buy & process data (same as original)
     log('📊 Updating buy & process data...', 'cyan');
     // ... [Buy & process update code - same as original] ...

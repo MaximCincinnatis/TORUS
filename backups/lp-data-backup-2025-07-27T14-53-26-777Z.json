@@ -1,12 +1,12 @@
 {
   "metadata": {
-    "createdAt": "2025-07-27T10:00:02.372Z",
+    "createdAt": "2025-07-27T14:53:26.777Z",
     "version": "1.0",
     "totalPositions": 3,
-    "dataChecksum": "885b3fe"
+    "dataChecksum": "5ad8400b"
   },
   "data": {
-    "lastUpdated": "2025-07-27T09:30:11.774Z",
+    "lastUpdated": "2025-07-27T14:28:48.654Z",
     "version": "1.0.0",
     "poolData": {
       "sqrtPriceX96": "554139135573472192658640374362480",
@@ -43,8 +43,8 @@
         "token1": "0xF19308F923582A6f7c465e5CE7a9Dc1BEC6665B1",
         "nonce": "0",
         "status": "active",
-        "lastUpdated": "2025-07-27T09:30:03.809Z",
-        "lastActivityBlock": 23009590
+        "lastUpdated": "2025-07-27T14:21:08.538Z",
+        "lastActivityBlock": 23011042
       },
       {
         "tokenId": "1032346",
@@ -71,37 +71,37 @@
         "token1": "0xF19308F923582A6f7c465e5CE7a9Dc1BEC6665B1",
         "nonce": "0",
         "status": "active",
-        "lastUpdated": "2025-07-27T09:30:04.168Z",
-        "lastActivityBlock": 23009590
+        "lastUpdated": "2025-07-27T14:21:09.549Z",
+        "lastActivityBlock": 23011042
       },
       {
         "tokenId": "1029195",
         "owner": "0xAa390a37006E22b5775A34f2147F81eBD6a63641",
-        "liquidity": "66167189361886207223383926",
+        "liquidity": "66269932873332915100574429",
         "tickLower": -887200,
         "tickUpper": 887200,
         "lowerTitanxPerTorus": "0.00M",
         "upperTitanxPerTorus": "Infinity",
         "currentTitanxPerTorus": "43.60M",
-        "claimableTorus": 31.59107749561905,
-        "claimableTitanX": 1905766584.305438,
-        "tokensOwed0": "31591077495619050151",
-        "tokensOwed1": "1905766584305437984720867575",
+        "claimableTorus": 35.3157396292368,
+        "claimableTitanX": 1937547307.1112905,
+        "tokensOwed0": "31815108601688577896",
+        "tokensOwed1": "1933379614599024764067848557",
         "fee": 10000,
         "inRange": true,
         "estimatedAPR": "12.50",
         "priceRange": "Full Range",
         "lastChecked": "2025-07-24T20:34:33.876Z",
-        "torusAmount": 9343.037437602756,
-        "titanxAmount": 468594606121.4801,
-        "claimableYield": 1905766615.8965156,
+        "torusAmount": 9663.52010405852,
+        "titanxAmount": 454462137579.82513,
+        "claimableYield": 1937547342.42703,
         "burned": false,
         "token0": "0xB47f575807fC5466285e1277Ef8aCFBB5c6686E8",
         "token1": "0xF19308F923582A6f7c465e5CE7a9Dc1BEC6665B1",
         "nonce": "0",
         "status": "active",
-        "lastUpdated": "2025-07-27T09:30:04.954Z",
-        "lastActivityBlock": 23009590
+        "lastUpdated": "2025-07-27T14:21:10.053Z",
+        "lastActivityBlock": 23011042
       }
     ],
     "historicalData": {
@@ -41075,7 +41075,7 @@
         }
       ],
       "currentProtocolDay": 17,
-      "totalSupply": 18077.090069100836,
+      "totalSupply": 17976.715557630556,
       "burnedSupply": 0,
       "lastUpdated": "2025-07-16T19:25:33.217Z",
       "metadata": {
@@ -41083,10 +41083,10 @@
         "lastUpdate": "2025-07-16T19:14:31.015Z",
         "stakesRefreshed": "2025-07-16T18:54:18.007Z",
         "dailySupplySnapshot": {
-          "day": 8,
-          "totalSupply": 18087.994205900675,
+          "day": 17,
+          "totalSupply": 17976.715557630556,
           "burnedSupply": 0,
-          "timestamp": "2025-07-26T18:53:36.512Z"
+          "timestamp": "2025-07-27T14:53:26.297Z"
         },
         "lastCreateBlock": 22969998,
         "lastFullRebuild": "2025-07-21T22:29:04.583Z",
@@ -41132,7 +41132,9 @@
         "fixedCount": 1,
         "totalTitanX": 999000000,
         "totalETH": 0
-      }
+      },
+      "lastSupplyUpdate": "2025-07-27T14:21:57.537Z",
+      "manualSupplyUpdate": true
     },
     "currentProtocolDay": 17,
     "totals": {
@@ -43459,10 +43461,10 @@
         "penaltiesInPool": 0
       }
     ],
-    "totalSupply": 18087.994205900675,
+    "totalSupply": 17976.715557630556,
     "totalTitanXBurnt": "157089380728850923636676922284",
     "titanxTotalSupply": "105723861557750726017054969810285",
-    "lastLPUpdate": 23009590,
-    "lastBlock": 23009590
+    "lastLPUpdate": 23011042,
+    "lastBlock": 23011080
   }
 }
