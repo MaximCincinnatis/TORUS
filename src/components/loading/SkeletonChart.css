@@ -208,7 +208,7 @@
   }
 }
 
-/* World-Class Line Chart Skeleton */
+/* Institutional-Grade Line Chart Skeleton */
 .skeleton-line-container {
   position: absolute;
   inset: 0;
@@ -219,255 +219,176 @@
   position: absolute;
   width: 100%;
   height: 100%;
-  filter: drop-shadow(0 2px 8px rgba(139, 92, 246, 0.1));
 }
 
-/* Area fill animation */
-.skeleton-area-path {
-  opacity: 0.4;
-  animation: skeleton-area-breathe 4s ease-in-out infinite;
+/* Subtle area fill - institutional restraint */
+.skeleton-area-institutional {
+  opacity: 0.6;
+  animation: skeleton-area-institutional 8s ease-in-out infinite;
 }
 
-@keyframes skeleton-area-breathe {
+@keyframes skeleton-area-institutional {
   0%, 100% {
-    opacity: 0.2;
-    transform: scaleY(0.95);
+    opacity: 0.4;
   }
   50% {
-    opacity: 0.6;
-    transform: scaleY(1.05);
+    opacity: 0.7;
   }
 }
 
-/* Primary line animation - sophisticated drawing effect */
-.skeleton-line-primary {
-  stroke-dasharray: 300;
-  stroke-dashoffset: 300;
-  animation: skeleton-line-draw-smooth 6s ease-in-out infinite;
-  filter: drop-shadow(0 0 3px rgba(139, 92, 246, 0.3));
-}
-
-@keyframes skeleton-line-draw-smooth {
-  0% {
-    stroke-dashoffset: 300;
-    opacity: 0.3;
-  }
-  30% {
-    stroke-dashoffset: 0;
-    opacity: 0.9;
-  }
-  70% {
-    stroke-dashoffset: 0;
-    opacity: 0.9;
-  }
-  100% {
-    stroke-dashoffset: -300;
-    opacity: 0.3;
-  }
-}
-
-/* Secondary line animation - offset timing */
-.skeleton-line-secondary {
+/* Clean, professional line animation */
+.skeleton-line-institutional {
   stroke-dasharray: 200;
   stroke-dashoffset: 200;
-  animation: skeleton-line-draw-secondary 5s ease-in-out infinite 1s;
-  filter: drop-shadow(0 0 2px rgba(236, 72, 153, 0.2));
+  animation: skeleton-line-institutional 12s linear infinite;
+  opacity: 0.7;
 }
 
-@keyframes skeleton-line-draw-secondary {
+@keyframes skeleton-line-institutional {
   0% {
     stroke-dashoffset: 200;
-    opacity: 0.2;
+    opacity: 0.4;
   }
-  40% {
+  25% {
     stroke-dashoffset: 0;
-    opacity: 0.7;
+    opacity: 0.8;
   }
-  60% {
+  75% {
     stroke-dashoffset: 0;
-    opacity: 0.7;
+    opacity: 0.8;
   }
   100% {
     stroke-dashoffset: -200;
-    opacity: 0.2;
-  }
-}
-
-/* Enhanced data points */
-.skeleton-data-point {
-  position: absolute;
-  border-radius: 50%;
-  transform: translate(-50%, -50%);
-}
-
-.skeleton-point-primary {
-  width: 10px;
-  height: 10px;
-  background: radial-gradient(circle, rgba(139, 92, 246, 0.8) 0%, rgba(139, 92, 246, 0.3) 70%);
-  border: 2px solid rgba(139, 92, 246, 0.6);
-  box-shadow: 0 0 8px rgba(139, 92, 246, 0.4), inset 0 0 3px rgba(255, 255, 255, 0.3);
-  animation: skeleton-point-primary-pulse 2.5s ease-in-out infinite;
-}
-
-.skeleton-point-secondary {
-  width: 7px;
-  height: 7px;
-  background: radial-gradient(circle, rgba(236, 72, 153, 0.7) 0%, rgba(236, 72, 153, 0.2) 70%);
-  border: 1.5px solid rgba(236, 72, 153, 0.5);
-  box-shadow: 0 0 6px rgba(236, 72, 153, 0.3);
-  animation: skeleton-point-secondary-pulse 2s ease-in-out infinite;
-}
-
-@keyframes skeleton-point-primary-pulse {
-  0%, 100% {
-    transform: translate(-50%, -50%) scale(0.8);
     opacity: 0.4;
-    box-shadow: 0 0 8px rgba(139, 92, 246, 0.2), inset 0 0 3px rgba(255, 255, 255, 0.1);
-  }
-  50% {
-    transform: translate(-50%, -50%) scale(1.3);
-    opacity: 1;
-    box-shadow: 0 0 16px rgba(139, 92, 246, 0.6), inset 0 0 6px rgba(255, 255, 255, 0.4);
   }
 }
 
-@keyframes skeleton-point-secondary-pulse {
+/* Minimal data points - institutional precision */
+.skeleton-point-minimal {
+  opacity: 0.5;
+  animation: skeleton-point-institutional 4s ease-in-out infinite;
+}
+
+@keyframes skeleton-point-institutional {
   0%, 100% {
-    transform: translate(-50%, -50%) scale(0.7);
     opacity: 0.3;
   }
   50% {
-    transform: translate(-50%, -50%) scale(1.1);
+    opacity: 0.7;
+  }
+}
+
+/* Professional shimmer overlay */
+.skeleton-shimmer-overlay {
+  animation: skeleton-shimmer-institutional 3s ease-in-out infinite;
+}
+
+@keyframes skeleton-shimmer-institutional {
+  0% {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  50% {
+    opacity: 0.6;
+  }
+  100% {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+}
+
+/* Clean value display - top right */
+.skeleton-value-display {
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  align-items: flex-end;
+}
+
+.skeleton-value-primary {
+  width: 72px;
+  height: 14px;
+  background: linear-gradient(90deg, 
+    rgba(71, 85, 105, 0.2) 0%, 
+    rgba(71, 85, 105, 0.4) 50%, 
+    rgba(71, 85, 105, 0.2) 100%
+  );
+  border-radius: 2px;
+  animation: skeleton-value-fade 6s ease-in-out infinite;
+}
+
+.skeleton-value-change {
+  width: 48px;
+  height: 10px;
+  background: linear-gradient(90deg, 
+    rgba(100, 116, 139, 0.15) 0%, 
+    rgba(100, 116, 139, 0.3) 50%, 
+    rgba(100, 116, 139, 0.15) 100%
+  );
+  border-radius: 2px;
+  animation: skeleton-value-fade 6s ease-in-out infinite 0.5s;
+}
+
+@keyframes skeleton-value-fade {
+  0%, 100% {
+    opacity: 0.3;
+  }
+  50% {
     opacity: 0.8;
   }
 }
 
-/* Trend indicators */
-.skeleton-trend-indicators {
-  position: absolute;
-  top: 10%;
-  right: 8%;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.skeleton-trend-up {
-  width: 24px;
-  height: 24px;
-  background: linear-gradient(135deg, rgba(34, 197, 94, 0.2) 0%, rgba(34, 197, 94, 0.4) 100%);
-  border-radius: 6px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  animation: skeleton-trend-glow 3s ease-in-out infinite;
-}
-
-.skeleton-trend-arrow {
-  width: 0;
-  height: 0;
-  border-left: 4px solid transparent;
-  border-right: 4px solid transparent;
-  border-bottom: 8px solid rgba(34, 197, 94, 0.7);
-}
-
-.skeleton-trend-steady {
-  width: 24px;
-  height: 24px;
-  background: linear-gradient(135deg, rgba(156, 163, 175, 0.2) 0%, rgba(156, 163, 175, 0.4) 100%);
-  border-radius: 6px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  animation: skeleton-trend-glow 3s ease-in-out infinite 1.5s;
-}
-
-.skeleton-trend-line {
-  width: 12px;
-  height: 2px;
-  background: rgba(156, 163, 175, 0.7);
-  border-radius: 1px;
-}
-
-@keyframes skeleton-trend-glow {
-  0%, 100% {
-    opacity: 0.4;
-    transform: scale(0.9);
-  }
-  50% {
-    opacity: 0.9;
-    transform: scale(1.05);
-  }
-}
-
-/* Simulated tooltips */
-.skeleton-tooltip {
-  position: absolute;
-  width: 60px;
-  height: 32px;
-  background: linear-gradient(135deg, 
-    rgba(30, 30, 40, 0.9) 0%, 
-    rgba(50, 50, 60, 0.9) 100%
-  );
-  border-radius: 8px;
-  border: 1px solid rgba(139, 92, 246, 0.3);
-  opacity: 0;
-  animation: skeleton-tooltip-appear 4s ease-in-out infinite;
-  backdrop-filter: blur(10px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
-}
-
-.skeleton-tooltip::before {
+/* Sophisticated loading state for institutional clients */
+.skeleton-line-container::before {
   content: '';
   position: absolute;
-  bottom: -4px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 0;
-  height: 0;
-  border-left: 4px solid transparent;
-  border-right: 4px solid transparent;
-  border-top: 4px solid rgba(50, 50, 60, 0.9);
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: linear-gradient(90deg, 
+    transparent 0%, 
+    rgba(148, 163, 184, 0.3) 50%, 
+    transparent 100%
+  );
+  animation: skeleton-progress-institutional 8s ease-in-out infinite;
 }
 
-.skeleton-tooltip-1 {
-  top: 25%;
-  left: 35%;
-  animation-delay: 2s;
-}
-
-.skeleton-tooltip-2 {
-  top: 45%;
-  left: 70%;
-  animation-delay: 4s;
-}
-
-@keyframes skeleton-tooltip-appear {
-  0%, 70% {
-    opacity: 0;
-    transform: translateY(8px) scale(0.8);
+@keyframes skeleton-progress-institutional {
+  0% {
+    transform: scaleX(0);
+    transform-origin: left;
   }
-  80%, 90% {
-    opacity: 0.9;
-    transform: translateY(0) scale(1);
+  50% {
+    transform: scaleX(1);
+    transform-origin: left;
+  }
+  51% {
+    transform: scaleX(1);
+    transform-origin: right;
   }
   100% {
-    opacity: 0;
-    transform: translateY(-4px) scale(0.9);
+    transform: scaleX(0);
+    transform-origin: right;
   }
 }
 
-/* Enhanced hover effects for the entire container */
-.skeleton-line-container:hover .skeleton-line-primary {
-  animation-duration: 3s;
+/* Minimal hover interaction - institutional professionalism */
+.skeleton-line-container:hover .skeleton-line-institutional {
+  animation-duration: 6s;
+  opacity: 0.9;
 }
 
-.skeleton-line-container:hover .skeleton-point-primary {
-  animation-duration: 1.5s;
-}
-
-.skeleton-line-container:hover .skeleton-area-path {
+.skeleton-line-container:hover .skeleton-area-institutional {
   opacity: 0.8;
+}
+
+.skeleton-line-container:hover .skeleton-value-primary,
+.skeleton-line-container:hover .skeleton-value-change {
+  animation-duration: 3s;
 }
 
 /* Area Chart Skeleton */
