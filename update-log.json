@@ -1,23 +1,9 @@
 {
-  "startTime": 1753671600599,
+  "startTime": 1753673400720,
   "rpcCalls": 0,
-  "lastBlockNumber": 23014818,
-  "lastUpdateTime": "2025-07-28T03:00:15.239Z",
+  "lastBlockNumber": 23014968,
+  "lastUpdateTime": "2025-07-28T03:30:20.917Z",
   "updateHistory": [
-    {
-      "timestamp": "2025-07-26T04:30:02.295Z",
-      "rpcCalls": 0,
-      "dataChanged": true,
-      "errors": [],
-      "stats": {
-        "lpPositions": {
-          "newPositions": 0,
-          "updatedPositions": 3,
-          "closedPositions": 0,
-          "errors": []
-        }
-      }
-    },
     {
       "timestamp": "2025-07-26T05:00:02.271Z",
       "rpcCalls": 0,
@@ -1373,6 +1359,21 @@
     },
     {
       "timestamp": "2025-07-28T03:00:00.600Z",
+      "rpcCalls": 0,
+      "dataChanged": true,
+      "errors": [],
+      "stats": {
+        "rpcCalls": null,
+        "lpPositions": {
+          "newPositions": 0,
+          "updatedPositions": 3,
+          "closedPositions": 0,
+          "errors": []
+        }
+      }
+    },
+    {
+      "timestamp": "2025-07-28T03:30:00.721Z",
       "rpcCalls": 0,
       "dataChanged": true,
       "errors": [],
