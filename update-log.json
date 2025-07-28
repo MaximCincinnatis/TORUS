@@ -1,37 +1,9 @@
 {
-  "startTime": 1753731301839,
+  "startTime": 1753731600858,
   "rpcCalls": 0,
-  "lastBlockNumber": 23019760,
-  "lastUpdateTime": "2025-07-28T19:35:03.119Z",
+  "lastBlockNumber": 23019784,
+  "lastUpdateTime": "2025-07-28T19:40:02.052Z",
   "updateHistory": [
-    {
-      "timestamp": "2025-07-26T23:00:03.027Z",
-      "rpcCalls": 0,
-      "dataChanged": true,
-      "errors": [],
-      "stats": {
-        "lpPositions": {
-          "newPositions": 0,
-          "updatedPositions": 3,
-          "closedPositions": 0,
-          "errors": []
-        }
-      }
-    },
-    {
-      "timestamp": "2025-07-26T23:30:01.714Z",
-      "rpcCalls": 0,
-      "dataChanged": true,
-      "errors": [],
-      "stats": {
-        "lpPositions": {
-          "newPositions": 0,
-          "updatedPositions": 3,
-          "closedPositions": 0,
-          "errors": []
-        }
-      }
-    },
     {
       "timestamp": "2025-07-27T00:00:02.444Z",
       "rpcCalls": 0,
@@ -1395,6 +1367,25 @@
     },
     {
       "timestamp": "2025-07-28T19:35:01.840Z",
+      "rpcCalls": 0,
+      "dataChanged": false,
+      "errors": [],
+      "stats": {
+        "rpcCalls": null
+      }
+    },
+    {
+      "timestamp": "2025-07-28T19:37:44.636Z",
+      "block": 23019772,
+      "rpcCalls": 15,
+      "dataChanged": true,
+      "errors": [
+        "Buy & Process update: Command failed: node scripts/update-buy-process-data.js",
+        "Future supply projection update: convertToPositions is not defined"
+      ]
+    },
+    {
+      "timestamp": "2025-07-28T19:40:00.858Z",
       "rpcCalls": 0,
       "dataChanged": false,
       "errors": [],
