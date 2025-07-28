@@ -12,7 +12,7 @@
 
 /**
  * STATUS: ACTIVE - Primary production script
- * RUNS: Every 30 minutes via cron job (run-auto-update.sh)
+ * RUNS: Every 5 minutes via cron job (run-auto-update.sh)
  * PURPOSE: Orchestrates data updates and Git deployment
  * DEPENDENCIES: smart-update-fixed.js, Git, Vercel
  * CRITICAL: This is the main entry point for automated updates

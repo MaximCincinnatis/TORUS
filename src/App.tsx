@@ -1597,12 +1597,13 @@ function App() {
   }
   
   // Stake metrics
-  const totalStaked = stakeData.reduce((sum, stake) => sum + parseFloat(stake.principal) / 1e18, 0);
-  const activeStakes = stakeData.filter(stake => {
+  const activeStakesData = stakeData.filter(stake => {
     const maturityDate = stake.maturityDate instanceof Date ? stake.maturityDate : new Date(stake.maturityDate);
     return maturityDate > new Date();
-  }).length;
-  const avgStakeSize = stakeData.length > 0 ? totalStaked / stakeData.length : 0;
+  });
+  const totalStaked = activeStakesData.reduce((sum, stake) => sum + parseFloat(stake.principal) / 1e18, 0);
+  const activeStakes = activeStakesData.length;
+  const avgStakeSize = activeStakesData.length > 0 ? totalStaked / activeStakesData.length : 0;
   
   // Debug: Check if stakes are beyond 88 days
   if (!loading && stakeData.length > 0) {
@@ -1660,12 +1661,13 @@ function App() {
   }
   
   // Create metrics
-  const totalCreated = createData.reduce((sum, create) => sum + parseFloat(create.torusAmount) / 1e18, 0);
-  const totalCreates = createData.length;
-  const activeCreates = createData.filter(create => {
+  const activeCreatesData = createData.filter(create => {
     const maturityDate = create.maturityDate instanceof Date ? create.maturityDate : new Date(create.maturityDate);
     return maturityDate > new Date();
-  }).length;
+  });
+  const totalCreated = activeCreatesData.reduce((sum, create) => sum + parseFloat(create.torusAmount) / 1e18, 0);
+  const totalCreates = createData.length;
+  const activeCreates = activeCreatesData.length;
   
   // Calculate average TitanX per create
   const createsWithTitanX = createData.filter(create => create.titanAmount && create.titanAmount !== '0');
