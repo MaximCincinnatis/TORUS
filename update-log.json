@@ -1,19 +1,9 @@
 {
-  "startTime": 1753761001448,
+  "startTime": 1753761301437,
   "rpcCalls": 0,
-  "lastBlockNumber": 23022215,
-  "lastUpdateTime": "2025-07-29T03:50:02.617Z",
+  "lastBlockNumber": 23022239,
+  "lastUpdateTime": "2025-07-29T03:55:03.615Z",
   "updateHistory": [
-    {
-      "timestamp": "2025-07-28T19:47:10.892Z",
-      "block": 23019818,
-      "rpcCalls": 7,
-      "dataChanged": true,
-      "errors": [
-        "Buy & Process update: Command failed: node scripts/update-buy-process-data.js",
-        "Future supply projection update: convertToPositions is not defined"
-      ]
-    },
     {
       "timestamp": "2025-07-28T19:50:01.525Z",
       "rpcCalls": 0,
@@ -906,6 +896,15 @@
       "timestamp": "2025-07-29T03:50:01.448Z",
       "rpcCalls": 0,
       "dataChanged": false,
+      "errors": [],
+      "stats": {
+        "rpcCalls": null
+      }
+    },
+    {
+      "timestamp": "2025-07-29T03:55:01.438Z",
+      "rpcCalls": 0,
+      "dataChanged": true,
       "errors": [],
       "stats": {
         "rpcCalls": null
