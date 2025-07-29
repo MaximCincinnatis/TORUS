@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2025-07-29T20:25:29.525Z",
+  "lastUpdated": "2025-07-29T20:30:31.090Z",
   "currentDay": 20,
   "totals": {
     "torusBurnt": "2684.372213639237227503",
@@ -7,7 +7,7 @@
     "ethBurn": "32.128989534422431568",
     "titanXUsedForBurns": "77824718279.28379203977288677",
     "ethUsedForBurns": "1.711477687064325866",
-    "ethUsedForBuilds": "0.526587049084270786"
+    "ethUsedForBuilds": "0.294458474645329982"
   },
   "dailyData": [
     {
@@ -52,14 +52,21 @@
       "fractalCount": 0,
       "torusBurned": 28.286192477422833,
       "titanXUsed": 804370344.4476559,
-      "ethUsed": 0.032523,
+      "ethUsed": 0.004167912816987546,
       "titanXUsedForBurns": 804370344.4476559,
       "ethUsedForBurns": 0.004167912816987267,
       "titanXUsedForBuilds": 0,
-      "ethUsedForBuilds": 0.0283554982,
+      "ethUsedForBuilds": 2.78e-16,
       "torusPurchased": 2.8944029168462135,
       "fractalTitanX": 0,
-      "fractalETH": 0
+      "fractalETH": 0,
+      "ethBuildTransactions": [
+        {
+          "hash": "0x41206fc74d298396b30790c0573cd1bc4d761ba37f3e586afe9af31354c0d534",
+          "eth": 2.78e-16,
+          "block": 22909941
+        }
+      ]
     },
     {
       "date": "2025-07-14",
@@ -154,14 +161,21 @@
       "fractalCount": 0,
       "torusBurned": 129.18086006740808,
       "titanXUsed": 3764001540.8606477,
-      "ethUsed": 0.092549,
+      "ethUsed": 0.06419379493114834,
       "titanXUsedForBurns": 3764001540.8606477,
       "ethUsedForBurns": 0.06419379493114831,
       "titanXUsedForBuilds": 1293390043.5109575,
-      "ethUsedForBuilds": 0.0283554982,
+      "ethUsedForBuilds": 3e-17,
       "torusPurchased": 21.938778186599084,
       "fractalTitanX": 0,
-      "fractalETH": 0
+      "fractalETH": 0,
+      "ethBuildTransactions": [
+        {
+          "hash": "0x83f8125ce50b08af2ab161b0ff1aeda8ecf98e5e74316a4c1c11e9f566e46e9b",
+          "eth": 3e-17,
+          "block": 22950063
+        }
+      ]
     },
     {
       "date": "2025-07-20",
@@ -171,14 +185,21 @@
       "fractalCount": 0,
       "torusBurned": 188.67383226964714,
       "titanXUsed": 5892684343.1249485,
-      "ethUsed": 0.154968,
+      "ethUsed": 0.12661270327143181,
       "titanXUsedForBurns": 5892684343.1249485,
       "ethUsedForBurns": 0.12661270327143154,
       "titanXUsedForBuilds": 2443658239.9154735,
-      "ethUsedForBuilds": 0.0283554982,
+      "ethUsedForBuilds": 2.72e-16,
       "torusPurchased": 31.544240739161943,
       "fractalTitanX": 0,
-      "fractalETH": 0
+      "fractalETH": 0,
+      "ethBuildTransactions": [
+        {
+          "hash": "0x98f1552ad6c2c783095a8e13fd90eb5073b89b2b2a449edf59b6efaf07c296cd",
+          "eth": 2.72e-16,
+          "block": 22957087
+        }
+      ]
     },
     {
       "date": "2025-07-21",
@@ -239,14 +260,21 @@
       "fractalCount": 0,
       "torusBurned": 305.9106578681179,
       "titanXUsed": 13461477151.961416,
-      "ethUsed": 0.201037,
+      "ethUsed": 0.17914536926617225,
       "titanXUsedForBurns": 10113668499.483597,
       "ethUsedForBurns": 0.17914536926617036,
       "titanXUsedForBuilds": 4609595059.655539,
-      "ethUsedForBuilds": 0.021891226586557597,
+      "ethUsedForBuilds": 1.883e-15,
       "torusPurchased": 55.580832859285806,
       "fractalTitanX": 0,
-      "fractalETH": 0
+      "fractalETH": 0,
+      "ethBuildTransactions": [
+        {
+          "hash": "0x511cd7c8e6e983102664fcd3171f6079d40186ced7ac7ef7f9ba3fb11ecdeeb5",
+          "eth": 1.883e-15,
+          "block": 22987175
+        }
+      ]
     },
     {
       "date": "2025-07-25",
@@ -256,14 +284,21 @@
       "fractalCount": 0,
       "torusBurned": 213.90196935094295,
       "titanXUsed": 10491480051.237911,
-      "ethUsed": 0.124118,
+      "ethUsed": 0.08537560203663788,
       "titanXUsedForBurns": 6557874134.170251,
       "ethUsedForBurns": 0.08537560203663609,
       "titanXUsedForBuilds": 4457358711.112198,
-      "ethUsedForBuilds": 0.038742142795152076,
+      "ethUsedForBuilds": 1.796e-15,
       "torusPurchased": 61.0315163361945,
       "fractalTitanX": 0,
-      "fractalETH": 0
+      "fractalETH": 0,
+      "ethBuildTransactions": [
+        {
+          "hash": "0x5dce0b1583c57b9db130f3ac0c6ea8bcbd04adcdcdd739018addf0111b8ba070",
+          "eth": 1.796e-15,
+          "block": 22994403
+        }
+      ]
     },
     {
       "date": "2025-07-26",
@@ -273,14 +308,31 @@
       "fractalCount": 0,
       "torusBurned": 241.9802921494784,
       "titanXUsed": 13247920407.791101,
-      "ethUsed": 0.155043,
+      "ethUsed": 0.10314819213740876,
       "titanXUsedForBurns": 8280614736.501325,
       "ethUsedForBurns": 0.1031481921374035,
       "titanXUsedForBuilds": 5628693791.773055,
-      "ethUsedForBuilds": 0.051894435698754904,
+      "ethUsedForBuilds": 5.256e-15,
       "torusPurchased": 68.19348235633575,
       "fractalTitanX": 0,
-      "fractalETH": 0
+      "fractalETH": 0,
+      "ethBuildTransactions": [
+        {
+          "hash": "0x2cf35e56ec2e9fb202e1922368e6e2ab101fd2650c4bd8d4d5298d6e5e935544",
+          "eth": 1.726e-15,
+          "block": 22998402
+        },
+        {
+          "hash": "0x015f089f4b8be23e4b99a6c140ca9deb2250f14ba6394f7b776463a7dc06a6c3",
+          "eth": 1.861e-15,
+          "block": 23002267
+        },
+        {
+          "hash": "0x9774e733b3ebf47ab1de270429b4bb0ba1b185a995b83a48130ac819803d3a2a",
+          "eth": 1.669e-15,
+          "block": 23002944
+        }
+      ]
     },
     {
       "date": "2025-07-27",
@@ -290,14 +342,21 @@
       "fractalCount": 0,
       "torusBurned": 242.56,
       "titanXUsed": 8369287195.03,
-      "ethUsed": 0.16892,
+      "ethUsed": 0.13438618878485717,
       "titanXUsedForBurns": 8369287195.03,
       "ethUsedForBurns": 0.13438618878485536,
       "titanXUsedForBuilds": 2832870656.7757645,
-      "ethUsedForBuilds": 0.034534274758487506,
+      "ethUsedForBuilds": 1.792e-15,
       "torusPurchased": 53.534275589435,
       "fractalTitanX": 0,
-      "fractalETH": 0
+      "fractalETH": 0,
+      "ethBuildTransactions": [
+        {
+          "hash": "0xf782d5ee950fd2b17e57bf332a82a4b865a19dcedfc04d3b7b142df0136c5f68",
+          "eth": 1.792e-15,
+          "block": 23005900
+        }
+      ]
     },
     {
       "date": "2025-07-28",
@@ -340,6 +399,6 @@
     "fractal": 0
   },
   "metadata": {
-    "lastBlock": 23027160
+    "lastBlock": 23027185
   }
 }
