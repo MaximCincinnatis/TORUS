@@ -1,9 +1,9 @@
 {
-  "lastUpdated": "2025-07-29T19:00:02.029Z",
+  "lastUpdated": "2025-07-29T19:04:53.167Z",
   "version": "1.0.0",
   "poolData": {
-    "sqrtPriceX96": "545852230425056049178525982514781",
-    "currentTick": 176764,
+    "sqrtPriceX96": "537953487636794067453379190582805",
+    "currentTick": 176472,
     "token0": "0xB47f575807fC5466285e1277Ef8aCFBB5c6686E8",
     "token1": "0xF19308F923582A6f7c465e5CE7a9Dc1BEC6665B1",
     "liquidity": "70539748011339879786162512",
@@ -477,9 +477,9 @@
   },
   "tokenPrices": {
     "torus": {
-      "usd": 474.6691546837801,
+      "usd": 461.0311686190366,
       "eth": 0.13757292090172435,
-      "lastUpdated": "2025-07-29T18:03:35.423Z"
+      "lastUpdated": "2025-07-29T19:04:24.729Z"
     },
     "titanx": {
       "usd": 0.00001,
@@ -44955,6 +44955,60 @@
         "costTitanX": "3900000000000000000000000000",
         "rawCostETH": "0",
         "rawCostTitanX": "3900000000000000000000000000"
+      },
+      {
+        "user": "0xfc53e3882af1791f5a1f25b2aa21fc4147a0dcf2",
+        "owner": "0xfc53e3882af1791f5a1f25b2aa21fc4147a0dcf2",
+        "createId": "7",
+        "torusAmount": "12311180366396342999",
+        "principal": "12311180366396342999",
+        "timestamp": 1753812803,
+        "endTime": 1761416003,
+        "blockNumber": 23026504,
+        "id": "7",
+        "createDays": 88,
+        "stakingDays": 88,
+        "maturityDate": "2025-10-25T18:13:23.000Z",
+        "startDate": "2025-07-29T18:13:23.000Z",
+        "protocolDay": 20,
+        "titanAmount": "0",
+        "titanXAmount": "0",
+        "ethAmount": "5927296192659400",
+        "shares": "0",
+        "power": "0",
+        "claimedCreate": false,
+        "claimedStake": false,
+        "costETH": "5927296192659400",
+        "costTitanX": "0",
+        "rawCostETH": "5927296192659400",
+        "rawCostTitanX": "0"
+      },
+      {
+        "user": "0xfc53e3882af1791f5a1f25b2aa21fc4147a0dcf2",
+        "owner": "0xfc53e3882af1791f5a1f25b2aa21fc4147a0dcf2",
+        "createId": "8",
+        "torusAmount": "15265863654331465319",
+        "principal": "15265863654331465319",
+        "timestamp": 1753813691,
+        "endTime": 1761416891,
+        "blockNumber": 23026578,
+        "id": "8",
+        "createDays": 88,
+        "stakingDays": 88,
+        "maturityDate": "2025-10-25T18:28:11.000Z",
+        "startDate": "2025-07-29T18:28:11.000Z",
+        "protocolDay": 20,
+        "titanAmount": "0",
+        "titanXAmount": "0",
+        "ethAmount": "7349847278897657",
+        "shares": "0",
+        "power": "0",
+        "claimedCreate": false,
+        "claimedStake": false,
+        "costETH": "7349847278897657",
+        "costTitanX": "0",
+        "rawCostETH": "7349847278897657",
+        "rawCostTitanX": "0"
       }
     ],
     "rewardPoolData": [
@@ -45872,21 +45926,21 @@
     "burnedSupply": 0,
     "lastUpdated": "2025-07-16T19:25:33.217Z",
     "metadata": {
-      "currentBlock": 23026453,
+      "currentBlock": 23026758,
       "lastUpdate": "2025-07-16T19:14:31.015Z",
       "stakesRefreshed": "2025-07-16T18:54:18.007Z",
       "dailySupplySnapshot": {
         "day": 20,
         "totalSupply": 17667.277816197544,
         "burnedSupply": 0,
-        "timestamp": "2025-07-29T19:00:01.625Z"
+        "timestamp": "2025-07-29T19:04:20.180Z"
       },
       "lastCreateBlock": 22969998,
       "lastFullRebuild": "2025-07-21T22:29:04.583Z",
       "totalCreates": 1258,
       "rebuildBlock": 22970545
     },
-    "lastBlock": 23026453
+    "lastBlock": 23026758
   },
   "contractData": {
     "torusToken": {
@@ -45945,8 +45999,8 @@
     "torusAddress": "0xb47f575807fc5466285e1277ef8acfbb5c6686e8",
     "titanxAddress": "0xf19308f923582a6f7c465e5ce7a9dc1bec6665b1",
     "poolData": {
-      "sqrtPriceX96": "545852230425056049178525982514781",
-      "currentTick": 176764,
+      "sqrtPriceX96": "537953487636794067453379190582805",
+      "currentTick": 176472,
       "liquidity": "65835830261737867710370501",
       "fee": 10000,
       "token0": "0xB47f575807fC5466285e1277Ef8aCFBB5c6686E8",
