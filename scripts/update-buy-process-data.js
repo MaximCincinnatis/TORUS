@@ -341,13 +341,37 @@ async function updateBuyProcessData() {
         const functionSelector = tx.data.slice(0, 10);
         
         if (functionSelector === '0x53ad9b96') {
-          // ETH build - check transaction value
+          // ETH build - check transaction value first
           if (tx.value && !tx.value.isZero()) {
             const ethAmount = parseFloat(ethers.utils.formatEther(tx.value));
             newDailyData[dateKey].ethUsed += ethAmount;
             newDailyData[dateKey].ethUsedForBuilds += ethAmount;
           } else {
-            AlertSystem.logAlert(`ETH build tx ${event.transactionHash} has zero value`, 'WARNING');
+            // Check for WETH deposits in transaction logs
+            try {
+              const receipt = await retryRPC(() => provider.getTransactionReceipt(event.transactionHash));
+              const WETH_ADDRESS = '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2';
+              const WETH_DEPOSIT_TOPIC = '0xe1fffcc4923d04b559f4d29a8bfc6cda04eb5b0d3c460751c2402c5c5cc9109c'; // Deposit(address,uint256)
+              
+              let ethAmount = 0;
+              for (const log of receipt.logs) {
+                if (log.address.toLowerCase() === WETH_ADDRESS.toLowerCase() && 
+                    log.topics[0] === WETH_DEPOSIT_TOPIC) {
+                  const depositAmount = ethers.BigNumber.from(log.data);
+                  ethAmount = parseFloat(ethers.utils.formatEther(depositAmount));
+                  break;
+                }
+              }
+              
+              if (ethAmount > 0) {
+                newDailyData[dateKey].ethUsed += ethAmount;
+                newDailyData[dateKey].ethUsedForBuilds += ethAmount;
+              } else {
+                AlertSystem.logAlert(`ETH build tx ${event.transactionHash} has no ETH value or WETH deposit`, 'WARNING');
+              }
+            } catch (e) {
+              AlertSystem.logAlert(`Failed to check WETH for tx ${event.transactionHash}: ${e.message}`, 'WARNING');
+            }
           }
         } else {
           // TitanX build
