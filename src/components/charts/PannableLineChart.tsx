@@ -47,6 +47,8 @@ interface PannableLineChartProps {
   customTooltipCallback?: (context: any, customData: any) => string[];
   unifiedTooltip?: boolean;
   windowSize?: number; // How many data points to show at once
+  initialStartDay?: number;
+  chartType?: 'historical' | 'future'; // New prop to determine navigation behavior
 }
 
 const PannableLineChart: React.FC<PannableLineChartProps> = ({
@@ -63,6 +65,8 @@ const PannableLineChart: React.FC<PannableLineChartProps> = ({
   customTooltipCallback,
   unifiedTooltip = false,
   windowSize = 7, // Default to 7 days
+  initialStartDay,
+  chartType = 'future', // Default to future behavior for backward compatibility
 }) => {
   const chartRef = useRef<ChartJSOrUndefined<'line'>>(null);
   const [startIndex, setStartIndex] = useState(0);
@@ -74,9 +78,42 @@ const PannableLineChart: React.FC<PannableLineChartProps> = ({
   // Update currentWindowSize when windowSize prop changes
   useEffect(() => {
     setCurrentWindowSize(windowSize);
-    // Reset to start when window size changes
-    setStartIndex(0);
-  }, [windowSize]);
+    
+    // Handle "ALL" case - auto-adjust to show only data with values
+    if (windowSize === 9999) {
+      // Find the last index with non-zero data
+      let lastNonZeroIndex = 0;
+      for (let i = datasets[0].data.length - 1; i >= 0; i--) {
+        if (datasets.some(dataset => dataset.data[i] > 0)) {
+          lastNonZeroIndex = i;
+          break;
+        }
+      }
+      // Set window size to show all data with values (add 1 for 0-based index)
+      setCurrentWindowSize(lastNonZeroIndex + 1);
+      setStartIndex(0);
+    } else if (initialStartDay !== undefined && windowSize !== 9999) {
+      // Find the index of the initial start day
+      const dayIndex = labels.findIndex(label => {
+        return label.includes(`Day ${initialStartDay}`);
+      });
+      
+      if (dayIndex >= 0) {
+        if (chartType === 'historical') {
+          // Historical charts: show windowSize days BEFORE current day (inclusive)
+          const startIdx = Math.max(0, dayIndex - windowSize + 1);
+          setStartIndex(startIdx);
+        } else {
+          // Future charts: show windowSize days FROM current day (inclusive)
+          setStartIndex(dayIndex);
+        }
+      } else {
+        setStartIndex(0);
+      }
+    } else {
+      setStartIndex(0);
+    }
+  }, [windowSize, initialStartDay, labels, chartType, datasets]);
 
   // Calculate visible data window
   const endIndex = Math.min(startIndex + currentWindowSize, labels.length);

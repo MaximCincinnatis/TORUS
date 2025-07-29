@@ -49,6 +49,7 @@ interface PannableBarChartProps {
   minBarHeight?: number;
   windowSize?: number;
   showDataLabels?: boolean;
+  showTotals?: boolean;
   multipleYAxes?: boolean;
   yAxis1Label?: string;
   yAxis2Label?: string;
@@ -57,6 +58,11 @@ interface PannableBarChartProps {
     color: string;
     logo?: string;
   }>;
+  tooltipCallbacks?: {
+    afterBody?: (context: any) => string | string[];
+  };
+  initialStartDay?: number;
+  chartType?: 'historical' | 'future'; // New prop to determine navigation behavior
 }
 
 const PannableBarChart: React.FC<PannableBarChartProps> = ({
@@ -74,10 +80,14 @@ const PannableBarChart: React.FC<PannableBarChartProps> = ({
   minBarHeight = 1,
   windowSize = 30,
   showDataLabels = false,
+  showTotals = false,
   multipleYAxes = false,
   yAxis1Label,
   yAxis2Label,
   customLegendItems,
+  tooltipCallbacks,
+  initialStartDay,
+  chartType = 'future', // Default to future behavior for backward compatibility
 }) => {
   const chartRef = useRef<ChartJSOrUndefined<'bar'>>(null);
   const [startIndex, setStartIndex] = useState(0);
@@ -90,13 +100,84 @@ const PannableBarChart: React.FC<PannableBarChartProps> = ({
   // Update currentWindowSize when windowSize prop changes
   useEffect(() => {
     setCurrentWindowSize(windowSize);
-    // Reset to start when window size changes
-    setStartIndex(0);
-  }, [windowSize]);
+    
+    // Handle "ALL" case - different behavior for historical vs future charts
+    if (windowSize === 9999) {
+      if (chartType === 'historical' && initialStartDay !== undefined) {
+        // Historical charts: show all data up to current protocol day
+        const currentDayIndex = labels.findIndex(label => {
+          const labelStr = Array.isArray(label) ? label.join(' ') : label;
+          return labelStr.includes(`Day ${initialStartDay}`);
+        });
+        
+        if (currentDayIndex >= 0) {
+          // Show from day 1 to current protocol day (inclusive)
+          setCurrentWindowSize(currentDayIndex + 1);
+        } else {
+          // Fallback to showing all available data
+          setCurrentWindowSize(labels.length);
+        }
+        setStartIndex(0);
+      } else {
+        // Future charts or no initialStartDay: show only data with values
+        let lastNonZeroIndex = 0;
+        for (let i = datasets[0].data.length - 1; i >= 0; i--) {
+          if (datasets.some(dataset => dataset.data[i] > 0)) {
+            lastNonZeroIndex = i;
+            break;
+          }
+        }
+        // Set window size to show all data with values (add 1 for 0-based index)
+        setCurrentWindowSize(lastNonZeroIndex + 1);
+        setStartIndex(0);
+      }
+    } else if (initialStartDay !== undefined && windowSize !== 9999) {
+      // Find the index of the initial start day
+      const dayIndex = labels.findIndex(label => {
+        const labelStr = Array.isArray(label) ? label.join(' ') : label;
+        return labelStr.includes(`Day ${initialStartDay}`);
+      });
+      
+      if (dayIndex >= 0) {
+        if (chartType === 'historical') {
+          // Historical charts: show windowSize days BEFORE current day (inclusive)
+          const startIdx = Math.max(0, dayIndex - windowSize + 1);
+          console.log('Historical chart setup:', {
+            initialStartDay,
+            dayIndex,
+            windowSize,
+            startIdx,
+            endIdx: startIdx + windowSize - 1,
+            showingDays: `${startIdx + 1} to ${startIdx + windowSize}`
+          });
+          setStartIndex(startIdx);
+        } else {
+          // Future charts: show windowSize days FROM current day (inclusive)
+          setStartIndex(dayIndex);
+        }
+      } else {
+        setStartIndex(0);
+      }
+    } else {
+      setStartIndex(0);
+    }
+  }, [windowSize, initialStartDay, labels, chartType, datasets]);
 
   // Calculate visible data window
   const endIndex = Math.min(startIndex + currentWindowSize, labels.length);
   const visibleLabels = labels.slice(startIndex, endIndex);
+  
+  // Debug for burn charts
+  if (chartType === 'historical' && currentWindowSize < 9999 && visibleLabels.length === 1) {
+    console.log('Historical chart showing only 1 bar:', {
+      startIndex,
+      endIndex,
+      currentWindowSize,
+      labelsLength: labels.length,
+      visibleLabelsLength: visibleLabels.length
+    });
+  }
+  
   const visibleDatasets = datasets.map(dataset => ({
     ...dataset,
     data: dataset.data.slice(startIndex, endIndex).map(val => 
@@ -206,7 +287,7 @@ const PannableBarChart: React.FC<PannableBarChartProps> = ({
     events: isDragging ? [] : ['mousemove', 'mouseout', 'click', 'touchstart', 'touchmove'],
     layout: {
       padding: {
-        top: showDataLabels ? 25 : 10,
+        top: showDataLabels || showTotals ? 25 : 10,
       }
     },
     plugins: {
@@ -228,6 +309,7 @@ const PannableBarChart: React.FC<PannableBarChartProps> = ({
             const formattedValue = formatTooltip ? formatTooltip(value, context.datasetIndex) : value.toLocaleString();
             return `${context.dataset.label}: ${formattedValue}`;
           },
+          ...(tooltipCallbacks || {})
         },
       },
     },
@@ -307,13 +389,17 @@ const PannableBarChart: React.FC<PannableBarChartProps> = ({
   };
 
   // Add datalabels configuration if needed
-  const options: ChartOptions<'bar'> = showDataLabels ? {
+  const options: ChartOptions<'bar'> = (showDataLabels || showTotals) ? {
     ...baseOptions,
     plugins: {
       ...baseOptions.plugins,
       datalabels: {
         display: function(context: any) {
           const value = context.dataset?.data?.[context.dataIndex];
+          if (showTotals) {
+            // Only show label on the last (top) dataset when showing totals
+            return context.datasetIndex === datasets.length - 1;
+          }
           return value !== null && value !== undefined && value > 0;
         },
         anchor: 'end' as const,
@@ -326,9 +412,23 @@ const PannableBarChart: React.FC<PannableBarChartProps> = ({
           size: 10,
           weight: 600,
         },
-        formatter: function(value: number) {
-          if (value !== null && value !== undefined && value > 0) {
-            return Math.round(value).toString();
+        formatter: function(value: number, context: any) {
+          if (showTotals && context.datasetIndex === datasets.length - 1) {
+            // Show total for the last (top) dataset
+            const dataIndex = context.dataIndex;
+            let total = 0;
+            for (let i = 0; i < datasets.length; i++) {
+              const datasetValue = context.chart.data.datasets[i].data[dataIndex];
+              if (datasetValue !== null && datasetValue !== undefined && !isNaN(datasetValue)) {
+                total += datasetValue;
+              }
+            }
+            return total > 0 ? Math.round(total).toLocaleString() : '';
+          } else if (showDataLabels && !showTotals) {
+            // Show individual values when only showDataLabels is true
+            if (value !== null && value !== undefined && value > 0) {
+              return Math.round(value).toString();
+            }
           }
           return '';
         },
@@ -470,7 +570,7 @@ const PannableBarChart: React.FC<PannableBarChartProps> = ({
         onWheel={handleWheel}
       >
         <div style={{ pointerEvents: isDragging ? 'none' : 'auto', height: '100%' }}>
-          <Bar ref={chartRef} options={options} data={data} plugins={showDataLabels ? [ChartDataLabels] : []} />
+          <Bar ref={chartRef} options={options} data={data} plugins={(showDataLabels || showTotals) ? [ChartDataLabels] : []} />
         </div>
       </div>
       {customLegendItems && <ChartLegend items={customLegendItems} />}

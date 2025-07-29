@@ -962,12 +962,13 @@ function App() {
         ? Math.max(...buyProcessData.dailyData.map((d: any) => d.protocolDay || 0))
         : 0);
     const currentDay = Math.max(buyProcessCurrentDay, currentProtocolDay, 17); // Ensure we show at least 17 days
-    const maxDay = currentDay; // Only show up to current day for this chart
+    // Extend maxDay to include future days for chart navigation
+    const maxDay = currentDay + 88; // Allow viewing up to 88 days in the future
     
     // Initialize data structure for each protocol day
     const dailyUsage: { [key: number]: { creates: number; stakes: number } } = {};
     
-    // Initialize all days from day 1 to current using protocol days
+    // Initialize all days from day 1 to maxDay using protocol days
     for (let day = 1; day <= maxDay; day++) {
       dailyUsage[day] = { creates: 0, stakes: 0 };
     }
@@ -1054,9 +1055,10 @@ function App() {
     
     // Get the current protocol day to limit the range (from contract via cached data)
     const currentDay = currentProtocolDay || 1; // Fallback to day 1 if not loaded
-    const maxDay = Math.min(currentDay, MAX_CHART_DAYS);
+    // Extend to allow future viewing for chart navigation
+    const maxDay = Math.min(currentDay + 88, MAX_CHART_DAYS);
     
-    // Initialize only the days from 1 to current protocol day
+    // Initialize days from 1 to maxDay
     for (let day = 1; day <= maxDay; day++) {
       stakedPerDay[day] = 0;
     }
@@ -1313,9 +1315,10 @@ function App() {
         ? Math.max(...buyProcessData.dailyData.map((d: any) => d.protocolDay || 0))
         : 0);
     const currentDay = Math.max(buyProcessCurrentDay, currentProtocolDay, 17); // Ensure we show at least 17 days
-    const maxDay = currentDay; // Only show up to current day for this chart
+    // Extend maxDay to include future days for chart navigation
+    const maxDay = currentDay + 88; // Allow viewing up to 88 days in the future
     
-    // Initialize all days from day 1 to current using protocol days
+    // Initialize all days from day 1 to maxDay using protocol days
     for (let day = 1; day <= maxDay; day++) {
       dailyData[day] = { creates: 0, stakes: 0 };
     }
@@ -2136,6 +2139,8 @@ function App() {
           yAxisLabel="Number of Positions"
           xAxisLabel="Contract Day"
           windowSize={dailyCreatesStakesDays}
+          initialStartDay={currentProtocolDay}
+          chartType="historical"
           showLegend={true}
           stacked={false}
           showDataLabels={true}
@@ -2223,6 +2228,7 @@ function App() {
             return value.toLocaleString('en-US', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
           }}
           windowSize={supplyProjectionDays}
+          initialStartDay={currentProtocolDay}
         />
         <div className="chart-note">
           <strong>Important:</strong> This projection shows how the total TORUS supply will grow as <em>currently staked positions</em> mature and release both principal and accrued rewards. Starting from current supply of {totalSupply.toLocaleString()} TORUS, the line tracks cumulative supply increases each day from existing stakes only. 
@@ -2290,6 +2296,8 @@ function App() {
           enableScaleToggle={true}
           formatTooltip={(value: number) => `${value.toLocaleString('en-US', { maximumFractionDigits: 2 })} TORUS`}
           windowSize={torusStakedDays}
+          initialStartDay={currentProtocolDay}
+          chartType="historical"
           showDataLabels={true}
         />
         <div className="chart-note">
@@ -2353,6 +2361,7 @@ function App() {
           enableScaleToggle={true}
           windowSize={stakeMaturityDays}
           showDataLabels={true}
+          initialStartDay={currentProtocolDay}
         />
         <div className="chart-note">
           Shows the number of stakes that ended (historical) or will end (future) on each day from contract launch through 88 days into the future. The numbers on top of each bar indicate the exact count of stakes maturing that day. Stakes can be created for 1-88 days, so the distribution shows when users chose their maturity dates.
@@ -2415,6 +2424,7 @@ function App() {
           enableScaleToggle={true}
           windowSize={torusReleasesDays}
           showDataLabels={true}
+          initialStartDay={currentProtocolDay}
         />
         <div className="chart-note">
           Shows the number of creates that ended (historical) or will end (future) on each day from contract launch through 88 days into the future. The numbers on top of each bar indicate the exact count of creates maturing that day. Creates can be made for 1-88 days, similar to stakes.
@@ -2424,7 +2434,7 @@ function App() {
 
       <ExpandableChartSection
         id="torus-rewards"
-        title="Principal vs Rewards Releasing Daily"
+        title={<><img src="/torus-logo.svg" alt="TORUS" style={{ width: '20px', height: '20px', marginRight: '8px', verticalAlign: 'middle' }} /><span style={{color: '#f59e0b'}}>TORUS</span> Principal and Share Supply Releasing Daily</>}
         chartType="bar"
         subtitle="TORUS Released Each Day: Principal vs Accrued Share Rewards"
         keyMetrics={[
@@ -2480,7 +2490,7 @@ function App() {
               // backgroundColor will be set by gradient plugin
             },
             {
-              label: 'Accrued Rewards',
+              label: 'Accrued Share Pool Rewards',
               data: torusReleasesWithRewards
                 .map(r => Math.round(r.rewards * 100) / 100),
               // backgroundColor will be set by gradient plugin (pink)
@@ -2490,11 +2500,13 @@ function App() {
           yAxisLabel="TORUS Amount"
           xAxisLabel="Date / Contract Day"
           enableScaleToggle={true}
-          stacked={false}
+          stacked={true}
+          showTotals={true}
           showLegend={true}
-          formatTooltip={(value: number) => `TORUS: ${value.toLocaleString('en-US', { maximumFractionDigits: 2 })}`}
+          formatTooltip={(value: number) => `${value.toLocaleString('en-US', { maximumFractionDigits: 2 })}`}
           minBarHeight={0}
           windowSize={torusRewardsDays}
+          initialStartDay={currentProtocolDay}
           customLegendItems={[
             {
               label: 'Principal TORUS',
@@ -2502,10 +2514,29 @@ function App() {
               logo: 'https://www.torus.win/torus.svg'
             },
             {
-              label: 'Accrued Rewards',
+              label: 'Accrued Share Pool Rewards',
               color: 'linear-gradient(to top, #fbbdd5, #ec4899)'
             }
           ]}
+          tooltipCallbacks={{
+            afterBody: (context: any) => {
+              const dataIndex = context[0]?.dataIndex;
+              if (dataIndex !== undefined) {
+                // Get the label to match with the original data
+                const label = context[0]?.label;
+                const dayMatch = label?.match(/Day (\d+)/);
+                if (dayMatch) {
+                  const day = parseInt(dayMatch[1]);
+                  const data = torusReleasesWithRewards.find(r => r.day === day);
+                  if (data) {
+                    const total = data.principal + data.rewards;
+                    return `\nTotal TORUS: ${total.toLocaleString('en-US', { maximumFractionDigits: 2 })}`;
+                  }
+                }
+              }
+              return '';
+            }
+          }}
         />
         <div className="chart-note">
           Shows total TORUS released each day from positions that matured (historical) or will mature (future), spanning from contract launch through 88 days ahead. Purple bars show principal from stakes/creates ending. Pink bars show accrued share rewards that accumulated daily throughout each position's lifetime. Bars are shown side-by-side for easy comparison. Days with no releases show no bars. Rewards are estimated based on current pool data.
@@ -2570,6 +2601,7 @@ function App() {
           formatTooltip={(value: number) => `TitanX: ${(value || 0).toLocaleString('en-US', { maximumFractionDigits: 2 })}`}
           enableScaleToggle={true}
           windowSize={titanXUsageDays}
+          initialStartDay={currentProtocolDay}
         />
         <div className="chart-note">
           Shows the total TitanX amounts that were used for creates ending on each day, from contract launch through 88 days into the future. When users create positions, they pay TitanX as a fee. This chart displays the aggregate TitanX amounts from all creates that matured (historical) or will mature (future) on each specific day.
@@ -2637,6 +2669,8 @@ function App() {
           formatTooltip={(value: number) => `TitanX: ${(value || 0).toLocaleString('en-US', { maximumFractionDigits: 2 })}`}
           enableScaleToggle={true}
           windowSize={dailyTitanXUsageDays}
+          initialStartDay={currentProtocolDay}
+          chartType="historical"
           showLegend={true}
         />
         <div className="chart-note">
@@ -2714,6 +2748,7 @@ function App() {
           yAxisLabel={`Total Shares (${sharesReleases.some(r => r.shares > 1e9) ? 'Billions' : sharesReleases.some(r => r.shares > 1e6) ? 'Millions' : 'Units'})`}
           xAxisLabel="Date / Contract Day"
           windowSize={sharesReleasesDays}
+          initialStartDay={currentProtocolDay}
           formatTooltip={(value: number) => {
             const selectedData = sharesReleases;
             const label = selectedData.some(r => r.shares > 1e9) ? 'B' : selectedData.some(r => r.shares > 1e6) ? 'M' : '';
@@ -2785,6 +2820,8 @@ function App() {
           yAxisLabel="TORUS Burned"
           xAxisLabel="Date / Contract Day"
           windowSize={torusBurnedDays}
+          initialStartDay={currentProtocolDay}
+          chartType="historical"
           showDataLabels={true}
           formatTooltip={(value: number) => `${value.toFixed(2)} TORUS burned`}
         />
@@ -2852,6 +2889,7 @@ function App() {
           yAxisLabel="Total TORUS Burned"
           xAxisLabel="Date"
           windowSize={cumulativeTorusBurnedDays}
+          initialStartDay={currentProtocolDay}
           formatTooltip={(value: number) => `${value.toFixed(2)} TORUS total`}
         />
         <div className="chart-note">
@@ -2911,6 +2949,8 @@ function App() {
           yAxisLabel="Number of Operations"
           xAxisLabel="Date / Contract Day"
           windowSize={buyBurnActivityDays}
+          initialStartDay={currentProtocolDay}
+          chartType="historical"
           showDataLabels={true}
           stacked={false}
           showLegend={true}
@@ -2987,6 +3027,8 @@ function App() {
           yAxisLabel="TitanX (Billions)"
           xAxisLabel="Date / Contract Day"
           windowSize={titanXEthUsageDays}
+          initialStartDay={currentProtocolDay}
+          chartType="historical"
           showDataLabels={false}
           formatTooltip={(value: number, datasetIndex?: number) => {
             if (datasetIndex === 0) {
@@ -3079,6 +3121,8 @@ function App() {
           yAxisLabel="TitanX (Billions)"
           xAxisLabel="Date / Contract Day"
           windowSize={titanXEthBuildUsageDays}
+          initialStartDay={currentProtocolDay}
+          chartType="historical"
           showDataLabels={false}
           formatTooltip={(value: number, datasetIndex?: number) => {
             if (datasetIndex === 0) {
@@ -3173,6 +3217,8 @@ function App() {
           yAxisLabel="TORUS Burned"
           xAxisLabel="Date / Contract Day"
           windowSize={lpFeeBurnsDays}
+          initialStartDay={currentProtocolDay}
+          chartType="historical"
           showDataLabels={true}
           formatTooltip={(value: number, datasetIndex?: number) => {
             if (datasetIndex === 0) {

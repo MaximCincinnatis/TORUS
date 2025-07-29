@@ -312,7 +312,8 @@ export function calculateFutureMaxSupply(
       }
       
       // Only add supply on maturity day when position can be claimed
-      if (day === projection.maturityDay) {
+      // FIX: Only include positions that mature on or after the current protocol day
+      if (day === projection.maturityDay && (!currentProtocolDay || projection.maturityDay >= currentProtocolDay)) {
         if (projection.position.type === 'stake') {
           // Stakes: Add principal + all accumulated rewards on maturity day
           const principal = parseFloat(projection.position.principal || '0') / 1e18;

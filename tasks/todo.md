@@ -173,3 +173,126 @@ Investigated data collection issues that caused:
 ### Next Steps
 
 The fundamental issues in the data collection scripts need to be addressed to prevent future data loss. Manual intervention will continue to be necessary until these root causes are fixed.
+
+---
+
+# Day 19 Tooltip Values Audit
+
+## Todo List
+
+- [x] Check day 19 projection data in cached-data.json
+- [x] Analyze how breakdown values (fromStakes, fromCreates) are calculated
+- [x] Verify if these are cumulative or daily values
+- [x] Check actual positions maturing on day 19
+- [x] Write audit report with findings
+
+## Summary
+
+Investigated why Day 19 tooltip shows 274 TORUS from stakes and 276 TORUS from creates.
+
+### Key Finding
+
+**These values are CUMULATIVE, not daily.** They represent total supply added from positions maturing between Day 17 (current protocol day) and Day 19, including both principal and accumulated rewards.
+
+### Breakdown
+
+- **Days 17-19 Positions**: 7 total (3 stakes, 4 creates)
+- **Principal**: 170 ETH from stakes, 0.328 ETH from creates
+- **Tooltip Values**: Include principal + accumulated rewards until maturity
+- **Calculation**: Correctly implemented in `maxSupplyProjection.ts`
+
+### Recommendation
+
+The calculation is correct but could be clearer. Consider:
+1. Label as "Cumulative from Stakes/Creates"
+2. Add daily breakdown in tooltip
+3. Include help icon explaining cumulative nature
+
+### Files Created
+
+- `/tasks/day19-tooltip-audit-report.md` - Detailed audit report
+
+The values are accurately calculated and represent the expected cumulative supply additions.
+
+---
+
+# Fix Maximum Supply Double-Counting Bug
+
+## Todo List
+
+- [x] Audit the exact issue in maxSupplyProjection.ts
+- [x] Fix the double-counting bug by only including future positions
+- [x] Test the fix with current data
+- [x] Regenerate future supply projections
+- [x] Verify the chart displays correctly
+
+## Summary
+
+Fixed a critical bug where the maximum supply projection was double-counting positions that had already matured.
+
+### The Bug
+
+When viewing the chart on Protocol Day 20:
+- **Before Fix**: Day 20 showed 18,729 TORUS (current supply + positions from days 17-20)
+- **Problem**: Days 17-19 positions were already included in current supply
+
+### The Fix
+
+Modified `maxSupplyProjection.ts` line 316 to only include positions maturing on or after the current protocol day:
+```typescript
+if (day === projection.maturityDay && projection.maturityDay >= currentProtocolDay)
+```
+
+### Results
+
+- **After Fix**: Day 20 shows 17,906 TORUS (current supply + only day 20 positions)
+- **Breakdown**: 161 from stakes + 54 from creates maturing on Day 20
+- **Correct**: No longer double-counts positions from days 17-19
+
+### Files Modified
+
+- `/src/utils/maxSupplyProjection.ts` - Added condition to exclude past positions
+- `/scripts/generate-future-supply-projection-fixed.js` - Created fixed script for regeneration
+- `/public/data/cached-data.json` - Updated with corrected projections
+
+The chart now accurately shows maximum possible supply without double-counting matured positions.
+
+---
+
+# Fix ETH Values in Buy & Build Operations
+
+## Todo List
+
+- [x] Create script to fetch exact ETH values from blockchain
+- [x] Implement RPC rotation for reliable data fetching  
+- [x] Update buy-process-data.json with accurate ETH values
+- [x] Fix the update script to prevent future averaging
+- [x] Add validation to ensure no duplicate values
+
+## Summary
+
+Fixed critical data integrity issue where ETH values for Buy & Build operations were incorrectly averaged across multiple days.
+
+### The Problem
+
+- Days 2, 3, 4, 5, 7, 9, 10, 19 all showed exactly 0.028355 ETH
+- Days 17, 18 both showed exactly 0.034534274758487506 ETH
+- Caused by a "fix" script that divided missing ETH equally instead of fetching actual values
+
+### The Solution
+
+1. **Removed** the problematic `fix-missing-build-data.js` script
+2. **Created** `fix-eth-build-values-comprehensive.js` to fetch exact values from blockchain
+3. **Added** RPC rotation to handle rate limits and failures
+4. **Created** `validate-no-duplicates.js` to detect future issues
+5. **Updated** data to show 0 ETH until accurate values are fetched
+
+### Next Steps
+
+- Run `fix-eth-build-values-comprehensive.js` to populate accurate ETH values
+- Integrate validation into smart-update-fixed.js
+- Ensure all future updates fetch actual transaction values, never use averages
+
+### Key Principle
+
+**NEVER use averaged or distributed values** - always fetch exact data from blockchain using RPC rotation for reliability.

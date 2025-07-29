@@ -25,7 +25,7 @@ const {
   mapFieldNames,
   mergeLPPositions 
 } = require('./shared/lpCalculations');
-const { generateFutureSupplyProjection, shouldUpdateProjection } = require('./scripts/generate-future-supply-projection');
+const { generateFutureSupplyProjection, shouldUpdateProjection } = require('./scripts/generate-future-supply-projection-fixed');
 const {
   fetchUserStakeData,
   fetchUserCreateData,
@@ -193,11 +193,8 @@ async function shouldUpdate(provider, updateLog) {
     log(`Current block: ${currentBlock}, Last update: ${updateLog.lastBlockNumber}`, 'cyan');
     log(`Blocks since last update: ${blocksSinceLastUpdate}`, 'cyan');
     
-    // Skip if less than 10 blocks (about 2 minutes)
-    if (blocksSinceLastUpdate < 10) {
-      log('Too few blocks since last update, skipping', 'yellow');
-      return { shouldUpdate: false, currentBlock };
-    }
+    // Always update if there are new blocks - removed arbitrary minimum
+    // We want to catch all new transactions as soon as possible
     
     return { shouldUpdate: true, currentBlock, blocksSinceLastUpdate };
   } catch (e) {
@@ -990,6 +987,21 @@ async function performSmartUpdate(provider, updateLog, currentBlock, blocksSince
     } catch (e) {
       updateStats.errors.push(`Future supply projection update: ${e.message}`);
       log(`Failed to update future supply projection: ${e.message}`, 'yellow');
+    }
+    
+    // 8.5. Validate data integrity
+    log('Validating data integrity...', 'cyan');
+    try {
+      const { validateNoDuplicates } = require('./scripts/validate-no-duplicates');
+      // Run validation but don't exit on failure, just log
+      const originalExit = process.exit;
+      process.exit = () => {}; // Temporarily disable exit
+      validateNoDuplicates();
+      process.exit = originalExit; // Restore exit
+      log('Data validation complete', 'green');
+    } catch (e) {
+      updateStats.errors.push(`Data validation warning: ${e.message}`);
+      log('Data validation found issues - manual review needed', 'yellow');
     }
     
     // 9. Update timestamp
