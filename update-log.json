@@ -1,18 +1,9 @@
 {
-  "startTime": 1753791901266,
+  "startTime": 1753792201001,
   "rpcCalls": 0,
-  "lastBlockNumber": 23024778,
-  "lastUpdateTime": "2025-07-29T12:25:02.449Z",
+  "lastBlockNumber": 23024803,
+  "lastUpdateTime": "2025-07-29T12:30:02.222Z",
   "updateHistory": [
-    {
-      "timestamp": "2025-07-29T04:13:15.829Z",
-      "block": 23022327,
-      "rpcCalls": 29,
-      "dataChanged": true,
-      "errors": [
-        "Future supply projection update: convertToPositions is not defined"
-      ]
-    },
     {
       "timestamp": "2025-07-29T04:15:00.832Z",
       "rpcCalls": 0,
@@ -897,6 +888,15 @@
     },
     {
       "timestamp": "2025-07-29T12:25:01.267Z",
+      "rpcCalls": 0,
+      "dataChanged": false,
+      "errors": [],
+      "stats": {
+        "rpcCalls": null
+      }
+    },
+    {
+      "timestamp": "2025-07-29T12:30:01.002Z",
       "rpcCalls": 0,
       "dataChanged": false,
       "errors": [],
