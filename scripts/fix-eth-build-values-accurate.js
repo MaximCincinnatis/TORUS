@@ -17,7 +17,7 @@ let rpcCallCount = 0;
 // TorusBuyAndProcess contract
 const BUY_PROCESS_ADDRESS = '0xaa390a37006e22b5775a34f2147f81ebd6a63641';
 const BUY_PROCESS_ABI = [
-  "event BuyAndBuild(address indexed user, uint256 torusAmount, uint256 userRewardsAmount, uint256 protocolRewardsAmount, uint256 devRewardsAmount, uint256 lpRewardsAmount, uint256 torusPurchased, uint256 tokenAllocated)",
+  "event BuyAndBuild(uint256 indexed tokenAllocated, uint256 indexed torusPurchased, address indexed caller)",
   "function buyAndBuildWithETH(address, address) payable",
   "function buyAndBuildWithTitanX(address, address, uint256)"
 ];
@@ -82,7 +82,7 @@ async function fixETHBuildValues() {
   const data = JSON.parse(fs.readFileSync('public/data/buy-process-data.json', 'utf8'));
   
   // Check ALL days from 1 to current protocol day
-  const currentProtocolDay = data.currentDay || 19;
+  const currentProtocolDay = data.currentDay || 20;
   const daysToCheck = [];
   for (let i = 1; i <= currentProtocolDay; i++) {
     daysToCheck.push(i);
@@ -114,8 +114,8 @@ async function fixETHBuildValues() {
     }
     
     // Calculate block range for this day
-    // The dates in the JSON are showing 2025 but this is actually 2024 data
-    const dateStr = dayData.date.replace('2025', '2024');
+    // Dates are correct as 2025
+    const dateStr = dayData.date;
     const startTime = new Date(dateStr + 'T15:00:00Z').getTime() / 1000;
     const endTime = startTime + (24 * 60 * 60);
     

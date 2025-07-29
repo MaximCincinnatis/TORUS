@@ -15,7 +15,7 @@ const WETH_ADDRESS = '0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2';
 
 // ABIs
 const BUY_PROCESS_ABI = [
-  'event BuyAndBuild(address indexed user, uint256 indexed day, uint256 titanXAmount, uint256 torusAmount)'
+  'event BuyAndBuild(uint256 indexed tokenAllocated, uint256 indexed torusPurchased, address indexed caller)'
 ];
 
 const WETH_ABI = [
@@ -159,7 +159,7 @@ async function main() {
   // First, get all BuyAndBuild events
   console.log('📥 Phase 1: Fetching all BuyAndBuild events...\n');
   
-  const startBlock = 20085459; // Contract deployment
+  const startBlock = 22890272; // Contract deployment
   const chunkSize = 500; // Smaller chunks for reliability
   let allEvents = [];
   
@@ -212,7 +212,13 @@ async function main() {
   
   for (const event of allEvents) {
     eventsProcessed++;
-    const day = Number(event.args.day);
+    // Get protocol day from transaction timestamp
+    const block = await fetchWithRetry(async (provider) => provider.getBlock(event.blockNumber));
+    const timestamp = block.timestamp;
+    const CONTRACT_START_DATE = new Date('2025-07-10T18:00:00.000Z');
+    const msPerDay = 24 * 60 * 60 * 1000;
+    const dateObj = new Date(timestamp * 1000);
+    const day = Math.floor((dateObj.getTime() - CONTRACT_START_DATE.getTime()) / msPerDay) + 1;
     
     if (eventsProcessed % 10 === 0) {
       const progress = (eventsProcessed / allEvents.length * 100).toFixed(1);

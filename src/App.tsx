@@ -92,7 +92,7 @@ function App() {
   const [dailyTitanXUsageDays, setDailyTitanXUsageDays] = useState<number>(9999);
   const [futureMaxSupplyDays, setFutureMaxSupplyDays] = useState<number>(30);
   const [torusStakedDays, setTorusStakedDays] = useState<number>(9999);
-  const [torusRewardsDays, setTorusRewardsDays] = useState<number>(9999);
+  const [torusRewardsDays, setTorusRewardsDays] = useState<number>(30);
   const [supplyProjectionDays, setSupplyProjectionDays] = useState<number>(9999);
   const [torusBurnedDays, setTorusBurnedDays] = useState<number>(9999);
   const [cumulativeTorusBurnedDays, setCumulativeTorusBurnedDays] = useState<number>(9999);
@@ -2036,7 +2036,7 @@ function App() {
       <ExpandableChartSection
         id="max-supply-projection"
         title="Maximum Possible Supply If All Positions Maintain Their Share Percentages"
-        subtitle="Future TORUS Max Supply Projection"
+        subtitle="Future TORUS Max Supply Projection (includes future share pool payouts)"
         chartType="line"
         keyMetrics={[
           {
@@ -2080,6 +2080,117 @@ function App() {
         />
         <div className="chart-note">
           This projection shows the accrued future supply based on existing positions only. It includes principal returns from stakes and new tokens from creates that will be added when positions mature. This does NOT project future share rewards beyond what current positions have already earned. New positions created after today will dilute existing share percentages and reduce actual rewards.
+        </div>
+      </ExpandableChartSection>
+
+      <ExpandableChartSection
+        id="torus-rewards"
+        title={<><span style={{color: '#f59e0b'}}>TORUS</span> Principal and Share Supply Releasing Daily</>}
+        chartType="bar"
+        subtitle="TORUS Released Each Day: Principal vs Accrued Share Rewards (does not add in future share pool payouts, only includes current accrued share payouts)"
+        keyMetrics={[
+          {
+            label: "Total Principal",
+            value: `${torusReleasesWithRewards.slice(0, torusRewardsDays).reduce((sum, r) => sum + r.principal, 0).toLocaleString('en-US', { maximumFractionDigits: 0 })} TORUS`,
+            trend: "up"
+          },
+          {
+            label: "Total Rewards",
+            value: `${torusReleasesWithRewards.slice(0, torusRewardsDays).reduce((sum, r) => sum + r.rewards, 0).toLocaleString('en-US', { maximumFractionDigits: 0 })} TORUS`,
+            trend: "up"
+          },
+          {
+            label: "Reward Ratio",
+            value: torusReleasesWithRewards.slice(0, torusRewardsDays).length > 0 ? 
+              (() => {
+                const totalPrincipal = torusReleasesWithRewards.slice(0, torusRewardsDays).reduce((sum, r) => sum + r.principal, 0);
+                const totalRewards = torusReleasesWithRewards.slice(0, torusRewardsDays).reduce((sum, r) => sum + r.rewards, 0);
+                return totalPrincipal > 0 ? `${((totalRewards / totalPrincipal) * 100).toFixed(1)}%` : "0%";
+              })() : 
+              "0%",
+            trend: "up"
+          },
+          {
+            label: "Peak Day Total",
+            value: torusReleasesWithRewards.slice(0, torusRewardsDays).length > 0 && torusReleasesWithRewards.slice(0, torusRewardsDays).some(r => r.total > 0) ? 
+              `${Math.max(...torusReleasesWithRewards.slice(0, torusRewardsDays).map(r => r.total)).toLocaleString('en-US', { maximumFractionDigits: 0 })} TORUS` : 
+              "0 TORUS",
+            trend: "up"
+          }
+        ]}
+
+        loading={chartsLoading}
+
+      >
+        <DateRangeButtons 
+          selectedDays={torusRewardsDays}
+          onDaysChange={setTorusRewardsDays}
+        />
+        <PannableBarChart
+          key="torus-rewards-chart"
+          title={<><span className="torus-text">TORUS</span> Released Each Day: Principal vs Accrued Share Rewards</>}
+          labels={torusReleasesWithRewards
+            .map(r => {
+              return [`${r.date.substring(5)}`, `Day ${r.day}`];
+            })}
+          datasets={[
+            {
+              label: 'Principal TORUS',
+              data: torusReleasesWithRewards
+                .map(r => Math.round(r.principal * 100) / 100),
+              // backgroundColor will be set by gradient plugin
+            },
+            {
+              label: 'Accrued Share Pool Rewards',
+              data: torusReleasesWithRewards
+                .map(r => Math.round(r.rewards * 100) / 100),
+              // backgroundColor will be set by gradient plugin (pink)
+            },
+          ]}
+          height={600}
+          yAxisLabel="TORUS Amount"
+          xAxisLabel="Date / Contract Day"
+          enableScaleToggle={true}
+          stacked={true}
+          showTotals={true}
+          showLegend={true}
+          formatTooltip={(value: number) => `${value.toLocaleString('en-US', { maximumFractionDigits: 2 })}`}
+          minBarHeight={0}
+          windowSize={torusRewardsDays}
+          initialStartDay={currentProtocolDay}
+          customLegendItems={[
+            {
+              label: 'Principal TORUS',
+              color: 'linear-gradient(to top, #fbbf24, #ec4899, #8b5cf6)',
+              logo: 'https://www.torus.win/torus.svg'
+            },
+            {
+              label: 'Accrued Share Pool Rewards',
+              color: 'linear-gradient(to top, #3b82f6, #1d4ed8)'
+            }
+          ]}
+          tooltipCallbacks={{
+            afterBody: (context: any) => {
+              const dataIndex = context[0]?.dataIndex;
+              if (dataIndex !== undefined) {
+                // Get the label to match with the original data
+                const label = context[0]?.label;
+                const dayMatch = label?.match(/Day (\d+)/);
+                if (dayMatch) {
+                  const day = parseInt(dayMatch[1]);
+                  const data = torusReleasesWithRewards.find(r => r.day === day);
+                  if (data) {
+                    const total = data.principal + data.rewards;
+                    return `\nTotal TORUS: ${total.toLocaleString('en-US', { maximumFractionDigits: 2 })}`;
+                  }
+                }
+              }
+              return '';
+            }
+          }}
+        />
+        <div className="chart-note">
+          Shows total TORUS released each day from positions that matured (historical) or will mature (future), spanning from contract launch through 88 days ahead. Purple bars show principal from stakes/creates ending. Blue bars show accrued share rewards that accumulated daily throughout each position's lifetime. <strong>Important:</strong> This chart only includes share rewards that have already been accrued by existing positions - it does NOT include future daily share pool distributions that will be available for new staking.
         </div>
       </ExpandableChartSection>
 
@@ -2431,117 +2542,6 @@ function App() {
         </div>
       </ExpandableChartSection>
 
-
-      <ExpandableChartSection
-        id="torus-rewards"
-        title={<><img src="/torus-logo.svg" alt="TORUS" style={{ width: '20px', height: '20px', marginRight: '8px', verticalAlign: 'middle' }} /><span style={{color: '#f59e0b'}}>TORUS</span> Principal and Share Supply Releasing Daily</>}
-        chartType="bar"
-        subtitle="TORUS Released Each Day: Principal vs Accrued Share Rewards"
-        keyMetrics={[
-          {
-            label: "Total Principal",
-            value: `${torusReleasesWithRewards.slice(0, torusRewardsDays).reduce((sum, r) => sum + r.principal, 0).toLocaleString('en-US', { maximumFractionDigits: 0 })} TORUS`,
-            trend: "up"
-          },
-          {
-            label: "Total Rewards",
-            value: `${torusReleasesWithRewards.slice(0, torusRewardsDays).reduce((sum, r) => sum + r.rewards, 0).toLocaleString('en-US', { maximumFractionDigits: 0 })} TORUS`,
-            trend: "up"
-          },
-          {
-            label: "Reward Ratio",
-            value: torusReleasesWithRewards.slice(0, torusRewardsDays).length > 0 ? 
-              (() => {
-                const totalPrincipal = torusReleasesWithRewards.slice(0, torusRewardsDays).reduce((sum, r) => sum + r.principal, 0);
-                const totalRewards = torusReleasesWithRewards.slice(0, torusRewardsDays).reduce((sum, r) => sum + r.rewards, 0);
-                return totalPrincipal > 0 ? `${((totalRewards / totalPrincipal) * 100).toFixed(1)}%` : "0%";
-              })() : 
-              "0%",
-            trend: "up"
-          },
-          {
-            label: "Peak Day Total",
-            value: torusReleasesWithRewards.slice(0, torusRewardsDays).length > 0 && torusReleasesWithRewards.slice(0, torusRewardsDays).some(r => r.total > 0) ? 
-              `${Math.max(...torusReleasesWithRewards.slice(0, torusRewardsDays).map(r => r.total)).toLocaleString('en-US', { maximumFractionDigits: 0 })} TORUS` : 
-              "0 TORUS",
-            trend: "up"
-          }
-        ]}
-
-        loading={chartsLoading}
-
-      >
-        <DateRangeButtons 
-          selectedDays={torusRewardsDays}
-          onDaysChange={setTorusRewardsDays}
-        />
-        <PannableBarChart
-          key="torus-rewards-chart"
-          title={<><span className="torus-text">TORUS</span> Released Each Day: Principal vs Accrued Share Rewards</>}
-          labels={torusReleasesWithRewards
-            .map(r => {
-              return [`${r.date.substring(5)}`, `Day ${r.day}`];
-            })}
-          datasets={[
-            {
-              label: 'Principal TORUS',
-              data: torusReleasesWithRewards
-                .map(r => Math.round(r.principal * 100) / 100),
-              // backgroundColor will be set by gradient plugin
-            },
-            {
-              label: 'Accrued Share Pool Rewards',
-              data: torusReleasesWithRewards
-                .map(r => Math.round(r.rewards * 100) / 100),
-              // backgroundColor will be set by gradient plugin (pink)
-            },
-          ]}
-          height={600}
-          yAxisLabel="TORUS Amount"
-          xAxisLabel="Date / Contract Day"
-          enableScaleToggle={true}
-          stacked={true}
-          showTotals={true}
-          showLegend={true}
-          formatTooltip={(value: number) => `${value.toLocaleString('en-US', { maximumFractionDigits: 2 })}`}
-          minBarHeight={0}
-          windowSize={torusRewardsDays}
-          initialStartDay={currentProtocolDay}
-          customLegendItems={[
-            {
-              label: 'Principal TORUS',
-              color: 'linear-gradient(to top, #fbbf24, #ec4899, #8b5cf6)',
-              logo: 'https://www.torus.win/torus.svg'
-            },
-            {
-              label: 'Accrued Share Pool Rewards',
-              color: 'linear-gradient(to top, #fbbdd5, #ec4899)'
-            }
-          ]}
-          tooltipCallbacks={{
-            afterBody: (context: any) => {
-              const dataIndex = context[0]?.dataIndex;
-              if (dataIndex !== undefined) {
-                // Get the label to match with the original data
-                const label = context[0]?.label;
-                const dayMatch = label?.match(/Day (\d+)/);
-                if (dayMatch) {
-                  const day = parseInt(dayMatch[1]);
-                  const data = torusReleasesWithRewards.find(r => r.day === day);
-                  if (data) {
-                    const total = data.principal + data.rewards;
-                    return `\nTotal TORUS: ${total.toLocaleString('en-US', { maximumFractionDigits: 2 })}`;
-                  }
-                }
-              }
-              return '';
-            }
-          }}
-        />
-        <div className="chart-note">
-          Shows total TORUS released each day from positions that matured (historical) or will mature (future), spanning from contract launch through 88 days ahead. Purple bars show principal from stakes/creates ending. Pink bars show accrued share rewards that accumulated daily throughout each position's lifetime. Bars are shown side-by-side for easy comparison. Days with no releases show no bars. Rewards are estimated based on current pool data.
-        </div>
-      </ExpandableChartSection>
 
       <ExpandableChartSection
         id="titanx-usage"
