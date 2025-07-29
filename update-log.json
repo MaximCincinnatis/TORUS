@@ -1,27 +1,9 @@
 {
-  "startTime": 1753762200960,
+  "startTime": 1753762500831,
   "rpcCalls": 0,
-  "lastBlockNumber": 23022314,
-  "lastUpdateTime": "2025-07-29T04:10:02.269Z",
+  "lastBlockNumber": 23022340,
+  "lastUpdateTime": "2025-07-29T04:15:02.164Z",
   "updateHistory": [
-    {
-      "timestamp": "2025-07-28T20:05:00.675Z",
-      "rpcCalls": 0,
-      "dataChanged": true,
-      "errors": [],
-      "stats": {
-        "rpcCalls": null
-      }
-    },
-    {
-      "timestamp": "2025-07-28T20:10:01.095Z",
-      "rpcCalls": 0,
-      "dataChanged": false,
-      "errors": [],
-      "stats": {
-        "rpcCalls": null
-      }
-    },
     {
       "timestamp": "2025-07-28T20:15:00.678Z",
       "rpcCalls": 0,
@@ -903,6 +885,24 @@
     },
     {
       "timestamp": "2025-07-29T04:10:00.961Z",
+      "rpcCalls": 0,
+      "dataChanged": false,
+      "errors": [],
+      "stats": {
+        "rpcCalls": null
+      }
+    },
+    {
+      "timestamp": "2025-07-29T04:13:15.829Z",
+      "block": 23022327,
+      "rpcCalls": 29,
+      "dataChanged": true,
+      "errors": [
+        "Future supply projection update: convertToPositions is not defined"
+      ]
+    },
+    {
+      "timestamp": "2025-07-29T04:15:00.832Z",
       "rpcCalls": 0,
       "dataChanged": false,
       "errors": [],
