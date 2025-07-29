@@ -309,7 +309,171 @@ async function performSmartUpdate() {
     
     // Update staking data (same as original)
     log('📊 Checking for new staking events...', 'cyan');
-    // ... [Staking update code - same as original] ...
+    
+    try {
+      // Get last block from staking data
+      let lastStakeBlock = cachedData.stakingData?.metadata?.currentBlock || 
+                          cachedData.stakingData?.lastBlock || 
+                          22890272; // Fallback to deployment block
+      
+      // If lastStakeBlock is too far behind (>50k blocks), start from a recent block
+      const MAX_BLOCKS_BEHIND = 50000;
+      if ((currentBlock - lastStakeBlock) > MAX_BLOCKS_BEHIND) {
+        // Start from 20k blocks ago (about 3 days)
+        const newStartBlock = currentBlock - 20000;
+        log(`⚠️  Last stake block (${lastStakeBlock}) is too old. Starting from block ${newStartBlock} instead`, 'yellow');
+        lastStakeBlock = newStartBlock;
+      }
+      
+      // Always check for new stake/create events regardless of main update threshold
+      if (currentBlock > lastStakeBlock) {
+        const STAKE_CONTRACTS = {
+          TORUS_CREATE_STAKE: '0xc7cc775b21f9df85e043c7fdd9dac60af0b69507'
+        };
+        
+        const contractABI = [
+          'event Staked(address indexed user, uint256 stakeIndex, uint256 principal, uint256 stakingDays, uint256 shares)',
+          'event Created(address indexed user, uint256 stakeIndex, uint256 torusAmount, uint256 endTime)',
+          'function getCurrentDayIndex() view returns (uint24)'
+        ];
+        
+        const contract = new ethers.Contract(STAKE_CONTRACTS.TORUS_CREATE_STAKE, contractABI, provider);
+        
+        // Fetch current protocol day from contract
+        try {
+          const currentDayFromContract = await contract.getCurrentDayIndex();
+          const currentDayNumber = Number(currentDayFromContract);
+          
+          if (cachedData.currentProtocolDay !== currentDayNumber || 
+              cachedData.stakingData.currentProtocolDay !== currentDayNumber) {
+            log(`Updating current protocol day: ${currentDayNumber} (was ${cachedData.currentProtocolDay})`, 'green');
+            cachedData.currentProtocolDay = currentDayNumber;
+            cachedData.stakingData.currentProtocolDay = currentDayNumber;
+            updateResult.dataChanged = true;
+          }
+        } catch (e) {
+          log(`Failed to fetch current protocol day: ${e.message}`, 'yellow');
+        }
+        
+        // Simplified event fetching for enhanced script
+        const MAX_BLOCK_RANGE = 5000;
+        let newStakeEvents = [];
+        let newCreateEvents = [];
+        
+        const fromBlock = lastStakeBlock + 1;
+        const toBlock = currentBlock;
+        
+        if (fromBlock <= toBlock) {
+          try {
+            log(`  Fetching events from block ${fromBlock} to ${toBlock}...`, 'cyan');
+            
+            const [stakeEvents, createEvents] = await Promise.all([
+              contract.queryFilter(contract.filters.Staked(), fromBlock, toBlock),
+              contract.queryFilter(contract.filters.Created(), fromBlock, toBlock)
+            ]);
+            
+            newStakeEvents = stakeEvents;
+            newCreateEvents = createEvents;
+            updateResult.rpcCalls += 2;
+            
+            log(`  ✓ Successfully fetched: ${stakeEvents.length} stakes, ${createEvents.length} creates`, 'green');
+            
+            // Process and add new events if found
+            if (newStakeEvents.length > 0 || newCreateEvents.length > 0) {
+              log(`  Adding ${newStakeEvents.length} stakes and ${newCreateEvents.length} creates...`, 'cyan');
+              
+              // Fetch actual block timestamps for accurate data
+              const blockNumbers = Array.from(new Set([
+                ...newStakeEvents.map(e => e.blockNumber),
+                ...newCreateEvents.map(e => e.blockNumber)
+              ]));
+              
+              log(`  Fetching accurate timestamps for ${blockNumbers.length} blocks...`, 'cyan');
+              const blockTimestamps = new Map();
+              
+              // Fetch block data to get accurate timestamps
+              for (const blockNumber of blockNumbers) {
+                try {
+                  const block = await provider.getBlock(blockNumber);
+                  if (block) {
+                    blockTimestamps.set(blockNumber, block.timestamp);
+                  }
+                  updateResult.rpcCalls++;
+                } catch (error) {
+                  log(`Warning: Could not fetch block ${blockNumber}: ${error.message}`, 'yellow');
+                }
+              }
+              
+              // Initialize arrays if they don't exist
+              if (!cachedData.stakingData.stakeEvents) cachedData.stakingData.stakeEvents = [];
+              if (!cachedData.stakingData.createEvents) cachedData.stakingData.createEvents = [];
+              
+              // Add new stake events with accurate timestamps
+              newStakeEvents.forEach(event => {
+                const blockTimestamp = blockTimestamps.get(event.blockNumber);
+                if (!blockTimestamp) {
+                  log(`Warning: Skipping stake event ${event.args.stakeIndex} - no timestamp for block ${event.blockNumber}`, 'yellow');
+                  return;
+                }
+                
+                const stakingDays = Number(event.args.stakingDays);
+                const maturityTimestamp = blockTimestamp + (stakingDays * 86400);
+                
+                const stakeData = {
+                  user: event.args.user.toLowerCase(),
+                  id: event.args.stakeIndex.toString(),
+                  principal: event.args.principal.toString(),
+                  stakingDays: stakingDays,
+                  shares: event.args.shares.toString(),
+                  timestamp: blockTimestamp.toString(),
+                  blockNumber: event.blockNumber,
+                  maturityDate: new Date(maturityTimestamp * 1000).toISOString(),
+                  startDate: new Date(blockTimestamp * 1000).toISOString()
+                };
+                cachedData.stakingData.stakeEvents.push(stakeData);
+              });
+              
+              // Add new create events with accurate timestamps
+              newCreateEvents.forEach(event => {
+                const blockTimestamp = blockTimestamps.get(event.blockNumber);
+                if (!blockTimestamp) {
+                  log(`Warning: Skipping create event ${event.args.stakeIndex} - no timestamp for block ${event.blockNumber}`, 'yellow');
+                  return;
+                }
+                
+                const endTime = Number(event.args.endTime);
+                
+                const createData = {
+                  user: event.args.user.toLowerCase(),
+                  id: event.args.stakeIndex.toString(),
+                  torusAmount: event.args.torusAmount.toString(),
+                  endTime: endTime,
+                  timestamp: blockTimestamp,
+                  blockNumber: event.blockNumber,
+                  maturityDate: new Date(endTime * 1000).toISOString(),
+                  startDate: new Date(blockTimestamp * 1000).toISOString()
+                };
+                cachedData.stakingData.createEvents.push(createData);
+              });
+              
+              updateResult.dataChanged = true;
+            }
+            
+            // Update metadata
+            cachedData.stakingData.metadata = cachedData.stakingData.metadata || {};
+            cachedData.stakingData.metadata.currentBlock = currentBlock;
+            cachedData.stakingData.lastBlock = currentBlock;
+            
+          } catch (e) {
+            log(`  ✗ Error fetching events: ${e.message}`, 'red');
+            updateResult.errors.push(`Event fetching: ${e.message}`);
+          }
+        }
+      }
+    } catch (e) {
+      updateResult.errors.push(`Staking update: ${e.message}`);
+      log(`  Error updating staking data: ${e.message}`, 'red');
+    }
     
     // Update TitanX data
     log('📊 Updating TitanX data...', 'cyan');
@@ -362,7 +526,15 @@ async function performSmartUpdate() {
     
     // Update buy & process data (same as original)
     log('📊 Updating buy & process data...', 'cyan');
-    // ... [Buy & process update code - same as original] ...
+    try {
+      const { execSync } = require('child_process');
+      execSync('node scripts/update-buy-process-data.js', { stdio: 'inherit' });
+      updateResult.dataChanged = true;
+      log('Buy & Process data updated', 'green');
+    } catch (e) {
+      updateResult.errors.push(`Buy & Process update: ${e.message}`);
+      log(`Failed to update Buy & Process data: ${e.message}`, 'yellow');
+    }
     
     // Update metadata
     cachedData.lastUpdated = new Date().toISOString();
