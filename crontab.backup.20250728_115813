@@ -1,0 +1,8 @@
+*/30 * * * * /home/wsl/projects/TORUSspecs/torus-dashboard/run-auto-update.sh
+@reboot cd /home/wsl/projects/TORUSspecs/torus-dashboard && nohup /usr/bin/node run-updater-service.js >> logs/reboot-service.log 2>&1 &
+0 * * * * cd /home/wsl/projects/TORUSspecs/torus-dashboard/test-env-20250723-131924 && node scripts/monitor-lp-updates.js > monitoring/dashboards/lp-status-13.txt 2>&1
+0 2 * * * cd /home/wsl/projects/TORUSspecs/torus-dashboard/test-env-20250723-131924 && node scripts/monitor-lp-updates.js report > monitoring/reports/daily-20250723.txt 2>&1
+0 3 * * 0 cd /home/wsl/projects/TORUSspecs/torus-dashboard/test-env-20250723-131924 && node scripts/monitor-lp-updates.js report > monitoring/reports/weekly-20250723.txt 2>&1
+0 6,18 * * * cd /home/wsl/projects/TORUSspecs/torus-dashboard/test-env-20250723-131924 && node scripts/validate-lp-data.js check > logs/validation-20250723-13.log 2>&1
+0 3 * * * cd /home/wsl/projects/TORUSspecs/torus-dashboard/test-env-20250723-131924 && find logs -name '*.log' -mtime +7 -exec mv {} logs/archive/ \;
+0 4 * * 0 cd /home/wsl/projects/TORUSspecs/torus-dashboard/test-env-20250723-131924 && find logs/archive -name '*.log' -mtime +30 -delete

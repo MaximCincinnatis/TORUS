@@ -1,5 +1,5 @@
 const fs = require('fs');
-const { calculateFutureMaxSupply, convertToPositions } = require('../src/utils/maxSupplyProjection.js');
+// const { calculateFutureMaxSupply, convertToPositions } = require('../src/utils/maxSupplyProjection.js');
 
 function generateFutureSupplyProjection() {
   console.log('🔄 Generating Future Supply Projection...\n');

@@ -165,6 +165,16 @@ export async function getIncrementalUpdates(
     // Process events to match expected format
     const processedStakeEvents = stakeEvents.map(event => {
       if (!event.args) return null;
+      const startTime = Number(event.args.startTime);
+      const stakingDays = Number(event.args.stakingDays);
+      const maturityTimestamp = (startTime + stakingDays * 86400) * 1000;
+      
+      // Calculate protocol day from timestamp
+      const CONTRACT_START_DATE = new Date('2025-07-10T18:00:00.000Z'); // July 10, 2025 6:00 PM UTC
+      const eventDate = new Date(startTime * 1000);
+      const msPerDay = 24 * 60 * 60 * 1000;
+      const protocolDay = Math.floor((eventDate.getTime() - CONTRACT_START_DATE.getTime()) / msPerDay) + 1;
+      
       return {
         user: event.args.user,
         id: event.args.stakeIndex.toString(),
@@ -173,8 +183,9 @@ export async function getIncrementalUpdates(
         duration: event.args.stakingDays.toString(),
         timestamp: event.args.startTime.toString(),
         blockNumber: event.blockNumber,
-        stakingDays: Number(event.args.stakingDays),
-        maturityDate: new Date((Number(event.args.startTime) + Number(event.args.stakingDays) * 86400) * 1000).toISOString(),
+        stakingDays: stakingDays,
+        maturityDate: new Date(maturityTimestamp).toISOString(),
+        protocolDay: Math.max(1, protocolDay), // Ensure minimum of day 1
         costETH: "0", // Will be populated by RPC update
         costTitanX: "0"
       };
@@ -182,6 +193,16 @@ export async function getIncrementalUpdates(
     
     const processedCreateEvents = createEvents.map(event => {
       if (!event.args) return null;
+      const startTime = Number(event.args.startTime) || 0;
+      const endTime = Number(event.args.endTime);
+      const stakingDays = Math.floor((endTime - startTime) / 86400);
+      
+      // Calculate protocol day from timestamp
+      const CONTRACT_START_DATE = new Date('2025-07-10T18:00:00.000Z'); // July 10, 2025 6:00 PM UTC
+      const eventDate = new Date(startTime * 1000);
+      const msPerDay = 24 * 60 * 60 * 1000;
+      const protocolDay = Math.floor((eventDate.getTime() - CONTRACT_START_DATE.getTime()) / msPerDay) + 1;
+      
       return {
         user: event.args.user,
         id: event.args.stakeIndex.toString(),
@@ -189,8 +210,9 @@ export async function getIncrementalUpdates(
         endTime: event.args.endTime.toString(),
         timestamp: event.args.startTime?.toString() || "0",
         blockNumber: event.blockNumber,
-        stakingDays: Math.floor((Number(event.args.endTime) - (Number(event.args.startTime) || 0)) / 86400),
-        maturityDate: new Date(Number(event.args.endTime) * 1000).toISOString(),
+        stakingDays: stakingDays,
+        maturityDate: new Date(endTime * 1000).toISOString(),
+        protocolDay: Math.max(1, protocolDay), // Ensure minimum of day 1
         costETH: "0", // Will be populated by RPC update
         costTitanX: "0"
       };

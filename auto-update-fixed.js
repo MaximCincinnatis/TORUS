@@ -63,14 +63,20 @@ async function main() {
     }
   }
   
-  // 2. Check if LP positions need detailed update
+  // 2. Update LP fee burns (critical for burn tracking)
+  log('Updating LP fee burns...', 'cyan');
+  if (!execCommand('node update-lp-fee-burns.js', 'Updating LP fee burn data')) {
+    log('LP fee update had issues, but continuing...', 'yellow');
+  }
+  
+  // 3. Check if LP positions need detailed update
   const cachedData = JSON.parse(fs.readFileSync('./public/data/cached-data.json', 'utf8'));
   if (cachedData.metadata?.needsManualUpdate) {
     log('Running incremental LP updater...', 'cyan');
     execCommand('node incremental-lp-updater.js', 'Updating LP positions');
   }
   
-  // 3. Check for git changes
+  // 4. Check for git changes
   try {
     const gitStatus = execSync('git status --porcelain', { encoding: 'utf8' });
     

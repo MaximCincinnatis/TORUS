@@ -33,6 +33,7 @@ const {
   logRpcStats,
   resetRpcStats
 } = require('./shared/rpcUtils');
+const { getComprehensivePaymentData } = require('./comprehensive-payment-matching');
 
 // Configuration
 const UPDATE_LOG_FILE = 'update-log.json';
@@ -145,6 +146,22 @@ function loadUpdateLog() {
 // Save update history
 function saveUpdateLog(logData) {
   fs.writeFileSync(UPDATE_LOG_FILE, JSON.stringify(logData, null, 2));
+}
+
+// Helper function to deduplicate events array
+function deduplicateEvents(events, keyFunction) {
+  const seen = new Set();
+  const unique = [];
+  
+  for (const event of events) {
+    const key = keyFunction(event);
+    if (!seen.has(key)) {
+      seen.add(key);
+      unique.push(event);
+    }
+  }
+  
+  return unique;
 }
 
 // Get working RPC provider
@@ -327,9 +344,11 @@ async function updateLPPositionsIncrementally(provider, cachedData, currentBlock
                   positionManager.ownerOf(tokenId)
                 ]);
                 
-                // Verify this is TORUS pool
-                if (position.token0.toLowerCase() === CONTRACTS.TORUS.toLowerCase() &&
-                    position.token1.toLowerCase() === CONTRACTS.TITANX.toLowerCase() &&
+                // Verify this is TORUS/TitanX pool
+                if (((position.token0.toLowerCase() === CONTRACTS.TORUS.toLowerCase() && 
+                      position.token1.toLowerCase() === CONTRACTS.TITANX.toLowerCase()) ||
+                     (position.token0.toLowerCase() === CONTRACTS.TITANX.toLowerCase() && 
+                      position.token1.toLowerCase() === CONTRACTS.TORUS.toLowerCase())) &&
                     position.liquidity.gt(0)) {
                   
                   // Check if in range
@@ -424,6 +443,34 @@ async function performSmartUpdate(provider, updateLog, currentBlock, blocksSince
     // Load current cached data
     const cachedData = JSON.parse(fs.readFileSync(CACHE_FILE, 'utf8'));
     const originalData = JSON.stringify(cachedData);
+    
+    // Clean up any existing duplicates first
+    if (cachedData.stakingData) {
+      const originalStakeCount = cachedData.stakingData.stakeEvents?.length || 0;
+      const originalCreateCount = cachedData.stakingData.createEvents?.length || 0;
+      
+      if (cachedData.stakingData.stakeEvents) {
+        cachedData.stakingData.stakeEvents = deduplicateEvents(
+          cachedData.stakingData.stakeEvents,
+          stake => `${stake.user}-${stake.id}-${stake.blockNumber}`
+        );
+      }
+      
+      if (cachedData.stakingData.createEvents) {
+        cachedData.stakingData.createEvents = deduplicateEvents(
+          cachedData.stakingData.createEvents,
+          create => `${create.user}-${create.id || create.createId}-${create.blockNumber}`
+        );
+      }
+      
+      const removedStakes = originalStakeCount - (cachedData.stakingData.stakeEvents?.length || 0);
+      const removedCreates = originalCreateCount - (cachedData.stakingData.createEvents?.length || 0);
+      
+      if (removedStakes > 0 || removedCreates > 0) {
+        log(`🧹 Cleaned up duplicates: ${removedStakes} stake events, ${removedCreates} create events`, 'yellow');
+        updateStats.dataChanged = true;
+      }
+    }
     
     // 1. Update pool data
     log('Updating pool data...', 'cyan');
@@ -578,42 +625,107 @@ async function performSmartUpdate(provider, updateLog, currentBlock, blocksSince
     
     try {
       // Get last block from staking data
-      const lastStakeBlock = cachedData.stakingData?.metadata?.currentBlock || 
-                            cachedData.stakingData?.lastBlock || 
-                            22890272; // Fallback to deployment block
+      let lastStakeBlock = cachedData.stakingData?.metadata?.currentBlock || 
+                          cachedData.stakingData?.lastBlock || 
+                          22890272; // Fallback to deployment block
       
-      // Only update if we have enough new blocks
-      if (currentBlock - lastStakeBlock > 50) {
+      // If lastStakeBlock is too far behind (>50k blocks), start from a recent block
+      const MAX_BLOCKS_BEHIND = 50000;
+      if ((currentBlock - lastStakeBlock) > MAX_BLOCKS_BEHIND) {
+        // Start from 20k blocks ago (about 3 days)
+        const newStartBlock = currentBlock - 20000;
+        log(`⚠️  Last stake block (${lastStakeBlock}) is too old. Starting from block ${newStartBlock} instead`, 'yellow');
+        lastStakeBlock = newStartBlock;
+      }
+      
+      // Always check for new stake/create events regardless of main update threshold
+      if (currentBlock > lastStakeBlock) {
         const CONTRACTS = {
           TORUS_CREATE_STAKE: '0xc7cc775b21f9df85e043c7fdd9dac60af0b69507'
         };
         
         const contractABI = [
           'event Staked(address indexed user, uint256 stakeIndex, uint256 principal, uint256 stakingDays, uint256 shares)',
-          'event Created(address indexed user, uint256 stakeIndex, uint256 torusAmount, uint256 endTime)'
+          'event Created(address indexed user, uint256 stakeIndex, uint256 torusAmount, uint256 endTime)',
+          'function getCurrentDayIndex() view returns (uint24)'
         ];
         
         const contract = new ethers.Contract(CONTRACTS.TORUS_CREATE_STAKE, contractABI, provider);
         
+        // Fetch current protocol day from contract
+        try {
+          const currentDayFromContract = await contract.getCurrentDayIndex();
+          const currentDayNumber = Number(currentDayFromContract);
+          
+          if (cachedData.currentProtocolDay !== currentDayNumber || 
+              cachedData.stakingData.currentProtocolDay !== currentDayNumber) {
+            log(`Updating current protocol day: ${currentDayNumber} (was ${cachedData.currentProtocolDay})`, 'green');
+            cachedData.currentProtocolDay = currentDayNumber;
+            cachedData.stakingData.currentProtocolDay = currentDayNumber;
+            updateStats.dataChanged = true;
+          }
+        } catch (e) {
+          log(`Failed to fetch current protocol day: ${e.message}`, 'yellow');
+        }
+        
         // Fetch in chunks if needed
         const MAX_BLOCK_RANGE = 9999;
+        const MAX_RETRIES = 3;
+        const RETRY_DELAY = 2000; // 2 seconds
         let newStakeEvents = [];
         let newCreateEvents = [];
+        let lastSuccessfulBlock = lastStakeBlock;
         
         for (let fromBlock = lastStakeBlock + 1; fromBlock <= currentBlock; fromBlock += MAX_BLOCK_RANGE) {
           const toBlock = Math.min(fromBlock + MAX_BLOCK_RANGE - 1, currentBlock);
+          let retries = 0;
+          let chunkSuccess = false;
           
-          try {
-            const [stakeEvents, createEvents] = await Promise.all([
-              contract.queryFilter(contract.filters.Staked(), fromBlock, toBlock),
-              contract.queryFilter(contract.filters.Created(), fromBlock, toBlock)
-            ]);
-            
-            newStakeEvents.push(...stakeEvents);
-            newCreateEvents.push(...createEvents);
-            updateStats.rpcCalls += 2;
-          } catch (e) {
-            log(`  Error fetching events ${fromBlock}-${toBlock}: ${e.message}`, 'yellow');
+          while (retries < MAX_RETRIES && !chunkSuccess) {
+            try {
+              log(`  Fetching events from block ${fromBlock} to ${toBlock} (attempt ${retries + 1}/${MAX_RETRIES})...`, 'cyan');
+              
+              const [stakeEvents, createEvents] = await Promise.all([
+                contract.queryFilter(contract.filters.Staked(), fromBlock, toBlock),
+                contract.queryFilter(contract.filters.Created(), fromBlock, toBlock)
+              ]);
+              
+              newStakeEvents.push(...stakeEvents);
+              newCreateEvents.push(...createEvents);
+              updateStats.rpcCalls += 2;
+              
+              // Update lastBlock incrementally after successful chunk
+              lastSuccessfulBlock = toBlock;
+              
+              // Update cached data's lastBlock to track progress
+              if (cachedData.stakingData) {
+                cachedData.stakingData.lastBlock = lastSuccessfulBlock;
+                cachedData.stakingData.metadata = cachedData.stakingData.metadata || {};
+                cachedData.stakingData.metadata.currentBlock = lastSuccessfulBlock;
+              }
+              
+              log(`  ✓ Successfully fetched chunk: ${stakeEvents.length} stakes, ${createEvents.length} creates`, 'green');
+              chunkSuccess = true;
+              
+            } catch (e) {
+              retries++;
+              log(`  ✗ Error fetching events ${fromBlock}-${toBlock}: ${e.message}`, 'red');
+              
+              if (retries < MAX_RETRIES) {
+                log(`  ⏳ Retrying in ${RETRY_DELAY/1000} seconds...`, 'yellow');
+                await new Promise(resolve => setTimeout(resolve, RETRY_DELAY));
+              } else {
+                log(`  ❌ Failed after ${MAX_RETRIES} attempts. Stopping at block ${lastSuccessfulBlock}`, 'red');
+                // Stop processing further chunks if we can't get this one
+                fromBlock = currentBlock + 1; // Exit the loop
+              }
+            }
+          }
+          
+          if (!chunkSuccess) {
+            // Save progress even on failure
+            log(`  💾 Saving progress up to block ${lastSuccessfulBlock}`, 'yellow');
+            break;
           }
         }
         
@@ -628,13 +740,24 @@ async function performSmartUpdate(provider, updateLog, currentBlock, blocksSince
           const blockTimestamps = await fetchBlockData(provider, blockNumbers, true);
           
           // Process and merge new events
-          // Process new stakes and fetch payment data
+          // Process new stakes and fetch payment data using comprehensive matching
+          log(`  🔍 Getting comprehensive payment data for ${newStakeEvents.length} stakes...`, 'cyan');
+          const minStakeBlock = newStakeEvents.length > 0 ? Math.min(...newStakeEvents.map(e => e.blockNumber)) : 0;
+          const maxStakeBlock = newStakeEvents.length > 0 ? Math.max(...newStakeEvents.map(e => e.blockNumber)) : 0;
+          const stakePaymentData = await getComprehensivePaymentData(newStakeEvents, provider, minStakeBlock, maxStakeBlock);
+          
           const processedStakes = [];
           
           for (const event of newStakeEvents) {
             const blockTimestamp = blockTimestamps.get(event.blockNumber) || Math.floor(Date.now() / 1000);
             const stakingDays = parseInt(event.args.stakingDays.toString());
             const maturityTimestamp = blockTimestamp + (stakingDays * 86400);
+            
+            // Calculate protocol day from timestamp
+            const CONTRACT_START_DATE = new Date('2025-07-10T18:00:00.000Z'); // July 10, 2025 6:00 PM UTC
+            const eventDate = new Date(blockTimestamp * 1000);
+            const msPerDay = 24 * 60 * 60 * 1000;
+            const protocolDay = Math.max(1, Math.floor((eventDate.getTime() - CONTRACT_START_DATE.getTime()) / msPerDay) + 1);
             
             const stakeData = {
               user: event.args.user,
@@ -648,6 +771,7 @@ async function performSmartUpdate(provider, updateLog, currentBlock, blocksSince
               stakingDays: stakingDays,
               maturityDate: new Date(maturityTimestamp * 1000).toISOString(),
               startDate: new Date(blockTimestamp * 1000).toISOString(),
+              protocolDay: protocolDay, // Add protocol day
               // Initialize payment fields
               power: "0",
               claimedCreate: false,
@@ -662,27 +786,29 @@ async function performSmartUpdate(provider, updateLog, currentBlock, blocksSince
               isCreate: false
             };
             
-            // Fetch actual payment data from contract using optimized RPC
-            const userStakeABI = ['function userStakes(address user, uint256 index) view returns (uint256 principal, uint256 shares, uint256 duration, uint256 timestamp, uint256 titanAmount, uint256 ethAmount, uint256 status, uint256 payout)'];
-            const stakeContract = new ethers.Contract(CONTRACTS.TORUS_CREATE_STAKE, userStakeABI, provider);
-            const stakeResult = await fetchUserStakeData(stakeContract, event.args.user, event.args.stakeIndex, true);
+            // Get comprehensive payment data
+            const eventKey = `${event.transactionHash}-${event.args.stakeIndex}`;
+            const paymentData = stakePaymentData.get(eventKey) || {
+              costETH: "0", rawCostETH: "0", costTitanX: "0", rawCostTitanX: "0"
+            };
             
-            if (stakeResult.success) {
-              // Update payment fields with actual data
-              const stakeInfo = stakeResult.data;
-              stakeData.rawCostTitanX = stakeInfo.titanAmount.toString();
-              stakeData.rawCostETH = stakeInfo.ethAmount.toString();
-              stakeData.costTitanX = stakeInfo.titanAmount.toString();
-              stakeData.costETH = stakeInfo.ethAmount.toString();
-            }
-            // Note: Silent failure - no error logging for payment data
+            // Apply payment data
+            stakeData.costETH = paymentData.costETH;
+            stakeData.rawCostETH = paymentData.rawCostETH;
+            stakeData.costTitanX = paymentData.costTitanX;
+            stakeData.rawCostTitanX = paymentData.rawCostTitanX;
             
             updateStats.rpcCalls++;
             
             processedStakes.push(stakeData);
           }
           
-          // Process new creates and fetch payment data
+          // Process new creates and fetch payment data using comprehensive matching
+          log(`  🔍 Getting comprehensive payment data for ${newCreateEvents.length} creates...`, 'cyan');
+          const minCreateBlock = newCreateEvents.length > 0 ? Math.min(...newCreateEvents.map(e => e.blockNumber)) : 0;
+          const maxCreateBlock = newCreateEvents.length > 0 ? Math.max(...newCreateEvents.map(e => e.blockNumber)) : 0;
+          const createPaymentData = await getComprehensivePaymentData(newCreateEvents, provider, minCreateBlock, maxCreateBlock);
+          
           const processedCreates = [];
           
           for (const event of newCreateEvents) {
@@ -690,6 +816,12 @@ async function performSmartUpdate(provider, updateLog, currentBlock, blocksSince
             const endTime = parseInt(event.args.endTime.toString());
             // Calculate duration from start to end time
             const duration = Math.round((endTime - blockTimestamp) / 86400);
+            
+            // Calculate protocol day from timestamp
+            const CONTRACT_START_DATE = new Date('2025-07-10T18:00:00.000Z'); // July 10, 2025 6:00 PM UTC
+            const eventDate = new Date(blockTimestamp * 1000);
+            const msPerDay = 24 * 60 * 60 * 1000;
+            const protocolDay = Math.max(1, Math.floor((eventDate.getTime() - CONTRACT_START_DATE.getTime()) / msPerDay) + 1);
             
             const createData = {
               user: event.args.user.toLowerCase(),
@@ -706,6 +838,7 @@ async function performSmartUpdate(provider, updateLog, currentBlock, blocksSince
               stakingDays: duration, // For compatibility
               maturityDate: new Date(endTime * 1000).toISOString(),
               startDate: new Date(blockTimestamp * 1000).toISOString(),
+              protocolDay: protocolDay, // Add protocol day
               // Initialize payment fields
               titanAmount: "0",
               titanXAmount: "0",
@@ -720,34 +853,76 @@ async function performSmartUpdate(provider, updateLog, currentBlock, blocksSince
               rawCostTitanX: "0"
             };
             
-            // Fetch actual payment data from contract using optimized RPC
-            const userCreateABI = ['function userCreates(address user, uint256 index) view returns (uint256 torusAmount, uint256 duration, uint256 timestamp, uint256 titanAmount, uint256 ethAmount, bool claimed)'];
-            const createContract = new ethers.Contract(CONTRACTS.TORUS_CREATE_STAKE, userCreateABI, provider);
-            const createResult = await fetchUserCreateData(createContract, event.args.user, event.args.stakeIndex, true);
+            // Get comprehensive payment data
+            const eventKey = `${event.transactionHash}-${event.args.stakeIndex}`;
+            const paymentData = createPaymentData.get(eventKey) || {
+              costETH: "0", rawCostETH: "0", costTitanX: "0", rawCostTitanX: "0",
+              ethAmount: "0", titanAmount: "0", titanXAmount: "0"
+            };
             
-            if (createResult.success) {
-              // Update payment fields with actual data
-              const createInfo = createResult.data;
-              createData.titanAmount = createInfo.titanAmount.toString();
-              createData.titanXAmount = createInfo.titanAmount.toString();
-              createData.ethAmount = createInfo.ethAmount.toString();
-            }
-            // Note: Silent failure - no error logging for payment data
+            // Apply payment data
+            createData.costETH = paymentData.costETH;
+            createData.rawCostETH = paymentData.rawCostETH;
+            createData.costTitanX = paymentData.costTitanX;
+            createData.rawCostTitanX = paymentData.rawCostTitanX;
+            createData.ethAmount = paymentData.ethAmount;
+            createData.titanAmount = paymentData.titanAmount;
+            createData.titanXAmount = paymentData.titanXAmount;
             
             updateStats.rpcCalls++;
             
             processedCreates.push(createData);
           }
           
-          // Merge with existing events
+          // Merge with existing events and deduplicate
+          const existingStakes = cachedData.stakingData.stakeEvents || [];
+          const existingCreates = cachedData.stakingData.createEvents || [];
+          
+          // Create sets to track unique events
+          const stakeKeys = new Set();
+          const createKeys = new Set();
+          
+          // Add existing events to sets (user + id + blockNumber as unique key)
+          existingStakes.forEach(stake => {
+            const key = `${stake.user}-${stake.id}-${stake.blockNumber}`;
+            stakeKeys.add(key);
+          });
+          
+          existingCreates.forEach(create => {
+            const key = `${create.user}-${create.id || create.createId}-${create.blockNumber}`;
+            createKeys.add(key);
+          });
+          
+          // Filter out duplicates from new events
+          const uniqueNewStakes = processedStakes.filter(stake => {
+            const key = `${stake.user}-${stake.id}-${stake.blockNumber}`;
+            if (stakeKeys.has(key)) {
+              log(`  ⚠️  Skipping duplicate stake: ${key}`, 'yellow');
+              return false;
+            }
+            stakeKeys.add(key);
+            return true;
+          });
+          
+          const uniqueNewCreates = processedCreates.filter(create => {
+            const key = `${create.user}-${create.id || create.createId}-${create.blockNumber}`;
+            if (createKeys.has(key)) {
+              log(`  ⚠️  Skipping duplicate create: ${key}`, 'yellow');
+              return false;
+            }
+            createKeys.add(key);
+            return true;
+          });
+          
+          // Merge arrays with only unique new events
           cachedData.stakingData.stakeEvents = [
-            ...(cachedData.stakingData.stakeEvents || []),
-            ...processedStakes
+            ...existingStakes,
+            ...uniqueNewStakes
           ];
           
           cachedData.stakingData.createEvents = [
-            ...(cachedData.stakingData.createEvents || []),
-            ...processedCreates
+            ...existingCreates,
+            ...uniqueNewCreates
           ];
           
           // Update metadata
@@ -756,7 +931,7 @@ async function performSmartUpdate(provider, updateLog, currentBlock, blocksSince
           cachedData.stakingData.lastBlock = currentBlock;
           
           updateStats.dataChanged = true;
-          log(`  Added ${newStakeEvents.length} new stakes, ${newCreateEvents.length} new creates`, 'green');
+          log(`  Added ${uniqueNewStakes.length} new stakes (${newStakeEvents.length - uniqueNewStakes.length} duplicates skipped), ${uniqueNewCreates.length} new creates (${newCreateEvents.length - uniqueNewCreates.length} duplicates skipped)`, 'green');
         }
       }
     } catch (e) {

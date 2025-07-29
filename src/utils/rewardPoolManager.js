@@ -18,7 +18,7 @@ const STAKE_CONTRACT_ABI = [
 // Constants based on TORUS contract design
 const INITIAL_REWARD_POOL = 100000; // 100,000 TORUS
 const DAILY_REDUCTION_RATE = 0.0008; // 0.08%
-const TOTAL_REWARD_DAYS = 88;
+const TOTAL_REWARD_DAYS = 365; // Extended to include penalty rewards
 
 /**
  * Fetch reward pool data for a range of days
@@ -72,6 +72,36 @@ async function fetchRewardPoolData(provider, startDay = 1, endDay = null) {
     }
     
     console.log(`✅ Fetched ${rewardPoolData.length} days of reward pool data`);
+    
+    // Calculate future rewards for chart display
+    const currentDay = await contract.getCurrentDayIndex();
+    const maxProjectionDay = currentDay + 88; // Always show 88 days forward
+    
+    // Fill in future days with calculated rewards
+    let lastReward = INITIAL_REWARD_POOL;
+    for (let day = 1; day <= maxProjectionDay; day++) {
+      if (day === 1) {
+        lastReward = INITIAL_REWARD_POOL;
+      } else {
+        lastReward = lastReward * (1 - DAILY_REDUCTION_RATE);
+      }
+      
+      // Check if we already have this day
+      const existing = rewardPoolData.find(d => d.day === day);
+      if (!existing) {
+        rewardPoolData.push({
+          day,
+          rewardPool: lastReward, // Rewards decline forever
+          totalShares: 0,
+          penaltiesInPool: 0,
+          calculated: true
+        });
+      }
+    }
+    
+    // Sort by day
+    rewardPoolData.sort((a, b) => a.day - b.day);
+    
     return rewardPoolData;
     
   } catch (error) {
@@ -108,7 +138,7 @@ async function fetchSingleDayData(contract, day) {
  * Calculate expected reward pool for a day using contract formula
  */
 function calculateRewardPoolForDay(day) {
-  if (day < 1 || day > TOTAL_REWARD_DAYS) {
+  if (day < 1) {
     return {
       day,
       rewardPool: 0,
@@ -116,6 +146,9 @@ function calculateRewardPoolForDay(day) {
       penaltiesInPool: 0
     };
   }
+  
+  // Days 1-88: Base rewards (declining)
+  // Days 89+: Only penalty rewards (fetched from contract)
   
   let rewardPool = INITIAL_REWARD_POOL;
   for (let i = 1; i < day; i++) {

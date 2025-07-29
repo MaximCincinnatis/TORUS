@@ -104,22 +104,36 @@ async function batchRpcCalls(calls, silent = false) {
  * Fetch user stake data with optimized error handling
  */
 async function fetchUserStakeData(contract, user, stakeIndex, silent = true) {
-  return await callWithRetry(
+  const result = await callWithRetry(
     () => contract.userStakes(user, stakeIndex),
     `stake data for ${user}:${stakeIndex}`,
     silent
   );
+  
+  // Return in expected format with success flag
+  if (result && result.principal !== undefined) {
+    return { success: true, data: result };
+  } else {
+    return { success: false, data: null };
+  }
 }
 
 /**
  * Fetch user create data with optimized error handling
  */
 async function fetchUserCreateData(contract, user, createIndex, silent = true) {
-  return await callWithRetry(
+  const result = await callWithRetry(
     () => contract.userCreates(user, createIndex),
     `create data for ${user}:${createIndex}`,
     silent
   );
+  
+  // Return in expected format with success flag
+  if (result && result.torusAmount !== undefined) {
+    return { success: true, data: result };
+  } else {
+    return { success: false, data: null };
+  }
 }
 
 /**

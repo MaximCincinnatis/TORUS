@@ -956,10 +956,11 @@ function App() {
     }
     
     // Get the current protocol day to limit the range 
-    // Use buy-process data as source of truth for current day, fallback to cached currentProtocolDay
-    const buyProcessCurrentDay = buyProcessData?.dailyData?.length > 0 
-      ? Math.max(...buyProcessData.dailyData.map((d: any) => d.protocolDay || 0))
-      : 0;
+    // Use buy-process data currentDay field as source of truth, fallback to max protocolDay in data
+    const buyProcessCurrentDay = buyProcessData?.currentDay || 
+      (buyProcessData?.dailyData?.length > 0 
+        ? Math.max(...buyProcessData.dailyData.map((d: any) => d.protocolDay || 0))
+        : 0);
     const currentDay = Math.max(buyProcessCurrentDay, currentProtocolDay, 17); // Ensure we show at least 17 days
     const maxDay = currentDay; // Only show up to current day for this chart
     
@@ -1025,6 +1026,20 @@ function App() {
     console.log(`Total TitanX from creates: ${totalCreates.toFixed(2)}`);
     console.log(`Total TitanX from stakes: ${totalStakes.toFixed(2)}`);
     console.log(`Total TitanX used: ${(totalCreates + totalStakes).toFixed(2)}`);
+    
+    // Log specific days 15-19 for debugging
+    const targetDays = [15, 16, 17, 18, 19];
+    console.log('\n🎯 Days 15-19 TitanX Usage (Chart Debug):');
+    targetDays.forEach(day => {
+      const dayData = result.find(d => d.day === day);
+      if (dayData) {
+        const total = dayData.creates + dayData.stakes;
+        console.log(`  Day ${day}: Creates=${dayData.creates.toFixed(2)}, Stakes=${dayData.stakes.toFixed(2)}, Total=${total.toFixed(2)} TitanX ${total > 1e9 ? `(${(total/1e9).toFixed(1)}B)` : ''}`);
+      } else {
+        console.log(`  Day ${day}: No data found`);
+      }
+    });
+    
     console.log('=== END DAILY TITANX USAGE ===\n');
     
     return result;
@@ -1176,13 +1191,12 @@ function App() {
     // The TorusBuyAndProcess contract executes both regular burns and LP fee burns
     // These show up in the daily totals, so we should NOT add them separately
     
-    // Convert from date-based to protocol day-based with user timezone
-    const dateBasedData = buyProcessData.dailyData.map((day: any) => ({
-      date: day.date,
-      amount: day.torusBurned || 0
-    }));
-    
-    return convertToProtocolDayData(dateBasedData);
+    // Use the protocol day directly from the data to avoid date conversion issues
+    return buyProcessData.dailyData.map((day: any) => ({
+      date: getProtocolDayUserDate(day.protocolDay), // Use protocol day to get consistent dates
+      amount: day.torusBurned || 0,
+      day: day.protocolDay
+    })).sort((a: any, b: any) => a.day - b.day);
   };
 
   const calculateCumulativeTorusBurned = (): { date: string; amount: number; day: number }[] => {
@@ -1206,14 +1220,13 @@ function App() {
   const calculateBuyBurnActivity = (): { date: string; buyAndBurn: number; buyAndBuild: number; day: number }[] => {
     if (!buyProcessData?.dailyData) return [];
     
-    // Convert from date-based to protocol day-based with user timezone
-    const dateBasedData = buyProcessData.dailyData.map((day: any) => ({
-      date: day.date,
+    // Use the protocol day directly from the data to avoid date conversion issues
+    return buyProcessData.dailyData.map((day: any) => ({
+      date: getProtocolDayUserDate(day.protocolDay), // Use protocol day to get consistent dates
       buyAndBurn: day.buyAndBurnCount,
-      buyAndBuild: day.buyAndBuildCount
-    }));
-    
-    return convertToProtocolDayData(dateBasedData);
+      buyAndBuild: day.buyAndBuildCount,
+      day: day.protocolDay
+    })).sort((a: any, b: any) => a.day - b.day);
   };
 
   const calculateTitanXEthUsage = (): { date: string; titanX: number; eth: number; day: number }[] => {
@@ -1268,8 +1281,16 @@ function App() {
       console.log('- Total TORUS Burnt:', buyProcessData.totals.torusBurnt);
     }
     
-    // Convert from date-based to protocol day-based with user timezone
-    return convertToProtocolDayData(dateBasedData);
+    // Use the protocol day directly from the data to avoid date conversion issues
+    const result = buyProcessData.dailyData.map((day: any) => ({
+      date: getProtocolDayUserDate(day.protocolDay), // Use protocol day to get consistent dates
+      titanX: (day.titanXUsedForBurns || 0) / 1e9,  // Convert to billions  
+      eth: day.ethUsedForBurns || 0,
+      day: day.protocolDay
+    })).sort((a: any, b: any) => a.day - b.day);
+    
+    console.log('Final result:', result);
+    return result;
   };
 
   // Only calculate if data is loaded
@@ -1286,10 +1307,11 @@ function App() {
     const dailyData: { [key: number]: { creates: number; stakes: number } } = {};
     
     // Get the current protocol day to limit the range 
-    // Use buy-process data as source of truth for current day, fallback to cached currentProtocolDay
-    const buyProcessCurrentDay = buyProcessData?.dailyData?.length > 0 
-      ? Math.max(...buyProcessData.dailyData.map((d: any) => d.protocolDay || 0))
-      : 0;
+    // Use buy-process data currentDay field as source of truth, fallback to max protocolDay in data
+    const buyProcessCurrentDay = buyProcessData?.currentDay || 
+      (buyProcessData?.dailyData?.length > 0 
+        ? Math.max(...buyProcessData.dailyData.map((d: any) => d.protocolDay || 0))
+        : 0);
     const currentDay = Math.max(buyProcessCurrentDay, currentProtocolDay, 17); // Ensure we show at least 17 days
     const maxDay = currentDay; // Only show up to current day for this chart
     
@@ -1357,14 +1379,13 @@ function App() {
   const calculateTitanXEthBuildUsage = (): { date: string; titanX: number; eth: number; day: number }[] => {
     if (!buyProcessData?.dailyData) return [];
     
-    // Convert from date-based to protocol day-based with user timezone
-    const dateBasedData = buyProcessData.dailyData.map((day: any) => ({
-      date: day.date,
-      titanX: day.titanXUsedForBuilds || 0,  // Only builds
-      eth: day.ethUsedForBuilds || 0         // Only builds
-    }));
-    
-    return convertToProtocolDayData(dateBasedData);
+    // Use the protocol day directly from the data to avoid date conversion issues
+    return buyProcessData.dailyData.map((day: any) => ({
+      date: getProtocolDayUserDate(day.protocolDay), // Use protocol day to get consistent dates
+      titanX: (day.titanXUsedForBuilds || 0) / 1e9,  // Convert to billions
+      eth: day.ethUsedForBuilds || 0,
+      day: day.protocolDay
+    })).sort((a: any, b: any) => a.day - b.day);
   };
 
   // Calculate Buy & Process data
@@ -1595,6 +1616,18 @@ function App() {
     
     console.log('=== END DAY ANALYSIS ===\n');
   }
+  
+  // Helper to calculate contract day for events (for charts)
+  const addContractDayToEvents = (events: any[]) => {
+    return events.map(event => ({
+      ...event,
+      contractDay: event.timestamp ? getContractDay(new Date(parseInt(event.timestamp) * 1000)) : null
+    }));
+  };
+  
+  // Add contract days to events for chart usage
+  const stakeDataWithDays = useMemo(() => addContractDayToEvents(stakeData), [stakeData]);
+  const createDataWithDays = useMemo(() => addContractDayToEvents(createData), [createData]);
   
   // Stake metrics
   const activeStakesData = stakeData.filter(stake => {
@@ -2581,7 +2614,7 @@ function App() {
           onDaysChange={setDailyTitanXUsageDays}
         />
         <PannableBarChart
-          key="daily-titanx-usage-chart"
+          key={`daily-titanx-usage-chart-${dailyTitanXUsage.length}-${Date.now()}`}
           title={<>Daily <span style={{color: '#16a34a'}}>TitanX</span> Usage Breakdown</>}
           labels={dailyTitanXUsage.map(r => {
             return [`${r.date.substring(5)}`, `Day ${r.day}`];
@@ -2939,7 +2972,7 @@ function App() {
           datasets={[
             {
               label: 'TitanX Used',
-              data: titanXEthUsage.map(d => d.titanX / 1e9), // Show in billions
+              data: titanXEthUsage.map(d => d.titanX), // Already in billions
               // backgroundColor will be set by gradient plugin
               yAxisID: 'y',
             },
@@ -3031,7 +3064,7 @@ function App() {
           datasets={[
             {
               label: 'TitanX Used',
-              data: titanXEthBuildUsage.map(d => d.titanX / 1e9), // Show in billions
+              data: titanXEthBuildUsage.map(d => d.titanX), // Already in billions
               // backgroundColor will be set by gradient plugin
               yAxisID: 'y',
             },
