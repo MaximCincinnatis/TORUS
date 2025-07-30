@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2025-07-30T18:20:33.697Z",
+  "lastUpdated": "2025-07-30T18:25:06.001Z",
   "version": "1.0.0",
   "poolData": {
     "sqrtPriceX96": "546583387126081041033788464325868",
@@ -45478,6 +45478,16 @@
         "blockNumber": 23033548,
         "maturityDate": "2025-10-26T17:51:47.000Z",
         "startDate": "2025-07-30T17:51:47.000Z"
+      },
+      {
+        "user": "0x79c640b83e95135c2578a1e1e0d48b637fc2ead7",
+        "id": "22",
+        "torusAmount": "196821150075560357049",
+        "endTime": 1761503039,
+        "timestamp": 1753899839,
+        "blockNumber": 23033709,
+        "maturityDate": "2025-10-26T18:23:59.000Z",
+        "startDate": "2025-07-30T18:23:59.000Z"
       }
     ],
     "rewardPoolData": [
@@ -46141,21 +46151,21 @@
     "burnedSupply": 0,
     "lastUpdated": "2025-07-16T19:25:33.217Z",
     "metadata": {
-      "currentBlock": 23033689,
+      "currentBlock": 23033713,
       "lastUpdate": "2025-07-16T19:14:31.015Z",
       "stakesRefreshed": "2025-07-16T18:54:18.007Z",
       "dailySupplySnapshot": {
         "day": 21,
         "totalSupply": 17472.99196053419,
         "burnedSupply": 0,
-        "timestamp": "2025-07-30T18:20:02.900Z"
+        "timestamp": "2025-07-30T18:25:02.716Z"
       },
       "lastCreateBlock": 22969998,
       "lastFullRebuild": "2025-07-21T22:29:04.583Z",
       "totalCreates": 1258,
       "rebuildBlock": 22970545
     },
-    "lastBlock": 23033689
+    "lastBlock": 23033713
   },
   "contractData": {
     "torusToken": {
@@ -48589,8 +48599,8 @@
     }
   ],
   "totalSupply": 17472.99196053419,
-  "totalTitanXBurnt": "174871256623565936781419688033",
+  "totalTitanXBurnt": "174957456623565936781419688033",
   "titanxTotalSupply": "105738073748524978455421627814950",
   "lastLPUpdate": 23020006,
-  "lastBlock": 23033689
+  "lastBlock": 23033713
 }
