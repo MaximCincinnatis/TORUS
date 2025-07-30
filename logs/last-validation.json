@@ -1,11 +1,12 @@
 {
-  "valid": true,
-  "errors": [],
+  "valid": false,
+  "errors": [
+    "Duplicate entries for protocol day 20 (found 2 times)",
+    "Protocol days not in order: 20 -> 20"
+  ],
   "warnings": [
     "Day 3: Has 1 builds but 0 TitanX used for builds",
-    "Day 4: Has ETH used but not allocated to burns or builds",
-    "Day 5: Has ETH used but not allocated to burns or builds",
-    "Day 7: Has ETH used but not allocated to burns or builds"
+    "Day 20: Has 1 builds but 0 TitanX used for builds"
   ],
-  "timestamp": "2025-07-29T00:52:56.151Z"
+  "timestamp": "2025-07-30T12:55:32.900Z"
 }
