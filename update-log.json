@@ -1,20 +1,9 @@
 {
-  "startTime": 1753860901446,
+  "startTime": 1753861201608,
   "rpcCalls": 0,
-  "lastBlockNumber": 23030483,
-  "lastUpdateTime": "2025-07-30T07:35:29.949Z",
+  "lastBlockNumber": 23030509,
+  "lastUpdateTime": "2025-07-30T07:40:05.815Z",
   "updateHistory": [
-    {
-      "timestamp": "2025-07-29T23:20:01.472Z",
-      "rpcCalls": 2,
-      "dataChanged": true,
-      "errors": [
-        "TitanX update: missing revert data in call exception; Transaction reverted without a reason string [ See: https://links.ethers.org/v5-errors-CALL_EXCEPTION ] (data=\"0x\", transaction={\"to\":\"0xc7Cc775B21f9Df85E043C7FDd9dAC60af0B69507\",\"data\":\"0x4310b4ab\",\"accessList\":null}, error={\"reason\":\"bad response\",\"code\":\"SERVER_ERROR\",\"status\":408,\"headers\":{\"date\":\"Tue, 29 Jul 2025 23:20:05 GMT\",\"content-type\":\"application/json\",\"transfer-encoding\":\"chunked\",\"connection\":\"close\",\"access-control-allow-origin\":\"*\",\"vary\":\"Accept-Encoding\",\"x-drpc-owner-id\":\"cb501251-31a8-4028-8b0a-54679f15c385\",\"x-drpc-owner-tier\":\"free\",\"x-drpc-provider-id\":\"drpc-core-free\",\"x-drpc-trace-id\":\"68f97e8c421720f6f6b280a763ce3af9\",\"strict-transport-security\":\"max-age=31536000; includeSubDomains\",\"access-control-allow-credentials\":\"true\",\"access-control-allow-methods\":\"GET, PUT, POST, DELETE, PATCH, OPTIONS\",\"access-control-allow-headers\":\"DNT,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range,Authorization\",\"access-control-max-age\":\"1728000\",\"cf-cache-status\":\"DYNAMIC\",\"server\":\"cloudflare\",\"cf-ray\":\"9670583d3eb127ab-SEA\"},\"body\":\"{\\\"id\\\":56,\\\"jsonrpc\\\":\\\"2.0\\\",\\\"error\\\":{\\\"message\\\":\\\"Request timeout on the free tier, please upgrade your tier to the paid one\\\",\\\"code\\\":30}}\",\"requestBody\":\"{\\\"method\\\":\\\"eth_call\\\",\\\"params\\\":[{\\\"to\\\":\\\"0xc7cc775b21f9df85e043c7fdd9dac60af0b69507\\\",\\\"data\\\":\\\"0x4310b4ab\\\"},\\\"latest\\\"],\\\"id\\\":56,\\\"jsonrpc\\\":\\\"2.0\\\"}\",\"requestMethod\":\"POST\",\"url\":\"https://eth.drpc.org\"}, code=CALL_EXCEPTION, version=providers/5.7.2)"
-      ],
-      "stats": {
-        "rpcCalls": null
-      }
-    },
     {
       "timestamp": "2025-07-29T23:25:01.828Z",
       "rpcCalls": 2,
@@ -904,6 +893,17 @@
       "rpcCalls": 2,
       "dataChanged": true,
       "errors": [],
+      "stats": {
+        "rpcCalls": null
+      }
+    },
+    {
+      "timestamp": "2025-07-30T07:40:01.609Z",
+      "rpcCalls": 2,
+      "dataChanged": false,
+      "errors": [
+        "Buy & Process update: Command failed: node scripts/update-buy-process-data.js"
+      ],
       "stats": {
         "rpcCalls": null
       }
