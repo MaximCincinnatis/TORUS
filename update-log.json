@@ -1,18 +1,9 @@
 {
-  "startTime": 1753833901270,
+  "startTime": 1753834201032,
   "rpcCalls": 0,
-  "lastBlockNumber": 23028250,
-  "lastUpdateTime": "2025-07-30T00:05:30.834Z",
+  "lastBlockNumber": 23028276,
+  "lastUpdateTime": "2025-07-30T00:10:30.960Z",
   "updateHistory": [
-    {
-      "timestamp": "2025-07-29T16:00:01.077Z",
-      "rpcCalls": 0,
-      "dataChanged": true,
-      "errors": [],
-      "stats": {
-        "rpcCalls": null
-      }
-    },
     {
       "timestamp": "2025-07-29T16:05:01.497Z",
       "rpcCalls": 0,
@@ -894,6 +885,17 @@
       "rpcCalls": 2,
       "dataChanged": true,
       "errors": [],
+      "stats": {
+        "rpcCalls": null
+      }
+    },
+    {
+      "timestamp": "2025-07-30T00:10:01.033Z",
+      "rpcCalls": 0,
+      "dataChanged": true,
+      "errors": [
+        "Event fetching: bad response (status=500, headers={\"date\":\"Wed, 30 Jul 2025 00:10:02 GMT\",\"content-type\":\"application/json\",\"transfer-encoding\":\"chunked\",\"connection\":\"close\",\"access-control-allow-origin\":\"*\",\"vary\":\"Accept-Encoding\",\"x-drpc-owner-id\":\"cb501251-31a8-4028-8b0a-54679f15c385\",\"x-drpc-owner-tier\":\"free\",\"x-drpc-provider-id\":\"cardinate-free\",\"x-drpc-trace-id\":\"ff7f0dfd90dda79684cee5a30d022799\",\"strict-transport-security\":\"max-age=31536000; includeSubDomains\",\"access-control-allow-credentials\":\"true\",\"access-control-allow-methods\":\"GET, PUT, POST, DELETE, PATCH, OPTIONS\",\"access-control-allow-headers\":\"DNT,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range,Authorization\",\"access-control-max-age\":\"1728000\",\"cf-cache-status\":\"DYNAMIC\",\"server\":\"cloudflare\",\"cf-ray\":\"9670a1763c6ec378-SEA\"}, body=\"{\\\"id\\\":52,\\\"jsonrpc\\\":\\\"2.0\\\",\\\"error\\\":{\\\"message\\\":\\\"Unable to perform request\\\",\\\"code\\\":19}}\", requestBody=\"{\\\"method\\\":\\\"eth_getLogs\\\",\\\"params\\\":[{\\\"fromBlock\\\":\\\"0x15f6203\\\",\\\"toBlock\\\":\\\"0x15f6234\\\",\\\"address\\\":\\\"0xc7cc775b21f9df85e043c7fdd9dac60af0b69507\\\",\\\"topics\\\":[\\\"0x9cfd25589d1eb8ad71e342a86a8524e83522e3936c0803048c08f6d9ad974f40\\\"]}],\\\"id\\\":52,\\\"jsonrpc\\\":\\\"2.0\\\"}\", requestMethod=\"POST\", url=\"https://eth.drpc.org\", code=SERVER_ERROR, version=web/5.8.0)"
+      ],
       "stats": {
         "rpcCalls": null
       }
