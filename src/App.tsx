@@ -16,6 +16,7 @@ import { getContractInfo, RewardPoolData } from './utils/ethersWeb3';
 import { getTokenInfo, SimpleLPPosition } from './utils/uniswapV3RealOwners';
 import { getMainDashboardDataWithCache, getLPPositionsWithCache } from './utils/cacheDataLoader';
 import { updateDailySnapshot } from './utils/historicalSupplyTracker';
+import MaintenancePage from './MaintenancePage';
 import './App.css';
 
 // Contract launch date - Day 1 (aligned with contract's actual protocol start time)
@@ -1855,6 +1856,13 @@ function App() {
   if (createData.length > 0) {
     const sample = createData[0];
     console.log(`Sample: ${sample.torusAmount} * ${sample.stakingDays} * ${sample.stakingDays} = ${sample.shares}`);
+  }
+
+  // Maintenance mode flag - set to true to show maintenance page
+  const isMaintenanceMode = true; // TODO: Change to false when backend work is complete
+  
+  if (isMaintenanceMode) {
+    return <MaintenancePage />;
   }
 
   return (
