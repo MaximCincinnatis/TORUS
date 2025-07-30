@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2025-07-30T17:35:05.872Z",
+  "lastUpdated": "2025-07-30T17:40:06.769Z",
   "version": "1.0.0",
   "poolData": {
     "sqrtPriceX96": "546583387126081041033788464325868",
@@ -45458,6 +45458,16 @@
         "blockNumber": 23033155,
         "maturityDate": "2025-10-26T16:32:47.000Z",
         "startDate": "2025-07-30T16:32:47.000Z"
+      },
+      {
+        "user": "0x6582b7c80df319553a988f62436b8a1be6b2b24c",
+        "id": "41",
+        "torusAmount": "98489442931170743999",
+        "endTime": 1761500183,
+        "timestamp": 1753896983,
+        "blockNumber": 23033471,
+        "maturityDate": "2025-10-26T17:36:23.000Z",
+        "startDate": "2025-07-30T17:36:23.000Z"
       }
     ],
     "rewardPoolData": [
@@ -46117,25 +46127,25 @@
       }
     ],
     "currentProtocolDay": 20,
-    "totalSupply": 17476.359187980066,
+    "totalSupply": 17493.075855700183,
     "burnedSupply": 0,
     "lastUpdated": "2025-07-16T19:25:33.217Z",
     "metadata": {
-      "currentBlock": 23033463,
+      "currentBlock": 23033488,
       "lastUpdate": "2025-07-16T19:14:31.015Z",
       "stakesRefreshed": "2025-07-16T18:54:18.007Z",
       "dailySupplySnapshot": {
         "day": 20,
-        "totalSupply": 17476.359187980066,
+        "totalSupply": 17493.075855700183,
         "burnedSupply": 0,
-        "timestamp": "2025-07-30T17:35:02.738Z"
+        "timestamp": "2025-07-30T17:40:03.438Z"
       },
       "lastCreateBlock": 22969998,
       "lastFullRebuild": "2025-07-21T22:29:04.583Z",
       "totalCreates": 1258,
       "rebuildBlock": 22970545
     },
-    "lastBlock": 23033463
+    "lastBlock": 23033488
   },
   "contractData": {
     "torusToken": {
@@ -48568,9 +48578,9 @@
       "penaltiesInPool": 0
     }
   ],
-  "totalSupply": 17476.359187980066,
-  "totalTitanXBurnt": "174807090057628534986433548030",
+  "totalSupply": 17493.075855700183,
+  "totalTitanXBurnt": "174849912620979322735814430974",
   "titanxTotalSupply": "105737715252981763313654026000966",
   "lastLPUpdate": 23020006,
-  "lastBlock": 23033463
+  "lastBlock": 23033488
 }
