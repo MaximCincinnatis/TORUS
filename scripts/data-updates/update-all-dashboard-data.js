@@ -213,6 +213,26 @@ function aggregateTitanXByEndDate(stakeEvents, createEvents) {
   })).sort((a, b) => new Date(a.date) - new Date(b.date));
 }
 
+// Protocol day calculation function
+function getProtocolDay(timestamp) {
+  const CONTRACT_START_DATE = new Date('2025-07-10T18:00:00.000Z');
+  const msPerDay = 24 * 60 * 60 * 1000;
+  let dateObj;
+  
+  if (typeof timestamp === 'number') {
+    // Unix timestamp in seconds
+    dateObj = new Date(timestamp * 1000);
+  } else if (typeof timestamp === 'string') {
+    // Date string - avoid for protocol day calculation
+    dateObj = new Date(timestamp + 'T12:00:00.000Z');
+  } else {
+    dateObj = timestamp;
+  }
+  
+  const daysDiff = Math.floor((dateObj.getTime() - CONTRACT_START_DATE.getTime()) / msPerDay) + 1;
+  return Math.max(1, daysDiff);
+}
+
 async function updateAllDashboardData() {
   console.log('🚀 UPDATING ALL DASHBOARD DATA (COMPLETE VERSION)');
   console.log('================================================');
@@ -341,8 +361,13 @@ async function updateAllDashboardData() {
     }
     console.log('');
     
-    // Update events with costs AND shares
+    // Update events with costs AND shares - also fix protocol days
     cachedData.stakingData.stakeEvents.forEach(event => {
+      // Fix undefined protocol days
+      if (!event.protocolDay || event.protocolDay === undefined) {
+        event.protocolDay = getProtocolDay(parseInt(event.timestamp));
+      }
+      
       const userPos = userPositions.get(event.user);
       if (userPos) {
         const eventMaturityTime = Math.floor(new Date(event.maturityDate).getTime() / 1000);
@@ -369,6 +394,11 @@ async function updateAllDashboardData() {
     });
     
     cachedData.stakingData.createEvents.forEach(event => {
+      // Fix undefined protocol days for creates too
+      if (!event.protocolDay || event.protocolDay === undefined) {
+        event.protocolDay = getProtocolDay(parseInt(event.timestamp));
+      }
+      
       const userPos = userPositions.get(event.user);
       if (userPos) {
         const eventMaturityTime = Math.floor(new Date(event.maturityDate).getTime() / 1000);
