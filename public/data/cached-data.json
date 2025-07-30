@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2025-07-30T15:45:31.368Z",
+  "lastUpdated": "2025-07-30T15:50:29.400Z",
   "version": "1.0.0",
   "poolData": {
     "sqrtPriceX96": "539135848902871135960907190617074",
@@ -19,7 +19,7 @@
       "tickUpper": 168200,
       "lowerTitanxPerTorus": "0.20M",
       "upperTitanxPerTorus": "20.16M",
-      "currentTitanxPerTorus": "48.01M",
+      "currentTitanxPerTorus": "47.59M",
       "claimableTorus": 0,
       "claimableTitanX": 0,
       "tokensOwed0": "0",
@@ -30,15 +30,7 @@
       "priceRange": "0.20M - 20.16M TITANX per TORUS",
       "torusAmount": 0,
       "titanxAmount": 114999999.99989024,
-      "claimableYield": 0,
-      "burned": false,
-      "token0": "0xB47f575807fC5466285e1277Ef8aCFBB5c6686E8",
-      "token1": "0xF19308F923582A6f7c465e5CE7a9Dc1BEC6665B1",
-      "nonce": "0",
-      "status": "active",
-      "lastUpdated": "2025-07-28T20:25:03.226Z",
-      "lastActivityBlock": 23020006,
-      "lastChecked": "2025-07-29T20:43:45.726Z"
+      "claimableYield": 0
     },
     {
       "tokenId": "1032346",
@@ -48,7 +40,7 @@
       "tickUpper": 173800,
       "lowerTitanxPerTorus": "28.89M",
       "upperTitanxPerTorus": "35.29M",
-      "currentTitanxPerTorus": "48.01M",
+      "currentTitanxPerTorus": "47.59M",
       "claimableTorus": 0.1460776033756232,
       "claimableTitanX": 5003826.698754727,
       "tokensOwed0": "0",
@@ -59,15 +51,7 @@
       "priceRange": "28.89M - 35.29M TITANX per TORUS",
       "torusAmount": 0,
       "titanxAmount": 879002737.6988096,
-      "claimableYield": 5003826.84483233,
-      "burned": false,
-      "token0": "0xB47f575807fC5466285e1277Ef8aCFBB5c6686E8",
-      "token1": "0xF19308F923582A6f7c465e5CE7a9Dc1BEC6665B1",
-      "nonce": "0",
-      "status": "active",
-      "lastUpdated": "2025-07-28T20:25:04.177Z",
-      "lastActivityBlock": 23020006,
-      "lastChecked": "2025-07-29T20:43:46.404Z"
+      "claimableYield": 5003826.84483233
     },
     {
       "tokenId": "1029195",
@@ -102,393 +86,393 @@
   "historicalData": {
     "sevenDay": [
       {
-        "date": "2025-07-20",
-        "volumeUSD": 113858.36579582523,
-        "volumeToken0": 903.1645744865318,
-        "volumeToken1": 49307112.21498413,
-        "feesUSD": 1468.6279206978852,
-        "tvlUSD": 9180093.549479138,
-        "liquidity": "65835830261737867710370501",
-        "txCount": 264
-      },
-      {
-        "date": "2025-07-21",
-        "volumeUSD": 94885.32938490191,
-        "volumeToken0": 663.037483899022,
-        "volumeToken1": 62851909.42232474,
-        "feesUSD": 659.0060893312971,
-        "tvlUSD": 9180093.549479138,
-        "liquidity": "65835830261737867710370501",
-        "txCount": 118
-      },
-      {
-        "date": "2025-07-22",
-        "volumeUSD": 53680.315323227216,
-        "volumeToken0": 1205.1411447800174,
-        "volumeToken1": 30029688.12789485,
-        "feesUSD": 845.8468866549487,
-        "tvlUSD": 9180093.549479138,
-        "liquidity": "65835830261737867710370501",
-        "txCount": 128
-      },
-      {
-        "date": "2025-07-23",
-        "volumeUSD": 73623.42181566096,
-        "volumeToken0": 755.2235542278606,
-        "volumeToken1": 48805689.923498616,
-        "feesUSD": 526.5919261044764,
-        "tvlUSD": 9180093.549479138,
-        "liquidity": "65835830261737867710370501",
-        "txCount": 185
-      },
-      {
         "date": "2025-07-24",
-        "volumeUSD": 111097.4665013889,
-        "volumeToken0": 1442.049861684507,
-        "volumeToken1": 68901673.27401301,
-        "feesUSD": 543.1436425562728,
-        "tvlUSD": 9180093.549479138,
-        "liquidity": "65835830261737867710370501",
-        "txCount": 191
+        "volumeUSD": 146488.80151406635,
+        "volumeToken0": 1405.6872180113637,
+        "volumeToken1": 61004875.05334502,
+        "feesUSD": 1088.59882185987,
+        "tvlUSD": 9338769.34588146,
+        "liquidity": "67472300524638809283221485",
+        "txCount": 202
       },
       {
         "date": "2025-07-25",
-        "volumeUSD": 145400.50680023723,
-        "volumeToken0": 552.8782071315799,
-        "volumeToken1": 65511132.563777864,
-        "feesUSD": 1090.1438398002952,
-        "tvlUSD": 9180093.549479138,
-        "liquidity": "65835830261737867710370501",
-        "txCount": 182
+        "volumeUSD": 68471.39873238644,
+        "volumeToken0": 1295.3784942626717,
+        "volumeToken1": 63490033.936010316,
+        "feesUSD": 1156.7034304934273,
+        "tvlUSD": 9338769.34588146,
+        "liquidity": "67472300524638809283221485",
+        "txCount": 217
       },
       {
         "date": "2025-07-26",
-        "volumeUSD": 94333.02355784911,
-        "volumeToken0": 1314.4004088804784,
-        "volumeToken1": 47717862.327595234,
-        "feesUSD": 743.2603363019368,
-        "tvlUSD": 9180093.549479138,
-        "liquidity": "65835830261737867710370501",
-        "txCount": 181
+        "volumeUSD": 52093.44889162826,
+        "volumeToken0": 1333.0477802082846,
+        "volumeToken1": 53938759.961202815,
+        "feesUSD": 621.2305270034062,
+        "tvlUSD": 9338769.34588146,
+        "liquidity": "67472300524638809283221485",
+        "txCount": 160
+      },
+      {
+        "date": "2025-07-27",
+        "volumeUSD": 94354.75038360039,
+        "volumeToken0": 918.961685064525,
+        "volumeToken1": 64360331.44810416,
+        "feesUSD": 1432.7905532195527,
+        "tvlUSD": 9338769.34588146,
+        "liquidity": "67472300524638809283221485",
+        "txCount": 238
+      },
+      {
+        "date": "2025-07-28",
+        "volumeUSD": 112800.109329073,
+        "volumeToken0": 924.9576911204542,
+        "volumeToken1": 53978129.29740967,
+        "feesUSD": 1085.8629259443046,
+        "tvlUSD": 9338769.34588146,
+        "liquidity": "67472300524638809283221485",
+        "txCount": 220
+      },
+      {
+        "date": "2025-07-29",
+        "volumeUSD": 72637.05983208586,
+        "volumeToken0": 843.7678793894994,
+        "volumeToken1": 49541611.139043085,
+        "feesUSD": 663.0396899325823,
+        "tvlUSD": 9338769.34588146,
+        "liquidity": "67472300524638809283221485",
+        "txCount": 109
+      },
+      {
+        "date": "2025-07-30",
+        "volumeUSD": 64092.361998135326,
+        "volumeToken0": 1302.4715060980684,
+        "volumeToken1": 30809265.11351644,
+        "feesUSD": 1060.944124726951,
+        "tvlUSD": 9338769.34588146,
+        "liquidity": "67472300524638809283221485",
+        "txCount": 270
       }
     ],
     "thirtyDay": [
       {
-        "date": "2025-06-27",
-        "volumeUSD": 122493.67160339498,
-        "volumeToken0": 1383.6251739262989,
-        "volumeToken1": 30891938.6365868,
-        "feesUSD": 522.6714582283382,
-        "tvlUSD": 9180093.549479138,
-        "liquidity": "65835830261737867710370501",
-        "txCount": 157
-      },
-      {
-        "date": "2025-06-28",
-        "volumeUSD": 86660.0879047347,
-        "volumeToken0": 846.5133068971538,
-        "volumeToken1": 44006010.24127397,
-        "feesUSD": 896.9922495812315,
-        "tvlUSD": 9180093.549479138,
-        "liquidity": "65835830261737867710370501",
-        "txCount": 137
-      },
-      {
-        "date": "2025-06-29",
-        "volumeUSD": 56631.05574324929,
-        "volumeToken0": 665.7832907933337,
-        "volumeToken1": 51275996.77080946,
-        "feesUSD": 1157.6259157787179,
-        "tvlUSD": 9180093.549479138,
-        "liquidity": "65835830261737867710370501",
-        "txCount": 188
-      },
-      {
-        "date": "2025-06-30",
-        "volumeUSD": 122416.78688933938,
-        "volumeToken0": 1447.5187333622753,
-        "volumeToken1": 68982408.44632117,
-        "feesUSD": 1121.2716757648436,
-        "tvlUSD": 9180093.549479138,
-        "liquidity": "65835830261737867710370501",
-        "txCount": 197
-      },
-      {
         "date": "2025-07-01",
-        "volumeUSD": 62774.059333372235,
-        "volumeToken0": 522.564929712765,
-        "volumeToken1": 28352756.527590327,
-        "feesUSD": 887.667234904173,
-        "tvlUSD": 9180093.549479138,
-        "liquidity": "65835830261737867710370501",
-        "txCount": 166
-      },
-      {
-        "date": "2025-07-02",
-        "volumeUSD": 118176.81305800876,
-        "volumeToken0": 1028.129158615699,
-        "volumeToken1": 64966689.91404312,
-        "feesUSD": 948.509123763875,
-        "tvlUSD": 9180093.549479138,
-        "liquidity": "65835830261737867710370501",
-        "txCount": 190
-      },
-      {
-        "date": "2025-07-03",
-        "volumeUSD": 111466.70295108996,
-        "volumeToken0": 564.760324541709,
-        "volumeToken1": 43490700.87506248,
-        "feesUSD": 1213.935371947291,
-        "tvlUSD": 9180093.549479138,
-        "liquidity": "65835830261737867710370501",
-        "txCount": 235
-      },
-      {
-        "date": "2025-07-04",
-        "volumeUSD": 131298.42035086287,
-        "volumeToken0": 813.4017204331883,
-        "volumeToken1": 74256274.01296893,
-        "feesUSD": 889.9466767214435,
-        "tvlUSD": 9180093.549479138,
-        "liquidity": "65835830261737867710370501",
-        "txCount": 244
-      },
-      {
-        "date": "2025-07-05",
-        "volumeUSD": 147200.82449711085,
-        "volumeToken0": 1370.6863666838772,
-        "volumeToken1": 71955209.00076814,
-        "feesUSD": 1326.8457637756374,
-        "tvlUSD": 9180093.549479138,
-        "liquidity": "65835830261737867710370501",
-        "txCount": 220
-      },
-      {
-        "date": "2025-07-06",
-        "volumeUSD": 62011.806283790705,
-        "volumeToken0": 844.0354897045404,
-        "volumeToken1": 38512557.83790407,
-        "feesUSD": 906.3059637524009,
-        "tvlUSD": 9180093.549479138,
-        "liquidity": "65835830261737867710370501",
-        "txCount": 162
-      },
-      {
-        "date": "2025-07-07",
-        "volumeUSD": 132869.15924679887,
-        "volumeToken0": 1072.707186715698,
-        "volumeToken1": 66466555.440908924,
-        "feesUSD": 573.0467235569631,
-        "tvlUSD": 9180093.549479138,
-        "liquidity": "65835830261737867710370501",
-        "txCount": 281
-      },
-      {
-        "date": "2025-07-08",
-        "volumeUSD": 82008.1909784653,
-        "volumeToken0": 612.125354497626,
-        "volumeToken1": 73522750.78112876,
-        "feesUSD": 1324.299719124142,
-        "tvlUSD": 9180093.549479138,
-        "liquidity": "65835830261737867710370501",
-        "txCount": 277
-      },
-      {
-        "date": "2025-07-09",
-        "volumeUSD": 89341.19143475904,
-        "volumeToken0": 595.2038316303847,
-        "volumeToken1": 31422325.13128084,
-        "feesUSD": 876.605909710146,
-        "tvlUSD": 9180093.549479138,
-        "liquidity": "65835830261737867710370501",
-        "txCount": 130
-      },
-      {
-        "date": "2025-07-10",
-        "volumeUSD": 59615.99796099177,
-        "volumeToken0": 1057.3596586691192,
-        "volumeToken1": 33994017.36078557,
-        "feesUSD": 596.3797234284926,
-        "tvlUSD": 9180093.549479138,
-        "liquidity": "65835830261737867710370501",
-        "txCount": 195
-      },
-      {
-        "date": "2025-07-11",
-        "volumeUSD": 110879.54015027406,
-        "volumeToken0": 923.6529532008351,
-        "volumeToken1": 48924038.13603686,
-        "feesUSD": 1466.7049504073534,
-        "tvlUSD": 9180093.549479138,
-        "liquidity": "65835830261737867710370501",
-        "txCount": 201
-      },
-      {
-        "date": "2025-07-12",
-        "volumeUSD": 90229.36912922395,
-        "volumeToken0": 1184.4307537852842,
-        "volumeToken1": 38046768.56440757,
-        "feesUSD": 1121.4914856829348,
-        "tvlUSD": 9180093.549479138,
-        "liquidity": "65835830261737867710370501",
-        "txCount": 263
-      },
-      {
-        "date": "2025-07-13",
-        "volumeUSD": 73855.41735515473,
-        "volumeToken0": 1328.4043342959703,
-        "volumeToken1": 53945609.86172182,
-        "feesUSD": 1167.6570078314612,
-        "tvlUSD": 9180093.549479138,
-        "liquidity": "65835830261737867710370501",
-        "txCount": 281
-      },
-      {
-        "date": "2025-07-14",
-        "volumeUSD": 145063.23031955876,
-        "volumeToken0": 787.9913286559632,
-        "volumeToken1": 34475383.40466341,
-        "feesUSD": 1496.693435178132,
-        "tvlUSD": 9180093.549479138,
-        "liquidity": "65835830261737867710370501",
-        "txCount": 207
-      },
-      {
-        "date": "2025-07-15",
-        "volumeUSD": 114589.15264214581,
-        "volumeToken0": 559.6361324351269,
-        "volumeToken1": 42070108.59345284,
-        "feesUSD": 1390.4546378868652,
-        "tvlUSD": 9180093.549479138,
-        "liquidity": "65835830261737867710370501",
-        "txCount": 294
-      },
-      {
-        "date": "2025-07-16",
-        "volumeUSD": 68393.7812242369,
-        "volumeToken0": 1470.6850273077466,
-        "volumeToken1": 38635543.42463779,
-        "feesUSD": 684.7866265466293,
-        "tvlUSD": 9180093.549479138,
-        "liquidity": "65835830261737867710370501",
-        "txCount": 213
-      },
-      {
-        "date": "2025-07-17",
-        "volumeUSD": 117733.25297683752,
-        "volumeToken0": 1010.5583360750559,
-        "volumeToken1": 74934612.59837389,
-        "feesUSD": 1489.9091126629387,
-        "tvlUSD": 9180093.549479138,
-        "liquidity": "65835830261737867710370501",
-        "txCount": 253
-      },
-      {
-        "date": "2025-07-18",
-        "volumeUSD": 70547.87937837702,
-        "volumeToken0": 857.2613800477218,
-        "volumeToken1": 45600682.65042952,
-        "feesUSD": 974.3142478990934,
-        "tvlUSD": 9180093.549479138,
-        "liquidity": "65835830261737867710370501",
-        "txCount": 101
-      },
-      {
-        "date": "2025-07-19",
-        "volumeUSD": 103399.94357160767,
-        "volumeToken0": 670.7032485323199,
-        "volumeToken1": 47147952.44822502,
-        "feesUSD": 684.9475454335126,
-        "tvlUSD": 9180093.549479138,
-        "liquidity": "65835830261737867710370501",
-        "txCount": 165
-      },
-      {
-        "date": "2025-07-20",
-        "volumeUSD": 127766.28414391224,
-        "volumeToken0": 633.4945814772814,
-        "volumeToken1": 54860219.30940212,
-        "feesUSD": 554.7304995350097,
-        "tvlUSD": 9180093.549479138,
-        "liquidity": "65835830261737867710370501",
+        "volumeUSD": 64375.870765560976,
+        "volumeToken0": 541.682953370274,
+        "volumeToken1": 55204145.348750204,
+        "feesUSD": 1330.522092328054,
+        "tvlUSD": 9338769.34588146,
+        "liquidity": "67472300524638809283221485",
         "txCount": 136
       },
       {
+        "date": "2025-07-02",
+        "volumeUSD": 53037.178405758255,
+        "volumeToken0": 1409.9212595941012,
+        "volumeToken1": 73509270.4977937,
+        "feesUSD": 1232.1564758896711,
+        "tvlUSD": 9338769.34588146,
+        "liquidity": "67472300524638809283221485",
+        "txCount": 268
+      },
+      {
+        "date": "2025-07-03",
+        "volumeUSD": 110797.26186528662,
+        "volumeToken0": 782.8134354019569,
+        "volumeToken1": 50652881.352808766,
+        "feesUSD": 1233.2641410296212,
+        "tvlUSD": 9338769.34588146,
+        "liquidity": "67472300524638809283221485",
+        "txCount": 178
+      },
+      {
+        "date": "2025-07-04",
+        "volumeUSD": 51968.918486520146,
+        "volumeToken0": 586.8002730525992,
+        "volumeToken1": 51040927.09721325,
+        "feesUSD": 1109.0581456803807,
+        "tvlUSD": 9338769.34588146,
+        "liquidity": "67472300524638809283221485",
+        "txCount": 246
+      },
+      {
+        "date": "2025-07-05",
+        "volumeUSD": 67956.93701107227,
+        "volumeToken0": 1209.780232809607,
+        "volumeToken1": 47438221.673485085,
+        "feesUSD": 693.580623177793,
+        "tvlUSD": 9338769.34588146,
+        "liquidity": "67472300524638809283221485",
+        "txCount": 111
+      },
+      {
+        "date": "2025-07-06",
+        "volumeUSD": 65867.6754301613,
+        "volumeToken0": 881.3336227310016,
+        "volumeToken1": 70242456.68763292,
+        "feesUSD": 527.4811392635565,
+        "tvlUSD": 9338769.34588146,
+        "liquidity": "67472300524638809283221485",
+        "txCount": 297
+      },
+      {
+        "date": "2025-07-07",
+        "volumeUSD": 93190.01500560493,
+        "volumeToken0": 1272.0281293982437,
+        "volumeToken1": 36063710.31124532,
+        "feesUSD": 935.3870835388287,
+        "tvlUSD": 9338769.34588146,
+        "liquidity": "67472300524638809283221485",
+        "txCount": 273
+      },
+      {
+        "date": "2025-07-08",
+        "volumeUSD": 58664.127041472995,
+        "volumeToken0": 1041.0964798753985,
+        "volumeToken1": 52404153.74029851,
+        "feesUSD": 1288.9115583320208,
+        "tvlUSD": 9338769.34588146,
+        "liquidity": "67472300524638809283221485",
+        "txCount": 209
+      },
+      {
+        "date": "2025-07-09",
+        "volumeUSD": 72465.99778011549,
+        "volumeToken0": 1268.774443088028,
+        "volumeToken1": 67997271.6003401,
+        "feesUSD": 1319.233988095856,
+        "tvlUSD": 9338769.34588146,
+        "liquidity": "67472300524638809283221485",
+        "txCount": 124
+      },
+      {
+        "date": "2025-07-10",
+        "volumeUSD": 115738.19402524263,
+        "volumeToken0": 858.4190520169436,
+        "volumeToken1": 59972478.46136639,
+        "feesUSD": 931.3359887492261,
+        "tvlUSD": 9338769.34588146,
+        "liquidity": "67472300524638809283221485",
+        "txCount": 148
+      },
+      {
+        "date": "2025-07-11",
+        "volumeUSD": 82032.64482666488,
+        "volumeToken0": 1454.8094997569265,
+        "volumeToken1": 34329548.703198455,
+        "feesUSD": 1221.683190863354,
+        "tvlUSD": 9338769.34588146,
+        "liquidity": "67472300524638809283221485",
+        "txCount": 144
+      },
+      {
+        "date": "2025-07-12",
+        "volumeUSD": 95090.93703092792,
+        "volumeToken0": 1323.8667963608627,
+        "volumeToken1": 31547024.846363004,
+        "feesUSD": 584.5299841858367,
+        "tvlUSD": 9338769.34588146,
+        "liquidity": "67472300524638809283221485",
+        "txCount": 202
+      },
+      {
+        "date": "2025-07-13",
+        "volumeUSD": 67700.35895082622,
+        "volumeToken0": 1364.685112095537,
+        "volumeToken1": 50022384.15338142,
+        "feesUSD": 1429.7321677505997,
+        "tvlUSD": 9338769.34588146,
+        "liquidity": "67472300524638809283221485",
+        "txCount": 284
+      },
+      {
+        "date": "2025-07-14",
+        "volumeUSD": 54032.46919527842,
+        "volumeToken0": 1170.6627966602296,
+        "volumeToken1": 50342518.839404725,
+        "feesUSD": 1301.0756854839801,
+        "tvlUSD": 9338769.34588146,
+        "liquidity": "67472300524638809283221485",
+        "txCount": 216
+      },
+      {
+        "date": "2025-07-15",
+        "volumeUSD": 107489.30923666916,
+        "volumeToken0": 604.6950951759637,
+        "volumeToken1": 56317467.46888348,
+        "feesUSD": 1291.0640761662357,
+        "tvlUSD": 9338769.34588146,
+        "liquidity": "67472300524638809283221485",
+        "txCount": 233
+      },
+      {
+        "date": "2025-07-16",
+        "volumeUSD": 88948.91748402754,
+        "volumeToken0": 1144.529750786198,
+        "volumeToken1": 41385183.21983272,
+        "feesUSD": 852.8118940487217,
+        "tvlUSD": 9338769.34588146,
+        "liquidity": "67472300524638809283221485",
+        "txCount": 117
+      },
+      {
+        "date": "2025-07-17",
+        "volumeUSD": 119769.56116142737,
+        "volumeToken0": 1450.557509552247,
+        "volumeToken1": 71891633.83722988,
+        "feesUSD": 674.1847022588987,
+        "tvlUSD": 9338769.34588146,
+        "liquidity": "67472300524638809283221485",
+        "txCount": 146
+      },
+      {
+        "date": "2025-07-18",
+        "volumeUSD": 96956.07943902936,
+        "volumeToken0": 1114.7625289295968,
+        "volumeToken1": 33223335.801289424,
+        "feesUSD": 1176.5389564873035,
+        "tvlUSD": 9338769.34588146,
+        "liquidity": "67472300524638809283221485",
+        "txCount": 193
+      },
+      {
+        "date": "2025-07-19",
+        "volumeUSD": 95030.87594024432,
+        "volumeToken0": 1248.3005207022295,
+        "volumeToken1": 30121057.269555174,
+        "feesUSD": 1068.5381416847822,
+        "tvlUSD": 9338769.34588146,
+        "liquidity": "67472300524638809283221485",
+        "txCount": 245
+      },
+      {
+        "date": "2025-07-20",
+        "volumeUSD": 143246.4572413596,
+        "volumeToken0": 518.1475061511837,
+        "volumeToken1": 55778220.09849839,
+        "feesUSD": 1116.2357353334542,
+        "tvlUSD": 9338769.34588146,
+        "liquidity": "67472300524638809283221485",
+        "txCount": 122
+      },
+      {
         "date": "2025-07-21",
-        "volumeUSD": 140405.10386552048,
-        "volumeToken0": 1248.482879204119,
-        "volumeToken1": 63180509.850704424,
-        "feesUSD": 1112.2618766283404,
-        "tvlUSD": 9180093.549479138,
-        "liquidity": "65835830261737867710370501",
-        "txCount": 207
+        "volumeUSD": 54300.71999022479,
+        "volumeToken0": 1432.337877291669,
+        "volumeToken1": 70854688.0496151,
+        "feesUSD": 1023.861826602718,
+        "tvlUSD": 9338769.34588146,
+        "liquidity": "67472300524638809283221485",
+        "txCount": 285
       },
       {
         "date": "2025-07-22",
-        "volumeUSD": 91783.05264445778,
-        "volumeToken0": 1379.3200266275,
-        "volumeToken1": 32594160.294363804,
-        "feesUSD": 1054.887329213132,
-        "tvlUSD": 9180093.549479138,
-        "liquidity": "65835830261737867710370501",
-        "txCount": 152
+        "volumeUSD": 61509.35253071568,
+        "volumeToken0": 542.3703171931951,
+        "volumeToken1": 35156745.549346104,
+        "feesUSD": 508.8584705316823,
+        "tvlUSD": 9338769.34588146,
+        "liquidity": "67472300524638809283221485",
+        "txCount": 290
       },
       {
         "date": "2025-07-23",
-        "volumeUSD": 117137.41304015824,
-        "volumeToken0": 766.3192360672624,
-        "volumeToken1": 31944375.030800343,
-        "feesUSD": 539.3311296119787,
-        "tvlUSD": 9180093.549479138,
-        "liquidity": "65835830261737867710370501",
-        "txCount": 207
+        "volumeUSD": 122005.95482110958,
+        "volumeToken0": 1421.1892638291201,
+        "volumeToken1": 73355106.35920933,
+        "feesUSD": 1207.629401877421,
+        "tvlUSD": 9338769.34588146,
+        "liquidity": "67472300524638809283221485",
+        "txCount": 118
       },
       {
         "date": "2025-07-24",
-        "volumeUSD": 85213.58785738298,
-        "volumeToken0": 1115.3370507737318,
-        "volumeToken1": 27256499.514524978,
-        "feesUSD": 1192.997116310041,
-        "tvlUSD": 9180093.549479138,
-        "liquidity": "65835830261737867710370501",
-        "txCount": 174
+        "volumeUSD": 89075.34809975537,
+        "volumeToken0": 505.01804925606655,
+        "volumeToken1": 64234290.58938217,
+        "feesUSD": 1064.451736322524,
+        "tvlUSD": 9338769.34588146,
+        "liquidity": "67472300524638809283221485",
+        "txCount": 274
       },
       {
         "date": "2025-07-25",
-        "volumeUSD": 123508.05187818859,
-        "volumeToken0": 1178.3397564500888,
-        "volumeToken1": 40689612.96844986,
-        "feesUSD": 1382.9678445932586,
-        "tvlUSD": 9180093.549479138,
-        "liquidity": "65835830261737867710370501",
-        "txCount": 248
+        "volumeUSD": 78252.63770210909,
+        "volumeToken0": 1403.4411245672845,
+        "volumeToken1": 33512207.9705813,
+        "feesUSD": 1182.8874805999396,
+        "tvlUSD": 9338769.34588146,
+        "liquidity": "67472300524638809283221485",
+        "txCount": 174
       },
       {
         "date": "2025-07-26",
-        "volumeUSD": 115537.21392960634,
-        "volumeToken0": 785.5638654118618,
-        "volumeToken1": 70887041.18920295,
-        "feesUSD": 591.8452387720381,
-        "tvlUSD": 9180093.549479138,
-        "liquidity": "65835830261737867710370501",
-        "txCount": 144
+        "volumeUSD": 105085.29529648839,
+        "volumeToken0": 1264.0557371657787,
+        "volumeToken1": 29582019.753435083,
+        "feesUSD": 1044.1388337063865,
+        "tvlUSD": 9338769.34588146,
+        "liquidity": "67472300524638809283221485",
+        "txCount": 217
+      },
+      {
+        "date": "2025-07-27",
+        "volumeUSD": 59837.11503634799,
+        "volumeToken0": 535.7285173345961,
+        "volumeToken1": 60816971.3851873,
+        "feesUSD": 1206.1550666136282,
+        "tvlUSD": 9338769.34588146,
+        "liquidity": "67472300524638809283221485",
+        "txCount": 111
+      },
+      {
+        "date": "2025-07-28",
+        "volumeUSD": 77085.35188359917,
+        "volumeToken0": 1016.2950522955705,
+        "volumeToken1": 38843468.008943185,
+        "feesUSD": 504.20925200292555,
+        "tvlUSD": 9338769.34588146,
+        "liquidity": "67472300524638809283221485",
+        "txCount": 230
+      },
+      {
+        "date": "2025-07-29",
+        "volumeUSD": 120788.24134069592,
+        "volumeToken0": 1110.5173296070338,
+        "volumeToken1": 27261299.708237585,
+        "feesUSD": 1321.5570773625716,
+        "tvlUSD": 9338769.34588146,
+        "liquidity": "67472300524638809283221485",
+        "txCount": 171
+      },
+      {
+        "date": "2025-07-30",
+        "volumeUSD": 133771.62663967395,
+        "volumeToken0": 1147.3599859324895,
+        "volumeToken1": 61097996.19585654,
+        "feesUSD": 511.23322525222204,
+        "tvlUSD": 9338769.34588146,
+        "liquidity": "67472300524638809283221485",
+        "txCount": 296
       }
     ]
   },
   "tokenPrices": {
     "torus": {
-      "usd": 463.0599850462897,
-      "eth": 0.13757292090172435,
-      "lastUpdated": "2025-07-29T20:43:47.769Z"
+      "usd": 477.045967785851,
+      "eth": 0.13629884793881458,
+      "lastUpdated": "2025-07-30T15:48:26.352Z"
     },
     "titanx": {
       "usd": 0.00001,
       "eth": 2.857142857142857e-9,
-      "lastUpdated": "2025-07-26T19:28:26.212Z"
+      "lastUpdated": "2025-07-30T15:48:26.352Z"
     },
     "eth": {
       "usd": 3500,
-      "lastUpdated": "2025-07-26T19:28:26.212Z"
+      "lastUpdated": "2025-07-30T15:48:26.352Z"
     }
   },
   "stakingData": {
@@ -3721,8 +3705,8 @@
         "power": "0",
         "claimedCreate": false,
         "claimedStake": false,
-        "costETH": "0",
-        "costTitanX": "78126162693917517868400000",
+        "costETH": "0.0",
+        "costTitanX": "78126162.6939175178684",
         "rawCostETH": "0",
         "rawCostTitanX": "78126162693917517868400000",
         "rewards": "0",
@@ -3745,10 +3729,10 @@
         "power": "0",
         "claimedCreate": false,
         "claimedStake": false,
-        "costETH": "0",
-        "costTitanX": "86375158982642635344224",
-        "rawCostETH": "0",
-        "rawCostTitanX": "86375158982642635344224",
+        "costETH": "0.000113688795464227",
+        "costTitanX": "0.0",
+        "rawCostETH": "113688795464227",
+        "rawCostTitanX": "0",
         "rewards": "0",
         "penalties": "0",
         "claimedAt": "0",
@@ -3770,10 +3754,10 @@
         "power": "0",
         "claimedCreate": false,
         "claimedStake": false,
-        "costETH": "0",
-        "costTitanX": "304281662544909615065259",
-        "rawCostETH": "0",
-        "rawCostTitanX": "304281662544909615065259",
+        "costETH": "0.00038572768697318",
+        "costTitanX": "0.0",
+        "rawCostETH": "385727686973180",
+        "rawCostTitanX": "0",
         "rewards": "0",
         "penalties": "0",
         "claimedAt": "0",
@@ -3783,7 +3767,7 @@
         "user": "0xD6BbC7B245CC01F588157122A68f5881E01298F7",
         "id": "1",
         "principal": "22000000000000000000",
-        "shares": "170368000000000000000000",
+        "shares": "108416000000000000000000",
         "duration": "88",
         "timestamp": "1753665887",
         "blockNumber": 23014346,
@@ -3794,10 +3778,10 @@
         "power": "0",
         "claimedCreate": false,
         "claimedStake": false,
-        "costETH": "0",
-        "costTitanX": "475695166088614873474811",
-        "rawCostETH": "0",
-        "rawCostTitanX": "475695166088614873474811",
+        "costETH": "0.00038572768697318",
+        "costTitanX": "0.0",
+        "rawCostETH": "385727686973180",
+        "rawCostTitanX": "0",
         "rewards": "0",
         "penalties": "0",
         "claimedAt": "0",
@@ -39955,8 +39939,8 @@
         "power": "0",
         "claimedCreate": false,
         "claimedStake": false,
-        "costETH": "0",
-        "costTitanX": "300000000000000000000000000",
+        "costETH": "0.0",
+        "costTitanX": "300000000.0",
         "rawCostETH": "0",
         "rawCostTitanX": "300000000000000000000000000",
         "protocolDay": 15
@@ -40110,17 +40094,17 @@
         "stakingDays": 88,
         "maturityDate": "2025-10-20T20:46:35.000Z",
         "startDate": "2025-07-24T20:46:35.000Z",
-        "titanAmount": "11000000000000000000000000000",
+        "titanAmount": "850000000000000000000000000",
         "titanXAmount": "11000000000000000000000000000",
         "ethAmount": "0",
         "shares": "651942557322724788154496",
         "power": "0",
         "claimedCreate": false,
         "claimedStake": false,
-        "costETH": "0",
-        "costTitanX": "11000000000000000000000000000",
+        "costETH": "0.0",
+        "costTitanX": "850000000.0",
         "rawCostETH": "0",
-        "rawCostTitanX": "11000000000000000000000000000",
+        "rawCostTitanX": "850000000000000000000000000",
         "protocolDay": 15
       },
       {
@@ -40171,8 +40155,8 @@
         "power": "0",
         "claimedCreate": false,
         "claimedStake": false,
-        "costETH": "0",
-        "costTitanX": "1000000000000000000000000000",
+        "costETH": "0.0",
+        "costTitanX": "1000000000.0",
         "rawCostETH": "0",
         "rawCostTitanX": "1000000000000000000000000000",
         "protocolDay": 15
@@ -40387,8 +40371,8 @@
         "power": "0",
         "claimedCreate": false,
         "claimedStake": false,
-        "costETH": "0",
-        "costTitanX": "20000000000000000000000000000",
+        "costETH": "0.0",
+        "costTitanX": "20000000000.0",
         "rawCostETH": "0",
         "rawCostTitanX": "20000000000000000000000000000",
         "protocolDay": 15
@@ -40414,8 +40398,8 @@
         "power": "0",
         "claimedCreate": false,
         "claimedStake": false,
-        "costETH": "0",
-        "costTitanX": "130000000000000000000000000",
+        "costETH": "0.0",
+        "costTitanX": "130000000.0",
         "rawCostETH": "0",
         "rawCostTitanX": "130000000000000000000000000",
         "protocolDay": 15
@@ -40441,8 +40425,8 @@
         "power": "0",
         "claimedCreate": false,
         "claimedStake": false,
-        "costETH": "0",
-        "costTitanX": "9800000000000000000000000000",
+        "costETH": "0.0",
+        "costTitanX": "9800000000.0",
         "rawCostETH": "0",
         "rawCostTitanX": "9800000000000000000000000000",
         "protocolDay": 15
@@ -40468,8 +40452,8 @@
         "power": "0",
         "claimedCreate": false,
         "claimedStake": false,
-        "costETH": "0",
-        "costTitanX": "10000000000000000000000000000",
+        "costETH": "0.0",
+        "costTitanX": "10000000000.0",
         "rawCostETH": "0",
         "rawCostTitanX": "10000000000000000000000000000",
         "protocolDay": 15
@@ -40549,8 +40533,8 @@
         "power": "0",
         "claimedCreate": false,
         "claimedStake": false,
-        "costETH": "0",
-        "costTitanX": "1600000000000000000000000000",
+        "costETH": "0.0",
+        "costTitanX": "1600000000.0",
         "rawCostETH": "0",
         "rawCostTitanX": "1600000000000000000000000000",
         "protocolDay": 15
@@ -40576,8 +40560,8 @@
         "power": "0",
         "claimedCreate": false,
         "claimedStake": false,
-        "costETH": "0",
-        "costTitanX": "3690000000000000000000000000",
+        "costETH": "0.0",
+        "costTitanX": "3690000000.0",
         "rawCostETH": "0",
         "rawCostTitanX": "3690000000000000000000000000",
         "protocolDay": 15
@@ -40603,8 +40587,8 @@
         "power": "0",
         "claimedCreate": false,
         "claimedStake": false,
-        "costETH": "0",
-        "costTitanX": "300000000000000000000000000",
+        "costETH": "0.0",
+        "costTitanX": "300000000.0",
         "rawCostETH": "0",
         "rawCostTitanX": "300000000000000000000000000",
         "protocolDay": 15
@@ -40623,17 +40607,17 @@
         "stakingDays": 88,
         "maturityDate": "2025-10-21T07:06:35.000Z",
         "startDate": "2025-07-25T07:06:35.000Z",
-        "titanAmount": "316000000000000000000000000",
+        "titanAmount": "300000000000000000000000000",
         "titanXAmount": "316000000000000000000000000",
         "ethAmount": "0",
         "shares": "229729008227084430836288",
         "power": "0",
         "claimedCreate": false,
         "claimedStake": false,
-        "costETH": "0",
-        "costTitanX": "316000000000000000000000000",
+        "costETH": "0.0",
+        "costTitanX": "300000000.0",
         "rawCostETH": "0",
-        "rawCostTitanX": "316000000000000000000000000",
+        "rawCostTitanX": "300000000000000000000000000",
         "protocolDay": 15
       },
       {
@@ -40684,8 +40668,8 @@
         "power": "0",
         "claimedCreate": false,
         "claimedStake": false,
-        "costETH": "0",
-        "costTitanX": "5000000000000000000000000000",
+        "costETH": "0.0",
+        "costTitanX": "5000000000.0",
         "rawCostETH": "0",
         "rawCostTitanX": "5000000000000000000000000000",
         "protocolDay": 15
@@ -40704,17 +40688,17 @@
         "stakingDays": 55,
         "maturityDate": "2025-09-18T08:26:35.000Z",
         "startDate": "2025-07-25T08:26:35.000Z",
-        "titanAmount": "8054000000000000000000000000",
+        "titanAmount": "3368000000000000000000000000",
         "titanXAmount": "8054000000000000000000000000",
         "ethAmount": "0",
         "shares": "780394575351017433742675",
         "power": "0",
         "claimedCreate": false,
         "claimedStake": false,
-        "costETH": "0",
-        "costTitanX": "8054000000000000000000000000",
+        "costETH": "0.0",
+        "costTitanX": "3368000000.0",
         "rawCostETH": "0",
-        "rawCostTitanX": "8054000000000000000000000000",
+        "rawCostTitanX": "3368000000000000000000000000",
         "protocolDay": 15
       },
       {
@@ -40738,8 +40722,8 @@
         "power": "0",
         "claimedCreate": false,
         "claimedStake": false,
-        "costETH": "0",
-        "costTitanX": "5000000000000000000000000000",
+        "costETH": "0.0",
+        "costTitanX": "5000000000.0",
         "rawCostETH": "0",
         "rawCostTitanX": "5000000000000000000000000000",
         "protocolDay": 15
@@ -40765,8 +40749,8 @@
         "power": "0",
         "claimedCreate": false,
         "claimedStake": false,
-        "costETH": "0",
-        "costTitanX": "5000000000000000000000000000",
+        "costETH": "0.0",
+        "costTitanX": "5000000000.0",
         "rawCostETH": "0",
         "rawCostTitanX": "5000000000000000000000000000",
         "protocolDay": 15
@@ -40819,8 +40803,8 @@
         "power": "0",
         "claimedCreate": false,
         "claimedStake": false,
-        "costETH": "0",
-        "costTitanX": "509000000000000000000000000",
+        "costETH": "0.0",
+        "costTitanX": "509000000.0",
         "rawCostETH": "0",
         "rawCostTitanX": "509000000000000000000000000",
         "protocolDay": 15
@@ -41001,17 +40985,17 @@
         "stakingDays": 88,
         "maturityDate": "2025-10-21T15:25:47.000Z",
         "startDate": "2025-07-25T15:25:47.000Z",
-        "titanAmount": "300000000000000000000000000",
+        "titanAmount": "250000000000000000000000000",
         "titanXAmount": "300000000000000000000000000",
         "ethAmount": "0",
         "shares": "191594264104998606388416",
         "power": "0",
         "claimedCreate": false,
         "claimedStake": false,
-        "costETH": "0",
-        "costTitanX": "300000000000000000000000000",
+        "costETH": "0.0",
+        "costTitanX": "250000000.0",
         "rawCostETH": "0",
-        "rawCostTitanX": "300000000000000000000000000",
+        "rawCostTitanX": "250000000000000000000000000",
         "protocolDay": 15
       },
       {
@@ -41035,8 +41019,8 @@
         "power": "0",
         "claimedCreate": false,
         "claimedStake": false,
-        "costETH": "0",
-        "costTitanX": "500000000000000000000000000",
+        "costETH": "0.0",
+        "costTitanX": "500000000.0",
         "rawCostETH": "0",
         "rawCostTitanX": "500000000000000000000000000",
         "protocolDay": 15
@@ -41062,8 +41046,8 @@
         "power": "0",
         "claimedCreate": false,
         "claimedStake": false,
-        "costETH": "0",
-        "costTitanX": "1200000000000000000000000000",
+        "costETH": "0.0",
+        "costTitanX": "1200000000.0",
         "rawCostETH": "0",
         "rawCostTitanX": "1200000000000000000000000000",
         "protocolDay": 15
@@ -41089,8 +41073,8 @@
         "power": "0",
         "claimedCreate": false,
         "claimedStake": false,
-        "costETH": "0",
-        "costTitanX": "327000000000000000000000000",
+        "costETH": "0.0",
+        "costTitanX": "327000000.0",
         "rawCostETH": "0",
         "rawCostTitanX": "327000000000000000000000000",
         "protocolDay": 16
@@ -41109,17 +41093,17 @@
         "stakingDays": 53,
         "maturityDate": "2025-09-16T18:12:59.000Z",
         "startDate": "2025-07-25T18:12:59.000Z",
-        "titanAmount": "170692049237297498569096289",
+        "titanAmount": "0",
         "titanXAmount": "170692049237297498569096289",
         "ethAmount": "0",
         "shares": "668630610520386617573141",
         "power": "0",
         "claimedCreate": false,
         "claimedStake": false,
-        "costETH": "0",
-        "costTitanX": "170692049237297498569096289",
-        "rawCostETH": "0",
-        "rawCostTitanX": "170692049237297498569096289",
+        "costETH": "0.214540364085788021",
+        "costTitanX": "0.0",
+        "rawCostETH": "214540364085788021",
+        "rawCostTitanX": "0",
         "protocolDay": 16
       },
       {
@@ -41136,17 +41120,17 @@
         "stakingDays": 88,
         "maturityDate": "2025-10-21T19:11:59.000Z",
         "startDate": "2025-07-25T19:11:59.000Z",
-        "titanAmount": "42669937920834311175983467",
+        "titanAmount": "0",
         "titanXAmount": "42669937920834311175983467",
         "ethAmount": "0",
         "shares": "765150156526106969297152",
         "power": "0",
         "claimedCreate": false,
         "claimedStake": false,
-        "costETH": "0",
-        "costTitanX": "42669937920834311175983467",
-        "rawCostETH": "0",
-        "rawCostTitanX": "42669937920834311175983467",
+        "costETH": "0.053624365612080933",
+        "costTitanX": "0.0",
+        "rawCostETH": "53624365612080933",
+        "rawCostTitanX": "0",
         "protocolDay": 16
       },
       {
@@ -41163,17 +41147,17 @@
         "stakingDays": 88,
         "maturityDate": "2025-10-21T21:17:11.000Z",
         "startDate": "2025-07-25T21:17:11.000Z",
-        "titanAmount": "600000000000000000000000000",
+        "titanAmount": "500000000000000000000000000",
         "titanXAmount": "600000000000000000000000000",
         "ethAmount": "0",
         "shares": "383188528209997212776832",
         "power": "0",
         "claimedCreate": false,
         "claimedStake": false,
-        "costETH": "0",
-        "costTitanX": "600000000000000000000000000",
+        "costETH": "0.0",
+        "costTitanX": "500000000.0",
         "rawCostETH": "0",
-        "rawCostTitanX": "600000000000000000000000000",
+        "rawCostTitanX": "500000000000000000000000000",
         "protocolDay": 16
       },
       {
@@ -41197,8 +41181,8 @@
         "power": "0",
         "claimedCreate": false,
         "claimedStake": false,
-        "costETH": "0",
-        "costTitanX": "2500000000000000000000000000",
+        "costETH": "0.0",
+        "costTitanX": "2500000000.0",
         "rawCostETH": "0",
         "rawCostTitanX": "2500000000000000000000000000",
         "protocolDay": 16
@@ -41217,17 +41201,17 @@
         "stakingDays": 28,
         "maturityDate": "2025-08-22T22:50:23.000Z",
         "startDate": "2025-07-25T22:50:23.000Z",
-        "titanAmount": "1000000000000000000000000000",
+        "titanAmount": "2500000000000000000000000000",
         "titanXAmount": "1000000000000000000000000000",
         "ethAmount": "0",
         "shares": "61618732083127040395504",
         "power": "0",
         "claimedCreate": false,
         "claimedStake": false,
-        "costETH": "0",
-        "costTitanX": "1000000000000000000000000000",
+        "costETH": "0.0",
+        "costTitanX": "2500000000.0",
         "rawCostETH": "0",
-        "rawCostTitanX": "1000000000000000000000000000",
+        "rawCostTitanX": "2500000000000000000000000000",
         "protocolDay": 16
       },
       {
@@ -41251,8 +41235,8 @@
         "power": "0",
         "claimedCreate": false,
         "claimedStake": false,
-        "costETH": "0",
-        "costTitanX": "153000000000000000000000000",
+        "costETH": "0.0",
+        "costTitanX": "153000000.0",
         "rawCostETH": "0",
         "rawCostTitanX": "153000000000000000000000000",
         "protocolDay": 16
@@ -41278,8 +41262,8 @@
         "power": "0",
         "claimedCreate": false,
         "claimedStake": false,
-        "costETH": "0",
-        "costTitanX": "2000000000000000000000000000",
+        "costETH": "0.0",
+        "costTitanX": "2000000000.0",
         "rawCostETH": "0",
         "rawCostTitanX": "2000000000000000000000000000",
         "protocolDay": 16
@@ -41305,8 +41289,8 @@
         "power": "0",
         "claimedCreate": false,
         "claimedStake": false,
-        "costETH": "0",
-        "costTitanX": "250000000000000000000000000",
+        "costETH": "0.0",
+        "costTitanX": "250000000.0",
         "rawCostETH": "0",
         "rawCostTitanX": "250000000000000000000000000",
         "protocolDay": 16
@@ -41325,17 +41309,17 @@
         "stakingDays": 88,
         "maturityDate": "2025-10-22T00:27:59.000Z",
         "startDate": "2025-07-26T00:27:59.000Z",
-        "titanAmount": "15500000000000000000000000000",
+        "titanAmount": "12000000000000000000000000000",
         "titanXAmount": "15500000000000000000000000000",
         "ethAmount": "0",
         "shares": "9196524677039933106713664",
         "power": "0",
         "claimedCreate": false,
         "claimedStake": false,
-        "costETH": "0",
-        "costTitanX": "15500000000000000000000000000",
+        "costETH": "0.0",
+        "costTitanX": "12000000000.0",
         "rawCostETH": "0",
-        "rawCostTitanX": "15500000000000000000000000000",
+        "rawCostTitanX": "12000000000000000000000000000",
         "protocolDay": 16
       },
       {
@@ -41352,17 +41336,17 @@
         "stakingDays": 71,
         "maturityDate": "2025-10-05T02:10:47.000Z",
         "startDate": "2025-07-26T02:10:47.000Z",
-        "titanAmount": "44807807177705929427733720",
+        "titanAmount": "0",
         "titanXAmount": "44807807177705929427733720",
         "ethAmount": "0",
         "shares": "275038461052335784160000",
         "power": "0",
         "claimedCreate": false,
         "claimedStake": false,
-        "costETH": "0",
-        "costTitanX": "44807807177705929427733720",
-        "rawCostETH": "0",
-        "rawCostTitanX": "44807807177705929427733720",
+        "costETH": "0.037026888628475866",
+        "costTitanX": "0.0",
+        "rawCostETH": "37026888628475866",
+        "rawCostTitanX": "0",
         "protocolDay": 16
       },
       {
@@ -41379,17 +41363,17 @@
         "stakingDays": 88,
         "maturityDate": "2025-10-22T03:17:11.000Z",
         "startDate": "2025-07-26T03:17:11.000Z",
-        "titanAmount": "1500000000000000000000000000",
+        "titanAmount": "500000000000000000000000000",
         "titanXAmount": "1500000000000000000000000000",
         "ethAmount": "0",
         "shares": "383188528209997212776832",
         "power": "0",
         "claimedCreate": false,
         "claimedStake": false,
-        "costETH": "0",
-        "costTitanX": "1500000000000000000000000000",
+        "costETH": "0.0",
+        "costTitanX": "500000000.0",
         "rawCostETH": "0",
-        "rawCostTitanX": "1500000000000000000000000000",
+        "rawCostTitanX": "500000000000000000000000000",
         "protocolDay": 16
       },
       {
@@ -41406,17 +41390,17 @@
         "stakingDays": 88,
         "maturityDate": "2025-10-22T05:03:59.000Z",
         "startDate": "2025-07-26T05:03:59.000Z",
-        "titanAmount": "6900000000000000000000000000",
+        "titanAmount": "10000000000000000000000000000",
         "titanXAmount": "6900000000000000000000000000",
         "ethAmount": "0",
         "shares": "7657633607569481028033728",
         "power": "0",
         "claimedCreate": false,
         "claimedStake": false,
-        "costETH": "0",
-        "costTitanX": "6900000000000000000000000000",
+        "costETH": "0.0",
+        "costTitanX": "10000000000.0",
         "rawCostETH": "0",
-        "rawCostTitanX": "6900000000000000000000000000",
+        "rawCostTitanX": "10000000000000000000000000000",
         "protocolDay": 16
       },
       {
@@ -41440,8 +41424,8 @@
         "power": "0",
         "claimedCreate": false,
         "claimedStake": false,
-        "costETH": "0",
-        "costTitanX": "20000000000000000000000000000",
+        "costETH": "0.0",
+        "costTitanX": "20000000000.0",
         "rawCostETH": "0",
         "rawCostTitanX": "20000000000000000000000000000",
         "protocolDay": 16
@@ -41460,17 +41444,17 @@
         "stakingDays": 88,
         "maturityDate": "2025-10-22T09:37:23.000Z",
         "startDate": "2025-07-26T09:37:23.000Z",
-        "titanAmount": "384202845739960159568331967",
+        "titanAmount": "0",
         "titanXAmount": "384202845739960159568331967",
         "ethAmount": "0",
         "shares": "6891870246812532925228032",
         "power": "0",
         "claimedCreate": false,
         "claimedStake": false,
-        "costETH": "0",
-        "costTitanX": "384202845739960159568331967",
-        "rawCostETH": "0",
-        "rawCostTitanX": "384202845739960159568331967",
+        "costETH": "0.483924057999320461",
+        "costTitanX": "0.0",
+        "rawCostETH": "483924057999320461",
+        "rawCostTitanX": "0",
         "protocolDay": 16
       },
       {
@@ -41487,17 +41471,17 @@
         "stakingDays": 72,
         "maturityDate": "2025-10-06T12:12:11.000Z",
         "startDate": "2025-07-26T12:12:11.000Z",
-        "titanAmount": "250000000000000000000000000",
+        "titanAmount": "1000000000000000000000000000",
         "titanXAmount": "250000000000000000000000000",
         "ethAmount": "0",
         "shares": "774400000000000000000000",
         "power": "0",
         "claimedCreate": false,
         "claimedStake": false,
-        "costETH": "0",
-        "costTitanX": "250000000000000000000000000",
+        "costETH": "0.0",
+        "costTitanX": "1000000000.0",
         "rawCostETH": "0",
-        "rawCostTitanX": "250000000000000000000000000",
+        "rawCostTitanX": "1000000000000000000000000000",
         "protocolDay": 16
       },
       {
@@ -41521,8 +41505,8 @@
         "power": "0",
         "claimedCreate": false,
         "claimedStake": false,
-        "costETH": "0",
-        "costTitanX": "250000000000000000000000000",
+        "costETH": "0.0",
+        "costTitanX": "250000000.0",
         "rawCostETH": "0",
         "rawCostTitanX": "250000000000000000000000000",
         "protocolDay": 16
@@ -41548,8 +41532,8 @@
         "power": "0",
         "claimedCreate": false,
         "claimedStake": false,
-        "costETH": "0",
-        "costTitanX": "250000000000000000000000000",
+        "costETH": "0.0",
+        "costTitanX": "250000000.0",
         "rawCostETH": "0",
         "rawCostTitanX": "250000000000000000000000000",
         "protocolDay": 16
@@ -41575,8 +41559,8 @@
         "power": "0",
         "claimedCreate": false,
         "claimedStake": false,
-        "costETH": "0",
-        "costTitanX": "500000000000000000000000000",
+        "costETH": "0.0",
+        "costTitanX": "500000000.0",
         "rawCostETH": "0",
         "rawCostTitanX": "500000000000000000000000000",
         "protocolDay": 16
@@ -41595,17 +41579,17 @@
         "stakingDays": 88,
         "maturityDate": "2025-10-22T13:11:59.000Z",
         "startDate": "2025-07-26T13:11:59.000Z",
-        "titanAmount": "19201861796222751743871832",
+        "titanAmount": "0",
         "titanXAmount": "19201861796222751743871832",
         "ethAmount": "0",
         "shares": "306550822567997770218368",
         "power": "0",
         "claimedCreate": false,
         "claimedStake": false,
-        "costETH": "0",
-        "costTitanX": "19201861796222751743871832",
-        "rawCostETH": "0",
-        "rawCostTitanX": "19201861796222751743871832",
+        "costETH": "0.021351308913322254",
+        "costTitanX": "0.0",
+        "rawCostETH": "21351308913322254",
+        "rawCostTitanX": "0",
         "protocolDay": 16
       },
       {
@@ -41622,17 +41606,17 @@
         "stakingDays": 88,
         "maturityDate": "2025-10-22T14:14:59.000Z",
         "startDate": "2025-07-26T14:14:59.000Z",
-        "titanAmount": "32004715640310363985468925",
+        "titanAmount": "0",
         "titanXAmount": "32004715640310363985468925",
         "ethAmount": "0",
         "shares": "574322520567711077102336",
         "power": "0",
         "claimedCreate": false,
         "claimedStake": false,
-        "costETH": "0",
-        "costTitanX": "32004715640310363985468925",
-        "rawCostETH": "0",
-        "rawCostTitanX": "32004715640310363985468925",
+        "costETH": "0.041084068134424212",
+        "costTitanX": "0.0",
+        "rawCostETH": "41084068134424212",
+        "rawCostTitanX": "0",
         "protocolDay": 16
       },
       {
@@ -41656,8 +41640,8 @@
         "power": "0",
         "claimedCreate": false,
         "claimedStake": false,
-        "costETH": "0",
-        "costTitanX": "463000000000000000000000000",
+        "costETH": "0.0",
+        "costTitanX": "463000000.0",
         "rawCostETH": "0",
         "rawCostTitanX": "463000000000000000000000000",
         "protocolDay": 16
@@ -41676,17 +41660,17 @@
         "stakingDays": 25,
         "maturityDate": "2025-08-20T16:12:59.000Z",
         "startDate": "2025-07-26T16:12:59.000Z",
-        "titanAmount": "192204685485820001280345575",
+        "titanAmount": "0",
         "titanXAmount": "192204685485820001280345575",
         "ethAmount": "0",
         "shares": "78946193505737427622500",
         "power": "0",
         "claimedCreate": false,
         "claimedStake": false,
-        "costETH": "0",
-        "costTitanX": "192204685485820001280345575",
-        "rawCostETH": "0",
-        "rawCostTitanX": "192204685485820001280345575",
+        "costETH": "0.255463130030585978",
+        "costTitanX": "0.0",
+        "rawCostETH": "255463130030585978",
+        "rawCostTitanX": "0",
         "protocolDay": 16
       },
       {
@@ -41703,17 +41687,17 @@
         "stakingDays": 88,
         "maturityDate": "2025-10-22T17:22:35.000Z",
         "startDate": "2025-07-26T17:22:35.000Z",
-        "titanAmount": "57864551018724013721560926",
+        "titanAmount": "0",
         "titanXAmount": "57864551018724013721560926",
         "ethAmount": "0",
         "shares": "1032952711310244408552704",
         "power": "0",
         "claimedCreate": false,
         "claimedStake": false,
-        "costETH": "0",
-        "costTitanX": "57864551018724013721560926",
-        "rawCostETH": "0",
-        "rawCostTitanX": "57864551018724013721560926",
+        "costETH": "0.074084548228609673",
+        "costTitanX": "0.0",
+        "rawCostETH": "74084548228609673",
+        "rawCostTitanX": "0",
         "protocolDay": 16
       },
       {
@@ -41737,8 +41721,8 @@
         "power": "0",
         "claimedCreate": false,
         "claimedStake": false,
-        "costETH": "0",
-        "costTitanX": "100000000000000000000000000",
+        "costETH": "0.0",
+        "costTitanX": "100000000.0",
         "rawCostETH": "0",
         "rawCostTitanX": "100000000000000000000000000",
         "protocolDay": 16
@@ -41757,17 +41741,17 @@
         "stakingDays": 88,
         "maturityDate": "2025-10-22T17:57:11.000Z",
         "startDate": "2025-07-26T17:57:11.000Z",
-        "titanAmount": "9818319769296542445778584",
+        "titanAmount": "0",
         "titanXAmount": "9818319769296542445778584",
         "ethAmount": "0",
         "shares": "187612023385452285183872",
         "power": "0",
         "claimedCreate": false,
         "claimedStake": false,
-        "costETH": "0",
-        "costTitanX": "9818319769296542445778584",
-        "rawCostETH": "0",
-        "rawCostTitanX": "9818319769296542445778584",
+        "costETH": "0.013234222837258572",
+        "costTitanX": "0.0",
+        "rawCostETH": "13234222837258572",
+        "rawCostTitanX": "0",
         "protocolDay": 16
       },
       {
@@ -41792,8 +41776,8 @@
         "power": "0",
         "claimedCreate": false,
         "claimedStake": false,
-        "costETH": "0",
-        "costTitanX": "2000000000000000000000000000",
+        "costETH": "0.0",
+        "costTitanX": "2000000000.0",
         "rawCostETH": "0",
         "rawCostTitanX": "2000000000000000000000000000",
         "term": "88"
@@ -41813,17 +41797,17 @@
         "maturityDate": "2025-10-22T22:28:59.000Z",
         "startDate": "2025-07-26T22:28:59.000Z",
         "protocolDay": 17,
-        "titanAmount": "4265700938345629545177504",
+        "titanAmount": "0",
         "titanXAmount": "4265700938345629545177504",
         "ethAmount": "0",
         "shares": "76576336075694810273600",
         "power": "0",
         "claimedCreate": false,
         "claimedStake": false,
-        "costETH": "0",
-        "costTitanX": "4265700938345629545177504",
-        "rawCostETH": "0",
-        "rawCostTitanX": "4265700938345629545177504",
+        "costETH": "0.005490488734216272",
+        "costTitanX": "0.0",
+        "rawCostETH": "5490488734216272",
+        "rawCostTitanX": "0",
         "term": "88"
       },
       {
@@ -41841,17 +41825,17 @@
         "maturityDate": "2025-10-23T04:08:47.000Z",
         "startDate": "2025-07-27T04:08:47.000Z",
         "protocolDay": 17,
-        "titanAmount": "9813857904204385288856393",
+        "titanAmount": "0",
         "titanXAmount": "9813857904204385288856393",
         "ethAmount": "0",
         "shares": "175984536001004602931840",
         "power": "0",
         "claimedCreate": false,
         "claimedStake": false,
-        "costETH": "0",
-        "costTitanX": "9813857904204385288856393",
-        "rawCostETH": "0",
-        "rawCostTitanX": "9813857904204385288856393",
+        "costETH": "0.01213299252506872",
+        "costTitanX": "0.0",
+        "rawCostETH": "12132992525068720",
+        "rawCostTitanX": "0",
         "term": "88"
       },
       {
@@ -41869,17 +41853,17 @@
         "maturityDate": "2025-10-23T04:46:47.000Z",
         "startDate": "2025-07-27T04:46:47.000Z",
         "protocolDay": 17,
-        "titanAmount": "384417753990967354381806887",
+        "titanAmount": "0",
         "titanXAmount": "384417753990967354381806887",
         "ethAmount": "0",
         "shares": "6891870246812532925228032",
         "power": "0",
         "claimedCreate": false,
         "claimedStake": false,
-        "costETH": "0",
-        "costTitanX": "384417753990967354381806887",
-        "rawCostETH": "0",
-        "rawCostTitanX": "384417753990967354381806887",
+        "costETH": "0.483924057999320461",
+        "costTitanX": "0.0",
+        "rawCostETH": "483924057999320461",
+        "rawCostTitanX": "0",
         "term": "88"
       },
       {
@@ -41897,17 +41881,17 @@
         "maturityDate": "2025-10-23T05:18:47.000Z",
         "startDate": "2025-07-27T05:18:47.000Z",
         "protocolDay": 17,
-        "titanAmount": "20902959088861992280135397",
+        "titanAmount": "0",
         "titanXAmount": "20902959088861992280135397",
         "ethAmount": "0",
         "shares": "374623347233632731962816",
         "power": "0",
         "claimedCreate": false,
         "claimedStake": false,
-        "costETH": "0",
-        "costTitanX": "20902959088861992280135397",
-        "rawCostETH": "0",
-        "rawCostTitanX": "20902959088861992280135397",
+        "costETH": "0.026090049963720436",
+        "costTitanX": "0.0",
+        "rawCostETH": "26090049963720436",
+        "rawCostTitanX": "0",
         "term": "88"
       },
       {
@@ -41932,8 +41916,8 @@
         "power": "0",
         "claimedCreate": false,
         "claimedStake": false,
-        "costETH": "0",
-        "costTitanX": "140000000000000000000000000",
+        "costETH": "0.0",
+        "costTitanX": "140000000.0",
         "rawCostETH": "0",
         "rawCostTitanX": "140000000000000000000000000",
         "term": "88"
@@ -41953,17 +41937,17 @@
         "maturityDate": "2025-10-23T07:18:35.000Z",
         "startDate": "2025-07-27T07:18:35.000Z",
         "protocolDay": 17,
-        "titanAmount": "7654189017588583360921195",
+        "titanAmount": "0",
         "titanXAmount": "7654189017588583360921195",
         "ethAmount": "0",
         "shares": "137616739800109983169856",
         "power": "0",
         "claimedCreate": false,
         "claimedStake": false,
-        "costETH": "0",
-        "costTitanX": "7654189017588583360921195",
-        "rawCostETH": "0",
-        "rawCostTitanX": "7654189017588583360921195",
+        "costETH": "0.009715327509836069",
+        "costTitanX": "0.0",
+        "rawCostETH": "9715327509836069",
+        "rawCostTitanX": "0",
         "term": "88"
       },
       {
@@ -41988,8 +41972,8 @@
         "power": "0",
         "claimedCreate": false,
         "claimedStake": false,
-        "costETH": "0",
-        "costTitanX": "20000000000000000000000000000",
+        "costETH": "0.0",
+        "costTitanX": "20000000000.0",
         "rawCostETH": "0",
         "rawCostTitanX": "20000000000000000000000000000",
         "term": "88"
@@ -42009,17 +41993,17 @@
         "maturityDate": "2025-10-23T10:25:11.000Z",
         "startDate": "2025-07-27T10:25:11.000Z",
         "protocolDay": 17,
-        "titanAmount": "93886697753520961180152618",
+        "titanAmount": "0",
         "titanXAmount": "93886697753520961180152618",
         "ethAmount": "0",
         "shares": "1681982375334677572103552",
         "power": "0",
         "claimedCreate": false,
         "claimedStake": false,
-        "costETH": "0",
-        "costTitanX": "93886697753520961180152618",
-        "rawCostETH": "0",
-        "rawCostTitanX": "93886697753520961180152618",
+        "costETH": "0.118849803146910435",
+        "costTitanX": "0.0",
+        "rawCostETH": "118849803146910435",
+        "rawCostTitanX": "0",
         "term": "88"
       },
       {
@@ -42037,17 +42021,17 @@
         "maturityDate": "2025-10-23T10:28:23.000Z",
         "startDate": "2025-07-27T10:28:23.000Z",
         "protocolDay": 17,
-        "titanAmount": "19209336306803720525655894",
+        "titanAmount": "0",
         "titanXAmount": "19209336306803720525655894",
         "ethAmount": "0",
         "shares": "1681982375334677572103552",
         "power": "0",
         "claimedCreate": false,
         "claimedStake": false,
-        "costETH": "0",
-        "costTitanX": "19209336306803720525655894",
-        "rawCostETH": "0",
-        "rawCostTitanX": "19209336306803720525655894",
+        "costETH": "0.118849803146910435",
+        "costTitanX": "0.0",
+        "rawCostETH": "118849803146910435",
+        "rawCostTitanX": "0",
         "term": "88"
       },
       {
@@ -42065,17 +42049,17 @@
         "maturityDate": "2025-10-23T10:44:23.000Z",
         "startDate": "2025-07-27T10:44:23.000Z",
         "protocolDay": 17,
-        "titanAmount": "125873320322329587670088620",
+        "titanAmount": "0",
         "titanXAmount": "125873320322329587670088620",
         "ethAmount": "0",
         "shares": "1681982375334677572103552",
         "power": "0",
         "claimedCreate": false,
         "claimedStake": false,
-        "costETH": "0",
-        "costTitanX": "125873320322329587670088620",
-        "rawCostETH": "0",
-        "rawCostTitanX": "125873320322329587670088620",
+        "costETH": "0.118849803146910435",
+        "costTitanX": "0.0",
+        "rawCostETH": "118849803146910435",
+        "rawCostTitanX": "0",
         "term": "88"
       },
       {
@@ -42100,8 +42084,8 @@
         "power": "0",
         "claimedCreate": false,
         "claimedStake": false,
-        "costETH": "0",
-        "costTitanX": "2000000000000000000000000000",
+        "costETH": "0.0",
+        "costTitanX": "2000000000.0",
         "rawCostETH": "0",
         "rawCostTitanX": "2000000000000000000000000000",
         "term": "60"
@@ -42128,8 +42112,8 @@
         "power": "0",
         "claimedCreate": false,
         "claimedStake": false,
-        "costETH": "0",
-        "costTitanX": "1400000000000000000000000000",
+        "costETH": "0.0",
+        "costTitanX": "1400000000.0",
         "rawCostETH": "0",
         "rawCostTitanX": "1400000000000000000000000000",
         "term": "88"
@@ -42149,17 +42133,17 @@
         "maturityDate": "2025-10-23T13:07:11.000Z",
         "startDate": "2025-07-27T13:07:11.000Z",
         "protocolDay": 17,
-        "titanAmount": "313000000000000000000000000",
+        "titanAmount": "463000000000000000000000000",
         "titanXAmount": "313000000000000000000000000",
         "ethAmount": "0",
         "shares": "354264522471587526779904",
         "power": "0",
         "claimedCreate": false,
         "claimedStake": false,
-        "costETH": "0",
-        "costTitanX": "313000000000000000000000000",
+        "costETH": "0.0",
+        "costTitanX": "463000000.0",
         "rawCostETH": "0",
-        "rawCostTitanX": "313000000000000000000000000",
+        "rawCostTitanX": "463000000000000000000000000",
         "term": "88"
       },
       {
@@ -42177,17 +42161,17 @@
         "maturityDate": "2025-10-23T13:23:47.000Z",
         "startDate": "2025-07-27T13:23:47.000Z",
         "protocolDay": 17,
-        "titanAmount": "21415651571001572534426298",
+        "titanAmount": "0",
         "titanXAmount": "21415651571001572534426298",
         "ethAmount": "0",
         "shares": "344593512340626646258304",
         "power": "0",
         "claimedCreate": false,
         "claimedStake": false,
-        "costETH": "0",
-        "costTitanX": "21415651571001572534426298",
-        "rawCostETH": "0",
-        "rawCostTitanX": "21415651571001572534426298",
+        "costETH": "0.024225254318264258",
+        "costTitanX": "0.0",
+        "rawCostETH": "24225254318264258",
+        "rawCostTitanX": "0",
         "term": "88"
       },
       {
@@ -42205,17 +42189,17 @@
         "maturityDate": "2025-10-23T13:58:11.000Z",
         "startDate": "2025-07-27T13:58:11.000Z",
         "protocolDay": 17,
-        "titanAmount": "34164381460065922344745799",
+        "titanAmount": "0",
         "titanXAmount": "34164381460065922344745799",
         "ethAmount": "0",
         "shares": "574322520567711077102336",
         "power": "0",
         "claimedCreate": false,
         "claimedStake": false,
-        "costETH": "0",
-        "costTitanX": "34164381460065922344745799",
-        "rawCostETH": "0",
-        "rawCostTitanX": "34164381460065922344745799",
+        "costETH": "0.040347172368797117",
+        "costTitanX": "0.0",
+        "rawCostETH": "40347172368797117",
+        "rawCostTitanX": "0",
         "term": "88"
       },
       {
@@ -42240,8 +42224,8 @@
         "power": "0",
         "claimedCreate": false,
         "claimedStake": false,
-        "costETH": "0",
-        "costTitanX": "188000000000000000000000000",
+        "costETH": "0.0",
+        "costTitanX": "188000000.0",
         "rawCostETH": "0",
         "rawCostTitanX": "188000000000000000000000000",
         "term": "88"
@@ -42261,17 +42245,17 @@
         "maturityDate": "2025-10-23T15:28:23.000Z",
         "startDate": "2025-07-27T15:28:23.000Z",
         "protocolDay": 17,
-        "titanAmount": "17019400258144292758778296",
+        "titanAmount": "0",
         "titanXAmount": "17019400258144292758778296",
         "ethAmount": "0",
         "shares": "305814977333577740381760",
         "power": "0",
         "claimedCreate": false,
         "claimedStake": false,
-        "costETH": "0",
-        "costTitanX": "17019400258144292758778296",
-        "rawCostETH": "0",
-        "rawCostTitanX": "17019400258144292758778296",
+        "costETH": "0.022193758713949361",
+        "costTitanX": "0.0",
+        "rawCostETH": "22193758713949361",
+        "rawCostTitanX": "0",
         "term": "88"
       },
       {
@@ -42289,17 +42273,17 @@
         "maturityDate": "2025-10-23T15:54:59.000Z",
         "startDate": "2025-07-27T15:54:59.000Z",
         "protocolDay": 17,
-        "titanAmount": "36271062609039730664020057",
+        "titanAmount": "0",
         "titanXAmount": "36271062609039730664020057",
         "ethAmount": "0",
         "shares": "573862617394580226972864",
         "power": "0",
         "claimedCreate": false,
         "claimedStake": false,
-        "costETH": "0",
-        "costTitanX": "36271062609039730664020057",
-        "rawCostETH": "0",
-        "rawCostTitanX": "36271062609039730664020057",
+        "costETH": "0.043415549046539233",
+        "costTitanX": "0.0",
+        "rawCostETH": "43415549046539233",
+        "rawCostTitanX": "0",
         "term": "88"
       },
       {
@@ -42324,8 +42308,8 @@
         "power": "0",
         "claimedCreate": false,
         "claimedStake": false,
-        "costETH": "0",
-        "costTitanX": "1040000000000000000000000000",
+        "costETH": "0.0",
+        "costTitanX": "1040000000.0",
         "rawCostETH": "0",
         "rawCostTitanX": "1040000000000000000000000000",
         "term": "88"
@@ -42345,17 +42329,17 @@
         "maturityDate": "2025-10-23T16:45:23.000Z",
         "startDate": "2025-07-27T16:45:23.000Z",
         "protocolDay": 17,
-        "titanAmount": "5632756376007636481794321",
+        "titanAmount": "0",
         "titanXAmount": "5632756376007636481794321",
         "ethAmount": "0",
         "shares": "374623347233632731962816",
         "power": "0",
         "claimedCreate": false,
         "claimedStake": false,
-        "costETH": "0",
-        "costTitanX": "5632756376007636481794321",
-        "rawCostETH": "0",
-        "rawCostTitanX": "5632756376007636481794321",
+        "costETH": "0.026090049963720436",
+        "costTitanX": "0.0",
+        "rawCostETH": "26090049963720436",
+        "rawCostTitanX": "0",
         "term": "88"
       },
       {
@@ -42373,17 +42357,17 @@
         "maturityDate": "2025-09-15T16:53:11.000Z",
         "startDate": "2025-07-27T16:53:11.000Z",
         "protocolDay": 17,
-        "titanAmount": "40538253513268016817396847",
+        "titanAmount": "0",
         "titanXAmount": "40538253513268016817396847",
         "ethAmount": "0",
         "shares": "133224580607722535442500",
         "power": "0",
         "claimedCreate": false,
         "claimedStake": false,
-        "costETH": "0",
-        "costTitanX": "40538253513268016817396847",
-        "rawCostETH": "0",
-        "rawCostTitanX": "40538253513268016817396847",
+        "costETH": "0.052694367054629639",
+        "costTitanX": "0.0",
+        "rawCostETH": "52694367054629639",
+        "rawCostTitanX": "0",
         "term": "50"
       },
       {
@@ -42401,17 +42385,17 @@
         "maturityDate": "2025-10-04T17:29:59.000Z",
         "startDate": "2025-07-27T17:29:59.000Z",
         "protocolDay": 17,
-        "titanAmount": "6399899316360079750050562",
+        "titanAmount": "349000000000000000000000000",
         "titanXAmount": "6399899316360079750050562",
         "ethAmount": "0",
         "shares": "140473677195068149621811",
         "power": "0",
         "claimedCreate": false,
         "claimedStake": false,
-        "costETH": "0",
-        "costTitanX": "6399899316360079750050562",
+        "costETH": "0.0",
+        "costTitanX": "349000000.0",
         "rawCostETH": "0",
-        "rawCostTitanX": "6399899316360079750050562",
+        "rawCostTitanX": "349000000000000000000000000",
         "term": "71"
       },
       {
@@ -42429,17 +42413,17 @@
         "maturityDate": "2025-10-03T17:32:59.000Z",
         "startDate": "2025-07-27T17:32:59.000Z",
         "protocolDay": 17,
-        "titanAmount": "4267013463629581909393794",
+        "titanAmount": "349000000000000000000000000",
         "titanXAmount": "4267013463629581909393794",
         "ethAmount": "0",
         "shares": "140473677195068149621811",
         "power": "0",
         "claimedCreate": false,
         "claimedStake": false,
-        "costETH": "0",
-        "costTitanX": "4267013463629581909393794",
+        "costETH": "0.0",
+        "costTitanX": "349000000.0",
         "rawCostETH": "0",
-        "rawCostTitanX": "4267013463629581909393794",
+        "rawCostTitanX": "349000000000000000000000000",
         "term": "71"
       },
       {
@@ -42457,17 +42441,17 @@
         "maturityDate": "2025-10-02T17:34:11.000Z",
         "startDate": "2025-07-27T17:34:11.000Z",
         "protocolDay": 17,
-        "titanAmount": "4267003270608750014097988",
+        "titanAmount": "349000000000000000000000000",
         "titanXAmount": "4267003270608750014097988",
         "ethAmount": "0",
         "shares": "140473677195068149621811",
         "power": "0",
         "claimedCreate": false,
         "claimedStake": false,
-        "costETH": "0",
-        "costTitanX": "4267003270608750014097988",
+        "costETH": "0.0",
+        "costTitanX": "349000000.0",
         "rawCostETH": "0",
-        "rawCostTitanX": "4267003270608750014097988",
+        "rawCostTitanX": "349000000000000000000000000",
         "term": "71"
       },
       {
@@ -42485,17 +42469,17 @@
         "maturityDate": "2025-10-01T17:37:23.000Z",
         "startDate": "2025-07-27T17:37:23.000Z",
         "protocolDay": 17,
-        "titanAmount": "4266993077624441632427129",
+        "titanAmount": "349000000000000000000000000",
         "titanXAmount": "4266993077624441632427129",
         "ethAmount": "0",
         "shares": "140473677195068149621811",
         "power": "0",
         "claimedCreate": false,
         "claimedStake": false,
-        "costETH": "0",
-        "costTitanX": "4266993077624441632427129",
+        "costETH": "0.0",
+        "costTitanX": "349000000.0",
         "rawCostETH": "0",
-        "rawCostTitanX": "4266993077624441632427129",
+        "rawCostTitanX": "349000000000000000000000000",
         "term": "71"
       },
       {
@@ -42513,17 +42497,17 @@
         "maturityDate": "2025-09-30T17:38:35.000Z",
         "startDate": "2025-07-27T17:38:35.000Z",
         "protocolDay": 17,
-        "titanAmount": "4266982884676656589887254",
+        "titanAmount": "0",
         "titanXAmount": "4266982884676656589887254",
         "ethAmount": "0",
         "shares": "44297078538030193039374",
         "power": "0",
         "claimedCreate": false,
         "claimedStake": false,
-        "costETH": "0",
-        "costTitanX": "4266982884676656589887254",
-        "rawCostETH": "0",
-        "rawCostTitanX": "4266982884676656589887254",
+        "costETH": "0.0065833179829754",
+        "costTitanX": "0.0",
+        "rawCostETH": "6583317982975400",
+        "rawCostTitanX": "0",
         "term": "69"
       },
       {
@@ -42541,17 +42525,17 @@
         "maturityDate": "2025-09-29T17:39:35.000Z",
         "startDate": "2025-07-27T17:39:35.000Z",
         "protocolDay": 17,
-        "titanAmount": "4266662056703612483060748",
+        "titanAmount": "0",
         "titanXAmount": "4266662056703612483060748",
         "ethAmount": "0",
         "shares": "70664827036042186862144",
         "power": "0",
         "claimedCreate": false,
         "claimedStake": false,
-        "costETH": "0",
-        "costTitanX": "4266662056703612483060748",
-        "rawCostETH": "0",
-        "rawCostTitanX": "4266662056703612483060748",
+        "costETH": "0.01094261314220988",
+        "costTitanX": "0.0",
+        "rawCostETH": "10942613142209880",
+        "rawCostTitanX": "0",
         "term": "68"
       },
       {
@@ -42569,17 +42553,17 @@
         "maturityDate": "2025-09-28T17:42:59.000Z",
         "startDate": "2025-07-27T17:42:59.000Z",
         "protocolDay": 17,
-        "titanAmount": "4267078529618765782835310",
+        "titanAmount": "0",
         "titanXAmount": "4267078529618765782835310",
         "ethAmount": "0",
         "shares": "30809937220543832664625",
         "power": "0",
         "claimedCreate": false,
         "claimedStake": false,
-        "costETH": "0",
-        "costTitanX": "4267078529618765782835310",
-        "rawCostETH": "0",
-        "rawCostTitanX": "4267078529618765782835310",
+        "costETH": "0.005556768166392031",
+        "costTitanX": "0.0",
+        "rawCostETH": "5556768166392031",
+        "rawCostTitanX": "0",
         "term": "65"
       },
       {
@@ -42597,17 +42581,17 @@
         "maturityDate": "2025-10-23T17:45:59.000Z",
         "startDate": "2025-07-27T17:45:59.000Z",
         "protocolDay": 17,
-        "titanAmount": "21335239742370060930056853",
+        "titanAmount": "0",
         "titanXAmount": "21335239742370060930056853",
         "ethAmount": "0",
         "shares": "374623347233632731962816",
         "power": "0",
         "claimedCreate": false,
         "claimedStake": false,
-        "costETH": "0",
-        "costTitanX": "21335239742370060930056853",
-        "rawCostETH": "0",
-        "rawCostTitanX": "21335239742370060930056853",
+        "costETH": "0.026090049963720436",
+        "costTitanX": "0.0",
+        "rawCostETH": "26090049963720436",
+        "rawCostTitanX": "0",
         "term": "88"
       },
       {
@@ -42625,17 +42609,17 @@
         "maturityDate": "2025-10-23T18:07:11.000Z",
         "startDate": "2025-07-27T18:07:11.000Z",
         "protocolDay": 18,
-        "titanAmount": "1006000000000000000000000000",
+        "titanAmount": "2000000000000000000000000000",
         "titanXAmount": "1006000000000000000000000000",
         "ethAmount": "0",
         "shares": "1530300313052213938594304",
         "power": "0",
         "claimedCreate": false,
         "claimedStake": false,
-        "costETH": "0",
-        "costTitanX": "1006000000000000000000000000",
+        "costETH": "0.0",
+        "costTitanX": "2000000000.0",
         "rawCostETH": "0",
-        "rawCostTitanX": "1006000000000000000000000000",
+        "rawCostTitanX": "2000000000000000000000000000",
         "term": "88"
       },
       {
@@ -42653,17 +42637,17 @@
         "maturityDate": "2025-10-23T19:10:11.000Z",
         "startDate": "2025-07-27T19:10:11.000Z",
         "protocolDay": 18,
-        "titanAmount": "10667269147767195302603411",
+        "titanAmount": "0",
         "titanXAmount": "10667269147767195302603411",
         "ethAmount": "0",
         "shares": "305814977333577740381760",
         "power": "0",
         "claimedCreate": false,
         "claimedStake": false,
-        "costETH": "0",
-        "costTitanX": "10667269147767195302603411",
-        "rawCostETH": "0",
-        "rawCostTitanX": "10667269147767195302603411",
+        "costETH": "0.022193758713949361",
+        "costTitanX": "0.0",
+        "rawCostETH": "22193758713949361",
+        "rawCostTitanX": "0",
         "term": "88"
       },
       {
@@ -42681,17 +42665,17 @@
         "maturityDate": "2025-09-07T19:29:23.000Z",
         "startDate": "2025-07-27T19:29:23.000Z",
         "protocolDay": 18,
-        "titanAmount": "2942426239759389329513620",
+        "titanAmount": "0",
         "titanXAmount": "2942426239759389329513620",
         "ethAmount": "0",
         "shares": "5813648136736355605536",
         "power": "0",
         "claimedCreate": false,
         "claimedStake": false,
-        "costETH": "0",
-        "costTitanX": "2942426239759389329513620",
-        "rawCostETH": "0",
-        "rawCostTitanX": "2942426239759389329513620",
+        "costETH": "0.003920978854115038",
+        "costTitanX": "0.0",
+        "rawCostETH": "3920978854115038",
+        "rawCostTitanX": "0",
         "term": "42"
       },
       {
@@ -42709,17 +42693,17 @@
         "maturityDate": "2025-09-09T19:30:11.000Z",
         "startDate": "2025-07-27T19:30:11.000Z",
         "protocolDay": 18,
-        "titanAmount": "2948249826468752644162793",
+        "titanAmount": "100000000000000000000000000",
         "titanXAmount": "2948249826468752644162793",
         "ethAmount": "0",
         "shares": "13230696831382055923702",
         "power": "0",
         "claimedCreate": false,
         "claimedStake": false,
-        "costETH": "0",
-        "costTitanX": "2948249826468752644162793",
+        "costETH": "0.0",
+        "costTitanX": "100000000.0",
         "rawCostETH": "0",
-        "rawCostTitanX": "2948249826468752644162793",
+        "rawCostTitanX": "100000000000000000000000000",
         "term": "49"
       },
       {
@@ -42737,17 +42721,17 @@
         "maturityDate": "2025-09-11T19:31:23.000Z",
         "startDate": "2025-07-27T19:31:23.000Z",
         "protocolDay": 18,
-        "titanAmount": "2953260923581099600005836",
+        "titanAmount": "100000000000000000000000000",
         "titanXAmount": "2953260923581099600005836",
         "ethAmount": "0",
         "shares": "13230696831382055923702",
         "power": "0",
         "claimedCreate": false,
         "claimedStake": false,
-        "costETH": "0",
-        "costTitanX": "2953260923581099600005836",
+        "costETH": "0.0",
+        "costTitanX": "100000000.0",
         "rawCostETH": "0",
-        "rawCostTitanX": "2953260923581099600005836",
+        "rawCostTitanX": "100000000000000000000000000",
         "term": "49"
       },
       {
@@ -42765,17 +42749,17 @@
         "maturityDate": "2025-09-13T19:31:47.000Z",
         "startDate": "2025-07-27T19:31:47.000Z",
         "protocolDay": 18,
-        "titanAmount": "2954732902285948831592802",
+        "titanAmount": "0",
         "titanXAmount": "2954732902285948831592802",
         "ethAmount": "0",
         "shares": "16855351960688365097500",
         "power": "0",
         "claimedCreate": false,
         "claimedStake": false,
-        "costETH": "0",
-        "costTitanX": "2954732902285948831592802",
-        "rawCostETH": "0",
-        "rawCostTitanX": "2954732902285948831592802",
+        "costETH": "0.006584634712405174",
+        "costTitanX": "0.0",
+        "rawCostETH": "6584634712405174",
+        "rawCostTitanX": "0",
         "term": "50"
       },
       {
@@ -42793,17 +42777,17 @@
         "maturityDate": "2025-10-04T19:39:59.000Z",
         "startDate": "2025-07-27T19:39:59.000Z",
         "protocolDay": 18,
-        "titanAmount": "10656495228358167487857740",
+        "titanAmount": "349000000000000000000000000",
         "titanXAmount": "10656495228358167487857740",
         "ethAmount": "0",
         "shares": "140473677195068149621811",
         "power": "0",
         "claimedCreate": false,
         "claimedStake": false,
-        "costETH": "0",
-        "costTitanX": "10656495228358167487857740",
+        "costETH": "0.0",
+        "costTitanX": "349000000.0",
         "rawCostETH": "0",
-        "rawCostTitanX": "10656495228358167487857740",
+        "rawCostTitanX": "349000000000000000000000000",
         "term": "71"
       },
       {
@@ -42821,17 +42805,17 @@
         "maturityDate": "2025-10-23T19:56:23.000Z",
         "startDate": "2025-07-27T19:56:23.000Z",
         "protocolDay": 18,
-        "titanAmount": "2988216730144701144833504587",
+        "titanAmount": "0",
         "titanXAmount": "2988216730144701144833504587",
         "ethAmount": "0",
         "shares": "53474765455107409154809408",
         "power": "0",
         "claimedCreate": false,
         "claimedStake": false,
-        "costETH": "0",
-        "costTitanX": "2988216730144701144833504587",
-        "rawCostETH": "0",
-        "rawCostTitanX": "2988216730144701144833504587",
+        "costETH": "3.977051121222582343",
+        "costTitanX": "0.0",
+        "rawCostETH": "3977051121222582343",
+        "rawCostTitanX": "0",
         "term": "88"
       },
       {
@@ -42849,17 +42833,17 @@
         "maturityDate": "2025-10-14T19:58:35.000Z",
         "startDate": "2025-07-27T19:58:35.000Z",
         "protocolDay": 18,
-        "titanAmount": "1277018213687237967565835231",
+        "titanAmount": "0",
         "titanXAmount": "1277018213687237967565835231",
         "ethAmount": "0",
         "shares": "16580795407517446624033398",
         "power": "0",
         "claimedCreate": false,
         "claimedStake": false,
-        "costETH": "0",
-        "costTitanX": "1277018213687237967565835231",
-        "rawCostETH": "0",
-        "rawCostTitanX": "1277018213687237967565835231",
+        "costETH": "1.704620925572016257",
+        "costTitanX": "0.0",
+        "rawCostETH": "1704620925572016257",
+        "rawCostTitanX": "0",
         "term": "79"
       },
       {
@@ -42877,17 +42861,17 @@
         "maturityDate": "2025-10-23T19:59:59.000Z",
         "startDate": "2025-07-27T19:59:59.000Z",
         "protocolDay": 18,
-        "titanAmount": "5113899960715030387956052",
+        "titanAmount": "0",
         "titanXAmount": "5113899960715030387956052",
         "ethAmount": "0",
         "shares": "374623347233632731962816",
         "power": "0",
         "claimedCreate": false,
         "claimedStake": false,
-        "costETH": "0",
-        "costTitanX": "5113899960715030387956052",
-        "rawCostETH": "0",
-        "rawCostTitanX": "5113899960715030387956052",
+        "costETH": "0.026090049963720436",
+        "costTitanX": "0.0",
+        "rawCostETH": "26090049963720436",
+        "rawCostTitanX": "0",
         "term": "88"
       },
       {
@@ -42905,17 +42889,17 @@
         "maturityDate": "2025-10-04T20:01:23.000Z",
         "startDate": "2025-07-27T20:01:23.000Z",
         "protocolDay": 18,
-        "titanAmount": "852194634691683852825548679",
+        "titanAmount": "0",
         "titanXAmount": "852194634691683852825548679",
         "ethAmount": "0",
         "shares": "7365124623039487577241120",
         "power": "0",
         "claimedCreate": false,
         "claimedStake": false,
-        "costETH": "0",
-        "costTitanX": "852194634691683852825548679",
-        "rawCostETH": "0",
-        "rawCostTitanX": "852194634691683852825548679",
+        "costETH": "1.1367549086600135",
+        "costTitanX": "0.0",
+        "rawCostETH": "1136754908660013500",
+        "rawCostTitanX": "0",
         "term": "69"
       },
       {
@@ -42933,17 +42917,17 @@
         "maturityDate": "2025-10-23T20:23:23.000Z",
         "startDate": "2025-07-27T20:23:23.000Z",
         "protocolDay": 18,
-        "titanAmount": "42601990658819024884669935",
+        "titanAmount": "0",
         "titanXAmount": "42601990658819024884669935",
         "ethAmount": "0",
         "shares": "763925220787248702208576",
         "power": "0",
         "claimedCreate": false,
         "claimedStake": false,
-        "costETH": "0",
-        "costTitanX": "42601990658819024884669935",
-        "rawCostETH": "0",
-        "rawCostTitanX": "42601990658819024884669935",
+        "costETH": "0.05698001044061822",
+        "costTitanX": "0.0",
+        "rawCostETH": "56980010440618220",
+        "rawCostTitanX": "0",
         "term": "88"
       },
       {
@@ -42961,17 +42945,17 @@
         "maturityDate": "2025-10-23T20:54:47.000Z",
         "startDate": "2025-07-27T20:54:47.000Z",
         "protocolDay": 18,
-        "titanAmount": "14236053334377953771137918",
+        "titanAmount": "0",
         "titanXAmount": "14236053334377953771137918",
         "ethAmount": "0",
         "shares": "254387098522153817834240",
         "power": "0",
         "claimedCreate": false,
         "claimedStake": false,
-        "costETH": "0",
-        "costTitanX": "14236053334377953771137918",
-        "rawCostETH": "0",
-        "rawCostTitanX": "14236053334377953771137918",
+        "costETH": "0.018999024928661541",
+        "costTitanX": "0.0",
+        "rawCostETH": "18999024928661541",
+        "rawCostTitanX": "0",
         "term": "88"
       },
       {
@@ -42996,8 +42980,8 @@
         "power": "0",
         "claimedCreate": false,
         "claimedStake": false,
-        "costETH": "0",
-        "costTitanX": "440000000000000000000000000",
+        "costETH": "0.0",
+        "costTitanX": "440000000.0",
         "rawCostETH": "0",
         "rawCostTitanX": "440000000000000000000000000",
         "term": "88"
@@ -43024,8 +43008,8 @@
         "power": "0",
         "claimedCreate": false,
         "claimedStake": false,
-        "costETH": "0",
-        "costTitanX": "5000000000000000000000000000",
+        "costETH": "0.0",
+        "costTitanX": "5000000000.0",
         "rawCostETH": "0",
         "rawCostTitanX": "5000000000000000000000000000",
         "term": "88"
@@ -43045,17 +43029,17 @@
         "maturityDate": "2025-10-23T22:24:35.000Z",
         "startDate": "2025-07-27T22:24:35.000Z",
         "protocolDay": 18,
-        "titanAmount": "5348736529416829182959930",
+        "titanAmount": "0",
         "titanXAmount": "5348736529416829182959930",
         "ethAmount": "0",
         "shares": "95490652598406087775104",
         "power": "0",
         "claimedCreate": false,
         "claimedStake": false,
-        "costETH": "0",
-        "costTitanX": "5348736529416829182959930",
-        "rawCostETH": "0",
-        "rawCostTitanX": "5348736529416829182959930",
+        "costETH": "0.007054455835581165",
+        "costTitanX": "0.0",
+        "rawCostETH": "7054455835581165",
+        "rawCostTitanX": "0",
         "term": "88"
       },
       {
@@ -43073,17 +43057,17 @@
         "maturityDate": "2025-10-24T00:22:23.000Z",
         "startDate": "2025-07-28T00:22:23.000Z",
         "protocolDay": 18,
-        "titanAmount": "10479631611308807794644906",
+        "titanAmount": "0",
         "titanXAmount": "10479631611308807794644906",
         "ethAmount": "0",
         "shares": "187161679092875932036416",
         "power": "0",
         "claimedCreate": false,
         "claimedStake": false,
-        "costETH": "0",
-        "costTitanX": "10479631611308807794644906",
-        "rawCostETH": "0",
-        "rawCostTitanX": "10479631611308807794644906",
+        "costETH": "0.013128776673785524",
+        "costTitanX": "0.0",
+        "rawCostETH": "13128776673785524",
+        "rawCostTitanX": "0",
         "term": "88"
       },
       {
@@ -43101,17 +43085,17 @@
         "maturityDate": "2025-10-22T01:21:59.000Z",
         "startDate": "2025-07-28T01:21:59.000Z",
         "protocolDay": 18,
-        "titanAmount": "3837486104924109195665355",
+        "titanAmount": "0",
         "titanXAmount": "3837486104924109195665355",
         "ethAmount": "0",
         "shares": "76637705641999442550720",
         "power": "0",
         "claimedCreate": false,
         "claimedStake": false,
-        "costETH": "0",
-        "costTitanX": "3837486104924109195665355",
-        "rawCostETH": "0",
-        "rawCostTitanX": "3837486104924109195665355",
+        "costETH": "0.005189929374024402",
+        "costTitanX": "0.0",
+        "rawCostETH": "5189929374024402",
+        "rawCostTitanX": "0",
         "term": "88"
       },
       {
@@ -43129,17 +43113,17 @@
         "maturityDate": "2025-10-24T02:49:47.000Z",
         "startDate": "2025-07-28T02:49:47.000Z",
         "protocolDay": 18,
-        "titanAmount": "192029053191796934292585097",
+        "titanAmount": "0",
         "titanXAmount": "192029053191796934292585097",
         "ethAmount": "0",
         "shares": "3437663493542619159950208",
         "power": "0",
         "claimedCreate": false,
         "claimedStake": false,
-        "costETH": "0",
-        "costTitanX": "192029053191796934292585097",
-        "rawCostETH": "0",
-        "rawCostTitanX": "192029053191796934292585097",
+        "costETH": "0.240923877806259586",
+        "costTitanX": "0.0",
+        "rawCostETH": "240923877806259586",
+        "rawCostTitanX": "0",
         "term": "88"
       },
       {
@@ -43164,8 +43148,8 @@
         "power": "0",
         "claimedCreate": false,
         "claimedStake": false,
-        "costETH": "0",
-        "costTitanX": "594000000000000000000000000",
+        "costETH": "0.0",
+        "costTitanX": "594000000.0",
         "rawCostETH": "0",
         "rawCostTitanX": "594000000000000000000000000",
         "term": "88"
@@ -43192,8 +43176,8 @@
         "power": "0",
         "claimedCreate": false,
         "claimedStake": false,
-        "costETH": "0",
-        "costTitanX": "2400000000000000000000000000",
+        "costETH": "0.0",
+        "costTitanX": "2400000000.0",
         "rawCostETH": "0",
         "rawCostTitanX": "2400000000000000000000000000",
         "term": "60"
@@ -43213,17 +43197,17 @@
         "maturityDate": "2025-10-24T04:44:23.000Z",
         "startDate": "2025-07-28T04:44:23.000Z",
         "protocolDay": 18,
-        "titanAmount": "6441915540111178069571905",
+        "titanAmount": "0",
         "titanXAmount": "6441915540111178069571905",
         "ethAmount": "0",
         "shares": "175984536001004602931840",
         "power": "0",
         "claimedCreate": false,
         "claimedStake": false,
-        "costETH": "0",
-        "costTitanX": "6441915540111178069571905",
-        "rawCostETH": "0",
-        "rawCostTitanX": "6441915540111178069571905",
+        "costETH": "0.01213299252506872",
+        "costTitanX": "0.0",
+        "rawCostETH": "12132992525068720",
+        "rawCostTitanX": "0",
         "term": "88"
       },
       {
@@ -43241,17 +43225,17 @@
         "maturityDate": "2025-10-24T05:17:23.000Z",
         "startDate": "2025-07-28T05:17:23.000Z",
         "protocolDay": 18,
-        "titanAmount": "46940022244081337688060972",
+        "titanAmount": "0",
         "titanXAmount": "46940022244081337688060972",
         "ethAmount": "0",
         "shares": "840317742865973572430208",
         "power": "0",
         "claimedCreate": false,
         "claimedStake": false,
-        "costETH": "0",
-        "costTitanX": "46940022244081337688060972",
-        "rawCostETH": "0",
-        "rawCostTitanX": "46940022244081337688060972",
+        "costETH": "0.058951422475910991",
+        "costTitanX": "0.0",
+        "rawCostETH": "58951422475910991",
+        "rawCostTitanX": "0",
         "term": "88"
       },
       {
@@ -43276,8 +43260,8 @@
         "power": "0",
         "claimedCreate": false,
         "claimedStake": false,
-        "costETH": "0",
-        "costTitanX": "2757000000000000000000000000",
+        "costETH": "0.0",
+        "costTitanX": "2757000000.0",
         "rawCostETH": "0",
         "rawCostTitanX": "2757000000000000000000000000",
         "term": "88"
@@ -43297,17 +43281,17 @@
         "maturityDate": "2025-10-24T08:23:35.000Z",
         "startDate": "2025-07-28T08:23:35.000Z",
         "protocolDay": 18,
-        "titanAmount": "10668006849246758571736222",
+        "titanAmount": "0",
         "titanXAmount": "10668006849246758571736222",
         "ethAmount": "0",
         "shares": "305814977333577740381760",
         "power": "0",
         "claimedCreate": false,
         "claimedStake": false,
-        "costETH": "0",
-        "costTitanX": "10668006849246758571736222",
-        "rawCostETH": "0",
-        "rawCostTitanX": "10668006849246758571736222",
+        "costETH": "0.022193758713949361",
+        "costTitanX": "0.0",
+        "rawCostETH": "22193758713949361",
+        "rawCostTitanX": "0",
         "term": "88"
       },
       {
@@ -43325,17 +43309,17 @@
         "maturityDate": "2025-09-21T09:12:47.000Z",
         "startDate": "2025-07-28T09:12:47.000Z",
         "protocolDay": 18,
-        "titanAmount": "132367313681138248918506709",
+        "titanAmount": "0",
         "titanXAmount": "132367313681138248918506709",
         "ethAmount": "0",
         "shares": "578166060654411859581875",
         "power": "0",
         "claimedCreate": false,
         "claimedStake": false,
-        "costETH": "0",
-        "costTitanX": "132367313681138248918506709",
-        "rawCostETH": "0",
-        "rawCostTitanX": "132367313681138248918506709",
+        "costETH": "0.16382624566734606",
+        "costTitanX": "0.0",
+        "rawCostETH": "163826245667346060",
+        "rawCostTitanX": "0",
         "term": "55"
       },
       {
@@ -43360,8 +43344,8 @@
         "power": "0",
         "claimedCreate": false,
         "claimedStake": false,
-        "costETH": "0",
-        "costTitanX": "20000000000000000000000000000",
+        "costETH": "0.0",
+        "costTitanX": "20000000000.0",
         "rawCostETH": "0",
         "rawCostTitanX": "20000000000000000000000000000",
         "term": "88"
@@ -43381,17 +43365,17 @@
         "maturityDate": "2025-10-24T13:29:23.000Z",
         "startDate": "2025-07-28T13:29:23.000Z",
         "protocolDay": 18,
-        "titanAmount": "21342482849610275179973876",
+        "titanAmount": "0",
         "titanXAmount": "21342482849610275179973876",
         "ethAmount": "0",
         "shares": "382268721666972175475264",
         "power": "0",
         "claimedCreate": false,
         "claimedStake": false,
-        "costETH": "0",
-        "costTitanX": "21342482849610275179973876",
-        "rawCostETH": "0",
-        "rawCostTitanX": "21342482849610275179973876",
+        "costETH": "0.027318262418573316",
+        "costTitanX": "0.0",
+        "rawCostETH": "27318262418573316",
+        "rawCostTitanX": "0",
         "term": "88"
       },
       {
@@ -43416,8 +43400,8 @@
         "power": "0",
         "claimedCreate": false,
         "claimedStake": false,
-        "costETH": "0",
-        "costTitanX": "3550000000000000000000000000",
+        "costETH": "0.0",
+        "costTitanX": "3550000000.0",
         "rawCostETH": "0",
         "rawCostTitanX": "3550000000000000000000000000",
         "term": "31"
@@ -43437,17 +43421,17 @@
         "maturityDate": "2025-10-24T14:45:23.000Z",
         "startDate": "2025-07-28T14:45:23.000Z",
         "protocolDay": 18,
-        "titanAmount": "85342965463341703411481183",
+        "titanAmount": "0",
         "titanXAmount": "85342965463341703411481183",
         "ethAmount": "0",
         "shares": "611629954667155480763520",
         "power": "0",
         "claimedCreate": false,
         "claimedStake": false,
-        "costETH": "0",
-        "costTitanX": "85342965463341703411481183",
-        "rawCostETH": "0",
-        "rawCostTitanX": "85342965463341703411481183",
+        "costETH": "0.043235400072593745",
+        "costTitanX": "0.0",
+        "rawCostETH": "43235400072593745",
+        "rawCostTitanX": "0",
         "term": "88"
       },
       {
@@ -43472,8 +43456,8 @@
         "power": "0",
         "claimedCreate": false,
         "claimedStake": false,
-        "costETH": "0",
-        "costTitanX": "900000000000000000000000000",
+        "costETH": "0.0",
+        "costTitanX": "900000000.0",
         "rawCostETH": "0",
         "rawCostTitanX": "900000000000000000000000000",
         "term": "88"
@@ -43500,8 +43484,8 @@
         "power": "0",
         "claimedCreate": false,
         "claimedStake": false,
-        "costETH": "0",
-        "costTitanX": "6000000000000000000000000000",
+        "costETH": "0.0",
+        "costTitanX": "6000000000.0",
         "rawCostETH": "0",
         "rawCostTitanX": "6000000000000000000000000000",
         "term": "88"
@@ -43521,17 +43505,17 @@
         "maturityDate": "2025-10-19T15:49:11.000Z",
         "startDate": "2025-07-28T15:49:11.000Z",
         "protocolDay": 18,
-        "titanAmount": "8521932561354575418573032",
+        "titanAmount": "0",
         "titanXAmount": "8521932561354575418573032",
         "ethAmount": "0",
         "shares": "128193824608576309423608",
         "power": "0",
         "claimedCreate": false,
         "claimedStake": false,
-        "costETH": "0",
-        "costTitanX": "8521932561354575418573032",
-        "rawCostETH": "0",
-        "rawCostTitanX": "8521932561354575418573032",
+        "costETH": "0.010555704551958124",
+        "costTitanX": "0.0",
+        "rawCostETH": "10555704551958124",
+        "rawCostTitanX": "0",
         "term": "83"
       },
       {
@@ -43556,8 +43540,8 @@
         "power": "0",
         "claimedCreate": false,
         "claimedStake": false,
-        "costETH": "0",
-        "costTitanX": "2750000000000000000000000000",
+        "costETH": "0.0",
+        "costTitanX": "2750000000.0",
         "rawCostETH": "0",
         "rawCostTitanX": "2750000000000000000000000000",
         "term": "76"
@@ -43584,8 +43568,8 @@
         "power": "0",
         "claimedCreate": false,
         "claimedStake": false,
-        "costETH": "0",
-        "costTitanX": "1500000000000000000000000000",
+        "costETH": "0.0",
+        "costTitanX": "1500000000.0",
         "rawCostETH": "0",
         "rawCostTitanX": "1500000000000000000000000000",
         "term": "87"
@@ -43612,8 +43596,8 @@
         "power": "0",
         "claimedCreate": false,
         "claimedStake": false,
-        "costETH": "0",
-        "costTitanX": "1500000000000000000000000000",
+        "costETH": "0.0",
+        "costTitanX": "1500000000.0",
         "rawCostETH": "0",
         "rawCostTitanX": "1500000000000000000000000000",
         "term": "87"
@@ -43640,8 +43624,8 @@
         "power": "0",
         "claimedCreate": false,
         "claimedStake": false,
-        "costETH": "0",
-        "costTitanX": "1500000000000000000000000000",
+        "costETH": "0.0",
+        "costTitanX": "1500000000.0",
         "rawCostETH": "0",
         "rawCostTitanX": "1500000000000000000000000000",
         "term": "87"
@@ -43668,8 +43652,8 @@
         "power": "0",
         "claimedCreate": false,
         "claimedStake": false,
-        "costETH": "0",
-        "costTitanX": "1500000000000000000000000000",
+        "costETH": "0.0",
+        "costTitanX": "1500000000.0",
         "rawCostETH": "0",
         "rawCostTitanX": "1500000000000000000000000000",
         "term": "87"
@@ -43696,8 +43680,8 @@
         "power": "0",
         "claimedCreate": false,
         "claimedStake": false,
-        "costETH": "0",
-        "costTitanX": "440000000000000000000000000",
+        "costETH": "0.0",
+        "costTitanX": "440000000.0",
         "rawCostETH": "0",
         "rawCostTitanX": "440000000000000000000000000",
         "term": "88"
@@ -43717,17 +43701,17 @@
         "maturityDate": "2025-10-24T17:38:47.000Z",
         "startDate": "2025-07-28T17:38:47.000Z",
         "protocolDay": 18,
-        "titanAmount": "20268487562750973129523877",
+        "titanAmount": "0",
         "titanXAmount": "20268487562750973129523877",
         "ethAmount": "0",
         "shares": "362864479873943133546944",
         "power": "0",
         "claimedCreate": false,
         "claimedStake": false,
-        "costETH": "0",
-        "costTitanX": "20268487562750973129523877",
-        "rawCostETH": "0",
-        "rawCostTitanX": "20268487562750973129523877",
+        "costETH": "0.024676827787575344",
+        "costTitanX": "0.0",
+        "rawCostETH": "24676827787575344",
+        "rawCostTitanX": "0",
         "term": "88"
       },
       {
@@ -43745,17 +43729,17 @@
         "maturityDate": "2025-10-24T18:10:47.000Z",
         "startDate": "2025-07-28T18:10:47.000Z",
         "protocolDay": 19,
-        "titanAmount": "619000000000000000000000000",
+        "titanAmount": "1040000000000000000000000000",
         "titanXAmount": "619000000000000000000000000",
         "ethAmount": "0",
         "shares": "795118941067302124992576",
         "power": "0",
         "claimedCreate": false,
         "claimedStake": false,
-        "costETH": "0",
-        "costTitanX": "619000000000000000000000000",
+        "costETH": "0.0",
+        "costTitanX": "1040000000.0",
         "rawCostETH": "0",
-        "rawCostTitanX": "619000000000000000000000000",
+        "rawCostTitanX": "1040000000000000000000000000",
         "term": "88"
       },
       {
@@ -43780,8 +43764,8 @@
         "power": "0",
         "claimedCreate": false,
         "claimedStake": false,
-        "costETH": "0",
-        "costTitanX": "2100000000000000000000000000",
+        "costETH": "0.0",
+        "costTitanX": "2100000000.0",
         "rawCostETH": "0",
         "rawCostTitanX": "2100000000000000000000000000",
         "term": "49"
@@ -43808,8 +43792,8 @@
         "power": "0",
         "claimedCreate": false,
         "claimedStake": false,
-        "costETH": "0",
-        "costTitanX": "100000000000000000000000000",
+        "costETH": "0.0",
+        "costTitanX": "100000000.0",
         "rawCostETH": "0",
         "rawCostTitanX": "100000000000000000000000000",
         "term": "88"
@@ -43836,8 +43820,8 @@
         "power": "0",
         "claimedCreate": false,
         "claimedStake": false,
-        "costETH": "0",
-        "costTitanX": "4888000000000000000000000000",
+        "costETH": "0.0",
+        "costTitanX": "4888000000.0",
         "rawCostETH": "0",
         "rawCostTitanX": "4888000000000000000000000000",
         "term": "88"
@@ -43864,8 +43848,8 @@
         "power": "0",
         "claimedCreate": false,
         "claimedStake": false,
-        "costETH": "0",
-        "costTitanX": "2000000000000000000000000000",
+        "costETH": "0.0",
+        "costTitanX": "2000000000.0",
         "rawCostETH": "0",
         "rawCostTitanX": "2000000000000000000000000000",
         "term": "88"
@@ -43892,8 +43876,8 @@
         "power": "0",
         "claimedCreate": false,
         "claimedStake": false,
-        "costETH": "0",
-        "costTitanX": "10000000000000000000000000000",
+        "costETH": "0.0",
+        "costTitanX": "10000000000.0",
         "rawCostETH": "0",
         "rawCostTitanX": "10000000000000000000000000000",
         "term": "22"
@@ -43920,8 +43904,8 @@
         "power": "0",
         "claimedCreate": false,
         "claimedStake": false,
-        "costETH": "0",
-        "costTitanX": "30000000000000000000000000",
+        "costETH": "0.0",
+        "costTitanX": "30000000.0",
         "rawCostETH": "0",
         "rawCostTitanX": "30000000000000000000000000",
         "term": "88"
@@ -44424,8 +44408,8 @@
         "power": "0",
         "claimedCreate": false,
         "claimedStake": false,
-        "costETH": "0",
-        "costTitanX": "600000000000000000000000000",
+        "costETH": "0.0",
+        "costTitanX": "600000000.0",
         "rawCostETH": "0",
         "rawCostTitanX": "600000000000000000000000000",
         "term": "51"
@@ -44501,17 +44485,17 @@
         "maturityDate": "2025-10-25T03:51:59.000Z",
         "startDate": "2025-07-29T03:51:59.000Z",
         "protocolDay": 19,
-        "titanAmount": "2517000000000000000000000000",
+        "titanAmount": "2757000000000000000000000000",
         "titanXAmount": "2517000000000000000000000000",
         "ethAmount": "0",
         "shares": "2106141833710444671993280",
         "power": "0",
         "claimedCreate": false,
         "claimedStake": false,
-        "costETH": "0",
-        "costTitanX": "2517000000000000000000000000",
+        "costETH": "0.0",
+        "costTitanX": "2757000000.0",
         "rawCostETH": "0",
-        "rawCostTitanX": "2517000000000000000000000000",
+        "rawCostTitanX": "2757000000000000000000000000",
         "term": "88"
       },
       {
@@ -44529,17 +44513,17 @@
         "maturityDate": "2025-09-18T04:42:35.000Z",
         "startDate": "2025-07-29T04:42:35.000Z",
         "protocolDay": 19,
-        "titanAmount": "4519000000000000000000000000",
+        "titanAmount": "3368000000000000000000000000",
         "titanXAmount": "4519000000000000000000000000",
         "ethAmount": "0",
         "shares": "780394575351017433742675",
         "power": "0",
         "claimedCreate": false,
         "claimedStake": false,
-        "costETH": "0",
-        "costTitanX": "4519000000000000000000000000",
+        "costETH": "0.0",
+        "costTitanX": "3368000000.0",
         "rawCostETH": "0",
-        "rawCostTitanX": "4519000000000000000000000000",
+        "rawCostTitanX": "3368000000000000000000000000",
         "term": "59"
       },
       {
@@ -44585,17 +44569,17 @@
         "maturityDate": "2025-10-25T05:59:23.000Z",
         "startDate": "2025-07-29T05:59:23.000Z",
         "protocolDay": 19,
-        "titanAmount": "1044000000000000000000000000",
+        "titanAmount": "440000000000000000000000000",
         "titanXAmount": "1044000000000000000000000000",
         "ethAmount": "0",
         "shares": "336127097146389428965888",
         "power": "0",
         "claimedCreate": false,
         "claimedStake": false,
-        "costETH": "0",
-        "costTitanX": "1044000000000000000000000000",
+        "costETH": "0.0",
+        "costTitanX": "440000000.0",
         "rawCostETH": "0",
-        "rawCostTitanX": "1044000000000000000000000000",
+        "rawCostTitanX": "440000000000000000000000000",
         "term": "88"
       },
       {
@@ -44676,8 +44660,8 @@
         "power": "0",
         "claimedCreate": false,
         "claimedStake": false,
-        "costETH": "0",
-        "costTitanX": "824000000000000000000000000",
+        "costETH": "0.0",
+        "costTitanX": "824000000.0",
         "rawCostETH": "0",
         "rawCostTitanX": "824000000000000000000000000",
         "term": "88"
@@ -44844,8 +44828,8 @@
         "power": "0",
         "claimedCreate": false,
         "claimedStake": false,
-        "costETH": "0",
-        "costTitanX": "20000000000000000000000000000",
+        "costETH": "0.0",
+        "costTitanX": "20000000000.0",
         "rawCostETH": "0",
         "rawCostTitanX": "20000000000000000000000000000",
         "term": "88"
@@ -44956,8 +44940,8 @@
         "power": "0",
         "claimedCreate": false,
         "claimedStake": false,
-        "costETH": "0",
-        "costTitanX": "1000000000000000000000000000",
+        "costETH": "0.0",
+        "costTitanX": "1000000000.0",
         "rawCostETH": "0",
         "rawCostTitanX": "1000000000000000000000000000",
         "term": "21"
@@ -45005,17 +44989,17 @@
         "maturityDate": "2025-10-25T17:50:47.000Z",
         "startDate": "2025-07-29T17:50:47.000Z",
         "protocolDay": 19,
-        "titanAmount": "22391107761469899527749895",
+        "titanAmount": "0",
         "titanXAmount": "22391107761469899527749895",
         "ethAmount": "0",
         "shares": "362864479873943133546944",
         "power": "0",
         "claimedCreate": false,
         "claimedStake": false,
-        "costETH": "0",
-        "costTitanX": "22391107761469899527749895",
-        "rawCostETH": "0",
-        "rawCostTitanX": "22391107761469899527749895",
+        "costETH": "0.024676827787575344",
+        "costTitanX": "0.0",
+        "rawCostETH": "24676827787575344",
+        "rawCostTitanX": "0",
         "term": "88"
       },
       {
@@ -45068,8 +45052,8 @@
         "power": "0",
         "claimedCreate": false,
         "claimedStake": false,
-        "costETH": "0",
-        "costTitanX": "3900000000000000000000000000",
+        "costETH": "0.0",
+        "costTitanX": "3900000000.0",
         "rawCostETH": "0",
         "rawCostTitanX": "3900000000000000000000000000",
         "term": "88"
@@ -45152,9 +45136,9 @@
         "power": "0",
         "claimedCreate": false,
         "claimedStake": false,
-        "costETH": "0.118849803146910435",
+        "costETH": "0.17532520283630326",
         "costTitanX": "0.0",
-        "rawCostETH": "118849803146910435",
+        "rawCostETH": "175325202836303260",
         "rawCostTitanX": "0",
         "term": "88"
       },
@@ -45171,7 +45155,8 @@
         "costTitanX": "0.0",
         "rawCostETH": "58951422475910991",
         "rawCostTitanX": "0",
-        "titanAmount": "0"
+        "titanAmount": "0",
+        "shares": "840317742865973572430208"
       },
       {
         "user": "0x67938c55f1f1e9ba10a4d96cd7be2f74d7044496",
@@ -45183,11 +45168,12 @@
         "maturityDate": "2025-10-22T21:01:11.000Z",
         "startDate": "2025-07-29T21:01:11.000Z",
         "protocolDay": 20,
-        "costETH": "0.005431237335954705",
+        "costETH": "0.002745528822736616",
         "costTitanX": "0.0",
-        "rawCostETH": "5431237335954705",
+        "rawCostETH": "2745528822736616",
         "rawCostTitanX": "0",
-        "titanAmount": "0"
+        "titanAmount": "0",
+        "shares": "39053931398604353241472"
       },
       {
         "user": "0x67938c55f1f1e9ba10a4d96cd7be2f74d7044496",
@@ -45199,11 +45185,12 @@
         "maturityDate": "2025-10-23T21:02:11.000Z",
         "startDate": "2025-07-29T21:02:11.000Z",
         "protocolDay": 20,
-        "costETH": "0.002745528822736616",
+        "costETH": "0.005390205062026084",
         "costTitanX": "0.0",
-        "rawCostETH": "2745528822736616",
+        "rawCostETH": "5390205062026084",
         "rawCostTitanX": "0",
-        "titanAmount": "0"
+        "titanAmount": "0",
+        "shares": "76293364028996373627975"
       },
       {
         "user": "0x67938c55f1f1e9ba10a4d96cd7be2f74d7044496",
@@ -45219,7 +45206,8 @@
         "costTitanX": "0.0",
         "rawCostETH": "5390205062026084",
         "rawCostTitanX": "0",
-        "titanAmount": "0"
+        "titanAmount": "0",
+        "shares": "79017874131206704543432"
       },
       {
         "user": "0xeae7f59e6185fabfaafaf0680549ffe563d885c2",
@@ -45235,7 +45223,8 @@
         "costTitanX": "0.0",
         "rawCostETH": "265564270275856577",
         "rawCostTitanX": "0",
-        "titanAmount": "0"
+        "titanAmount": "0",
+        "shares": "4194862353324424328440256"
       },
       {
         "user": "0xc202d94cbd66fb7ec7cd3216b1422f40c31e8af4",
@@ -45251,7 +45240,8 @@
         "costTitanX": "0.0",
         "rawCostETH": "13128776673785524",
         "rawCostTitanX": "0",
-        "titanAmount": "0"
+        "titanAmount": "0",
+        "shares": "187161679092875932036416"
       },
       {
         "user": "0x44cb99a5122ccbed026fc57a746deb5a7535f1e3",
@@ -45263,11 +45253,12 @@
         "maturityDate": "2025-10-25T23:09:47.000Z",
         "startDate": "2025-07-29T23:09:47.000Z",
         "protocolDay": 20,
-        "costETH": "0.018999024928661541",
+        "costETH": "0.021072712037915853",
         "costTitanX": "0.0",
-        "rawCostETH": "18999024928661541",
+        "rawCostETH": "21072712037915853",
         "rawCostTitanX": "0",
-        "titanAmount": "0"
+        "titanAmount": "0",
+        "shares": "338639797250189891234240"
       },
       {
         "user": "0x79c640b83e95135c2578a1e1e0d48b637fc2ead7",
@@ -45280,10 +45271,11 @@
         "startDate": "2025-07-29T23:32:59.000Z",
         "protocolDay": 20,
         "costETH": "0.0",
-        "costTitanX": "1006000000.0",
+        "costTitanX": "2000000000.0",
         "rawCostETH": "0",
-        "rawCostTitanX": "1006000000000000000000000000",
-        "titanAmount": "1006000000000000000000000000"
+        "rawCostTitanX": "2000000000000000000000000000",
+        "titanAmount": "2000000000000000000000000000",
+        "shares": "1525404492117972483064256"
       },
       {
         "user": "0xb74db8eb4aebca066614e0f425d125fe6cad131f",
@@ -45293,7 +45285,14 @@
         "timestamp": 1753836299,
         "blockNumber": 23028449,
         "maturityDate": "2025-09-22T00:44:59.000Z",
-        "startDate": "2025-07-30T00:44:59.000Z"
+        "startDate": "2025-07-30T00:44:59.000Z",
+        "protocolDay": 20,
+        "costETH": "0.0",
+        "costTitanX": "1000000000.0",
+        "rawCostETH": "0",
+        "rawCostTitanX": "1000000000000000000000000000",
+        "titanAmount": "1000000000000000000000000000",
+        "shares": "176233427746748523083520"
       },
       {
         "user": "0xd6d4a20cf89bf49f7d456360e65c597132a8ed7f",
@@ -45303,7 +45302,14 @@
         "timestamp": 1753836479,
         "blockNumber": 23028464,
         "maturityDate": "2025-10-26T00:47:59.000Z",
-        "startDate": "2025-07-30T00:47:59.000Z"
+        "startDate": "2025-07-30T00:47:59.000Z",
+        "protocolDay": 20,
+        "costETH": "0.04873552970323518",
+        "costTitanX": "0.0",
+        "rawCostETH": "48735529703235180",
+        "rawCostTitanX": "0",
+        "titanAmount": "0",
+        "shares": "762702246058986241528256"
       },
       {
         "user": "0x92e63682dceda91ebfb14178cbb20caf172a9297",
@@ -45313,7 +45319,14 @@
         "timestamp": 1753838447,
         "blockNumber": 23028627,
         "maturityDate": "2025-10-26T01:20:47.000Z",
-        "startDate": "2025-07-30T01:20:47.000Z"
+        "startDate": "2025-07-30T01:20:47.000Z",
+        "protocolDay": 20,
+        "costETH": "0.0",
+        "costTitanX": "1257000000.0",
+        "rawCostETH": "0",
+        "rawCostTitanX": "1257000000000000000000000000",
+        "titanAmount": "1257000000000000000000000000",
+        "shares": "958716723296145705603008"
       },
       {
         "user": "0x2a4cdc9bbd937023a95e50185c0c027647f5a7b5",
@@ -45323,7 +45336,14 @@
         "timestamp": 1753840763,
         "blockNumber": 23028818,
         "maturityDate": "2025-10-22T01:59:23.000Z",
-        "startDate": "2025-07-30T01:59:23.000Z"
+        "startDate": "2025-07-30T01:59:23.000Z",
+        "protocolDay": 20,
+        "costETH": "0.100198591075961365",
+        "costTitanX": "0.0",
+        "rawCostETH": "100198591075961365",
+        "rawCostTitanX": "0",
+        "titanAmount": "0",
+        "shares": "1326706517797196014734192"
       },
       {
         "user": "0x8251a2ee15fb7e9d87a822b1e0f3e2d7fa36f5fb",
@@ -45333,7 +45353,14 @@
         "timestamp": 1753846619,
         "blockNumber": 23029301,
         "maturityDate": "2025-10-26T03:36:59.000Z",
-        "startDate": "2025-07-30T03:36:59.000Z"
+        "startDate": "2025-07-30T03:36:59.000Z",
+        "protocolDay": 20,
+        "costETH": "0.016153399740920303",
+        "costTitanX": "0.0",
+        "rawCostETH": "16153399740920303",
+        "rawCostTitanX": "0",
+        "titanAmount": "0",
+        "shares": "228994046547937004751296"
       },
       {
         "user": "0x235be0a9c1c15aacbd15e0bc31bd62ef932bd228",
@@ -45343,7 +45370,14 @@
         "timestamp": 1753850831,
         "blockNumber": 23029650,
         "maturityDate": "2025-08-29T04:47:11.000Z",
-        "startDate": "2025-07-30T04:47:11.000Z"
+        "startDate": "2025-07-30T04:47:11.000Z",
+        "protocolDay": 20,
+        "costETH": "0.037031704988757012",
+        "costTitanX": "0.0",
+        "rawCostETH": "37031704988757012",
+        "rawCostTitanX": "0",
+        "titanAmount": "0",
+        "shares": "46411737294137894583300"
       },
       {
         "user": "0xd94d4f36123213aff93b64503261b5c7da68f404",
@@ -45353,7 +45387,14 @@
         "timestamp": 1753852643,
         "blockNumber": 23029801,
         "maturityDate": "2025-10-26T05:17:23.000Z",
-        "startDate": "2025-07-30T05:17:23.000Z"
+        "startDate": "2025-07-30T05:17:23.000Z",
+        "protocolDay": 20,
+        "costETH": "0.0",
+        "costTitanX": "50000000000.0",
+        "rawCostETH": "0",
+        "rawCostTitanX": "50000000000000000000000000000",
+        "titanAmount": "50000000000000000000000000000",
+        "shares": "38135112302949312076761280"
       },
       {
         "user": "0xd0979b1b946140eab977cff9c89116bfabde2f14",
@@ -45363,7 +45404,14 @@
         "timestamp": 1753863431,
         "blockNumber": 23030693,
         "maturityDate": "2025-10-26T08:17:11.000Z",
-        "startDate": "2025-07-30T08:17:11.000Z"
+        "startDate": "2025-07-30T08:17:11.000Z",
+        "protocolDay": 20,
+        "costETH": "0.0",
+        "costTitanX": "20000000000.0",
+        "rawCostETH": "0",
+        "rawCostTitanX": "20000000000000000000000000000",
+        "titanAmount": "20000000000000000000000000000",
+        "shares": "15278504415744974044225728"
       },
       {
         "user": "0xcf24a48c662c096c602ebd45386a4b133b2bd89e",
@@ -45373,7 +45421,14 @@
         "timestamp": 1753870055,
         "blockNumber": 23031241,
         "maturityDate": "2025-09-18T10:07:35.000Z",
-        "startDate": "2025-07-30T10:07:35.000Z"
+        "startDate": "2025-07-30T10:07:35.000Z",
+        "protocolDay": 20,
+        "costETH": "0.0",
+        "costTitanX": "14000000000.0",
+        "rawCostETH": "0",
+        "rawCostTitanX": "14000000000000000000000000000",
+        "titanAmount": "14000000000000000000000000000",
+        "shares": "1958596876472145477207500"
       },
       {
         "user": "0x2adfbba2841df608084834ac7ae060d121f66637",
@@ -45383,7 +45438,14 @@
         "timestamp": 1753880207,
         "blockNumber": 23032083,
         "maturityDate": "2025-10-26T12:56:47.000Z",
-        "startDate": "2025-07-30T12:56:47.000Z"
+        "startDate": "2025-07-30T12:56:47.000Z",
+        "protocolDay": 20,
+        "costETH": "0.0",
+        "costTitanX": "1030000000.0",
+        "rawCostETH": "0",
+        "rawCostTitanX": "1030000000000000000000000000",
+        "titanAmount": "1030000000000000000000000000",
+        "shares": "785583313440755828774336"
       }
     ],
     "rewardPoolData": [
@@ -45509,791 +45571,537 @@
       },
       {
         "day": 20,
-        "rewardPool": 98490.89454558062,
-        "totalShares": 0,
-        "penaltiesInPool": 0,
-        "lastUpdated": "2025-07-29T04:07:46.323Z",
-        "calculated": true
+        "rewardPool": 98490.89454558064,
+        "totalShares": 2502924555.672016,
+        "penaltiesInPool": 3.0116112984e-8
       },
       {
         "day": 21,
-        "rewardPool": 98412.10182994416,
-        "totalShares": 0,
-        "penaltiesInPool": 0,
-        "lastUpdated": "2025-07-29T04:07:46.323Z",
-        "calculated": true
+        "rewardPool": 0,
+        "totalShares": 2502867800.0356526,
+        "penaltiesInPool": 0
       },
       {
         "day": 22,
-        "rewardPool": 98333.37214848021,
-        "totalShares": 0,
-        "penaltiesInPool": 0,
-        "lastUpdated": "2025-07-29T04:07:46.323Z",
-        "calculated": true
+        "rewardPool": 0,
+        "totalShares": 2502811222.944743,
+        "penaltiesInPool": 0
       },
       {
         "day": 23,
-        "rewardPool": 98254.70545076142,
-        "totalShares": 0,
-        "penaltiesInPool": 0,
-        "lastUpdated": "2025-07-29T04:07:46.323Z",
-        "calculated": true
+        "rewardPool": 0,
+        "totalShares": 2502743277.226549,
+        "penaltiesInPool": 0
       },
       {
         "day": 24,
-        "rewardPool": 98176.10168640081,
-        "totalShares": 0,
-        "penaltiesInPool": 0,
-        "lastUpdated": "2025-07-29T04:07:46.323Z",
-        "calculated": true
+        "rewardPool": 0,
+        "totalShares": 2502683584.017959,
+        "penaltiesInPool": 0
       },
       {
         "day": 25,
-        "rewardPool": 98097.56080505169,
-        "totalShares": 0,
-        "penaltiesInPool": 0,
-        "lastUpdated": "2025-07-29T04:07:46.323Z",
-        "calculated": true
+        "rewardPool": 0,
+        "totalShares": 2502627874.017959,
+        "penaltiesInPool": 0
       },
       {
         "day": 26,
-        "rewardPool": 98019.08275640765,
-        "totalShares": 0,
-        "penaltiesInPool": 0,
-        "lastUpdated": "2025-07-29T04:07:46.323Z",
-        "calculated": true
+        "rewardPool": 0,
+        "totalShares": 2502590019.4494886,
+        "penaltiesInPool": 0
       },
       {
         "day": 27,
-        "rewardPool": 97940.66749020251,
-        "totalShares": 0,
-        "penaltiesInPool": 0,
-        "lastUpdated": "2025-07-29T04:07:46.323Z",
-        "calculated": true
+        "rewardPool": 0,
+        "totalShares": 2502087096.540806,
+        "penaltiesInPool": 0
       },
       {
         "day": 28,
-        "rewardPool": 97862.31495621035,
-        "totalShares": 0,
-        "penaltiesInPool": 0,
-        "lastUpdated": "2025-07-29T04:07:46.323Z",
-        "calculated": true
+        "rewardPool": 0,
+        "totalShares": 2501828658.0862603,
+        "penaltiesInPool": 0
       },
       {
         "day": 29,
-        "rewardPool": 97784.02510424537,
-        "totalShares": 0,
-        "penaltiesInPool": 0,
-        "lastUpdated": "2025-07-29T04:07:46.323Z",
-        "calculated": true
+        "rewardPool": 0,
+        "totalShares": 2501471998.68626,
+        "penaltiesInPool": 0
       },
       {
         "day": 30,
-        "rewardPool": 97705.79788416198,
-        "totalShares": 0,
-        "penaltiesInPool": 0,
-        "lastUpdated": "2025-07-29T04:07:46.323Z",
-        "calculated": true
+        "rewardPool": 0,
+        "totalShares": 2501422967.1676235,
+        "penaltiesInPool": 0
       },
       {
         "day": 31,
-        "rewardPool": 97627.63324585464,
-        "totalShares": 0,
-        "penaltiesInPool": 0,
-        "lastUpdated": "2025-07-29T04:07:46.323Z",
-        "calculated": true
+        "rewardPool": 0,
+        "totalShares": 2500955706.3272157,
+        "penaltiesInPool": 0
       },
       {
         "day": 32,
-        "rewardPool": 97549.53113925795,
-        "totalShares": 0,
-        "penaltiesInPool": 0,
-        "lastUpdated": "2025-07-29T04:07:46.323Z",
-        "calculated": true
+        "rewardPool": 0,
+        "totalShares": 2500738301.8577805,
+        "penaltiesInPool": 0
       },
       {
         "day": 33,
-        "rewardPool": 97471.49151434653,
-        "totalShares": 0,
-        "penaltiesInPool": 0,
-        "lastUpdated": "2025-07-29T04:07:46.323Z",
-        "calculated": true
+        "rewardPool": 0,
+        "totalShares": 2500552814.6348643,
+        "penaltiesInPool": 0
       },
       {
         "day": 34,
-        "rewardPool": 97393.51432113505,
-        "totalShares": 0,
-        "penaltiesInPool": 0,
-        "lastUpdated": "2025-07-29T04:07:46.323Z",
-        "calculated": true
+        "rewardPool": 0,
+        "totalShares": 2499962978.9135714,
+        "penaltiesInPool": 0
       },
       {
         "day": 35,
-        "rewardPool": 97315.59950967814,
-        "totalShares": 0,
-        "penaltiesInPool": 0,
-        "lastUpdated": "2025-07-29T04:07:46.323Z",
-        "calculated": true
+        "rewardPool": 0,
+        "totalShares": 2499432092.9702067,
+        "penaltiesInPool": 0
       },
       {
         "day": 36,
-        "rewardPool": 97237.7470300704,
-        "totalShares": 0,
-        "penaltiesInPool": 0,
-        "lastUpdated": "2025-07-29T04:07:46.323Z",
-        "calculated": true
+        "rewardPool": 0,
+        "totalShares": 2499251284.118926,
+        "penaltiesInPool": 0
       },
       {
         "day": 37,
-        "rewardPool": 97159.95683244635,
-        "totalShares": 0,
-        "penaltiesInPool": 0,
-        "lastUpdated": "2025-07-29T04:07:46.323Z",
-        "calculated": true
+        "rewardPool": 0,
+        "totalShares": 2499175735.062926,
+        "penaltiesInPool": 0
       },
       {
         "day": 38,
-        "rewardPool": 97082.22886698038,
-        "totalShares": 0,
-        "penaltiesInPool": 0,
-        "lastUpdated": "2025-07-29T04:07:46.323Z",
-        "calculated": true
+        "rewardPool": 0,
+        "totalShares": 2498503641.2378235,
+        "penaltiesInPool": 0
       },
       {
         "day": 39,
-        "rewardPool": 97004.5630838868,
-        "totalShares": 0,
-        "penaltiesInPool": 0,
-        "lastUpdated": "2025-07-29T04:07:46.323Z",
-        "calculated": true
+        "rewardPool": 0,
+        "totalShares": 2498323383.679168,
+        "penaltiesInPool": 0
       },
       {
         "day": 40,
-        "rewardPool": 96926.95943341969,
-        "totalShares": 0,
-        "penaltiesInPool": 0,
-        "lastUpdated": "2025-07-29T04:07:46.323Z",
-        "calculated": true
+        "rewardPool": 0,
+        "totalShares": 2498201842.3018374,
+        "penaltiesInPool": 0
       },
       {
         "day": 41,
-        "rewardPool": 96849.41786587295,
-        "totalShares": 0,
-        "penaltiesInPool": 0,
-        "lastUpdated": "2025-07-29T04:07:46.323Z",
-        "calculated": true
+        "rewardPool": 0,
+        "totalShares": 2497815839.1539693,
+        "penaltiesInPool": 0
       },
       {
         "day": 42,
-        "rewardPool": 96771.93833158026,
-        "totalShares": 0,
-        "penaltiesInPool": 0,
-        "lastUpdated": "2025-07-29T04:07:46.323Z",
-        "calculated": true
+        "rewardPool": 0,
+        "totalShares": 2497189685.9825444,
+        "penaltiesInPool": 0
       },
       {
         "day": 43,
-        "rewardPool": 96694.52078091499,
-        "totalShares": 0,
-        "penaltiesInPool": 0,
-        "lastUpdated": "2025-07-29T04:07:46.323Z",
-        "calculated": true
+        "rewardPool": 0,
+        "totalShares": 2496439009.065632,
+        "penaltiesInPool": 0
       },
       {
         "day": 44,
-        "rewardPool": 96617.16516429026,
-        "totalShares": 0,
-        "penaltiesInPool": 0,
-        "lastUpdated": "2025-07-29T04:07:46.323Z",
-        "calculated": true
+        "rewardPool": 0,
+        "totalShares": 2496110984.1696606,
+        "penaltiesInPool": 0
       },
       {
         "day": 45,
-        "rewardPool": 96539.87143215882,
-        "totalShares": 0,
-        "penaltiesInPool": 0,
-        "lastUpdated": "2025-07-29T04:07:46.323Z",
-        "calculated": true
+        "rewardPool": 0,
+        "totalShares": 2494460699.879316,
+        "penaltiesInPool": 0
       },
       {
         "day": 46,
-        "rewardPool": 96462.63953501309,
-        "totalShares": 0,
-        "penaltiesInPool": 0,
-        "lastUpdated": "2025-07-29T04:07:46.323Z",
-        "calculated": true
+        "rewardPool": 0,
+        "totalShares": 2493555093.6001453,
+        "penaltiesInPool": 0
       },
       {
         "day": 47,
-        "rewardPool": 96385.46942338508,
-        "totalShares": 0,
-        "penaltiesInPool": 0,
-        "lastUpdated": "2025-07-29T04:07:46.323Z",
-        "calculated": true
+        "rewardPool": 0,
+        "totalShares": 2488232616.584032,
+        "penaltiesInPool": 0
       },
       {
         "day": 48,
-        "rewardPool": 96308.36104784637,
-        "totalShares": 0,
-        "penaltiesInPool": 0,
-        "lastUpdated": "2025-07-29T04:07:46.323Z",
-        "calculated": true
+        "rewardPool": 0,
+        "totalShares": 2486329920.476443,
+        "penaltiesInPool": 0
       },
       {
         "day": 49,
-        "rewardPool": 96231.31435900809,
-        "totalShares": 0,
-        "penaltiesInPool": 0,
-        "lastUpdated": "2025-07-29T04:07:46.323Z",
-        "calculated": true
+        "rewardPool": 0,
+        "totalShares": 2485014959.8019643,
+        "penaltiesInPool": 0
       },
       {
         "day": 50,
-        "rewardPool": 96154.32930752088,
-        "totalShares": 0,
-        "penaltiesInPool": 0,
-        "lastUpdated": "2025-07-29T04:07:46.323Z",
-        "calculated": true
+        "rewardPool": 0,
+        "totalShares": 2483330304.288419,
+        "penaltiesInPool": 0
       },
       {
         "day": 51,
-        "rewardPool": 96077.40584407486,
-        "totalShares": 0,
-        "penaltiesInPool": 0,
-        "lastUpdated": "2025-07-29T04:07:46.323Z",
-        "calculated": true
+        "rewardPool": 0,
+        "totalShares": 2480558374.72296,
+        "penaltiesInPool": 0
       },
       {
         "day": 52,
-        "rewardPool": 96000.5439193996,
-        "totalShares": 0,
-        "penaltiesInPool": 0,
-        "lastUpdated": "2025-07-29T04:07:46.323Z",
-        "calculated": true
+        "rewardPool": 0,
+        "totalShares": 2478027152.1574326,
+        "penaltiesInPool": 0
       },
       {
         "day": 53,
-        "rewardPool": 95923.74348426408,
-        "totalShares": 0,
-        "penaltiesInPool": 0,
-        "lastUpdated": "2025-07-29T04:07:46.323Z",
-        "calculated": true
+        "rewardPool": 0,
+        "totalShares": 2476180884.264615,
+        "penaltiesInPool": 0
       },
       {
         "day": 54,
-        "rewardPool": 95847.00448947666,
-        "totalShares": 0,
-        "penaltiesInPool": 0,
-        "lastUpdated": "2025-07-29T04:07:46.323Z",
-        "calculated": true
+        "rewardPool": 0,
+        "totalShares": 2475103259.439336,
+        "penaltiesInPool": 0
       },
       {
         "day": 55,
-        "rewardPool": 95770.32688588508,
-        "totalShares": 0,
-        "penaltiesInPool": 0,
-        "lastUpdated": "2025-07-29T04:07:46.323Z",
-        "calculated": true
+        "rewardPool": 0,
+        "totalShares": 2473306121.6223555,
+        "penaltiesInPool": 0
       },
       {
         "day": 56,
-        "rewardPool": 95693.71062437637,
-        "totalShares": 0,
-        "penaltiesInPool": 0,
-        "lastUpdated": "2025-07-29T04:07:46.323Z",
-        "calculated": true
+        "rewardPool": 0,
+        "totalShares": 2470268099.479843,
+        "penaltiesInPool": 0
       },
       {
         "day": 57,
-        "rewardPool": 95617.15565587686,
-        "totalShares": 0,
-        "penaltiesInPool": 0,
-        "lastUpdated": "2025-07-29T04:07:46.323Z",
-        "calculated": true
+        "rewardPool": 0,
+        "totalShares": 2468630260.5786967,
+        "penaltiesInPool": 0
       },
       {
         "day": 58,
-        "rewardPool": 95540.66193135217,
-        "totalShares": 0,
-        "penaltiesInPool": 0,
-        "lastUpdated": "2025-07-29T04:07:46.323Z",
-        "calculated": true
+        "rewardPool": 0,
+        "totalShares": 2464842723.8192844,
+        "penaltiesInPool": 0
       },
       {
         "day": 59,
-        "rewardPool": 95464.22940180708,
-        "totalShares": 0,
-        "penaltiesInPool": 0,
-        "lastUpdated": "2025-07-29T04:07:46.323Z",
-        "calculated": true
+        "rewardPool": 0,
+        "totalShares": 2461089741.747568,
+        "penaltiesInPool": 0
       },
       {
         "day": 60,
-        "rewardPool": 95387.85801828564,
-        "totalShares": 0,
-        "penaltiesInPool": 0,
-        "lastUpdated": "2025-07-29T04:07:46.323Z",
-        "calculated": true
+        "rewardPool": 0,
+        "totalShares": 2456016771.9473686,
+        "penaltiesInPool": 0
       },
       {
         "day": 61,
-        "rewardPool": 95311.547731871,
-        "totalShares": 0,
-        "penaltiesInPool": 0,
-        "lastUpdated": "2025-07-29T04:07:46.323Z",
-        "calculated": true
+        "rewardPool": 0,
+        "totalShares": 2448704238.2758307,
+        "penaltiesInPool": 0
       },
       {
         "day": 62,
-        "rewardPool": 95235.2984936855,
-        "totalShares": 0,
-        "penaltiesInPool": 0,
-        "lastUpdated": "2025-07-29T04:07:46.323Z",
-        "calculated": true
+        "rewardPool": 0,
+        "totalShares": 2447586719.5545177,
+        "penaltiesInPool": 0
       },
       {
         "day": 63,
-        "rewardPool": 95159.11025489056,
-        "totalShares": 0,
-        "penaltiesInPool": 0,
-        "lastUpdated": "2025-07-29T04:07:46.323Z",
-        "calculated": true
+        "rewardPool": 0,
+        "totalShares": 2446468603.1240196,
+        "penaltiesInPool": 0
       },
       {
         "day": 64,
-        "rewardPool": 95082.98296668664,
-        "totalShares": 0,
-        "penaltiesInPool": 0,
-        "lastUpdated": "2025-07-29T04:07:46.323Z",
-        "calculated": true
+        "rewardPool": 0,
+        "totalShares": 2445766727.4361987,
+        "penaltiesInPool": 0
       },
       {
         "day": 65,
-        "rewardPool": 95006.9165803133,
-        "totalShares": 0,
-        "penaltiesInPool": 0,
-        "lastUpdated": "2025-07-29T04:07:46.323Z",
-        "calculated": true
+        "rewardPool": 0,
+        "totalShares": 2440625904.670382,
+        "penaltiesInPool": 0
       },
       {
         "day": 66,
-        "rewardPool": 94930.91104704904,
-        "totalShares": 0,
-        "penaltiesInPool": 0,
-        "lastUpdated": "2025-07-29T04:07:46.323Z",
-        "calculated": true
+        "rewardPool": 0,
+        "totalShares": 2437521057.985923,
+        "penaltiesInPool": 0
       },
       {
         "day": 67,
-        "rewardPool": 94854.9663182114,
-        "totalShares": 0,
-        "penaltiesInPool": 0,
-        "lastUpdated": "2025-07-29T04:07:46.323Z",
-        "calculated": true
+        "rewardPool": 0,
+        "totalShares": 2434836784.014342,
+        "penaltiesInPool": 0
       },
       {
         "day": 68,
-        "rewardPool": 94779.08234515683,
-        "totalShares": 0,
-        "penaltiesInPool": 0,
-        "lastUpdated": "2025-07-29T04:07:46.323Z",
-        "calculated": true
+        "rewardPool": 0,
+        "totalShares": 2433288858.435291,
+        "penaltiesInPool": 0
       },
       {
         "day": 69,
-        "rewardPool": 94703.2590792807,
-        "totalShares": 0,
-        "penaltiesInPool": 0,
-        "lastUpdated": "2025-07-29T04:07:46.323Z",
-        "calculated": true
+        "rewardPool": 0,
+        "totalShares": 2423338165.5036325,
+        "penaltiesInPool": 0
       },
       {
         "day": 70,
-        "rewardPool": 94627.49647201727,
-        "totalShares": 0,
-        "penaltiesInPool": 0,
-        "lastUpdated": "2025-07-29T04:07:46.323Z",
-        "calculated": true
+        "rewardPool": 0,
+        "totalShares": 2416826469.2040477,
+        "penaltiesInPool": 0
       },
       {
         "day": 71,
-        "rewardPool": 94551.79447483965,
-        "totalShares": 0,
-        "penaltiesInPool": 0,
-        "lastUpdated": "2025-07-29T04:07:46.323Z",
-        "calculated": true
+        "rewardPool": 0,
+        "totalShares": 2415079318.210749,
+        "penaltiesInPool": 0
       },
       {
         "day": 72,
-        "rewardPool": 94476.15303925978,
-        "totalShares": 0,
-        "penaltiesInPool": 0,
-        "lastUpdated": "2025-07-29T04:07:46.323Z",
-        "calculated": true
+        "rewardPool": 0,
+        "totalShares": 2413221280.500219,
+        "penaltiesInPool": 0
       },
       {
         "day": 73,
-        "rewardPool": 94400.57211682836,
-        "totalShares": 0,
-        "penaltiesInPool": 0,
-        "lastUpdated": "2025-07-29T04:07:46.323Z",
-        "calculated": true
+        "rewardPool": 0,
+        "totalShares": 2405198857.606657,
+        "penaltiesInPool": 0
       },
       {
         "day": 74,
-        "rewardPool": 94325.0516591349,
-        "totalShares": 0,
-        "penaltiesInPool": 0,
-        "lastUpdated": "2025-07-29T04:07:46.323Z",
-        "calculated": true
+        "rewardPool": 0,
+        "totalShares": 2398151256.4075184,
+        "penaltiesInPool": 0
       },
       {
         "day": 75,
-        "rewardPool": 94249.59161780759,
-        "totalShares": 0,
-        "penaltiesInPool": 0,
-        "lastUpdated": "2025-07-29T04:07:46.323Z",
-        "calculated": true
+        "rewardPool": 0,
+        "totalShares": 2388105560.211742,
+        "penaltiesInPool": 0
       },
       {
         "day": 76,
-        "rewardPool": 94174.19194451334,
-        "totalShares": 0,
-        "penaltiesInPool": 0,
-        "lastUpdated": "2025-07-29T04:07:46.323Z",
-        "calculated": true
+        "rewardPool": 0,
+        "totalShares": 2348284463.608543,
+        "penaltiesInPool": 0
       },
       {
         "day": 77,
-        "rewardPool": 94098.85259095773,
-        "totalShares": 0,
-        "penaltiesInPool": 0,
-        "lastUpdated": "2025-07-29T04:07:46.323Z",
-        "calculated": true
+        "rewardPool": 0,
+        "totalShares": 2334611885.308461,
+        "penaltiesInPool": 0
       },
       {
         "day": 78,
-        "rewardPool": 94023.57350888496,
-        "totalShares": 0,
-        "penaltiesInPool": 0,
-        "lastUpdated": "2025-07-29T04:07:46.323Z",
-        "calculated": true
+        "rewardPool": 0,
+        "totalShares": 2310234391.335514,
+        "penaltiesInPool": 0
       },
       {
         "day": 79,
-        "rewardPool": 93948.35465007785,
-        "totalShares": 0,
-        "penaltiesInPool": 0,
-        "lastUpdated": "2025-07-29T04:07:46.323Z",
-        "calculated": true
+        "rewardPool": 0,
+        "totalShares": 2296170592.1431394,
+        "penaltiesInPool": 0
       },
       {
         "day": 80,
-        "rewardPool": 93873.19596635779,
-        "totalShares": 0,
-        "penaltiesInPool": 0,
-        "lastUpdated": "2025-07-29T04:07:46.323Z",
-        "calculated": true
+        "rewardPool": 0,
+        "totalShares": 2271187509.808249,
+        "penaltiesInPool": 0
       },
       {
         "day": 81,
-        "rewardPool": 93798.0974095847,
-        "totalShares": 0,
-        "penaltiesInPool": 0,
-        "lastUpdated": "2025-07-29T04:07:46.323Z",
-        "calculated": true
+        "rewardPool": 0,
+        "totalShares": 2249578442.661862,
+        "penaltiesInPool": 0
       },
       {
         "day": 82,
-        "rewardPool": 93723.05893165704,
-        "totalShares": 0,
-        "penaltiesInPool": 0,
-        "lastUpdated": "2025-07-29T04:07:46.323Z",
-        "calculated": true
+        "rewardPool": 0,
+        "totalShares": 2232775746.813133,
+        "penaltiesInPool": 0
       },
       {
         "day": 83,
-        "rewardPool": 93648.08048451171,
-        "totalShares": 0,
-        "penaltiesInPool": 0,
-        "lastUpdated": "2025-07-29T04:07:46.323Z",
-        "calculated": true
+        "rewardPool": 0,
+        "totalShares": 2194885792.678302,
+        "penaltiesInPool": 0
       },
       {
         "day": 84,
-        "rewardPool": 93573.1620201241,
-        "totalShares": 0,
-        "penaltiesInPool": 0,
-        "lastUpdated": "2025-07-29T04:07:46.323Z",
-        "calculated": true
+        "rewardPool": 0,
+        "totalShares": 2171492071.0029507,
+        "penaltiesInPool": 0
       },
       {
         "day": 85,
-        "rewardPool": 93498.303490508,
-        "totalShares": 0,
-        "penaltiesInPool": 0,
-        "lastUpdated": "2025-07-29T04:07:46.323Z",
-        "calculated": true
+        "rewardPool": 0,
+        "totalShares": 2141185293.4531438,
+        "penaltiesInPool": 0
       },
       {
         "day": 86,
-        "rewardPool": 93423.5048477156,
-        "totalShares": 0,
-        "penaltiesInPool": 0,
-        "lastUpdated": "2025-07-29T04:07:46.323Z",
-        "calculated": true
+        "rewardPool": 0,
+        "totalShares": 2090231918.7670853,
+        "penaltiesInPool": 0
       },
       {
         "day": 87,
-        "rewardPool": 93348.76604383742,
-        "totalShares": 0,
-        "penaltiesInPool": 0,
-        "lastUpdated": "2025-07-29T04:07:46.323Z",
-        "calculated": true
+        "rewardPool": 0,
+        "totalShares": 1996793023.3185844,
+        "penaltiesInPool": 0
       },
       {
         "day": 88,
-        "rewardPool": 93274.08703100235,
-        "totalShares": 0,
-        "penaltiesInPool": 0,
-        "lastUpdated": "2025-07-29T04:07:46.323Z",
-        "calculated": true
+        "rewardPool": 0,
+        "totalShares": 1943946844.6675158,
+        "penaltiesInPool": 0
       },
       {
         "day": 89,
-        "rewardPool": 93199.46776137754,
-        "totalShares": 0,
-        "penaltiesInPool": 0,
-        "lastUpdated": "2025-07-29T04:07:46.324Z",
-        "calculated": true
+        "rewardPool": 0,
+        "totalShares": 1436428627.4203982,
+        "penaltiesInPool": 0
       },
       {
         "day": 90,
-        "rewardPool": 93124.90818716843,
-        "totalShares": 0,
-        "penaltiesInPool": 0,
-        "lastUpdated": "2025-07-29T04:07:46.324Z",
-        "calculated": true
+        "rewardPool": 0,
+        "totalShares": 1236603395.161641,
+        "penaltiesInPool": 0
       },
       {
         "day": 91,
-        "rewardPool": 93050.4082606187,
-        "totalShares": 0,
-        "penaltiesInPool": 0,
-        "lastUpdated": "2025-07-29T04:07:46.324Z",
-        "calculated": true
+        "rewardPool": 0,
+        "totalShares": 1145405619.4047863,
+        "penaltiesInPool": 0
       },
       {
         "day": 92,
-        "rewardPool": 92975.9679340102,
-        "totalShares": 0,
-        "penaltiesInPool": 0,
-        "lastUpdated": "2025-07-29T04:07:46.324Z",
-        "calculated": true
+        "rewardPool": 0,
+        "totalShares": 1032826790.0286162,
+        "penaltiesInPool": 0
       },
       {
         "day": 93,
-        "rewardPool": 92901.58715966299,
-        "totalShares": 0,
-        "penaltiesInPool": 0,
-        "lastUpdated": "2025-07-29T04:07:46.324Z",
-        "calculated": true
+        "rewardPool": 0,
+        "totalShares": 962308079.7619393,
+        "penaltiesInPool": 0
       },
       {
         "day": 94,
-        "rewardPool": 92827.26588993525,
-        "totalShares": 0,
-        "penaltiesInPool": 0,
-        "lastUpdated": "2025-07-29T04:07:46.324Z",
-        "calculated": true
+        "rewardPool": 0,
+        "totalShares": 826196008.3933129,
+        "penaltiesInPool": 0
       },
       {
         "day": 95,
-        "rewardPool": 92753.0040772233,
-        "totalShares": 0,
-        "penaltiesInPool": 0,
-        "lastUpdated": "2025-07-29T04:07:46.324Z",
-        "calculated": true
+        "rewardPool": 0,
+        "totalShares": 764390074.6997929,
+        "penaltiesInPool": 0
       },
       {
         "day": 96,
-        "rewardPool": 92678.80167396153,
-        "totalShares": 0,
-        "penaltiesInPool": 0,
-        "lastUpdated": "2025-07-29T04:07:46.324Z",
-        "calculated": true
+        "rewardPool": 0,
+        "totalShares": 691345213.0296645,
+        "penaltiesInPool": 0
       },
       {
         "day": 97,
-        "rewardPool": 92604.65863262236,
-        "totalShares": 0,
-        "penaltiesInPool": 0,
-        "lastUpdated": "2025-07-29T04:07:46.324Z",
-        "calculated": true
+        "rewardPool": 0,
+        "totalShares": 649875374.6469141,
+        "penaltiesInPool": 0
       },
       {
         "day": 98,
-        "rewardPool": 92530.57490571626,
-        "totalShares": 0,
-        "penaltiesInPool": 0,
-        "lastUpdated": "2025-07-29T04:07:46.324Z",
-        "calculated": true
+        "rewardPool": 0,
+        "totalShares": 612476668.506048,
+        "penaltiesInPool": 0
       },
       {
         "day": 99,
-        "rewardPool": 92456.55044579168,
-        "totalShares": 0,
-        "penaltiesInPool": 0,
-        "lastUpdated": "2025-07-29T04:07:46.324Z",
-        "calculated": true
+        "rewardPool": 0,
+        "totalShares": 535374167.3824708,
+        "penaltiesInPool": 0
       },
       {
         "day": 100,
-        "rewardPool": 92382.58520543505,
-        "totalShares": 0,
-        "penaltiesInPool": 0,
-        "lastUpdated": "2025-07-29T04:07:46.324Z",
-        "calculated": true
+        "rewardPool": 0,
+        "totalShares": 467107483.06226677,
+        "penaltiesInPool": 0
       },
       {
         "day": 101,
-        "rewardPool": 92308.67913727071,
-        "totalShares": 0,
-        "penaltiesInPool": 0,
-        "lastUpdated": "2025-07-29T04:07:46.324Z",
-        "calculated": true
+        "rewardPool": 0,
+        "totalShares": 408883394.5830059,
+        "penaltiesInPool": 0
       },
       {
         "day": 102,
-        "rewardPool": 92234.83219396089,
-        "totalShares": 0,
-        "penaltiesInPool": 0,
-        "lastUpdated": "2025-07-29T04:07:46.324Z",
-        "calculated": true
+        "rewardPool": 0,
+        "totalShares": 348600429.76817113,
+        "penaltiesInPool": 0
       },
       {
         "day": 103,
-        "rewardPool": 92161.04432820571,
-        "totalShares": 0,
-        "penaltiesInPool": 0,
-        "lastUpdated": "2025-07-29T04:07:46.324Z",
-        "calculated": true
+        "rewardPool": 0,
+        "totalShares": 282660151.20794296,
+        "penaltiesInPool": 0
       },
       {
         "day": 104,
-        "rewardPool": 92087.31549274315,
-        "totalShares": 0,
-        "penaltiesInPool": 0,
-        "lastUpdated": "2025-07-29T04:07:46.324Z",
-        "calculated": true
+        "rewardPool": 0,
+        "totalShares": 233323988.06204414,
+        "penaltiesInPool": 0
       },
       {
         "day": 105,
-        "rewardPool": 92013.64564034894,
-        "totalShares": 0,
-        "penaltiesInPool": 0,
-        "lastUpdated": "2025-07-29T04:07:46.324Z",
-        "calculated": true
+        "rewardPool": 0,
+        "totalShares": 198605523.11609015,
+        "penaltiesInPool": 0
       },
       {
         "day": 106,
-        "rewardPool": 91940.03472383667,
-        "totalShares": 0,
-        "penaltiesInPool": 0,
-        "lastUpdated": "2025-07-29T04:07:46.324Z",
-        "calculated": true
+        "rewardPool": 0,
+        "totalShares": 106817331.19203708,
+        "penaltiesInPool": 0
       },
       {
         "day": 107,
-        "rewardPool": 91866.48269605759,
-        "totalShares": 0,
-        "penaltiesInPool": 0,
-        "lastUpdated": "2025-07-29T04:07:46.324Z",
-        "calculated": true
+        "rewardPool": 0,
+        "totalShares": 66271960.86231137,
+        "penaltiesInPool": 0
       },
       {
         "day": 108,
         "rewardPool": 0,
         "totalShares": 0,
-        "penaltiesInPool": 0,
-        "lastUpdated": "2025-07-29T03:58:28.946Z"
-      },
-      {
-        "day": 109,
-        "rewardPool": 0,
-        "totalShares": 0,
-        "penaltiesInPool": 0,
-        "lastUpdated": "2025-07-29T03:58:28.946Z"
-      },
-      {
-        "day": 110,
-        "rewardPool": 0,
-        "totalShares": 0,
-        "penaltiesInPool": 0,
-        "lastUpdated": "2025-07-29T03:58:28.946Z"
-      },
-      {
-        "day": 111,
-        "rewardPool": 0,
-        "totalShares": 0,
-        "penaltiesInPool": 0,
-        "lastUpdated": "2025-07-29T03:58:28.946Z"
-      },
-      {
-        "day": 112,
-        "rewardPool": 0,
-        "totalShares": 0,
-        "penaltiesInPool": 0,
-        "lastUpdated": "2025-07-29T03:58:28.946Z"
-      },
-      {
-        "day": 113,
-        "rewardPool": 0,
-        "totalShares": 0,
-        "penaltiesInPool": 0,
-        "lastUpdated": "2025-07-29T03:58:28.946Z"
-      },
-      {
-        "day": 114,
-        "rewardPool": 0,
-        "totalShares": 0,
-        "penaltiesInPool": 0,
-        "lastUpdated": "2025-07-29T03:58:29.625Z"
-      },
-      {
-        "day": 115,
-        "rewardPool": 0,
-        "totalShares": 0,
-        "penaltiesInPool": 0,
-        "lastUpdated": "2025-07-29T03:58:29.625Z"
-      },
-      {
-        "day": 116,
-        "rewardPool": 0,
-        "totalShares": 0,
-        "penaltiesInPool": 0,
-        "lastUpdated": "2025-07-29T03:58:29.625Z"
-      },
-      {
-        "day": 117,
-        "rewardPool": 0,
-        "totalShares": 0,
-        "penaltiesInPool": 0,
-        "lastUpdated": "2025-07-29T03:58:29.625Z"
-      },
-      {
-        "day": 118,
-        "rewardPool": 0,
-        "totalShares": 0,
-        "penaltiesInPool": 0,
-        "lastUpdated": "2025-07-29T03:58:29.625Z"
-      },
-      {
-        "day": 119,
-        "rewardPool": 0,
-        "totalShares": 0,
-        "penaltiesInPool": 0,
-        "lastUpdated": "2025-07-29T03:58:29.625Z"
+        "penaltiesInPool": 0
       }
     ],
     "currentProtocolDay": 20,
@@ -46301,21 +46109,21 @@
     "burnedSupply": 0,
     "lastUpdated": "2025-07-16T19:25:33.217Z",
     "metadata": {
-      "currentBlock": 23032917,
+      "currentBlock": 23032942,
       "lastUpdate": "2025-07-16T19:14:31.015Z",
       "stakesRefreshed": "2025-07-16T18:54:18.007Z",
       "dailySupplySnapshot": {
         "day": 20,
         "totalSupply": 17505.58377982202,
         "burnedSupply": 0,
-        "timestamp": "2025-07-30T15:45:02.646Z"
+        "timestamp": "2025-07-30T15:50:02.348Z"
       },
       "lastCreateBlock": 22969998,
       "lastFullRebuild": "2025-07-21T22:29:04.583Z",
       "totalCreates": 1258,
       "rebuildBlock": 22970545
     },
-    "lastBlock": 23032917
+    "lastBlock": 23032942
   },
   "contractData": {
     "torusToken": {
@@ -46323,14 +46131,14 @@
       "name": "Torus",
       "symbol": "TORUS",
       "decimals": 18,
-      "totalSupply": "18077090069100833993564"
+      "totalSupply": "17505583779822019630875"
     },
     "titanxToken": {
       "address": "0xf19308f923582a6f7c465e5ce7a9dc1bec6665b1",
       "name": "TITAN X",
       "symbol": "TITANX",
       "decimals": 18,
-      "totalSupply": "105723861557750726017054969810285"
+      "totalSupply": "105737715252981763313654026000966"
     },
     "uniswapPool": {
       "address": "0x7ff1f30F6E7EeC2ff3F0D1b60739115BDF88190F",
@@ -46339,7 +46147,7 @@
   },
   "metadata": {
     "dataSource": "Blockchain RPC",
-    "lastCompleteUpdate": "2025-07-26T19:30:51.010Z",
+    "lastCompleteUpdate": "2025-07-30T15:48:56.221Z",
     "dataComplete": true,
     "description": "Complete TORUS dashboard data with all frontend requirements",
     "fallbackToRPC": false,
@@ -46362,34 +46170,34 @@
   },
   "currentProtocolDay": 20,
   "totals": {
-    "totalETH": "67.141226",
-    "totalTitanX": "2994777490210.62",
-    "totalStakedETH": "0.161659",
-    "totalCreatedETH": "66.979567",
-    "totalStakedTitanX": "4343529252.44",
-    "totalCreatedTitanX": "2990433960958.17"
+    "totalETH": "77.749769",
+    "totalTitanX": "3114021662900.46",
+    "totalStakedETH": "0.162544",
+    "totalCreatedETH": "77.587224",
+    "totalStakedTitanX": "4342662900.45",
+    "totalCreatedTitanX": "3109679000000.00"
   },
   "uniswapV3": {
     "poolAddress": "0x7ff1f30F6E7EeC2ff3F0D1b60739115BDF88190F",
     "torusAddress": "0xb47f575807fc5466285e1277ef8acfbb5c6686e8",
     "titanxAddress": "0xf19308f923582a6f7c465e5ce7a9dc1bec6665b1",
     "poolData": {
-      "sqrtPriceX96": "539135848902871135960907190617074",
-      "currentTick": 176516,
-      "liquidity": "65835830261737867710370501",
+      "sqrtPriceX96": "546583387126081041033788464325868",
+      "currentTick": 176791,
+      "liquidity": "67472300524638809283221485",
       "fee": 10000,
       "token0": "0xB47f575807fC5466285e1277Ef8aCFBB5c6686E8",
       "token1": "0xF19308F923582A6f7c465e5CE7a9Dc1BEC6665B1"
     },
     "ratio": {
-      "titanxPerTorus": "48150522.32",
-      "titanxPerTorusM": "48.15",
+      "titanxPerTorus": "47704596.78",
+      "titanxPerTorusM": "47.70",
       "torusPerTitanx": "0.00000002"
     },
     "tvl": {
-      "torusAmount": "9532.70",
-      "titanxAmount": "0.46T",
-      "titanxAmountRaw": "459004677473.96"
+      "torusAmount": "9788.12",
+      "titanxAmount": "0.47T",
+      "titanxAmountRaw": "466938467294.07"
     },
     "lpPositions": [
       {
@@ -46400,7 +46208,7 @@
         "tickUpper": 168200,
         "lowerTitanxPerTorus": "0.20M",
         "upperTitanxPerTorus": "20.16M",
-        "currentTitanxPerTorus": "48.01M",
+        "currentTitanxPerTorus": "47.59M",
         "claimableTorus": 0,
         "claimableTitanX": 0,
         "tokensOwed0": "0",
@@ -46411,15 +46219,7 @@
         "priceRange": "0.20M - 20.16M TITANX per TORUS",
         "torusAmount": 0,
         "titanxAmount": 114999999.99989024,
-        "claimableYield": 0,
-        "burned": false,
-        "token0": "0xB47f575807fC5466285e1277Ef8aCFBB5c6686E8",
-        "token1": "0xF19308F923582A6f7c465e5CE7a9Dc1BEC6665B1",
-        "nonce": "0",
-        "status": "active",
-        "lastUpdated": "2025-07-28T20:25:03.226Z",
-        "lastActivityBlock": 23020006,
-        "lastChecked": "2025-07-29T20:43:45.726Z"
+        "claimableYield": 0
       },
       {
         "tokenId": "1032346",
@@ -46429,7 +46229,7 @@
         "tickUpper": 173800,
         "lowerTitanxPerTorus": "28.89M",
         "upperTitanxPerTorus": "35.29M",
-        "currentTitanxPerTorus": "48.01M",
+        "currentTitanxPerTorus": "47.59M",
         "claimableTorus": 0.1460776033756232,
         "claimableTitanX": 5003826.698754727,
         "tokensOwed0": "0",
@@ -46440,44 +46240,7 @@
         "priceRange": "28.89M - 35.29M TITANX per TORUS",
         "torusAmount": 0,
         "titanxAmount": 879002737.6988096,
-        "claimableYield": 5003826.84483233,
-        "burned": false,
-        "token0": "0xB47f575807fC5466285e1277Ef8aCFBB5c6686E8",
-        "token1": "0xF19308F923582A6f7c465e5CE7a9Dc1BEC6665B1",
-        "nonce": "0",
-        "status": "active",
-        "lastUpdated": "2025-07-28T20:25:04.177Z",
-        "lastActivityBlock": 23020006,
-        "lastChecked": "2025-07-29T20:43:46.404Z"
-      },
-      {
-        "tokenId": "1029195",
-        "owner": "0xAa390a37006E22b5775A34f2147F81eBD6a63641",
-        "liquidity": "67154865361396198377228969",
-        "tickLower": -887200,
-        "tickUpper": 887200,
-        "lowerTitanxPerTorus": "0.00M",
-        "upperTitanxPerTorus": "Infinity",
-        "currentTitanxPerTorus": "43.60M",
-        "claimableTorus": 7.155927360710007,
-        "claimableTitanX": 365548779.78086513,
-        "tokensOwed0": "7155927360710007014",
-        "tokensOwed1": "365548779780865106014597345",
-        "fee": 10000,
-        "inRange": true,
-        "estimatedAPR": "12.50",
-        "priceRange": "Full Range",
-        "lastChecked": "2025-07-29T20:43:47.008Z",
-        "torusAmount": 9601.76556744477,
-        "titanxAmount": 463815278451.3915,
-        "claimableYield": 157011828.90525985,
-        "burned": false,
-        "token0": "0xB47f575807fC5466285e1277Ef8aCFBB5c6686E8",
-        "token1": "0xF19308F923582A6f7c465e5CE7a9Dc1BEC6665B1",
-        "nonce": "0",
-        "status": "active",
-        "lastUpdated": "2025-07-28T20:25:05.118Z",
-        "lastActivityBlock": 23020006
+        "claimableYield": 5003826.84483233
       }
     ]
   },
@@ -46610,8 +46373,8 @@
       },
       {
         "date": "2025-08-19",
-        "titanXAmount": "1001000000.0",
-        "displayAmount": "0.00T"
+        "titanXAmount": "12001000000.0",
+        "displayAmount": "0.01T"
       },
       {
         "date": "2025-08-20",
@@ -46655,7 +46418,7 @@
       },
       {
         "date": "2025-08-28",
-        "titanXAmount": "11100000000.0",
+        "titanXAmount": "14650000000.0",
         "displayAmount": "0.01T"
       },
       {
@@ -46715,7 +46478,7 @@
       },
       {
         "date": "2025-09-09",
-        "titanXAmount": "8646207640.17400265580965",
+        "titanXAmount": "8746207640.17400265580965",
         "displayAmount": "0.01T"
       },
       {
@@ -46725,7 +46488,7 @@
       },
       {
         "date": "2025-09-11",
-        "titanXAmount": "2859000000.0",
+        "titanXAmount": "2959000000.0",
         "displayAmount": "0.00T"
       },
       {
@@ -46745,7 +46508,7 @@
       },
       {
         "date": "2025-09-15",
-        "titanXAmount": "2662000000.0",
+        "titanXAmount": "4762000000.0",
         "displayAmount": "0.00T"
       },
       {
@@ -46755,13 +46518,13 @@
       },
       {
         "date": "2025-09-17",
-        "titanXAmount": "24001000000.0",
+        "titanXAmount": "24151000000.0",
         "displayAmount": "0.02T"
       },
       {
         "date": "2025-09-18",
-        "titanXAmount": "7085706769.6313653392",
-        "displayAmount": "0.01T"
+        "titanXAmount": "25053706769.6313653392",
+        "displayAmount": "0.03T"
       },
       {
         "date": "2025-09-19",
@@ -46780,7 +46543,7 @@
       },
       {
         "date": "2025-09-22",
-        "titanXAmount": "16052000000.0",
+        "titanXAmount": "17052000000.0",
         "displayAmount": "0.02T"
       },
       {
@@ -46795,12 +46558,12 @@
       },
       {
         "date": "2025-09-25",
-        "titanXAmount": "42812894736.8421052631581",
+        "titanXAmount": "44812894736.8421052631581",
         "displayAmount": "0.04T"
       },
       {
         "date": "2025-09-26",
-        "titanXAmount": "28191000000.0",
+        "titanXAmount": "30591000000.0",
         "displayAmount": "0.03T"
       },
       {
@@ -46825,22 +46588,22 @@
       },
       {
         "date": "2025-10-01",
-        "titanXAmount": "36948000000.0",
+        "titanXAmount": "37297000000.0",
         "displayAmount": "0.04T"
       },
       {
         "date": "2025-10-02",
-        "titanXAmount": "32501695141.8913918146769",
+        "titanXAmount": "32850695141.8913918146769",
         "displayAmount": "0.03T"
       },
       {
         "date": "2025-10-03",
-        "titanXAmount": "51030000000.0",
+        "titanXAmount": "51379000000.0",
         "displayAmount": "0.05T"
       },
       {
         "date": "2025-10-04",
-        "titanXAmount": "63747638777.7387248071146",
+        "titanXAmount": "64445638777.7387248071146",
         "displayAmount": "0.06T"
       },
       {
@@ -46880,8 +46643,8 @@
       },
       {
         "date": "2025-10-12",
-        "titanXAmount": "53579502006.7560530856995",
-        "displayAmount": "0.05T"
+        "titanXAmount": "56329502006.7560530856995",
+        "displayAmount": "0.06T"
       },
       {
         "date": "2025-10-13",
@@ -46925,13 +46688,33 @@
       },
       {
         "date": "2025-10-21",
-        "titanXAmount": "53119000000.0",
+        "titanXAmount": "54619000000.0",
         "displayAmount": "0.05T"
       },
       {
         "date": "2025-10-22",
-        "titanXAmount": "45713000000.0",
+        "titanXAmount": "47213000000.0",
         "displayAmount": "0.05T"
+      },
+      {
+        "date": "2025-10-23",
+        "titanXAmount": "32171000000.0",
+        "displayAmount": "0.03T"
+      },
+      {
+        "date": "2025-10-24",
+        "titanXAmount": "40249000000.0",
+        "displayAmount": "0.04T"
+      },
+      {
+        "date": "2025-10-25",
+        "titanXAmount": "31321000000.0",
+        "displayAmount": "0.03T"
+      },
+      {
+        "date": "2025-10-26",
+        "titanXAmount": "72287000000.0",
+        "displayAmount": "0.07T"
       }
     ],
     "futureSupplyProjection": [
@@ -48135,27 +47918,31 @@
     },
     {
       "day": 13,
-      "rewardPool": 0,
-      "totalShares": 1923880330.2134602,
-      "penaltiesInPool": 0
+      "rewardPool": 99044.21275624927,
+      "totalShares": 2048869751.3588595,
+      "penaltiesInPool": 0,
+      "lastUpdated": "2025-07-29T03:58:20.087Z"
     },
     {
       "day": 14,
-      "rewardPool": 0,
-      "totalShares": 1923880330.2134602,
-      "penaltiesInPool": 0
+      "rewardPool": 98964.97738604427,
+      "totalShares": 2111765704.1498733,
+      "penaltiesInPool": 0,
+      "lastUpdated": "2025-07-29T03:58:20.087Z"
     },
     {
       "day": 15,
-      "rewardPool": 0,
-      "totalShares": 1923880330.2134602,
-      "penaltiesInPool": 0
+      "rewardPool": 98885.80540413543,
+      "totalShares": 2185040657.0433106,
+      "penaltiesInPool": 0,
+      "lastUpdated": "2025-07-29T03:58:20.087Z"
     },
     {
       "day": 16,
-      "rewardPool": 0,
-      "totalShares": 1923878412.5998237,
-      "penaltiesInPool": 0
+      "rewardPool": 98806.69675981213,
+      "totalShares": 2233664300.0952697,
+      "penaltiesInPool": 0,
+      "lastUpdated": "2025-07-29T03:58:20.087Z"
     },
     {
       "day": 17,
@@ -48166,527 +47953,547 @@
     {
       "day": 18,
       "rewardPool": 98648.66928128236,
-      "totalShares": 2235103941.572847,
-      "penaltiesInPool": 0
+      "totalShares": 2389781337.3450627,
+      "penaltiesInPool": 0,
+      "lastUpdated": "2025-07-29T03:58:20.087Z"
     },
     {
       "day": 19,
       "rewardPool": 98569.75034585733,
-      "totalShares": 2235073178.3910284,
-      "penaltiesInPool": 0
+      "totalShares": 2401609653.739687,
+      "penaltiesInPool": 0,
+      "lastUpdated": "2025-07-29T03:58:20.087Z"
     },
     {
       "day": 20,
       "rewardPool": 98490.89454558064,
-      "totalShares": 2235051182.802392,
-      "penaltiesInPool": 0
+      "totalShares": 2502924555.672016,
+      "penaltiesInPool": 3.0116112984e-8
     },
     {
       "day": 21,
-      "rewardPool": 98412.10182994418,
-      "totalShares": 2234994427.1660285,
+      "rewardPool": 0,
+      "totalShares": 2502867800.0356526,
       "penaltiesInPool": 0
     },
     {
       "day": 22,
-      "rewardPool": 98333.37214848022,
-      "totalShares": 2234937850.0751195,
+      "rewardPool": 0,
+      "totalShares": 2502811222.944743,
       "penaltiesInPool": 0
     },
     {
       "day": 23,
-      "rewardPool": 98254.70545076144,
-      "totalShares": 2234869904.3569255,
+      "rewardPool": 0,
+      "totalShares": 2502743277.226549,
       "penaltiesInPool": 0
     },
     {
       "day": 24,
-      "rewardPool": 98176.10168640083,
-      "totalShares": 2234810211.1483355,
+      "rewardPool": 0,
+      "totalShares": 2502683584.017959,
       "penaltiesInPool": 0
     },
     {
       "day": 25,
-      "rewardPool": 98097.5608050517,
-      "totalShares": 2234754501.1483355,
+      "rewardPool": 0,
+      "totalShares": 2502627874.017959,
       "penaltiesInPool": 0
     },
     {
       "day": 26,
-      "rewardPool": 98019.08275640766,
-      "totalShares": 2234716646.5798645,
+      "rewardPool": 0,
+      "totalShares": 2502590019.4494886,
       "penaltiesInPool": 0
     },
     {
       "day": 27,
-      "rewardPool": 97940.66749020253,
-      "totalShares": 2234213723.671182,
+      "rewardPool": 0,
+      "totalShares": 2502087096.540806,
       "penaltiesInPool": 0
     },
     {
       "day": 28,
-      "rewardPool": 97862.31495621036,
-      "totalShares": 2233955285.2166367,
+      "rewardPool": 0,
+      "totalShares": 2501828658.0862603,
       "penaltiesInPool": 0
     },
     {
       "day": 29,
-      "rewardPool": 97784.02510424539,
-      "totalShares": 2233598625.8166366,
+      "rewardPool": 0,
+      "totalShares": 2501471998.68626,
       "penaltiesInPool": 0
     },
     {
       "day": 30,
-      "rewardPool": 97705.79788416199,
-      "totalShares": 2233549594.298,
+      "rewardPool": 0,
+      "totalShares": 2501422967.1676235,
       "penaltiesInPool": 0
     },
     {
       "day": 31,
-      "rewardPool": 97627.63324585465,
-      "totalShares": 2233082333.4575915,
+      "rewardPool": 0,
+      "totalShares": 2500955706.3272157,
       "penaltiesInPool": 0
     },
     {
       "day": 32,
-      "rewardPool": 97549.53113925796,
-      "totalShares": 2232864928.9881563,
+      "rewardPool": 0,
+      "totalShares": 2500738301.8577805,
       "penaltiesInPool": 0
     },
     {
       "day": 33,
-      "rewardPool": 97471.49151434655,
-      "totalShares": 2232679441.7652407,
+      "rewardPool": 0,
+      "totalShares": 2500552814.6348643,
       "penaltiesInPool": 0
     },
     {
       "day": 34,
-      "rewardPool": 97393.51432113507,
-      "totalShares": 2232089606.043947,
+      "rewardPool": 0,
+      "totalShares": 2499962978.9135714,
       "penaltiesInPool": 0
     },
     {
       "day": 35,
-      "rewardPool": 97315.59950967816,
-      "totalShares": 2231558720.1005826,
+      "rewardPool": 0,
+      "totalShares": 2499432092.9702067,
       "penaltiesInPool": 0
     },
     {
       "day": 36,
-      "rewardPool": 97237.74703007042,
-      "totalShares": 2231377911.249302,
+      "rewardPool": 0,
+      "totalShares": 2499251284.118926,
       "penaltiesInPool": 0
     },
     {
       "day": 37,
-      "rewardPool": 97159.95683244636,
-      "totalShares": 2231302362.1933017,
+      "rewardPool": 0,
+      "totalShares": 2499175735.062926,
       "penaltiesInPool": 0
     },
     {
       "day": 38,
-      "rewardPool": 97082.2288669804,
-      "totalShares": 2230630268.3682,
+      "rewardPool": 0,
+      "totalShares": 2498503641.2378235,
       "penaltiesInPool": 0
     },
     {
       "day": 39,
-      "rewardPool": 97004.56308388681,
-      "totalShares": 2230450010.8095446,
+      "rewardPool": 0,
+      "totalShares": 2498323383.679168,
       "penaltiesInPool": 0
     },
     {
       "day": 40,
-      "rewardPool": 96926.9594334197,
-      "totalShares": 2230338842.6334853,
+      "rewardPool": 0,
+      "totalShares": 2498201842.3018374,
       "penaltiesInPool": 0
     },
     {
       "day": 41,
-      "rewardPool": 96849.41786587297,
-      "totalShares": 2230072107.218194,
+      "rewardPool": 0,
+      "totalShares": 2497815839.1539693,
       "penaltiesInPool": 0
     },
     {
       "day": 42,
-      "rewardPool": 96771.93833158027,
-      "totalShares": 2229445954.046769,
+      "rewardPool": 0,
+      "totalShares": 2497189685.9825444,
       "penaltiesInPool": 0
     },
     {
       "day": 43,
-      "rewardPool": 96694.520780915,
-      "totalShares": 2228695277.1298566,
+      "rewardPool": 0,
+      "totalShares": 2496439009.065632,
       "penaltiesInPool": 0
     },
     {
       "day": 44,
-      "rewardPool": 96617.16516429027,
-      "totalShares": 2228367252.2338853,
+      "rewardPool": 0,
+      "totalShares": 2496110984.1696606,
       "penaltiesInPool": 0
     },
     {
       "day": 45,
-      "rewardPool": 96539.87143215883,
-      "totalShares": 2226716967.9435406,
+      "rewardPool": 0,
+      "totalShares": 2494460699.879316,
       "penaltiesInPool": 0
     },
     {
       "day": 46,
-      "rewardPool": 96462.6395350131,
-      "totalShares": 2225811361.66437,
+      "rewardPool": 0,
+      "totalShares": 2493555093.6001453,
       "penaltiesInPool": 0
     },
     {
       "day": 47,
-      "rewardPool": 96385.46942338509,
-      "totalShares": 2220488884.648257,
+      "rewardPool": 0,
+      "totalShares": 2488232616.584032,
       "penaltiesInPool": 0
     },
     {
       "day": 48,
-      "rewardPool": 96308.36104784638,
-      "totalShares": 2218586188.5406675,
+      "rewardPool": 0,
+      "totalShares": 2486329920.476443,
       "penaltiesInPool": 0
     },
     {
       "day": 49,
-      "rewardPool": 96231.3143590081,
-      "totalShares": 2217389781.881169,
+      "rewardPool": 0,
+      "totalShares": 2485014959.8019643,
       "penaltiesInPool": 0
     },
     {
       "day": 50,
-      "rewardPool": 96154.3293075209,
-      "totalShares": 2215718724.625937,
+      "rewardPool": 0,
+      "totalShares": 2483330304.288419,
       "penaltiesInPool": 0
     },
     {
       "day": 51,
-      "rewardPool": 96077.40584407488,
-      "totalShares": 2212946795.060478,
+      "rewardPool": 0,
+      "totalShares": 2480558374.72296,
       "penaltiesInPool": 0
     },
     {
       "day": 52,
-      "rewardPool": 96000.54391939961,
-      "totalShares": 2210415572.494951,
+      "rewardPool": 0,
+      "totalShares": 2478027152.1574326,
       "penaltiesInPool": 0
     },
     {
       "day": 53,
-      "rewardPool": 95923.7434842641,
-      "totalShares": 2208569304.6021333,
+      "rewardPool": 0,
+      "totalShares": 2476180884.264615,
       "penaltiesInPool": 0
     },
     {
       "day": 54,
-      "rewardPool": 95847.00448947668,
-      "totalShares": 2207491679.776854,
+      "rewardPool": 0,
+      "totalShares": 2475103259.439336,
       "penaltiesInPool": 0
     },
     {
       "day": 55,
-      "rewardPool": 95770.3268858851,
-      "totalShares": 2205694541.9598737,
+      "rewardPool": 0,
+      "totalShares": 2473306121.6223555,
       "penaltiesInPool": 0
     },
     {
       "day": 56,
-      "rewardPool": 95693.71062437638,
-      "totalShares": 2202656519.8173614,
+      "rewardPool": 0,
+      "totalShares": 2470268099.479843,
       "penaltiesInPool": 0
     },
     {
       "day": 57,
-      "rewardPool": 95617.15565587688,
-      "totalShares": 2201018680.916215,
+      "rewardPool": 0,
+      "totalShares": 2468630260.5786967,
       "penaltiesInPool": 0
     },
     {
       "day": 58,
-      "rewardPool": 95540.66193135218,
-      "totalShares": 2197231144.1568027,
+      "rewardPool": 0,
+      "totalShares": 2464842723.8192844,
       "penaltiesInPool": 0
     },
     {
       "day": 59,
-      "rewardPool": 95464.2294018071,
-      "totalShares": 2193478162.0850863,
+      "rewardPool": 0,
+      "totalShares": 2461089741.747568,
       "penaltiesInPool": 0
     },
     {
       "day": 60,
-      "rewardPool": 95387.85801828565,
-      "totalShares": 2188411005.933024,
+      "rewardPool": 0,
+      "totalShares": 2456016771.9473686,
       "penaltiesInPool": 0
     },
     {
       "day": 61,
-      "rewardPool": 95311.54773187102,
-      "totalShares": 2181098472.261486,
+      "rewardPool": 0,
+      "totalShares": 2448704238.2758307,
       "penaltiesInPool": 0
     },
     {
       "day": 62,
-      "rewardPool": 95235.29849368552,
-      "totalShares": 2179987637.8858547,
+      "rewardPool": 0,
+      "totalShares": 2447586719.5545177,
       "penaltiesInPool": 0
     },
     {
       "day": 63,
-      "rewardPool": 95159.11025489058,
-      "totalShares": 2178869521.455356,
+      "rewardPool": 0,
+      "totalShares": 2446468603.1240196,
       "penaltiesInPool": 0
     },
     {
       "day": 64,
-      "rewardPool": 95082.98296668666,
-      "totalShares": 2178175283.674552,
+      "rewardPool": 0,
+      "totalShares": 2445766727.4361987,
       "penaltiesInPool": 0
     },
     {
       "day": 65,
-      "rewardPool": 95006.91658031331,
-      "totalShares": 2173034460.9087353,
+      "rewardPool": 0,
+      "totalShares": 2440625904.670382,
       "penaltiesInPool": 0
     },
     {
       "day": 66,
-      "rewardPool": 94930.91104704906,
-      "totalShares": 2169938292.3229527,
+      "rewardPool": 0,
+      "totalShares": 2437521057.985923,
       "penaltiesInPool": 0
     },
     {
       "day": 67,
-      "rewardPool": 94854.96631821142,
-      "totalShares": 2167387242.9319797,
+      "rewardPool": 0,
+      "totalShares": 2434836784.014342,
       "penaltiesInPool": 0
     },
     {
       "day": 68,
-      "rewardPool": 94779.08234515684,
-      "totalShares": 2166116051.3112955,
+      "rewardPool": 0,
+      "totalShares": 2433288858.435291,
       "penaltiesInPool": 0
     },
     {
       "day": 69,
-      "rewardPool": 94703.25907928072,
-      "totalShares": 2156179359.56913,
+      "rewardPool": 0,
+      "totalShares": 2423338165.5036325,
       "penaltiesInPool": 0
     },
     {
       "day": 70,
-      "rewardPool": 94627.49647201729,
-      "totalShares": 2152386850.0884075,
+      "rewardPool": 0,
+      "totalShares": 2416826469.2040477,
       "penaltiesInPool": 0
     },
     {
       "day": 71,
-      "rewardPool": 94551.79447483967,
-      "totalShares": 2150639699.0951085,
+      "rewardPool": 0,
+      "totalShares": 2415079318.210749,
       "penaltiesInPool": 0
     },
     {
       "day": 72,
-      "rewardPool": 94476.15303925979,
-      "totalShares": 2148781661.384578,
+      "rewardPool": 0,
+      "totalShares": 2413221280.500219,
       "penaltiesInPool": 0
     },
     {
       "day": 73,
-      "rewardPool": 94400.57211682838,
-      "totalShares": 2141337404.5516713,
+      "rewardPool": 0,
+      "totalShares": 2405198857.606657,
       "penaltiesInPool": 0
     },
     {
       "day": 74,
-      "rewardPool": 94325.05165913492,
-      "totalShares": 2134466036.7802792,
+      "rewardPool": 0,
+      "totalShares": 2398151256.4075184,
       "penaltiesInPool": 0
     },
     {
       "day": 75,
-      "rewardPool": 94249.5916178076,
-      "totalShares": 2124420340.584503,
+      "rewardPool": 0,
+      "totalShares": 2388105560.211742,
       "penaltiesInPool": 0
     },
     {
       "day": 76,
-      "rewardPool": 94174.19194451335,
-      "totalShares": 2084599243.9813037,
+      "rewardPool": 0,
+      "totalShares": 2348284463.608543,
       "penaltiesInPool": 0
     },
     {
       "day": 77,
-      "rewardPool": 94098.85259095774,
-      "totalShares": 2071411322.6818326,
+      "rewardPool": 0,
+      "totalShares": 2334611885.308461,
       "penaltiesInPool": 0
     },
     {
       "day": 78,
-      "rewardPool": 94023.57350888498,
-      "totalShares": 2047614951.3881097,
+      "rewardPool": 0,
+      "totalShares": 2310234391.335514,
       "penaltiesInPool": 0
     },
     {
       "day": 79,
-      "rewardPool": 93948.35465007786,
-      "totalShares": 2033575346.2511787,
+      "rewardPool": 0,
+      "totalShares": 2296170592.1431394,
       "penaltiesInPool": 0
     },
     {
       "day": 80,
-      "rewardPool": 93873.1959663578,
-      "totalShares": 2008620316.469305,
+      "rewardPool": 0,
+      "totalShares": 2271187509.808249,
       "penaltiesInPool": 0
     },
     {
       "day": 81,
-      "rewardPool": 93798.09740958472,
-      "totalShares": 1987040659.0277252,
+      "rewardPool": 0,
+      "totalShares": 2249578442.661862,
       "penaltiesInPool": 0
     },
     {
       "day": 82,
-      "rewardPool": 93723.05893165705,
-      "totalShares": 1970268773.1162167,
+      "rewardPool": 0,
+      "totalShares": 2232775746.813133,
       "penaltiesInPool": 0
     },
     {
       "day": 83,
-      "rewardPool": 93648.08048451172,
-      "totalShares": 1932411072.9047763,
+      "rewardPool": 0,
+      "totalShares": 2194885792.678302,
       "penaltiesInPool": 0
     },
     {
       "day": 84,
-      "rewardPool": 93573.16202012412,
-      "totalShares": 1909051093.565878,
+      "rewardPool": 0,
+      "totalShares": 2171492071.0029507,
       "penaltiesInPool": 0
     },
     {
       "day": 85,
-      "rewardPool": 93498.30349050801,
-      "totalShares": 1878779591.8656116,
+      "rewardPool": 0,
+      "totalShares": 2141185293.4531438,
       "penaltiesInPool": 0
     },
     {
       "day": 86,
-      "rewardPool": 93423.50484771561,
-      "totalShares": 1827881499.8832383,
+      "rewardPool": 0,
+      "totalShares": 2090231918.7670853,
       "penaltiesInPool": 0
     },
     {
       "day": 87,
-      "rewardPool": 93348.76604383743,
-      "totalShares": 1741899793.115565,
+      "rewardPool": 0,
+      "totalShares": 1996793023.3185844,
       "penaltiesInPool": 0
     },
     {
       "day": 88,
-      "rewardPool": 93274.08703100236,
-      "totalShares": 1689108808.665606,
+      "rewardPool": 0,
+      "totalShares": 1943946844.6675158,
       "penaltiesInPool": 0
     },
     {
       "day": 89,
-      "rewardPool": 93199.46776137756,
-      "totalShares": 1182032412.9541295,
+      "rewardPool": 0,
+      "totalShares": 1436428627.4203982,
       "penaltiesInPool": 0
     },
     {
       "day": 90,
-      "rewardPool": 93124.90818716845,
-      "totalShares": 982267314.8521636,
+      "rewardPool": 0,
+      "totalShares": 1236603395.161641,
       "penaltiesInPool": 0
     },
     {
       "day": 91,
-      "rewardPool": 93050.40826061871,
-      "totalShares": 891174057.4148266,
+      "rewardPool": 0,
+      "totalShares": 1145405619.4047863,
       "penaltiesInPool": 0
     },
     {
       "day": 92,
-      "rewardPool": 92975.96793401022,
-      "totalShares": 778660588.4474523,
+      "rewardPool": 0,
+      "totalShares": 1032826790.0286162,
       "penaltiesInPool": 0
     },
     {
       "day": 93,
-      "rewardPool": 92901.587159663,
-      "totalShares": 708209961.5969086,
+      "rewardPool": 0,
+      "totalShares": 962308079.7619393,
       "penaltiesInPool": 0
     },
     {
       "day": 94,
-      "rewardPool": 92827.26588993527,
-      "totalShares": 573522015.8496205,
+      "rewardPool": 0,
+      "totalShares": 826196008.3933129,
       "penaltiesInPool": 0
     },
     {
       "day": 95,
-      "rewardPool": 92753.00407722332,
-      "totalShares": 511789836.3900069,
+      "rewardPool": 0,
+      "totalShares": 764390074.6997929,
       "penaltiesInPool": 0
     },
     {
       "day": 96,
-      "rewardPool": 92678.80167396154,
-      "totalShares": 438821678.78039217,
+      "rewardPool": 0,
+      "totalShares": 691345213.0296645,
       "penaltiesInPool": 0
     },
     {
       "day": 97,
       "rewardPool": 0,
-      "totalShares": 414012367.31487453,
+      "totalShares": 649875374.6469141,
       "penaltiesInPool": 0
     },
     {
       "day": 98,
       "rewardPool": 0,
-      "totalShares": 376696498.76360554,
+      "totalShares": 612476668.506048,
       "penaltiesInPool": 0
     },
     {
       "day": 99,
       "rewardPool": 0,
-      "totalShares": 299680020.94827324,
+      "totalShares": 535374167.3824708,
       "penaltiesInPool": 0
     },
     {
       "day": 100,
       "rewardPool": 0,
-      "totalShares": 231502626.30181327,
+      "totalShares": 467107483.06226677,
       "penaltiesInPool": 0
     },
     {
       "day": 101,
       "rewardPool": 0,
-      "totalShares": 173499369.3413414,
+      "totalShares": 408883394.5830059,
       "penaltiesInPool": 0
     },
     {
       "day": 102,
       "rewardPool": 0,
-      "totalShares": 113312472.90414616,
+      "totalShares": 348600429.76817113,
       "penaltiesInPool": 0
     },
     {
       "day": 103,
       "rewardPool": 0,
-      "totalShares": 48404838.91966574,
+      "totalShares": 282660151.20794296,
       "penaltiesInPool": 0
     },
     {
       "day": 104,
       "rewardPool": 0,
-      "totalShares": 1529074.8866678886,
+      "totalShares": 233323988.06204414,
       "penaltiesInPool": 0
     },
     {
       "day": 105,
+      "rewardPool": 0,
+      "totalShares": 198605523.11609015,
+      "penaltiesInPool": 0
+    },
+    {
+      "day": 106,
+      "rewardPool": 0,
+      "totalShares": 106817331.19203708,
+      "penaltiesInPool": 0
+    },
+    {
+      "day": 107,
+      "rewardPool": 0,
+      "totalShares": 66271960.86231137,
+      "penaltiesInPool": 0
+    },
+    {
+      "day": 108,
       "rewardPool": 0,
       "totalShares": 0,
       "penaltiesInPool": 0
@@ -48696,5 +48503,5 @@
   "totalTitanXBurnt": "174764417320916625267246384569",
   "titanxTotalSupply": "105737715252981763313654026000966",
   "lastLPUpdate": 23020006,
-  "lastBlock": 23032917
+  "lastBlock": 23032942
 }
