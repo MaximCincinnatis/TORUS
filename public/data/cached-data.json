@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2025-07-30T22:15:32.080Z",
+  "lastUpdated": "2025-07-30T22:20:33.181Z",
   "version": "1.0.0",
   "poolData": {
     "sqrtPriceX96": "546583387126081041033788464325868",
@@ -45529,6 +45529,26 @@
         "blockNumber": 23034782,
         "maturityDate": "2025-10-26T22:00:59.000Z",
         "startDate": "2025-07-30T22:00:59.000Z"
+      },
+      {
+        "user": "0x19bd6fd9350a7cb5f125c7794ecd7f8bff2f9e08",
+        "id": "18",
+        "torusAmount": "22947556815627832536",
+        "endTime": 1760480255,
+        "timestamp": 1753913855,
+        "blockNumber": 23034864,
+        "maturityDate": "2025-10-14T22:17:35.000Z",
+        "startDate": "2025-07-30T22:17:35.000Z"
+      },
+      {
+        "user": "0x19bd6fd9350a7cb5f125c7794ecd7f8bff2f9e08",
+        "id": "19",
+        "torusAmount": "26570855260200648201",
+        "endTime": 1761517079,
+        "timestamp": 1753913879,
+        "blockNumber": 23034866,
+        "maturityDate": "2025-10-26T22:17:59.000Z",
+        "startDate": "2025-07-30T22:17:59.000Z"
       }
     ],
     "rewardPoolData": [
@@ -46192,21 +46212,21 @@
     "burnedSupply": 0,
     "lastUpdated": "2025-07-16T19:25:33.217Z",
     "metadata": {
-      "currentBlock": 23034851,
+      "currentBlock": 23034875,
       "lastUpdate": "2025-07-16T19:14:31.015Z",
       "stakesRefreshed": "2025-07-16T18:54:18.007Z",
       "dailySupplySnapshot": {
         "day": 21,
         "totalSupply": 17441.858632049825,
         "burnedSupply": 0,
-        "timestamp": "2025-07-30T22:15:02.311Z"
+        "timestamp": "2025-07-30T22:20:02.229Z"
       },
       "lastCreateBlock": 22969998,
       "lastFullRebuild": "2025-07-21T22:29:04.583Z",
       "totalCreates": 1258,
       "rebuildBlock": 22970545
     },
-    "lastBlock": 23034851
+    "lastBlock": 23034875
   },
   "contractData": {
     "torusToken": {
@@ -48640,8 +48660,8 @@
     }
   ],
   "totalSupply": 17441.858632049825,
-  "totalTitanXBurnt": "175069906065898220343105518946",
+  "totalTitanXBurnt": "175092950994525234989954495736",
   "titanxTotalSupply": "105738073748524978455421627814950",
   "lastLPUpdate": 23020006,
-  "lastBlock": 23034851
+  "lastBlock": 23034875
 }
