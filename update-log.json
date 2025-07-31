@@ -1,18 +1,9 @@
 {
-  "startTime": 1753939801368,
+  "startTime": 1753940101263,
   "rpcCalls": 0,
-  "lastBlockNumber": 23037012,
-  "lastUpdateTime": "2025-07-31T05:30:05.106Z",
+  "lastBlockNumber": 23037038,
+  "lastUpdateTime": "2025-07-31T05:35:35.422Z",
   "updateHistory": [
-    {
-      "timestamp": "2025-07-30T21:15:00.767Z",
-      "rpcCalls": 2,
-      "dataChanged": true,
-      "errors": [],
-      "stats": {
-        "rpcCalls": null
-      }
-    },
     {
       "timestamp": "2025-07-30T21:20:01.209Z",
       "rpcCalls": 2,
@@ -1055,6 +1046,17 @@
       "errors": [
         "Event fetching: bad response (status=400, headers={\"date\":\"Thu, 31 Jul 2025 05:30:02 GMT\",\"content-type\":\"application/json\",\"transfer-encoding\":\"chunked\",\"connection\":\"close\",\"access-control-allow-origin\":\"*\",\"vary\":\"Accept-Encoding\",\"x-drpc-provider-id\":\"\",\"x-drpc-trace-id\":\"1097d670d7f7a3f8f3a86a594b950c72\",\"strict-transport-security\":\"max-age=31536000; includeSubDomains\",\"access-control-allow-credentials\":\"true\",\"access-control-allow-methods\":\"GET, PUT, POST, DELETE, PATCH, OPTIONS\",\"access-control-allow-headers\":\"DNT,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range,Authorization\",\"access-control-max-age\":\"1728000\",\"cf-cache-status\":\"DYNAMIC\",\"server\":\"cloudflare\",\"cf-ray\":\"967ab39439429b60-SEA\"}, body=\"{\\\"id\\\":52,\\\"jsonrpc\\\":\\\"2.0\\\",\\\"error\\\":{\\\"message\\\":\\\"ranges over 10000 blocks are not supported on freetier\\\",\\\"code\\\":35}}\", requestBody=\"{\\\"method\\\":\\\"eth_getLogs\\\",\\\"params\\\":[{\\\"fromBlock\\\":\\\"0x15f3635\\\",\\\"toBlock\\\":\\\"0x15f8454\\\",\\\"address\\\":\\\"0xc7cc775b21f9df85e043c7fdd9dac60af0b69507\\\",\\\"topics\\\":[\\\"0x9cfd25589d1eb8ad71e342a86a8524e83522e3936c0803048c08f6d9ad974f40\\\"]}],\\\"id\\\":52,\\\"jsonrpc\\\":\\\"2.0\\\"}\", requestMethod=\"POST\", url=\"https://eth.drpc.org\", code=SERVER_ERROR, version=web/5.8.0)",
         "Buy & Process update: Command failed: node scripts/update-buy-process-data.js"
+      ],
+      "stats": {
+        "rpcCalls": null
+      }
+    },
+    {
+      "timestamp": "2025-07-31T05:35:01.264Z",
+      "rpcCalls": 0,
+      "dataChanged": true,
+      "errors": [
+        "Event fetching: bad response (status=400, headers={\"date\":\"Thu, 31 Jul 2025 05:35:02 GMT\",\"content-type\":\"application/json\",\"transfer-encoding\":\"chunked\",\"connection\":\"close\",\"access-control-allow-origin\":\"*\",\"vary\":\"Accept-Encoding\",\"x-drpc-provider-id\":\"\",\"x-drpc-trace-id\":\"44b602dd8eecc6550210e3069e05c325\",\"strict-transport-security\":\"max-age=31536000; includeSubDomains\",\"access-control-allow-credentials\":\"true\",\"access-control-allow-methods\":\"GET, PUT, POST, DELETE, PATCH, OPTIONS\",\"access-control-allow-headers\":\"DNT,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range,Authorization\",\"access-control-max-age\":\"1728000\",\"cf-cache-status\":\"DYNAMIC\",\"server\":\"cloudflare\",\"cf-ray\":\"967abae85b4febbe-SEA\"}, body=\"{\\\"id\\\":52,\\\"jsonrpc\\\":\\\"2.0\\\",\\\"error\\\":{\\\"message\\\":\\\"ranges over 10000 blocks are not supported on freetier\\\",\\\"code\\\":35}}\", requestBody=\"{\\\"method\\\":\\\"eth_getLogs\\\",\\\"params\\\":[{\\\"fromBlock\\\":\\\"0x15f364f\\\",\\\"toBlock\\\":\\\"0x15f846e\\\",\\\"address\\\":\\\"0xc7cc775b21f9df85e043c7fdd9dac60af0b69507\\\",\\\"topics\\\":[\\\"0x9cfd25589d1eb8ad71e342a86a8524e83522e3936c0803048c08f6d9ad974f40\\\"]}],\\\"id\\\":52,\\\"jsonrpc\\\":\\\"2.0\\\"}\", requestMethod=\"POST\", url=\"https://eth.drpc.org\", code=SERVER_ERROR, version=web/5.8.0)"
       ],
       "stats": {
         "rpcCalls": null
