@@ -1,5 +1,5 @@
 {
-  "lastUpdated": "2025-07-31T00:15:33.392Z",
+  "lastUpdated": "2025-07-31T00:20:30.494Z",
   "version": "1.0.0",
   "poolData": {},
   "lpPositions": [
@@ -61,9 +61,9 @@
         "protocolDay": 21,
         "costETH": "0.0",
         "rawCostETH": "0",
-        "costTitanX": "0.0",
-        "rawCostTitanX": "0",
-        "titanAmount": "0"
+        "rawCostTitanX": "0x000000000000000000000000000000000000000006765c793fa10079d0000000",
+        "costTitanX": "2000000000.0",
+        "titanAmount": "0x000000000000000000000000000000000000000006765c793fa10079d0000000"
       },
       {
         "user": "0x19bd6fd9350a7cb5f125c7794ecd7f8bff2f9e08",
@@ -173,9 +173,9 @@
         "protocolDay": 21,
         "costETH": "0.0",
         "rawCostETH": "0",
-        "costTitanX": "0.0",
-        "rawCostTitanX": "0",
-        "titanAmount": "0"
+        "rawCostTitanX": "0x0000000000000000000000000000000000000000038de60f7c988d0fcc000000",
+        "costTitanX": "1100000000.0",
+        "titanAmount": "0x0000000000000000000000000000000000000000038de60f7c988d0fcc000000"
       },
       {
         "user": "0x2a4cdc9bbd937023a95e50185c0c027647f5a7b5",
@@ -755,7 +755,7 @@
         "day": 21,
         "totalSupply": 17441.858632049825,
         "burnedSupply": 0,
-        "timestamp": "2025-07-31T00:15:02.000Z"
+        "timestamp": "2025-07-31T00:20:02.543Z"
       }
     },
     "lastBlock": 0
@@ -767,7 +767,7 @@
     "fallbackToRPC": false,
     "cacheExpiryMinutes": 60,
     "description": "Complete TORUS dashboard data with all frontend requirements",
-    "lastBlockCreatesStakes": 23035441
+    "lastBlockCreatesStakes": 23035459
   },
   "contractData": {
     "torusToken": {
@@ -1799,5 +1799,5 @@
     ]
   },
   "totalSupply": 17441.858632049825,
-  "lastBlock": 23035446
+  "lastBlock": 23035472
 }
