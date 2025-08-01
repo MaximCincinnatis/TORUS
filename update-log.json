@@ -1,20 +1,9 @@
 {
-  "startTime": 1754039401298,
+  "startTime": 1754039702634,
   "rpcCalls": 0,
-  "lastBlockNumber": 23045247,
-  "lastUpdateTime": "2025-08-01T09:10:58.347Z",
+  "lastBlockNumber": 23045271,
+  "lastUpdateTime": "2025-08-01T09:15:52.129Z",
   "updateHistory": [
-    {
-      "timestamp": "2025-08-01T00:55:01.186Z",
-      "rpcCalls": 0,
-      "dataChanged": true,
-      "errors": [
-        "Event fetching: bad response (status=400, headers={\"date\":\"Fri, 01 Aug 2025 00:55:02 GMT\",\"content-type\":\"application/json\",\"transfer-encoding\":\"chunked\",\"connection\":\"close\",\"cf-ray\":\"96815e1e68b42672-SEA\",\"access-control-allow-origin\":\"*\",\"vary\":\"Accept-Encoding\",\"x-drpc-provider-id\":\"\",\"x-drpc-trace-id\":\"4f258ba6f22f137029c7f64a5e27566b\",\"strict-transport-security\":\"max-age=31536000; includeSubDomains\",\"access-control-allow-credentials\":\"true\",\"access-control-allow-methods\":\"GET, PUT, POST, DELETE, PATCH, OPTIONS\",\"access-control-allow-headers\":\"DNT,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range,Authorization\",\"access-control-max-age\":\"1728000\",\"cf-cache-status\":\"DYNAMIC\",\"server\":\"cloudflare\"}, body=\"{\\\"id\\\":53,\\\"jsonrpc\\\":\\\"2.0\\\",\\\"error\\\":{\\\"message\\\":\\\"ranges over 10000 blocks are not supported on freetier\\\",\\\"code\\\":35}}\", requestBody=\"{\\\"method\\\":\\\"eth_getLogs\\\",\\\"params\\\":[{\\\"fromBlock\\\":\\\"0x15f4cc2\\\",\\\"toBlock\\\":\\\"0x15f9ae1\\\",\\\"address\\\":\\\"0xc7cc775b21f9df85e043c7fdd9dac60af0b69507\\\",\\\"topics\\\":[\\\"0x99a12a7aefbbb67909c2bee4a5e2ddb98b2183b8ae2a59e5a7db47f53453345d\\\"]}],\\\"id\\\":53,\\\"jsonrpc\\\":\\\"2.0\\\"}\", requestMethod=\"POST\", url=\"https://eth.drpc.org\", code=SERVER_ERROR, version=web/5.8.0)"
-      ],
-      "stats": {
-        "rpcCalls": null
-      }
-    },
     {
       "timestamp": "2025-08-01T01:00:01.396Z",
       "rpcCalls": 0,
@@ -1103,6 +1092,17 @@
       "dataChanged": true,
       "errors": [
         "Event fetching: bad response (status=400, headers={\"date\":\"Fri, 01 Aug 2025 09:10:04 GMT\",\"content-type\":\"application/json\",\"transfer-encoding\":\"chunked\",\"connection\":\"close\",\"cf-ray\":\"968433437d0e76b2-SEA\",\"access-control-allow-origin\":\"*\",\"vary\":\"Accept-Encoding\",\"x-drpc-provider-id\":\"\",\"x-drpc-trace-id\":\"3b177769fdf815bdd2deed4fc5bc0fd1\",\"strict-transport-security\":\"max-age=31536000; includeSubDomains\",\"access-control-allow-credentials\":\"true\",\"access-control-allow-methods\":\"GET, PUT, POST, DELETE, PATCH, OPTIONS\",\"access-control-allow-headers\":\"DNT,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range,Authorization\",\"access-control-max-age\":\"1728000\",\"cf-cache-status\":\"DYNAMIC\",\"server\":\"cloudflare\"}, body=\"{\\\"id\\\":52,\\\"jsonrpc\\\":\\\"2.0\\\",\\\"error\\\":{\\\"message\\\":\\\"ranges over 10000 blocks are not supported on freetier\\\",\\\"code\\\":35}}\", requestBody=\"{\\\"method\\\":\\\"eth_getLogs\\\",\\\"params\\\":[{\\\"fromBlock\\\":\\\"0x15f5660\\\",\\\"toBlock\\\":\\\"0x15fa47f\\\",\\\"address\\\":\\\"0xc7cc775b21f9df85e043c7fdd9dac60af0b69507\\\",\\\"topics\\\":[\\\"0x9cfd25589d1eb8ad71e342a86a8524e83522e3936c0803048c08f6d9ad974f40\\\"]}],\\\"id\\\":52,\\\"jsonrpc\\\":\\\"2.0\\\"}\", requestMethod=\"POST\", url=\"https://eth.drpc.org\", code=SERVER_ERROR, version=web/5.8.0)"
+      ],
+      "stats": {
+        "rpcCalls": null
+      }
+    },
+    {
+      "timestamp": "2025-08-01T09:15:02.636Z",
+      "rpcCalls": 0,
+      "dataChanged": true,
+      "errors": [
+        "Event fetching: bad response (status=400, headers={\"date\":\"Fri, 01 Aug 2025 09:15:04 GMT\",\"content-type\":\"application/json\",\"transfer-encoding\":\"chunked\",\"connection\":\"close\",\"access-control-allow-origin\":\"*\",\"vary\":\"Accept-Encoding\",\"x-drpc-provider-id\":\"\",\"x-drpc-trace-id\":\"cd5b6e8b6fa032424235bada56f9cee5\",\"strict-transport-security\":\"max-age=31536000; includeSubDomains\",\"access-control-allow-credentials\":\"true\",\"access-control-allow-methods\":\"GET, PUT, POST, DELETE, PATCH, OPTIONS\",\"access-control-allow-headers\":\"DNT,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range,Authorization\",\"access-control-max-age\":\"1728000\",\"cf-cache-status\":\"DYNAMIC\",\"server\":\"cloudflare\",\"cf-ray\":\"96843a992d5a7551-SEA\"}, body=\"{\\\"id\\\":53,\\\"jsonrpc\\\":\\\"2.0\\\",\\\"error\\\":{\\\"message\\\":\\\"ranges over 10000 blocks are not supported on freetier\\\",\\\"code\\\":35}}\", requestBody=\"{\\\"method\\\":\\\"eth_getLogs\\\",\\\"params\\\":[{\\\"fromBlock\\\":\\\"0x15f5678\\\",\\\"toBlock\\\":\\\"0x15fa497\\\",\\\"address\\\":\\\"0xc7cc775b21f9df85e043c7fdd9dac60af0b69507\\\",\\\"topics\\\":[\\\"0x99a12a7aefbbb67909c2bee4a5e2ddb98b2183b8ae2a59e5a7db47f53453345d\\\"]}],\\\"id\\\":53,\\\"jsonrpc\\\":\\\"2.0\\\"}\", requestMethod=\"POST\", url=\"https://eth.drpc.org\", code=SERVER_ERROR, version=web/5.8.0)"
       ],
       "stats": {
         "rpcCalls": null
