@@ -19,25 +19,53 @@ const {
 } = require('../../shared/lpCalculations');
 const { standardizeLPPosition } = require('../../src/utils/lpPositionContract');
 const { safeMergeLPPositions } = require('../shared/useLPPositionStandard');
+const { 
+  CONTRACT_ADDRESSES, 
+  EVENT_ABIS,
+  EVENT_TOPICS,
+  getProtocolDay: getProtocolDayHelper 
+} = require('../shared/contractConstants');
+const { getActualTitanXFromStake } = require('../shared/titanXHelpers');
+const { generateFutureSupplyProjection } = require('../generate-future-supply-projection-fixed');
 
-// Working RPC providers (all public, no API keys)
+// Working RPC providers (tested and verified)
 const WORKING_RPC_PROVIDERS = [
-  'https://eth.drpc.org',
+  'https://ethereum.publicnode.com',
+  'https://eth.llamarpc.com',
   'https://rpc.payload.de',
   'https://eth-mainnet.public.blastapi.io',
   'https://rpc.flashbots.net',
-  'https://ethereum.publicnode.com',
-  'https://eth.llamarpc.com',
-  'https://rpc.ankr.com/eth'
+  'https://eth.drpc.org'
 ];
 
-// Contract addresses
+// Rate limiting configuration
+const RATE_LIMIT_DELAY = 150; // ms between requests
+const BATCH_SIZE = 50; // smaller batches for rate limiting
+
+// Rate limiting helper
+async function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+// Rate limited RPC call wrapper
+let lastCallTime = 0;
+async function rateLimitedCall(fn) {
+  const now = Date.now();
+  const timeSinceLastCall = now - lastCallTime;
+  if (timeSinceLastCall < RATE_LIMIT_DELAY) {
+    await sleep(RATE_LIMIT_DELAY - timeSinceLastCall);
+  }
+  lastCallTime = Date.now();
+  return await fn();
+}
+
+// Contract addresses from shared constants
 const CONTRACTS = {
-  TORUS: '0xb47f575807fc5466285e1277ef8acfbb5c6686e8',
-  TITANX: '0xf19308f923582a6f7c465e5ce7a9dc1bec6665b1',
-  CREATE_STAKE: '0xc7cc775b21f9df85e043c7fdd9dac60af0b69507',
-  POOL: '0x7ff1f30F6E7EeC2ff3F0D1b60739115BDF88190F',
-  NFT_POSITION_MANAGER: '0xC36442b4a4522E871399CD717aBDD847Ab11FE88'
+  TORUS: CONTRACT_ADDRESSES.TORUS,
+  TITANX: CONTRACT_ADDRESSES.TITANX,
+  CREATE_STAKE: CONTRACT_ADDRESSES.CREATE_STAKE,
+  POOL: CONTRACT_ADDRESSES.TORUS_WETH_POOL,
+  NFT_POSITION_MANAGER: CONTRACT_ADDRESSES.POSITION_MANAGER
 };
 
 // Import existing ABIs (same as before)
@@ -74,7 +102,9 @@ const STAKE_CONTRACT_ABI = [
   'function rewardPool(uint24 day) view returns (uint256)',
   'function totalShares(uint24 day) view returns (uint256)',
   'function penaltiesInRewardPool(uint24 day) view returns (uint256)',
-  'function totalTitanXBurnt() view returns (uint256)'
+  'function totalTitanXBurnt() view returns (uint256)',
+  EVENT_ABIS.CREATED,
+  EVENT_ABIS.STAKED
 ];
 
 const POOL_ABI = [
@@ -213,25 +243,8 @@ function aggregateTitanXByEndDate(stakeEvents, createEvents) {
   })).sort((a, b) => new Date(a.date) - new Date(b.date));
 }
 
-// Protocol day calculation function
-function getProtocolDay(timestamp) {
-  const CONTRACT_START_DATE = new Date('2025-07-10T18:00:00.000Z');
-  const msPerDay = 24 * 60 * 60 * 1000;
-  let dateObj;
-  
-  if (typeof timestamp === 'number') {
-    // Unix timestamp in seconds
-    dateObj = new Date(timestamp * 1000);
-  } else if (typeof timestamp === 'string') {
-    // Date string - avoid for protocol day calculation
-    dateObj = new Date(timestamp + 'T12:00:00.000Z');
-  } else {
-    dateObj = timestamp;
-  }
-  
-  const daysDiff = Math.floor((dateObj.getTime() - CONTRACT_START_DATE.getTime()) / msPerDay) + 1;
-  return Math.max(1, daysDiff);
-}
+// Use getProtocolDay from shared constants
+const getProtocolDay = getProtocolDayHelper;
 
 async function updateAllDashboardData() {
   console.log('🚀 UPDATING ALL DASHBOARD DATA (COMPLETE VERSION)');
@@ -243,6 +256,23 @@ async function updateAllDashboardData() {
   console.log('    - DO NOT expect completion in 2 minutes!');
   console.log('    - Monitor progress by checking backup files');
   console.log('================================================');
+  
+  // Load checkpoint if exists
+  const checkpointPath = 'checkpoint-full-update.json';
+  let checkpoint = {};
+  if (fs.existsSync(checkpointPath)) {
+    checkpoint = JSON.parse(fs.readFileSync(checkpointPath, 'utf8'));
+    console.log('📍 RESUMING FROM CHECKPOINT:', checkpoint.stage || 'start');
+  }
+  
+  // Save checkpoint function
+  const saveCheckpoint = (data) => {
+    fs.writeFileSync(checkpointPath, JSON.stringify({
+      ...checkpoint,
+      ...data,
+      lastUpdate: new Date().toISOString()
+    }, null, 2));
+  };
   
   try {
     const provider = await getWorkingProvider();
@@ -304,7 +334,7 @@ async function updateAllDashboardData() {
     
     console.log(`  ✅ Contract data fetched`);
     
-    console.log('\n📊 2. UPDATING STAKE/CREATE ETH & TITANX COSTS...');
+    console.log('\n📊 2. FETCHING AND UPDATING STAKE/CREATE EVENTS...');
     
     // Process existing stake/create logic (same as before)
     const stakeContract = new ethers.Contract(CONTRACTS.CREATE_STAKE, STAKE_CONTRACT_ABI, provider);
@@ -324,7 +354,195 @@ async function updateAllDashboardData() {
     const titanxCurrentSupply = await titanxSupplyContract.totalSupply();
     cachedData.titanxTotalSupply = titanxCurrentSupply.toString();
     
-    // Update stake/create events (same logic as before but add missing fields)
+    // First, fetch all creates and stakes from blockchain
+    console.log('  🔍 Fetching all Create and Stake events from blockchain...');
+    const blockNumber = await provider.getBlockNumber();
+    const DEPLOYMENT_BLOCK = 22890272; // Contract deployment block
+    
+    // Clear existing events for clean rebuild
+    cachedData.stakingData.stakeEvents = [];
+    cachedData.stakingData.createEvents = [];
+    
+    // Fetch events in chunks to avoid rate limits
+    const CHUNK_SIZE = 5000;
+    let allCreates = [];
+    let allStakes = [];
+    
+    for (let start = DEPLOYMENT_BLOCK; start <= blockNumber; start += CHUNK_SIZE) {
+      const end = Math.min(start + CHUNK_SIZE - 1, blockNumber);
+      process.stdout.write(`\r  📊 Scanning blocks ${start} to ${end} (${((end - DEPLOYMENT_BLOCK) / (blockNumber - DEPLOYMENT_BLOCK) * 100).toFixed(1)}%)`);
+      
+      try {
+        const [creates, stakes] = await Promise.all([
+          stakeContract.queryFilter(stakeContract.filters.Created(), start, end),
+          stakeContract.queryFilter(stakeContract.filters.Staked(), start, end)
+        ]);
+        
+        allCreates.push(...creates);
+        allStakes.push(...stakes);
+      } catch (error) {
+        console.log(`\n  ⚠️  Error fetching events for blocks ${start}-${end}: ${error.message}`);
+        // Continue with next chunk
+      }
+    }
+    console.log(''); // New line after progress
+    console.log(`  ✅ Found ${allCreates.length} creates and ${allStakes.length} stakes`);
+    
+    // Get block timestamps for all events
+    const blockNumbers = new Set();
+    allCreates.forEach(e => blockNumbers.add(e.blockNumber));
+    allStakes.forEach(e => blockNumbers.add(e.blockNumber));
+    
+    const blockTimestamps = new Map();
+    const blockArray = Array.from(blockNumbers);
+    
+    console.log(`  🕐 Fetching timestamps for ${blockArray.length} blocks...`);
+    for (let i = 0; i < blockArray.length; i += 50) {
+      const batch = blockArray.slice(i, i + 50);
+      const blocks = await Promise.all(
+        batch.map(blockNum => provider.getBlock(blockNum))
+      );
+      blocks.forEach(block => {
+        blockTimestamps.set(block.number, block.timestamp);
+      });
+      process.stdout.write(`\r  📅 Processing block timestamps: ${Math.min(i + 50, blockArray.length)}/${blockArray.length}`);
+    }
+    console.log('');
+    
+    // Process create events
+    console.log('  🔄 Processing create events...');
+    let createErrors = 0;
+    for (const event of allCreates) {
+      try {
+        // Handle potential decode errors
+        if (!event.args && event.decodeError) {
+          // Manual decode for Created event
+          const iface = new ethers.utils.Interface([EVENT_ABIS.CREATED]);
+          const decoded = iface.parseLog({ data: event.data, topics: event.topics });
+          event.args = decoded.args;
+        }
+        
+        if (!event.args) {
+          createErrors++;
+          continue;
+        }
+        
+        const timestamp = blockTimestamps.get(event.blockNumber);
+        const protocolDay = getProtocolDay(timestamp);
+        const tx = await provider.getTransaction(event.transactionHash);
+        
+        const createData = {
+          user: event.args.user.toLowerCase(),
+          stakeIndex: event.args.stakeIndex.toString(),
+          torusAmount: event.args.torusAmount.toString(),
+          endTime: event.args.endTime.toString(),
+          maturityDate: new Date(Number(event.args.endTime) * 1000).toISOString(),
+          blockNumber: event.blockNumber,
+          transactionHash: event.transactionHash,
+          timestamp: timestamp.toString(),
+          protocolDay: protocolDay
+        };
+        
+        // Check if ETH or TitanX create
+        if (tx.value && !tx.value.isZero()) {
+          createData.costETH = ethers.utils.formatEther(tx.value);
+          createData.rawCostETH = tx.value.toString();
+          createData.costTitanX = "0.0";
+          createData.rawCostTitanX = "0";
+          createData.titanAmount = "0"; // Important for frontend
+        } else {
+          // For TitanX creates, get the amount from Transfer events
+          createData.costETH = "0.0";
+          createData.rawCostETH = "0";
+          
+          // Get transaction receipt to find TitanX transfer
+          const receipt = await provider.getTransactionReceipt(event.transactionHash);
+          
+          // Find transfer from user to contract
+          const titanXTransfer = receipt.logs.find(log => 
+            log.address.toLowerCase() === CONTRACT_ADDRESSES.TITANX.toLowerCase() &&
+            log.topics[0] === EVENT_TOPICS.TRANSFER &&
+            log.topics.length >= 3 &&
+            ethers.utils.defaultAbiCoder.decode(['address'], log.topics[1])[0].toLowerCase() === event.args.user.toLowerCase() &&
+            ethers.utils.defaultAbiCoder.decode(['address'], log.topics[2])[0].toLowerCase() === CONTRACT_ADDRESSES.CREATE_STAKE.toLowerCase()
+          );
+          
+          if (titanXTransfer && titanXTransfer.data !== '0x') {
+            const titanXAmount = BigInt(titanXTransfer.data).toString();
+            createData.rawCostTitanX = titanXAmount;
+            createData.costTitanX = ethers.utils.formatEther(titanXTransfer.data);
+            createData.titanAmount = titanXAmount;
+          } else {
+            createData.costTitanX = "0.0";
+            createData.rawCostTitanX = "0";
+            createData.titanAmount = "0";
+          }
+        }
+        
+        cachedData.stakingData.createEvents.push(createData);
+      } catch (error) {
+        createErrors++;
+        console.log(`  ⚠️  Error processing create event in block ${event.blockNumber}: ${error.message}`);
+      }
+    }
+    if (createErrors > 0) {
+      console.log(`  ⚠️  Failed to process ${createErrors} create events`);
+    }
+    
+    // Process stake events
+    console.log('  🔄 Processing stake events...');
+    let stakeErrors = 0;
+    for (const event of allStakes) {
+      try {
+        // Handle potential decode errors
+        if (!event.args && event.decodeError) {
+          // Manual decode for Staked event
+          const iface = new ethers.utils.Interface([EVENT_ABIS.STAKED]);
+          const decoded = iface.parseLog({ data: event.data, topics: event.topics });
+          event.args = decoded.args;
+        }
+        
+        if (!event.args) {
+          stakeErrors++;
+          continue;
+        }
+        
+        const timestamp = blockTimestamps.get(event.blockNumber);
+        const protocolDay = getProtocolDay(timestamp);
+        
+        // Calculate maturityDate for stake
+        const stakingDays = parseInt(event.args.stakingDays.toString());
+        const endTimestamp = timestamp + (stakingDays * 24 * 60 * 60);
+        const maturityDate = new Date(endTimestamp * 1000).toISOString();
+        
+        const stakeData = {
+          user: event.args.user.toLowerCase(),
+          stakeIndex: event.args.stakeIndex.toString(),
+          principal: event.args.principal.toString(),
+          stakingDays: event.args.stakingDays.toString(),
+          shares: event.args.shares.toString(),
+          blockNumber: event.blockNumber,
+          transactionHash: event.transactionHash,
+          timestamp: timestamp.toString(),
+          protocolDay: protocolDay,
+          maturityDate: maturityDate,
+          // Additional fields for consistency  
+          costETH: "0.0",
+          rawCostETH: "0"
+        };
+        
+        cachedData.stakingData.stakeEvents.push(stakeData);
+      } catch (error) {
+        stakeErrors++;
+        console.log(`  ⚠️  Error processing stake event in block ${event.blockNumber}: ${error.message}`);
+      }
+    }
+    if (stakeErrors > 0) {
+      console.log(`  ⚠️  Failed to process ${stakeErrors} stake events`);
+    }
+    
+    // Now update with cost data from user positions
+    console.log('\n  💰 Fetching ETH & TitanX costs from user positions...');
     const allUsers = new Set();
     cachedData.stakingData.stakeEvents.forEach(e => allUsers.add(e.user));
     cachedData.stakingData.createEvents.forEach(e => allUsers.add(e.user));
@@ -361,79 +579,93 @@ async function updateAllDashboardData() {
     }
     console.log('');
     
-    // Update events with costs AND shares - also fix protocol days
-    cachedData.stakingData.stakeEvents.forEach(event => {
-      // Fix undefined protocol days
-      if (!event.protocolDay || event.protocolDay === undefined) {
-        event.protocolDay = getProtocolDay(parseInt(event.timestamp));
-      }
-      
+    // Update events with costs AND shares
+    console.log('  💰 Matching events with user positions...');
+    
+    // For stakes, we need to get the TitanX cost from user positions
+    for (const event of cachedData.stakingData.stakeEvents) {
       const userPos = userPositions.get(event.user);
       if (userPos) {
-        const eventMaturityTime = Math.floor(new Date(event.maturityDate).getTime() / 1000);
+        // Find matching position by start time (within 5 minutes of event timestamp)
+        const eventTime = parseInt(event.timestamp);
         const matchingPosition = userPos.find(pos => 
-          Math.abs(Number(pos.endTime) - eventMaturityTime) < 86400 && !pos.isCreate
+          Math.abs(Number(pos.startTime) - eventTime) < 300 && !pos.isCreate
         );
         
         if (matchingPosition) {
-          // Users pay EITHER ETH OR TitanX, not both
-          if (matchingPosition.costETH.gt(0)) {
-            event.costETH = ethers.utils.formatEther(matchingPosition.costETH);
-            event.costTitanX = "0.0";
-            event.rawCostETH = matchingPosition.costETH.toString();
-            event.rawCostTitanX = "0";
+          // Add maturity date and endTime
+          event.maturityDate = new Date(Number(matchingPosition.endTime) * 1000).toISOString();
+          event.endTime = matchingPosition.endTime.toString();
+          
+          // Check if ETH was sent with the transaction
+          const tx = await provider.getTransaction(event.transactionHash);
+          
+          if (tx.value && !tx.value.isZero()) {
+            // ETH was used for the fee
+            event.costETH = ethers.utils.formatEther(tx.value);
+            event.rawCostETH = tx.value.toString();
           } else {
+            // No ETH sent, fee was paid in TitanX
             event.costETH = "0.0";
-            event.costTitanX = ethers.utils.formatEther(matchingPosition.costTitanX);
             event.rawCostETH = "0";
-            event.rawCostTitanX = matchingPosition.costTitanX.toString();
           }
-          event.shares = matchingPosition.shares.toString();
+          
+          // Always get actual TitanX from Transfer events (for both ETH and TitanX fees)
+          try {
+            const actualTitanX = await getActualTitanXFromStake(event.transactionHash, provider);
+            event.costTitanX = ethers.utils.formatEther(actualTitanX);
+            event.rawCostTitanX = actualTitanX;
+            event.titanAmount = actualTitanX;
+          } catch (error) {
+            console.warn(`  ⚠️  Failed to get actual TitanX for stake ${event.transactionHash}: ${error.message}`);
+            // Fallback to 0 if helper fails
+            event.costTitanX = "0.0";
+            event.rawCostTitanX = "0";
+            event.titanAmount = "0";
+          }
         }
+      }
+    }
+    
+    // For creates, we need to get shares from user positions
+    console.log('  📊 Matching create events with positions for shares...');
+    let createsWithShares = 0;
+    let createsWithoutShares = 0;
+    
+    cachedData.stakingData.createEvents.forEach(event => {
+      const userPos = userPositions.get(event.user);
+      if (userPos) {
+        // Find matching position by start time (within 5 minutes of event timestamp)
+        const eventTime = parseInt(event.timestamp);
+        const matchingPosition = userPos.find(pos => 
+          Math.abs(Number(pos.startTime) - eventTime) < 300 && pos.isCreate
+        );
+        
+        if (matchingPosition) {
+          // Add shares from the matched position
+          event.shares = matchingPosition.shares.toString();
+          createsWithShares++;
+          
+          // Also ensure maturity date and endTime are set
+          if (!event.maturityDate) {
+            event.maturityDate = new Date(Number(matchingPosition.endTime) * 1000).toISOString();
+          }
+          if (!event.endTime) {
+            event.endTime = matchingPosition.endTime.toString();
+          }
+        } else {
+          console.warn(`  ⚠️  No matching create position found for user ${event.user} at time ${eventTime}`);
+          createsWithoutShares++;
+        }
+      } else {
+        createsWithoutShares++;
       }
     });
     
-    cachedData.stakingData.createEvents.forEach(event => {
-      // Fix undefined protocol days for creates too
-      if (!event.protocolDay || event.protocolDay === undefined) {
-        event.protocolDay = getProtocolDay(parseInt(event.timestamp));
-      }
-      
-      const userPos = userPositions.get(event.user);
-      if (userPos) {
-        const eventMaturityTime = Math.floor(new Date(event.maturityDate).getTime() / 1000);
-        // Use wider time window (48 hours instead of 24) for better matching
-        const matchingPosition = userPos.find(pos => 
-          Math.abs(Number(pos.endTime) - eventMaturityTime) < 172800 && pos.isCreate
-        );
-        
-        if (!matchingPosition && (!event.costTitanX || event.costTitanX === "0" || event.costTitanX === "0.0")) {
-          // Log positions that couldn't be matched for debugging
-          console.log(`\n  ⚠️  No position match for create by ${event.user.slice(0,10)}...`);
-          console.log(`     TORUS: ${(parseFloat(event.torusAmount) / 1e18).toFixed(2)}`);
-          console.log(`     Maturity: ${event.maturityDate}`);
-          console.log(`     Available positions: ${userPos.filter(p => p.isCreate).length} creates`);
-        }
-        
-        if (matchingPosition) {
-          // Users pay EITHER ETH OR TitanX, not both
-          if (matchingPosition.costETH.gt(0)) {
-            event.costETH = ethers.utils.formatEther(matchingPosition.costETH);
-            event.costTitanX = "0.0";
-            event.rawCostETH = matchingPosition.costETH.toString();
-            event.rawCostTitanX = "0";
-            event.titanAmount = "0";
-          } else {
-            event.costETH = "0.0";
-            event.costTitanX = ethers.utils.formatEther(matchingPosition.costTitanX);
-            event.rawCostETH = "0";
-            event.rawCostTitanX = matchingPosition.costTitanX.toString();
-            event.titanAmount = matchingPosition.costTitanX.toString();
-          }
-          event.shares = matchingPosition.shares.toString();
-        }
-      }
-    });
+    console.log(`  ✅ Creates with shares: ${createsWithShares}/${cachedData.stakingData.createEvents.length}`);
+    if (createsWithoutShares > 0) {
+      console.warn(`  ⚠️  Creates without shares: ${createsWithoutShares}`);
+    }
     
     // Calculate totals (same as before)
     let totalStakeETH = 0, totalCreateETH = 0;
@@ -1286,6 +1518,16 @@ async function updateAllDashboardData() {
     cachedData.metadata.fallbackToRPC = false;
     cachedData.metadata.cacheExpiryMinutes = 60;
     cachedData.metadata.description = 'Complete TORUS dashboard data with all frontend requirements';
+    
+    // Generate future supply projection
+    console.log('\n🔄 Generating future supply projection...');
+    try {
+      generateFutureSupplyProjection();
+      console.log('✅ Future supply projection updated');
+    } catch (projectionError) {
+      console.warn('⚠️ Failed to generate future supply projection:', projectionError.message);
+      // Don't fail the entire update for projection issues
+    }
     
     // Save updated data
     fs.writeFileSync('public/data/cached-data.json', JSON.stringify(cachedData, null, 2));

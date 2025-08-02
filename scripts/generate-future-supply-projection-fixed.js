@@ -6,14 +6,29 @@ function convertToPositions(stakeEvents, createEvents) {
   
   // Convert stake events
   stakeEvents.forEach(stake => {
+    const maturityDate = stake.maturityDate ? new Date(stake.maturityDate) : null;
+    const endTime = stake.endTime ? parseInt(stake.endTime) : null;
+    
+    // Calculate maturity day from maturityDate or endTime
+    let maturityDay;
+    if (maturityDate) {
+      const CONTRACT_START = new Date('2025-07-10T15:00:00Z');
+      maturityDay = Math.floor((maturityDate - CONTRACT_START) / (24 * 60 * 60 * 1000)) + 1;
+    } else if (endTime) {
+      const CONTRACT_START = new Date('2025-07-10T15:00:00Z');
+      maturityDay = Math.floor((new Date(endTime * 1000) - CONTRACT_START) / (24 * 60 * 60 * 1000)) + 1;
+    } else {
+      maturityDay = parseInt(stake.protocolDay) + parseInt(stake.stakingDays || 0) - 1;
+    }
+    
     positions.push({
       type: 'stake',
-      id: stake.id,
+      id: stake.stakeIndex || stake.id,
       principal: stake.principal,
       shares: stake.shares,
-      startDay: stake.protocolDay,
-      stakingDays: stake.stakingDays,
-      maturityDay: stake.protocolDay + stake.stakingDays - 1,
+      startDay: parseInt(stake.protocolDay),
+      stakingDays: parseInt(stake.stakingDays || 0),
+      maturityDay: maturityDay,
       user: stake.user,
       timestamp: stake.timestamp,
       blockNumber: stake.blockNumber
@@ -22,14 +37,22 @@ function convertToPositions(stakeEvents, createEvents) {
   
   // Convert create events
   createEvents.forEach(create => {
+    const endTime = parseInt(create.endTime);
+    const CONTRACT_START = new Date('2025-07-10T15:00:00Z');
+    const maturityDay = Math.floor((new Date(endTime * 1000) - CONTRACT_START) / (24 * 60 * 60 * 1000)) + 1;
+    
+    // Calculate create days from endTime and startTime
+    const startTime = parseInt(create.timestamp);
+    const createDays = Math.ceil((endTime - startTime) / (24 * 60 * 60));
+    
     positions.push({
       type: 'create',
-      id: create.id,
+      id: create.stakeIndex || create.id,
       torusAmount: create.torusAmount,
       shares: create.shares,
-      startDay: create.protocolDay,
-      stakingDays: create.createDays,
-      maturityDay: create.protocolDay + create.createDays - 1,
+      startDay: parseInt(create.protocolDay),
+      stakingDays: createDays,
+      maturityDay: maturityDay,
       user: create.user,
       timestamp: create.timestamp,
       blockNumber: create.blockNumber
@@ -239,7 +262,7 @@ function generateFutureSupplyProjection() {
     data.stakingData.createEvents || []
   );
   
-  const rewardPoolData = data.rewardPoolData || [];
+  const rewardPoolData = data.stakingData.rewardPoolData || [];
   const currentSupply = data.totalSupply || 0;
   
   console.log(`Positions: ${positions.length}`);
