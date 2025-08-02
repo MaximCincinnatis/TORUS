@@ -1,0 +1,314 @@
+{
+  "timestamp": "2025-07-24T16:43:32.367Z",
+  "summary": {
+    "totalBurns": 30,
+    "ethBurns": 8,
+    "titanXBurns": 15,
+    "unknownBurns": 7
+  },
+  "ethBurns": [
+    {
+      "tx": "0xc815687fc85889609ac96881fc69984d1d9fd70857868c5eb55d8ba65ea0a2fb",
+      "block": 22981247,
+      "timestamp": "2025-07-23T10:22:59.000Z",
+      "date": "2025-07-23",
+      "torusBurned": "8.66590878262113471",
+      "caller": "0xC13Cf9Ff43C0F10D57d0a489b405796c39cbE883",
+      "functionSelector": "0x39b6ce64",
+      "functionName": "swapETHForTorusAndBurn",
+      "ethAmount": "0.0",
+      "type": "ETH"
+    },
+    {
+      "tx": "0x290b350b46cd49a1a84c9915001578954518ec7f1f13750922f3791d88430692",
+      "block": 22982977,
+      "timestamp": "2025-07-23T16:12:23.000Z",
+      "date": "2025-07-23",
+      "torusBurned": "9.350834364729859408",
+      "caller": "0x8b8672858B6eE2DDA2DC44d89a5009592361Ea7c",
+      "functionSelector": "0x39b6ce64",
+      "functionName": "swapETHForTorusAndBurn",
+      "ethAmount": "0.0",
+      "type": "ETH"
+    },
+    {
+      "tx": "0x82e8a4ab8cce5a7fcbd9ddd22a88e8b08e1e49716d898215376c16aa024bf7f8",
+      "block": 22984467,
+      "timestamp": "2025-07-23T21:12:11.000Z",
+      "date": "2025-07-23",
+      "torusBurned": "8.440058557124247488",
+      "caller": "0xC13Cf9Ff43C0F10D57d0a489b405796c39cbE883",
+      "functionSelector": "0x39b6ce64",
+      "functionName": "swapETHForTorusAndBurn",
+      "ethAmount": "0.0",
+      "type": "ETH"
+    },
+    {
+      "tx": "0x402b237566468282c96db204415952e4d1117035fcb62752b0ee8c5dfa00d720",
+      "block": 22984912,
+      "timestamp": "2025-07-23T22:41:47.000Z",
+      "date": "2025-07-23",
+      "torusBurned": "7.301934193817769622",
+      "caller": "0xC13Cf9Ff43C0F10D57d0a489b405796c39cbE883",
+      "functionSelector": "0x39b6ce64",
+      "functionName": "swapETHForTorusAndBurn",
+      "ethAmount": "0.0",
+      "type": "ETH"
+    },
+    {
+      "tx": "0xcd2f8bfbf0d59e50162f3dc024c11d3e62ccf986f0f7133c9153fc252c88e194",
+      "block": 22985398,
+      "timestamp": "2025-07-24T00:19:11.000Z",
+      "date": "2025-07-24",
+      "torusBurned": "7.274406513157460195",
+      "caller": "0xC13Cf9Ff43C0F10D57d0a489b405796c39cbE883",
+      "functionSelector": "0x39b6ce64",
+      "functionName": "swapETHForTorusAndBurn",
+      "ethAmount": "0.0",
+      "type": "ETH"
+    },
+    {
+      "tx": "0xd8347d8b83997791216c7aad4e00719b12a904735ff387853be00ab50c28aabc",
+      "block": 22987922,
+      "timestamp": "2025-07-24T08:47:11.000Z",
+      "date": "2025-07-24",
+      "torusBurned": "10.375044705256929783",
+      "caller": "0xC13Cf9Ff43C0F10D57d0a489b405796c39cbE883",
+      "functionSelector": "0x39b6ce64",
+      "functionName": "swapETHForTorusAndBurn",
+      "ethAmount": "0.0",
+      "type": "ETH"
+    },
+    {
+      "tx": "0x36fad09c80a7543f429a281287434d4667cff02f8bdf8bb71c6b375f26bd3172",
+      "block": 22988782,
+      "timestamp": "2025-07-24T11:41:47.000Z",
+      "date": "2025-07-24",
+      "torusBurned": "7.978923683735363998",
+      "caller": "0xD8E734Fa9d779d242b0B905f8B2416F1491233AD",
+      "functionSelector": "0x39b6ce64",
+      "functionName": "swapETHForTorusAndBurn",
+      "ethAmount": "0.0",
+      "type": "ETH"
+    },
+    {
+      "tx": "0x09e10f39ee2d6cdb70d282621c0a7d84fc11dc49977b21b65c34615bcd7c6f14",
+      "block": 22990213,
+      "timestamp": "2025-07-24T16:29:59.000Z",
+      "date": "2025-07-24",
+      "torusBurned": "12.748307641406600597",
+      "caller": "0x8b8672858B6eE2DDA2DC44d89a5009592361Ea7c",
+      "functionSelector": "0x39b6ce64",
+      "functionName": "swapETHForTorusAndBurn",
+      "ethAmount": "0.0",
+      "type": "ETH"
+    }
+  ],
+  "titanXBurns": [
+    {
+      "tx": "0xa807318becfb06f1034cd330206734d62c7377bcca58c1748bccebbf8d9ebc91",
+      "block": 22980403,
+      "timestamp": "2025-07-23T07:32:11.000Z",
+      "date": "2025-07-23",
+      "torusBurned": "5.861910986077661185",
+      "caller": "0xC13Cf9Ff43C0F10D57d0a489b405796c39cbE883",
+      "functionSelector": "0xd6d315a4",
+      "functionName": "swapTitanXForTorusAndBurn",
+      "titanXAmount": "249977354.54087136659717441",
+      "type": "TitanX"
+    },
+    {
+      "tx": "0x871871259833f2f6bf5d6b9843882fcfb0d37e568936f19435159ea5e265668e",
+      "block": 22981181,
+      "timestamp": "2025-07-23T10:09:47.000Z",
+      "date": "2025-07-23",
+      "torusBurned": "8.839896449341580138",
+      "caller": "0xC13Cf9Ff43C0F10D57d0a489b405796c39cbE883",
+      "functionSelector": "0xd6d315a4",
+      "functionName": "swapTitanXForTorusAndBurn",
+      "titanXAmount": "378460211.391216288321175911",
+      "type": "TitanX"
+    },
+    {
+      "tx": "0x61e2981bdbc095cfd70588e731571a82149312cc1f6460f402d565ab110f303c",
+      "block": 22981385,
+      "timestamp": "2025-07-23T10:50:47.000Z",
+      "date": "2025-07-23",
+      "torusBurned": "7.333582820380118887",
+      "caller": "0xC13Cf9Ff43C0F10D57d0a489b405796c39cbE883",
+      "functionSelector": "0xd6d315a4",
+      "functionName": "swapTitanXForTorusAndBurn",
+      "titanXAmount": "315252099.697058290167535075",
+      "type": "TitanX"
+    },
+    {
+      "tx": "0xa73a8891bdc0fc864b64c561663917606b579e732224d287c805035fd304aed6",
+      "block": 22982826,
+      "timestamp": "2025-07-23T15:41:47.000Z",
+      "date": "2025-07-23",
+      "torusBurned": "10.438222166345238829",
+      "caller": "0x8b8672858B6eE2DDA2DC44d89a5009592361Ea7c",
+      "functionSelector": "0xd6d315a4",
+      "functionName": "swapTitanXForTorusAndBurn",
+      "titanXAmount": "448629302.74741775845460655",
+      "type": "TitanX"
+    },
+    {
+      "tx": "0xa9b977adf21c8da4f4f389b691c1b9e8d9ed1c9d363abcba069741761f4caef6",
+      "block": 22983478,
+      "timestamp": "2025-07-23T17:53:11.000Z",
+      "date": "2025-07-23",
+      "torusBurned": "13.49423715868922322",
+      "caller": "0xC13Cf9Ff43C0F10D57d0a489b405796c39cbE883",
+      "functionSelector": "0xd6d315a4",
+      "functionName": "swapTitanXForTorusAndBurn",
+      "titanXAmount": "576547576.308281375999782836",
+      "type": "TitanX"
+    },
+    {
+      "tx": "0xddce9b420e7c8ff3fc8c66da1b30a9133d28ac85d4cdd1fcb5b48e360fb44cdc",
+      "block": 22983724,
+      "timestamp": "2025-07-23T18:42:35.000Z",
+      "date": "2025-07-23",
+      "torusBurned": "7.447451057226882555",
+      "caller": "0x8b8672858B6eE2DDA2DC44d89a5009592361Ea7c",
+      "functionSelector": "0xd6d315a4",
+      "functionName": "swapTitanXForTorusAndBurn",
+      "titanXAmount": "320104018.929493722299879426",
+      "type": "TitanX"
+    },
+    {
+      "tx": "0xdf04335aff523eb949b11f64987560834e022d50d415bc9ee4c52efb54dca596",
+      "block": 22984461,
+      "timestamp": "2025-07-23T21:10:59.000Z",
+      "date": "2025-07-23",
+      "torusBurned": "7.422143520322888969",
+      "caller": "0xC13Cf9Ff43C0F10D57d0a489b405796c39cbE883",
+      "functionSelector": "0xd6d315a4",
+      "functionName": "swapTitanXForTorusAndBurn",
+      "titanXAmount": "320299062.127490134718857862",
+      "type": "TitanX"
+    },
+    {
+      "tx": "0xcb4adce71a28b235a80bfb8fe88ff967ecfa4b94149226841deb3fe2ded8467a",
+      "block": 22985059,
+      "timestamp": "2025-07-23T23:11:23.000Z",
+      "date": "2025-07-23",
+      "torusBurned": "8.941860429855925616",
+      "caller": "0xC13Cf9Ff43C0F10D57d0a489b405796c39cbE883",
+      "functionSelector": "0xd6d315a4",
+      "functionName": "swapTitanXForTorusAndBurn",
+      "titanXAmount": "387936518.370435040773163245",
+      "type": "TitanX"
+    },
+    {
+      "tx": "0x99b96b7d066146c1e08d17002fc339080f9b465c0c237bed3ad45d1f1a871e8d",
+      "block": 22985395,
+      "timestamp": "2025-07-24T00:18:35.000Z",
+      "date": "2025-07-24",
+      "torusBurned": "8.91531686262812004",
+      "caller": "0xC13Cf9Ff43C0F10D57d0a489b405796c39cbE883",
+      "functionSelector": "0xd6d315a4",
+      "functionName": "swapTitanXForTorusAndBurn",
+      "titanXAmount": "387774878.154447359506174427",
+      "type": "TitanX"
+    },
+    {
+      "tx": "0x9a6a2738b63d475f9db407772a76cb1ecfd5913d822df54d188cd23907930278",
+      "block": 22986517,
+      "timestamp": "2025-07-24T04:05:47.000Z",
+      "date": "2025-07-24",
+      "torusBurned": "13.312930378192404239",
+      "caller": "0xafF57f83d52c08e938d1021b8be82924c99792Eb",
+      "functionSelector": "0xd6d315a4",
+      "functionName": "swapTitanXForTorusAndBurn",
+      "titanXAmount": "582534456.848954280629109293",
+      "type": "TitanX"
+    },
+    {
+      "tx": "0xd876da57fb97160e3b24ba561b2c4b7482a2d630cf795568aff582959e3ad846",
+      "block": 22987916,
+      "timestamp": "2025-07-24T08:45:59.000Z",
+      "date": "2025-07-24",
+      "torusBurned": "8.906607104708765848",
+      "caller": "0xC13Cf9Ff43C0F10D57d0a489b405796c39cbE883",
+      "functionSelector": "0xd6d315a4",
+      "functionName": "swapTitanXForTorusAndBurn",
+      "titanXAmount": "392279027.410719442977919777",
+      "type": "TitanX"
+    },
+    {
+      "tx": "0xe63c8c5e06a46ec66e6813e91f8cddcd5867cf529551a6f07adc54d7f518f09d",
+      "block": 22988427,
+      "timestamp": "2025-07-24T10:29:47.000Z",
+      "date": "2025-07-24",
+      "torusBurned": "5.889229236633570043",
+      "caller": "0xD8E734Fa9d779d242b0B905f8B2416F1491233AD",
+      "functionSelector": "0xd6d315a4",
+      "functionName": "swapTitanXForTorusAndBurn",
+      "titanXAmount": "261314066.96347221631319061",
+      "type": "TitanX"
+    },
+    {
+      "tx": "0x46048707b8ce87f0092a11da0a70287b4deb525ec8591a8dfa9a312acd71ca5a",
+      "block": 22988751,
+      "timestamp": "2025-07-24T11:35:35.000Z",
+      "date": "2025-07-24",
+      "torusBurned": "10.28784361847947114",
+      "caller": "0xD8E734Fa9d779d242b0B905f8B2416F1491233AD",
+      "functionSelector": "0xd6d315a4",
+      "functionName": "swapTitanXForTorusAndBurn",
+      "titanXAmount": "457172589.514635801776264654",
+      "type": "TitanX"
+    },
+    {
+      "tx": "0xd74dfd78fc3322f2e9413ac91ddb758568f34734e0a14e3670b82da2b7c3a236",
+      "block": 22989142,
+      "timestamp": "2025-07-24T12:54:23.000Z",
+      "date": "2025-07-24",
+      "torusBurned": "11.75635356182344873",
+      "caller": "0xC13Cf9Ff43C0F10D57d0a489b405796c39cbE883",
+      "functionSelector": "0xd6d315a4",
+      "functionName": "swapTitanXForTorusAndBurn",
+      "titanXAmount": "522228974.673345483727442632",
+      "type": "TitanX"
+    },
+    {
+      "tx": "0xd559abe6ef1e2dba28d1592e5a67192c44c326ade4c5c01c578d20b9278a836b",
+      "block": 22989491,
+      "timestamp": "2025-07-24T14:04:35.000Z",
+      "date": "2025-07-24",
+      "torusBurned": "10.26012457504818076",
+      "caller": "0x8b8672858B6eE2DDA2DC44d89a5009592361Ea7c",
+      "functionSelector": "0xd6d315a4",
+      "functionName": "swapTitanXForTorusAndBurn",
+      "titanXAmount": "456696491.532044421984700352",
+      "type": "TitanX"
+    }
+  ],
+  "dailyStats": {
+    "2025-07-23": {
+      "date": "2025-07-23",
+      "ethBurns": 4,
+      "titanXBurns": 8,
+      "totalETH": 0,
+      "totalTitanX": 2997206144.112264,
+      "totalTorusBurned": 103.53804048653254
+    },
+    "2025-07-24": {
+      "date": "2025-07-24",
+      "ethBurns": 4,
+      "titanXBurns": 7,
+      "totalETH": 0,
+      "totalTitanX": 3060000485.097619,
+      "totalTorusBurned": 107.70508788107031
+    }
+  },
+  "functionSelectors": {
+    "0x39b6ce64": "swapETHForTorusAndBurn",
+    "0xd6d315a4": "swapTitanXForTorusAndBurn",
+    "0x53ad9b96": "swapETHForTorusAndBuild",
+    "0xfc9b61ae": "swapTitanXForTorusAndBuild",
+    "0xf6b8cd5a": "burnTorus"
+  }
+}

@@ -499,11 +499,18 @@ async function performSmartUpdate(provider, updateLog, currentBlock, blocksSince
     try {
       const torusContract = new ethers.Contract(
         '0xb47f575807fc5466285e1277ef8acfbb5c6686e8',
-        ['function totalSupply() view returns (uint256)'],
+        [
+          'function totalSupply() view returns (uint256)',
+          'function balanceOf(address) view returns (uint256)'
+        ],
         provider
       );
-      const totalSupply = await torusContract.totalSupply();
+      const [totalSupply, stakedBalance] = await Promise.all([
+        torusContract.totalSupply(),
+        torusContract.balanceOf(CONTRACTS.CREATE_STAKE)
+      ]);
       const formattedSupply = parseFloat(ethers.utils.formatEther(totalSupply));
+      const formattedStakedBalance = parseFloat(ethers.utils.formatEther(stakedBalance));
       
       const oldSupply = cachedData.totalSupply || 0;
       if (Math.abs(oldSupply - formattedSupply) > 0.000001) {
@@ -519,6 +526,14 @@ async function performSmartUpdate(provider, updateLog, currentBlock, blocksSince
           cachedData.stakingData.totalSupply = formattedSupply;
           updateStats.dataChanged = true;
           log(`Staking data total supply updated: ${formattedSupply.toFixed(6)} TORUS (was ${oldStakingSupply.toFixed(6)})`, 'green');
+        }
+        
+        // Update staked balance from contract
+        const oldStakedBalance = cachedData.stakingData.totalStakedInContract || 0;
+        if (Math.abs(oldStakedBalance - formattedStakedBalance) > 0.000001) {
+          cachedData.stakingData.totalStakedInContract = formattedStakedBalance;
+          updateStats.dataChanged = true;
+          log(`Total staked in contract updated: ${formattedStakedBalance.toFixed(6)} TORUS (was ${oldStakedBalance.toFixed(6)})`, 'green');
         }
         
         // Track daily supply snapshot
@@ -746,7 +761,11 @@ async function performSmartUpdate(provider, updateLog, currentBlock, blocksSince
           const processedStakes = [];
           
           for (const event of newStakeEvents) {
-            const blockTimestamp = blockTimestamps.get(event.blockNumber) || Math.floor(Date.now() / 1000);
+            const blockTimestamp = blockTimestamps.get(event.blockNumber);
+            if (!blockTimestamp) {
+              log(`  ⚠️ Warning: Skipping stake event ${event.args.stakeIndex} - no timestamp for block ${event.blockNumber}`, 'yellow');
+              continue;
+            }
             const stakingDays = parseInt(event.args.stakingDays.toString());
             const maturityTimestamp = blockTimestamp + (stakingDays * 86400);
             
@@ -809,7 +828,11 @@ async function performSmartUpdate(provider, updateLog, currentBlock, blocksSince
           const processedCreates = [];
           
           for (const event of newCreateEvents) {
-            const blockTimestamp = blockTimestamps.get(event.blockNumber) || Math.floor(Date.now() / 1000);
+            const blockTimestamp = blockTimestamps.get(event.blockNumber);
+            if (!blockTimestamp) {
+              log(`  ⚠️ Warning: Skipping create event ${event.args.stakeIndex} - no timestamp for block ${event.blockNumber}`, 'yellow');
+              continue;
+            }
             const endTime = parseInt(event.args.endTime.toString());
             // Calculate duration from start to end time
             const duration = Math.round((endTime - blockTimestamp) / 86400);
@@ -968,6 +991,17 @@ async function performSmartUpdate(provider, updateLog, currentBlock, blocksSince
     } catch (e) {
       updateStats.errors.push(`Buy & Process update: ${e.message}`);
       log(`Failed to update Buy & Process data: ${e.message}`, 'yellow');
+    }
+    
+    // 7b. Update Creates & Stakes data
+    log('Updating Creates & Stakes data...', 'cyan');
+    try {
+      execSync('node scripts/update-creates-stakes-incremental.js', { stdio: 'inherit' });
+      updateStats.dataChanged = true;
+      log('Creates & Stakes data updated', 'green');
+    } catch (e) {
+      updateStats.errors.push(`Creates & Stakes update: ${e.message}`);
+      log(`Failed to update Creates & Stakes data: ${e.message}`, 'yellow');
     }
     
     // 8. Update Future Supply Projection if day changed

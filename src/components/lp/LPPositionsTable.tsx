@@ -162,6 +162,9 @@ const LPPositionsTable: React.FC<LPPositionsTableProps> = ({ positions, loading,
 
               // Check if this position is owned by a TORUS contract
               const isTorusContract = position.owner.toLowerCase() === CONTRACTS.TORUS_BUY_PROCESS.toLowerCase();
+              
+              // Full range positions are always in range
+              const isInRange = isFullRange || position.inRange;
 
               return (
                 <tr key={`${position.owner}-${index}`} className={isTorusContract ? 'torus-contract-position' : ''}>
@@ -198,8 +201,8 @@ const LPPositionsTable: React.FC<LPPositionsTableProps> = ({ positions, loading,
                   </td>
                   <td className="price-range">{titanXPriceRange}</td>
                   <td>
-                    <span className={`status-badge ${position.inRange ? 'in-range' : 'out-range'}`}>
-                      {position.inRange ? 'In Range' : 'Out of Range'}
+                    <span className={`status-badge ${isInRange ? 'in-range' : 'out-range'}`}>
+                      {isInRange ? 'In Range' : 'Out of Range'}
                     </span>
                   </td>
                 </tr>

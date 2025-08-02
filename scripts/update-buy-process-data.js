@@ -297,9 +297,11 @@ const CONTRACT_START_DATE = new Date('2025-07-10T18:00:00.000Z');
     // Set actual TORUS burned amounts from Transfer events
     for (const [dateKey, burnAmount] of Object.entries(burnsByDate)) {
       if (!newDailyData[dateKey]) {
+        // Parse date to get timestamp for protocol day calculation
+        const dateTimestamp = Math.floor(new Date(dateKey + 'T00:00:00Z').getTime() / 1000);
         newDailyData[dateKey] = {
           date: dateKey,
-          protocolDay: getProtocolDay(timestamp),
+          protocolDay: getProtocolDay(dateTimestamp),
           buyAndBurnCount: 0,
           buyAndBuildCount: 0,
           fractalCount: 0,

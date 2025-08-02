@@ -76,6 +76,7 @@ function App() {
   const [currentProtocolDay, setCurrentProtocolDay] = useState<number>(0);
   const [totalSupply, setTotalSupply] = useState<number>(0);
   const [burnedSupply, setBurnedSupply] = useState<number>(0);
+  const [totalStakedInContract, setTotalStakedInContract] = useState<number>(0);
   const [lpPositions, setLpPositions] = useState<SimpleLPPosition[]>([]);
   const [lpTokenInfo, setLpTokenInfo] = useState<any>(null);
   const [lpLoading, setLpLoading] = useState(true);
@@ -237,6 +238,7 @@ function App() {
       setTotalSupply(dashboardResult.data.totalSupply || 0);
       setBurnedSupply(dashboardResult.data.burnedSupply || 0);
       setCurrentProtocolDay(dashboardResult.data.currentProtocolDay || 0);
+      setTotalStakedInContract(dashboardResult.data.totalStakedInContract || 0);
       setTotalsLoading(false);
       console.log('✅ Basic metrics loaded');
       
@@ -998,7 +1000,15 @@ function App() {
         const protocolDay = getContractDay(stakeDate);
         
         if (dailyUsage[protocolDay]) {
-          const amount = parseFloat(stake.rawCostTitanX) / 1e18;
+          // Handle both hex and decimal values
+          let titanXAmount;
+          if (stake.rawCostTitanX.startsWith('0x')) {
+            // Convert hex to decimal
+            titanXAmount = BigInt(stake.rawCostTitanX);
+          } else {
+            titanXAmount = BigInt(stake.rawCostTitanX);
+          }
+          const amount = Number(titanXAmount) / 1e18;
           dailyUsage[protocolDay].stakes += amount;
         }
       }
@@ -1421,7 +1431,8 @@ function App() {
     
     // Add LP fee burns
     lpFeeBurnsData.feeDrivenBurns.forEach((burn: any) => {
-      const protocolDay = burn.protocolDay;
+      // Calculate protocolDay from timestamp since it's not in the data
+      const protocolDay = getContractDay(new Date(burn.timestamp * 1000));
       const torusBurned = parseFloat(burn.torusBurned);
       const titanxCollected = parseFloat(burn.titanxCollected) / 1e9; // Convert to billions
       
@@ -1642,6 +1653,10 @@ function App() {
   const activeStakes = activeStakesData.length;
   const avgStakeSize = activeStakesData.length > 0 ? totalStaked / activeStakesData.length : 0;
   
+  // Calculate total staked including matured but unclaimed stakes
+  // This represents all TORUS that is still locked in the staking contract, regardless of maturity status
+  const totalStakedIncludingMatured = stakeData.reduce((sum, stake) => sum + parseFloat(stake.principal) / 1e18, 0);
+  
   // Debug: Check if stakes are beyond 88 days
   if (!loading && stakeData.length > 0) {
     console.log('\n=== STAKE MATURITY ANALYSIS ===');
@@ -1727,10 +1742,10 @@ function App() {
   }, 0);
   
   // Calculate total TORUS locked (staked + created)
-  const totalTorusLocked = totalStaked + totalCreated;
+  const totalTorusLocked = (totalStakedInContract > 0 ? totalStakedInContract : totalStakedIncludingMatured) + totalCreated;
   
   // Calculate percentages - just staked, not staked + created
-  const percentStaked = totalSupply > 0 ? (totalStaked / totalSupply) * 100 : 0;
+  const percentStaked = totalSupply > 0 ? ((totalStakedInContract > 0 ? totalStakedInContract : totalStakedIncludingMatured) / totalSupply) * 100 : 0;
   const percentBurned = totalSupply > 0 ? (burnedSupply / totalSupply) * 100 : 0;
   
   // Calculate ETH and TitanX totals for overall metrics
@@ -1741,7 +1756,13 @@ function App() {
   const totalETHInput = totalETHFromStakes + totalETHFromCreates;
   
   const stakesWithTitanX = stakeData.filter(stake => stake.rawCostTitanX && stake.rawCostTitanX !== "0");
-  const totalTitanXFromStakes = stakesWithTitanX.reduce((sum, stake) => sum + parseFloat(stake.rawCostTitanX) / 1e18, 0);
+  const totalTitanXFromStakes = stakesWithTitanX.reduce((sum, stake) => {
+    // Handle both hex and decimal values
+    const titanXAmount = stake.rawCostTitanX.startsWith('0x') 
+      ? BigInt(stake.rawCostTitanX)
+      : BigInt(stake.rawCostTitanX);
+    return sum + Number(titanXAmount) / 1e18;
+  }, 0);
   const totalTitanXInput = totalTitanXFromStakes + totalTitanXUsed;
   
   // Get actual TitanX burned from cached data (most accurate)
@@ -1793,9 +1814,20 @@ function App() {
 
   // Stake metrics with useMemo
   const memoizedTotalStaked = useMemo(() => {
+    // Use the on-chain balance if available, otherwise fall back to calculated sum
+    console.log('Calculating memoizedTotalStaked:', {
+      totalStakedInContract,
+      totalStakedIncludingMatured,
+      stakeDataLength: stakeData.length
+    });
+    if (totalStakedInContract > 0) {
+      console.log('Using totalStakedInContract:', totalStakedInContract);
+      return totalStakedInContract;
+    }
     if (stakeData.length === 0) return null;
-    return totalStaked;
-  }, [stakeData]);
+    console.log('Using totalStakedIncludingMatured:', totalStakedIncludingMatured);
+    return totalStakedIncludingMatured;
+  }, [totalStakedInContract, stakeData, totalStakedIncludingMatured]);
 
   const memoizedActiveStakes = useMemo(() => {
     if (stakeData.length === 0) return null;
@@ -1848,7 +1880,15 @@ function App() {
     return totalETHFromCreates;
   }, [createData]);
 
-  console.log('Supply metrics:', { totalSupply, totalStaked, totalTorusLocked, burnedSupply, percentStaked, percentBurned });
+  console.log('Supply metrics:', { 
+    totalSupply, 
+    totalStakedInContract,
+    totalStakedIncludingMatured, 
+    totalTorusLocked, 
+    burnedSupply, 
+    percentStaked, 
+    percentBurned 
+  });
   
   console.log(`Total active shares: ${totalShares}`);
   console.log(`Total creates: ${createData.length}, Active creates: ${activeCreates}`);
@@ -1859,7 +1899,7 @@ function App() {
   }
 
   // Maintenance mode flag - set to true to show maintenance page
-  const isMaintenanceMode = true; // TODO: Change to false when backend work is complete
+  const isMaintenanceMode = false; // TODO: Change to false when backend work is complete
   
   if (isMaintenanceMode) {
     return <MaintenancePage />;

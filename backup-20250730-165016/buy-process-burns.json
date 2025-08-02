@@ -1,0 +1,50 @@
+{
+  "lastUpdated": "2025-07-30T23:45:33.801Z",
+  "lastBlock": 23035300,
+  "nftPosition": {
+    "tokenId": 1029195,
+    "owner": "0xaa390a37006e22b5775a34f2147f81ebd6a63641"
+  },
+  "feeDrivenBurns": [
+    {
+      "blockNumber": 22898872,
+      "timestamp": 1752272387,
+      "date": "2025-07-11T22:19:47.000Z",
+      "transactionHash": "0x65f4d4d6450701c3c9c44e4913c7434ad423587366c323654782580e53514669",
+      "torusCollected": "161.527971146914771679",
+      "titanxCollected": "5486363450.15269801997002397",
+      "torusBurned": "161.527971146914771679",
+      "burnPercentage": "100.00",
+      "protocolDay": 2
+    },
+    {
+      "blockNumber": 22929138,
+      "timestamp": 1752637415,
+      "date": "2025-07-16T03:43:35.000Z",
+      "transactionHash": "0x7e22b18f2d79f88f20ec6fbd380b65a69167e3d1e4dbb54350a74ce8be39ca03",
+      "torusCollected": "18.49596387540490905",
+      "titanxCollected": "1724715963.487654343574775275",
+      "torusBurned": "18.49596387540490905",
+      "burnPercentage": "100.00",
+      "protocolDay": 6
+    },
+    {
+      "blockNumber": 23014696,
+      "timestamp": 1753670111,
+      "date": "2025-07-28T02:35:11.000Z",
+      "transactionHash": "0xa7342ca7f20e164e57ce5f4ab3eabdf5b862b3da70867f7ae44e309a143a5753",
+      "torusCollected": "38.108102380258301157",
+      "titanxCollected": "2008222675.679938284521157904",
+      "torusBurned": "38.108102380258301157",
+      "burnPercentage": "100.00",
+      "protocolDay": 18
+    }
+  ],
+  "totals": {
+    "feeCollections": 3,
+    "torusCollected": "218.132037402577981886",
+    "torusBurned": "218.132037402577981886",
+    "titanxCollected": "9219302089.320290648065957149",
+    "averageBurnRate": "100.00"
+  }
+}

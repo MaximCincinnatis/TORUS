@@ -17,7 +17,7 @@ const WORKING_RPC_ENDPOINTS = [
 let currentRpcIndex = 0;
 
 async function getWorkingProviderWithRotation(): Promise<ethers.providers.JsonRpcProvider> {
-  const maxRetries = WORKING_RPC_ENDPOINTS.length;
+  const maxRetries = WORKING_RPC_ENDPOINTS.length * 2; // Try each provider twice
   
   for (let i = 0; i < maxRetries; i++) {
     const rpcUrl = WORKING_RPC_ENDPOINTS[currentRpcIndex];
@@ -28,7 +28,7 @@ async function getWorkingProviderWithRotation(): Promise<ethers.providers.JsonRp
       
       // Quick test with timeout to avoid 429 errors
       const timeoutPromise = new Promise<never>((_, reject) => {
-        setTimeout(() => reject(new Error('Timeout')), 3000);
+        setTimeout(() => reject(new Error('Timeout')), 5000); // Increased timeout
       });
       
       await RpcRateLimit.execute(async () => {
@@ -47,12 +47,39 @@ async function getWorkingProviderWithRotation(): Promise<ethers.providers.JsonRp
       // Auto-rotate to next provider
       currentRpcIndex = (currentRpcIndex + 1) % WORKING_RPC_ENDPOINTS.length;
       
-      // Add delay before trying next provider to avoid rapid requests
-      await new Promise(resolve => setTimeout(resolve, 1000));
+      // Exponential backoff: increase delay on retries
+      const delay = Math.min(1000 * Math.pow(2, Math.floor(i / WORKING_RPC_ENDPOINTS.length)), 10000);
+      await new Promise(resolve => setTimeout(resolve, delay));
     }
   }
   
   throw new Error('All RPC providers failed for incremental updates');
+}
+
+// Helper function for retrying RPC calls with exponential backoff
+async function retryWithBackoff<T>(
+  fn: () => Promise<T>,
+  maxRetries: number = 3,
+  initialDelay: number = 1000
+): Promise<T> {
+  let lastError: any;
+  
+  for (let i = 0; i < maxRetries; i++) {
+    try {
+      return await fn();
+    } catch (error) {
+      lastError = error;
+      console.warn(`⚠️ RPC call failed (attempt ${i + 1}/${maxRetries}):`, error instanceof Error ? error.message : 'Unknown error');
+      
+      if (i < maxRetries - 1) {
+        const delay = initialDelay * Math.pow(2, i);
+        console.log(`⏳ Waiting ${delay}ms before retry...`);
+        await new Promise(resolve => setTimeout(resolve, delay));
+      }
+    }
+  }
+  
+  throw lastError;
 }
 
 export interface IncrementalUpdate {
@@ -117,13 +144,16 @@ export async function getIncrementalUpdates(
     // Get working provider with auto-rotation
     const workingProvider = await getWorkingProviderWithRotation();
     
-    // Create contract instance
-    const contract = new ethers.Contract(CONTRACTS.TORUS_CREATE_STAKE, CREATE_STAKE_ABI, workingProvider);
+    // No longer need contract instance since we're using getLogs directly
     
-    // If block range is too large, fetch in chunks
-    const MAX_BLOCK_RANGE = 9999; // Stay under 10k limit
+    // Use getLogs instead of queryFilter for better performance and reliability
+    const MAX_BLOCK_RANGE = 5000; // Conservative limit to avoid timeouts
     let allStakeEvents: any[] = [];
     let allCreateEvents: any[] = [];
+    
+    // Event topics for Created and Staked events
+    const CREATED_TOPIC = '0x2cd2f3ca952a36788227224b8c3cc7420085066fa6c29918bc04da2c50221e2f';
+    const STAKED_TOPIC = '0x30d029df1ad6f5ef19929e6de4d6362e883e452dc13ab3e7b0fb8e827c7e5a03';
     
     if (blocksToUpdate > MAX_BLOCK_RANGE) {
       console.log(`📦 Block range too large (${blocksToUpdate}), fetching in chunks...`);
@@ -132,31 +162,100 @@ export async function getIncrementalUpdates(
         const toBlock = Math.min(fromBlock + MAX_BLOCK_RANGE - 1, currentBlock);
         console.log(`  Fetching blocks ${fromBlock} to ${toBlock}...`);
         
-        // Fetch stake events for this chunk
-        const stakeFilter = contract.filters.Staked();
-        const stakeChunk = await RpcRateLimit.execute(async () => {
-          return contract.queryFilter(stakeFilter, fromBlock, toBlock);
-        }, `Fetch stake events from block ${fromBlock} to ${toBlock}`);
-        allStakeEvents.push(...stakeChunk);
-        
-        // Fetch create events for this chunk
-        const createFilter = contract.filters.Created();
-        const createChunk = await RpcRateLimit.execute(async () => {
-          return contract.queryFilter(createFilter, fromBlock, toBlock);
-        }, `Fetch create events from block ${fromBlock} to ${toBlock}`);
-        allCreateEvents.push(...createChunk);
+        try {
+          // Use getLogs with topics for better performance, with retry logic
+          const [stakeLogs, createLogs] = await Promise.all([
+            retryWithBackoff(async () => {
+              return RpcRateLimit.execute(async () => {
+                return workingProvider.getLogs({
+                  address: CONTRACTS.TORUS_CREATE_STAKE,
+                  topics: [STAKED_TOPIC],
+                  fromBlock: fromBlock,
+                  toBlock: toBlock
+                });
+              }, `Fetch stake logs from block ${fromBlock} to ${toBlock}`);
+            }),
+            
+            retryWithBackoff(async () => {
+              return RpcRateLimit.execute(async () => {
+                return workingProvider.getLogs({
+                  address: CONTRACTS.TORUS_CREATE_STAKE,
+                  topics: [CREATED_TOPIC],
+                  fromBlock: fromBlock,
+                  toBlock: toBlock
+                });
+              }, `Fetch create logs from block ${fromBlock} to ${toBlock}`);
+            })
+          ]);
+          
+          // Parse logs into events
+          const stakeInterface = new ethers.utils.Interface(CREATE_STAKE_ABI);
+          const stakeChunk = stakeLogs.map(log => ({
+            ...stakeInterface.parseLog(log),
+            blockNumber: log.blockNumber,
+            transactionHash: log.transactionHash
+          }));
+          allStakeEvents.push(...stakeChunk);
+          
+          const createChunk = createLogs.map(log => ({
+            ...stakeInterface.parseLog(log),
+            blockNumber: log.blockNumber,
+            transactionHash: log.transactionHash
+          }));
+          allCreateEvents.push(...createChunk);
+          
+          // Add small delay between chunks to avoid rate limiting
+          await new Promise(resolve => setTimeout(resolve, 100));
+          
+        } catch (error) {
+          console.error(`❌ Error fetching chunk ${fromBlock}-${toBlock}:`, error);
+          throw error;
+        }
       }
     } else {
       // Fetch all at once if within limit
-      const stakeFilter = contract.filters.Staked();
-      allStakeEvents = await RpcRateLimit.execute(async () => {
-        return contract.queryFilter(stakeFilter, lastBlock + 1, currentBlock);
-      }, `Fetch stake events from block ${lastBlock + 1} to ${currentBlock}`);
-      
-      const createFilter = contract.filters.Created();
-      allCreateEvents = await RpcRateLimit.execute(async () => {
-        return contract.queryFilter(createFilter, lastBlock + 1, currentBlock);
-      }, `Fetch create events from block ${lastBlock + 1} to ${currentBlock}`);
+      try {
+        const [stakeLogs, createLogs] = await Promise.all([
+          retryWithBackoff(async () => {
+            return RpcRateLimit.execute(async () => {
+              return workingProvider.getLogs({
+                address: CONTRACTS.TORUS_CREATE_STAKE,
+                topics: [STAKED_TOPIC],
+                fromBlock: lastBlock + 1,
+                toBlock: currentBlock
+              });
+            }, `Fetch stake logs from block ${lastBlock + 1} to ${currentBlock}`);
+          }),
+          
+          retryWithBackoff(async () => {
+            return RpcRateLimit.execute(async () => {
+              return workingProvider.getLogs({
+                address: CONTRACTS.TORUS_CREATE_STAKE,
+                topics: [CREATED_TOPIC],
+                fromBlock: lastBlock + 1,
+                toBlock: currentBlock
+              });
+            }, `Fetch create logs from block ${lastBlock + 1} to ${currentBlock}`);
+          })
+        ]);
+        
+        // Parse logs into events
+        const stakeInterface = new ethers.utils.Interface(CREATE_STAKE_ABI);
+        allStakeEvents = stakeLogs.map(log => ({
+          ...stakeInterface.parseLog(log),
+          blockNumber: log.blockNumber,
+          transactionHash: log.transactionHash
+        }));
+        
+        allCreateEvents = createLogs.map(log => ({
+          ...stakeInterface.parseLog(log),
+          blockNumber: log.blockNumber,
+          transactionHash: log.transactionHash
+        }));
+      } catch (error) {
+        console.error(`❌ Error fetching events:`, error);
+        throw error;
+      }
     }
     
     const stakeEvents = allStakeEvents;

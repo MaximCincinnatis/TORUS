@@ -90,6 +90,7 @@ export interface CachedData {
     currentProtocolDay: number;
     totalSupply: number;
     burnedSupply: number;
+    totalStakedInContract?: number;
     lastUpdated: string;
   };
   contractData: {
@@ -227,7 +228,7 @@ export async function loadCachedData(): Promise<CachedData | null> {
     }
     
     console.log(`✅ Loaded fresh cached data from ${sourceUsed} (${minutesSinceUpdate.toFixed(1)} minutes old)`);
-    console.log(`📊 Cache contains: ${cachedData.lpPositions.length} LP positions, ${cachedData.historicalData.sevenDay.length} historical days`);
+    console.log(`📊 Cache contains: ${cachedData.lpPositions?.length || 0} LP positions, ${cachedData.historicalData?.sevenDay?.length || 0} historical days`);
     
     return cachedData;
     
@@ -355,6 +356,7 @@ export async function getMainDashboardDataWithCache(
       currentProtocolDay: cachedData.stakingData.currentProtocolDay,
       totalSupply: cachedData.stakingData.totalSupply,
       burnedSupply: cachedData.stakingData.burnedSupply,
+      totalStakedInContract: cachedData.stakingData.totalStakedInContract,
       totalTitanXBurnt: cachedData.totalTitanXBurnt,
       titanxTotalSupply: cachedData.titanxTotalSupply
     });
@@ -363,24 +365,31 @@ export async function getMainDashboardDataWithCache(
     let finalData = cachedData;
     let source: 'cache' | 'cache+incremental' = 'cache';
     
-    try {
-      // Try to get incremental updates using working RPC providers with auto-rotation
-      const provider = await getWorkingProviderWithRotation();
-      
-      const shouldUpdate = await shouldUpdateIncrementally(cachedData, provider);
-      
-      if (shouldUpdate) {
-        console.log('🔄 Getting incremental updates...');
-        const updates = await getIncrementalUpdates(cachedData, provider);
+    // Re-enabled: Fixed RPC issues with getLogs and retry logic
+    const ENABLE_INCREMENTAL_UPDATES = true;
+    
+    if (ENABLE_INCREMENTAL_UPDATES) {
+      try {
+        // Try to get incremental updates using working RPC providers with auto-rotation
+        const provider = await getWorkingProviderWithRotation();
         
-        if (updates.updated) {
-          finalData = mergeIncrementalUpdates(cachedData, updates);
-          source = 'cache+incremental';
-          console.log('✅ Applied incremental updates');
+        const shouldUpdate = await shouldUpdateIncrementally(cachedData, provider);
+        
+        if (shouldUpdate) {
+          console.log('🔄 Getting incremental updates...');
+          const updates = await getIncrementalUpdates(cachedData, provider);
+          
+          if (updates.updated) {
+            finalData = mergeIncrementalUpdates(cachedData, updates);
+            source = 'cache+incremental';
+            console.log('✅ Applied incremental updates');
+          }
         }
+      } catch (error) {
+        console.warn('⚠️ Could not get incremental updates, using cached data:', error instanceof Error ? error.message : 'Unknown error');
       }
-    } catch (error) {
-      console.warn('⚠️ Could not get incremental updates, using cached data:', error instanceof Error ? error.message : 'Unknown error');
+    } else {
+      console.log('📊 Using cached data (incremental updates disabled)');
     }
     
     // Convert string dates back to Date objects for cached data
@@ -415,6 +424,7 @@ export async function getMainDashboardDataWithCache(
         currentProtocolDay: finalData.stakingData.currentProtocolDay || 0,
         totalSupply: finalData.stakingData.totalSupply || 0,
         burnedSupply: finalData.stakingData.burnedSupply || 0,
+        totalStakedInContract: finalData.stakingData.totalStakedInContract || 0,
         totalTitanXBurnt: finalData.totalTitanXBurnt || "0",
         titanxTotalSupply: finalData.titanxTotalSupply || "0",
         totals: finalData.totals,

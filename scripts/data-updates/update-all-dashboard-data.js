@@ -295,7 +295,8 @@ async function updateAllDashboardData() {
     const titanxContract = new ethers.Contract(CONTRACTS.TITANX, ERC20_ABI, provider);
     
     const [torusDecimals, torusSymbol, torusName, torusTotalSupply,
-           titanxDecimals, titanxSymbol, titanxName, titanxTotalSupply] = await Promise.all([
+           titanxDecimals, titanxSymbol, titanxName, titanxTotalSupply,
+           torusStakedBalance] = await Promise.all([
       torusContract.decimals(),
       torusContract.symbol(),
       torusContract.name(),
@@ -303,7 +304,8 @@ async function updateAllDashboardData() {
       titanxContract.decimals(),
       titanxContract.symbol(),
       titanxContract.name(),
-      titanxContract.totalSupply()
+      titanxContract.totalSupply(),
+      torusContract.balanceOf(CONTRACTS.CREATE_STAKE)
     ]);
     
     cachedData.contractData = {
@@ -327,9 +329,10 @@ async function updateAllDashboardData() {
       }
     };
     
-    // Update total supply in stakingData
+    // Update total supply and staked balance in stakingData
     cachedData.stakingData = cachedData.stakingData || {};
     cachedData.stakingData.totalSupply = parseFloat(ethers.utils.formatEther(torusTotalSupply));
+    cachedData.stakingData.totalStakedInContract = parseFloat(ethers.utils.formatEther(torusStakedBalance));
     cachedData.stakingData.burnedSupply = 0; // Would need to get from contract
     
     console.log(`  ✅ Contract data fetched`);
