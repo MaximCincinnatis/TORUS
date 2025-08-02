@@ -23455,6 +23455,108 @@
         "costTitanX": "0.0",
         "rawCostTitanX": "0",
         "titanAmount": "0"
+      },
+      {
+        "user": "0x6821860c20de7cf4f295b80df598d6e679dd8efc",
+        "stakeIndex": "5",
+        "torusAmount": "108223478053058558411",
+        "endTime": "1758039623",
+        "maturityDate": "2025-09-16T16:20:23.000Z",
+        "blockNumber": 23054528,
+        "transactionHash": "0xe89e83e9ac0db487b9fb13661ca9dc9a7968e86453b71c35b26becf1b6aeecac",
+        "timestamp": "1754151623",
+        "protocolDay": 23,
+        "costETH": "0.0",
+        "rawCostETH": "0",
+        "rawCostTitanX": "2154000000000000000000000000",
+        "costTitanX": "2154000000.0",
+        "titanAmount": "2154000000000000000000000000",
+        "shares": "219152543057443580782275"
+      },
+      {
+        "user": "0xafe919a84b28e3d5157ef42d5ce447d6c1bbd518",
+        "stakeIndex": "2",
+        "torusAmount": "196506057333522194179",
+        "endTime": "1761757535",
+        "maturityDate": "2025-10-29T17:05:35.000Z",
+        "blockNumber": 23054753,
+        "transactionHash": "0x55640100da8d21dd01cdc60e7569668c2036afed2d84e06f6564c69c71819c06",
+        "timestamp": "1754154335",
+        "protocolDay": 23,
+        "costETH": "0.0",
+        "rawCostETH": "0",
+        "rawCostTitanX": "2000000000000000000000000000",
+        "costTitanX": "2000000000.0",
+        "titanAmount": "2000000000000000000000000000",
+        "shares": "1521742907990795871722176"
+      },
+      {
+        "user": "0x71c76faf49afc5598f1acc1f81ed2632f2516fa2",
+        "stakeIndex": "0",
+        "torusAmount": "123700563091452221235",
+        "endTime": "1761757583",
+        "maturityDate": "2025-10-29T17:06:23.000Z",
+        "blockNumber": 23054757,
+        "transactionHash": "0x92577ce741c4888b2d5c82084289a9c58460d5489d490ee816c812e38eae8cef",
+        "timestamp": "1754154383",
+        "protocolDay": 23,
+        "costETH": "0.0",
+        "rawCostETH": "0",
+        "rawCostTitanX": "1259000000000000000000000000",
+        "costTitanX": "1259000000.0",
+        "titanAmount": "1259000000000000000000000000",
+        "shares": "957937160580206001243840"
+      },
+      {
+        "user": "0xdb49f0873afb5ae5ab5a95ab6629eb6c41a7d6eb",
+        "stakeIndex": "4",
+        "torusAmount": "98253028666761097089",
+        "endTime": "1761757931",
+        "maturityDate": "2025-10-29T17:12:11.000Z",
+        "blockNumber": 23054786,
+        "transactionHash": "0x07eb64c38049f02a18b601c28940027841f677fa673904f3bd913bac6074f6e9",
+        "timestamp": "1754154731",
+        "protocolDay": 23,
+        "costETH": "0.0",
+        "rawCostETH": "0",
+        "rawCostTitanX": "1000000000000000000000000000",
+        "costTitanX": "1000000000.0",
+        "titanAmount": "1000000000000000000000000000",
+        "shares": "760871453995397935857216"
+      },
+      {
+        "user": "0x8251a2ee15fb7e9d87a822b1e0f3e2d7fa36f5fb",
+        "stakeIndex": "67",
+        "torusAmount": "39301211466704438835",
+        "endTime": "1761758747",
+        "maturityDate": "2025-10-29T17:25:47.000Z",
+        "blockNumber": 23054854,
+        "transactionHash": "0xbdc3af54b40bc975611c5a47686bf797beb3781e7043418a68ff6fb3c6c9f74c",
+        "timestamp": "1754155547",
+        "protocolDay": 23,
+        "costETH": "0.02179350566809639",
+        "rawCostETH": "21793505668096390",
+        "costTitanX": "0.0",
+        "rawCostTitanX": "0",
+        "titanAmount": "0",
+        "shares": "304348581598159174338240"
+      },
+      {
+        "user": "0xbd13272f62c86230188cd1b1416f14b12349b235",
+        "stakeIndex": "0",
+        "torusAmount": "683863409754445135891",
+        "endTime": "1758389447",
+        "maturityDate": "2025-09-20T17:30:47.000Z",
+        "blockNumber": 23054879,
+        "transactionHash": "0xf192590a85b0540d07f6d1805c027e101f8bc314c8c9cdad1d5e8d198b4283e0",
+        "timestamp": "1754155847",
+        "protocolDay": 23,
+        "costETH": "0.0",
+        "rawCostETH": "0",
+        "rawCostTitanX": "12500000000000000000000000000",
+        "costTitanX": "12500000000.0",
+        "titanAmount": "12500000000000000000000000000",
+        "shares": "1641956046820422771274291"
       }
     ],
     "stakeEvents": [
@@ -26040,17 +26142,1018 @@
         "day": 23,
         "totalSupply": 17165.90007509387,
         "burnedSupply": 0,
-        "timestamp": "2025-08-02T17:55:03.146Z"
+        "timestamp": "2025-08-02T18:00:03.287Z"
       }
-    }
+    },
+    "rewardPoolData": [
+      {
+        "day": 1,
+        "date": "2025-07-10T18:00:00.000Z",
+        "rewardPool": 100000,
+        "totalShares": 0,
+        "penaltiesInPool": 0,
+        "calculated": true,
+        "lastUpdated": "2025-08-02T17:56:33.531Z"
+      },
+      {
+        "day": 2,
+        "date": "2025-07-11T18:00:00.000Z",
+        "rewardPool": 99920,
+        "totalShares": 0,
+        "penaltiesInPool": 0,
+        "calculated": true,
+        "lastUpdated": "2025-08-02T17:56:33.531Z"
+      },
+      {
+        "day": 3,
+        "date": "2025-07-12T18:00:00.000Z",
+        "rewardPool": 99840.064,
+        "totalShares": 0,
+        "penaltiesInPool": 0,
+        "calculated": true,
+        "lastUpdated": "2025-08-02T17:56:33.531Z"
+      },
+      {
+        "day": 4,
+        "date": "2025-07-13T18:00:00.000Z",
+        "rewardPool": 99760.1919488,
+        "totalShares": 0,
+        "penaltiesInPool": 0,
+        "calculated": true,
+        "lastUpdated": "2025-08-02T17:56:33.531Z"
+      },
+      {
+        "day": 5,
+        "date": "2025-07-14T18:00:00.000Z",
+        "rewardPool": 99680.38379524095,
+        "totalShares": 0,
+        "penaltiesInPool": 0,
+        "calculated": true,
+        "lastUpdated": "2025-08-02T17:56:33.531Z"
+      },
+      {
+        "day": 6,
+        "date": "2025-07-15T18:00:00.000Z",
+        "rewardPool": 99600.63948820476,
+        "totalShares": 0,
+        "penaltiesInPool": 0,
+        "calculated": true,
+        "lastUpdated": "2025-08-02T17:56:33.531Z"
+      },
+      {
+        "day": 7,
+        "date": "2025-07-16T18:00:00.000Z",
+        "rewardPool": 99520.9589766142,
+        "totalShares": 0,
+        "penaltiesInPool": 0,
+        "calculated": true,
+        "lastUpdated": "2025-08-02T17:56:33.531Z"
+      },
+      {
+        "day": 8,
+        "date": "2025-07-17T18:00:00.000Z",
+        "rewardPool": 99441.34220943291,
+        "totalShares": 0,
+        "penaltiesInPool": 0,
+        "calculated": true,
+        "lastUpdated": "2025-08-02T17:56:33.531Z"
+      },
+      {
+        "day": 9,
+        "date": "2025-07-18T18:00:00.000Z",
+        "rewardPool": 99361.78913566537,
+        "totalShares": 0,
+        "penaltiesInPool": 0,
+        "calculated": true,
+        "lastUpdated": "2025-08-02T17:56:33.531Z"
+      },
+      {
+        "day": 10,
+        "date": "2025-07-19T18:00:00.000Z",
+        "rewardPool": 99282.29970435683,
+        "totalShares": 0,
+        "penaltiesInPool": 0,
+        "calculated": true,
+        "lastUpdated": "2025-08-02T17:56:33.531Z"
+      },
+      {
+        "day": 11,
+        "date": "2025-07-20T18:00:00.000Z",
+        "rewardPool": 99202.87386459335,
+        "totalShares": 0,
+        "penaltiesInPool": 0,
+        "calculated": true,
+        "lastUpdated": "2025-08-02T17:56:33.531Z"
+      },
+      {
+        "day": 12,
+        "date": "2025-07-21T18:00:00.000Z",
+        "rewardPool": 99123.51156550167,
+        "totalShares": 0,
+        "penaltiesInPool": 0,
+        "calculated": true,
+        "lastUpdated": "2025-08-02T17:56:33.531Z"
+      },
+      {
+        "day": 13,
+        "date": "2025-07-22T18:00:00.000Z",
+        "rewardPool": 99044.21275624927,
+        "totalShares": 0,
+        "penaltiesInPool": 0,
+        "calculated": true,
+        "lastUpdated": "2025-08-02T17:56:33.531Z"
+      },
+      {
+        "day": 14,
+        "date": "2025-07-23T18:00:00.000Z",
+        "rewardPool": 98964.97738604427,
+        "totalShares": 0,
+        "penaltiesInPool": 0,
+        "calculated": true,
+        "lastUpdated": "2025-08-02T17:56:33.531Z"
+      },
+      {
+        "day": 15,
+        "date": "2025-07-24T18:00:00.000Z",
+        "rewardPool": 98885.80540413543,
+        "totalShares": 0,
+        "penaltiesInPool": 0,
+        "calculated": true,
+        "lastUpdated": "2025-08-02T17:56:33.531Z"
+      },
+      {
+        "day": 16,
+        "date": "2025-07-25T18:00:00.000Z",
+        "rewardPool": 98806.69675981213,
+        "totalShares": 0,
+        "penaltiesInPool": 0,
+        "calculated": true,
+        "lastUpdated": "2025-08-02T17:56:33.531Z"
+      },
+      {
+        "day": 17,
+        "date": "2025-07-26T18:00:00.000Z",
+        "rewardPool": 98727.65140240427,
+        "totalShares": 0,
+        "penaltiesInPool": 0,
+        "calculated": true,
+        "lastUpdated": "2025-08-02T17:56:33.531Z"
+      },
+      {
+        "day": 18,
+        "date": "2025-07-27T18:00:00.000Z",
+        "rewardPool": 98648.66928128235,
+        "totalShares": 0,
+        "penaltiesInPool": 0,
+        "calculated": true,
+        "lastUpdated": "2025-08-02T17:56:33.531Z"
+      },
+      {
+        "day": 19,
+        "date": "2025-07-28T18:00:00.000Z",
+        "rewardPool": 98569.75034585732,
+        "totalShares": 0,
+        "penaltiesInPool": 0,
+        "calculated": true,
+        "lastUpdated": "2025-08-02T17:56:33.531Z"
+      },
+      {
+        "day": 20,
+        "date": "2025-07-29T18:00:00.000Z",
+        "rewardPool": 98490.89454558062,
+        "totalShares": 0,
+        "penaltiesInPool": 0,
+        "calculated": true,
+        "lastUpdated": "2025-08-02T17:56:33.531Z"
+      },
+      {
+        "day": 21,
+        "date": "2025-07-30T18:00:00.000Z",
+        "rewardPool": 98412.10182994416,
+        "totalShares": 0,
+        "penaltiesInPool": 0,
+        "calculated": true,
+        "lastUpdated": "2025-08-02T17:56:33.531Z"
+      },
+      {
+        "day": 22,
+        "date": "2025-07-31T18:00:00.000Z",
+        "rewardPool": 98333.37214848021,
+        "totalShares": 0,
+        "penaltiesInPool": 0,
+        "calculated": true,
+        "lastUpdated": "2025-08-02T17:56:33.531Z"
+      },
+      {
+        "day": 23,
+        "date": "2025-08-01T18:00:00.000Z",
+        "rewardPool": 98254.70545076142,
+        "totalShares": 0,
+        "penaltiesInPool": 0,
+        "calculated": true,
+        "lastUpdated": "2025-08-02T17:56:33.531Z"
+      },
+      {
+        "day": 24,
+        "date": "2025-08-02T18:00:00.000Z",
+        "rewardPool": 98176.10168640081,
+        "totalShares": 0,
+        "penaltiesInPool": 0,
+        "calculated": true,
+        "lastUpdated": "2025-08-02T17:56:33.531Z"
+      },
+      {
+        "day": 25,
+        "date": "2025-08-03T18:00:00.000Z",
+        "rewardPool": 98097.56080505169,
+        "totalShares": 0,
+        "penaltiesInPool": 0,
+        "calculated": true,
+        "lastUpdated": "2025-08-02T17:56:33.531Z"
+      },
+      {
+        "day": 26,
+        "date": "2025-08-04T18:00:00.000Z",
+        "rewardPool": 98019.08275640765,
+        "totalShares": 0,
+        "penaltiesInPool": 0,
+        "calculated": true,
+        "lastUpdated": "2025-08-02T17:56:33.531Z"
+      },
+      {
+        "day": 27,
+        "date": "2025-08-05T18:00:00.000Z",
+        "rewardPool": 97940.66749020251,
+        "totalShares": 0,
+        "penaltiesInPool": 0,
+        "calculated": true,
+        "lastUpdated": "2025-08-02T17:56:33.531Z"
+      },
+      {
+        "day": 28,
+        "date": "2025-08-06T18:00:00.000Z",
+        "rewardPool": 97862.31495621035,
+        "totalShares": 0,
+        "penaltiesInPool": 0,
+        "calculated": true,
+        "lastUpdated": "2025-08-02T17:56:33.531Z"
+      },
+      {
+        "day": 29,
+        "date": "2025-08-07T18:00:00.000Z",
+        "rewardPool": 97784.02510424537,
+        "totalShares": 0,
+        "penaltiesInPool": 0,
+        "calculated": true,
+        "lastUpdated": "2025-08-02T17:56:33.531Z"
+      },
+      {
+        "day": 30,
+        "date": "2025-08-08T18:00:00.000Z",
+        "rewardPool": 97705.79788416198,
+        "totalShares": 0,
+        "penaltiesInPool": 0,
+        "calculated": true,
+        "lastUpdated": "2025-08-02T17:56:33.531Z"
+      },
+      {
+        "day": 31,
+        "date": "2025-08-09T18:00:00.000Z",
+        "rewardPool": 97627.63324585464,
+        "totalShares": 0,
+        "penaltiesInPool": 0,
+        "calculated": true,
+        "lastUpdated": "2025-08-02T17:56:33.531Z"
+      },
+      {
+        "day": 32,
+        "date": "2025-08-10T18:00:00.000Z",
+        "rewardPool": 97549.53113925795,
+        "totalShares": 0,
+        "penaltiesInPool": 0,
+        "calculated": true,
+        "lastUpdated": "2025-08-02T17:56:33.531Z"
+      },
+      {
+        "day": 33,
+        "date": "2025-08-11T18:00:00.000Z",
+        "rewardPool": 97471.49151434653,
+        "totalShares": 0,
+        "penaltiesInPool": 0,
+        "calculated": true,
+        "lastUpdated": "2025-08-02T17:56:33.531Z"
+      },
+      {
+        "day": 34,
+        "date": "2025-08-12T18:00:00.000Z",
+        "rewardPool": 97393.51432113505,
+        "totalShares": 0,
+        "penaltiesInPool": 0,
+        "calculated": true,
+        "lastUpdated": "2025-08-02T17:56:33.531Z"
+      },
+      {
+        "day": 35,
+        "date": "2025-08-13T18:00:00.000Z",
+        "rewardPool": 97315.59950967814,
+        "totalShares": 0,
+        "penaltiesInPool": 0,
+        "calculated": true,
+        "lastUpdated": "2025-08-02T17:56:33.531Z"
+      },
+      {
+        "day": 36,
+        "date": "2025-08-14T18:00:00.000Z",
+        "rewardPool": 97237.7470300704,
+        "totalShares": 0,
+        "penaltiesInPool": 0,
+        "calculated": true,
+        "lastUpdated": "2025-08-02T17:56:33.531Z"
+      },
+      {
+        "day": 37,
+        "date": "2025-08-15T18:00:00.000Z",
+        "rewardPool": 97159.95683244635,
+        "totalShares": 0,
+        "penaltiesInPool": 0,
+        "calculated": true,
+        "lastUpdated": "2025-08-02T17:56:33.531Z"
+      },
+      {
+        "day": 38,
+        "date": "2025-08-16T18:00:00.000Z",
+        "rewardPool": 97082.22886698038,
+        "totalShares": 0,
+        "penaltiesInPool": 0,
+        "calculated": true,
+        "lastUpdated": "2025-08-02T17:56:33.531Z"
+      },
+      {
+        "day": 39,
+        "date": "2025-08-17T18:00:00.000Z",
+        "rewardPool": 97004.5630838868,
+        "totalShares": 0,
+        "penaltiesInPool": 0,
+        "calculated": true,
+        "lastUpdated": "2025-08-02T17:56:33.531Z"
+      },
+      {
+        "day": 40,
+        "date": "2025-08-18T18:00:00.000Z",
+        "rewardPool": 96926.95943341969,
+        "totalShares": 0,
+        "penaltiesInPool": 0,
+        "calculated": true,
+        "lastUpdated": "2025-08-02T17:56:33.531Z"
+      },
+      {
+        "day": 41,
+        "date": "2025-08-19T18:00:00.000Z",
+        "rewardPool": 96849.41786587295,
+        "totalShares": 0,
+        "penaltiesInPool": 0,
+        "calculated": true,
+        "lastUpdated": "2025-08-02T17:56:33.531Z"
+      },
+      {
+        "day": 42,
+        "date": "2025-08-20T18:00:00.000Z",
+        "rewardPool": 96771.93833158026,
+        "totalShares": 0,
+        "penaltiesInPool": 0,
+        "calculated": true,
+        "lastUpdated": "2025-08-02T17:56:33.531Z"
+      },
+      {
+        "day": 43,
+        "date": "2025-08-21T18:00:00.000Z",
+        "rewardPool": 96694.52078091499,
+        "totalShares": 0,
+        "penaltiesInPool": 0,
+        "calculated": true,
+        "lastUpdated": "2025-08-02T17:56:33.531Z"
+      },
+      {
+        "day": 44,
+        "date": "2025-08-22T18:00:00.000Z",
+        "rewardPool": 96617.16516429026,
+        "totalShares": 0,
+        "penaltiesInPool": 0,
+        "calculated": true,
+        "lastUpdated": "2025-08-02T17:56:33.531Z"
+      },
+      {
+        "day": 45,
+        "date": "2025-08-23T18:00:00.000Z",
+        "rewardPool": 96539.87143215882,
+        "totalShares": 0,
+        "penaltiesInPool": 0,
+        "calculated": true,
+        "lastUpdated": "2025-08-02T17:56:33.531Z"
+      },
+      {
+        "day": 46,
+        "date": "2025-08-24T18:00:00.000Z",
+        "rewardPool": 96462.63953501309,
+        "totalShares": 0,
+        "penaltiesInPool": 0,
+        "calculated": true,
+        "lastUpdated": "2025-08-02T17:56:33.531Z"
+      },
+      {
+        "day": 47,
+        "date": "2025-08-25T18:00:00.000Z",
+        "rewardPool": 96385.46942338508,
+        "totalShares": 0,
+        "penaltiesInPool": 0,
+        "calculated": true,
+        "lastUpdated": "2025-08-02T17:56:33.531Z"
+      },
+      {
+        "day": 48,
+        "date": "2025-08-26T18:00:00.000Z",
+        "rewardPool": 96308.36104784637,
+        "totalShares": 0,
+        "penaltiesInPool": 0,
+        "calculated": true,
+        "lastUpdated": "2025-08-02T17:56:33.531Z"
+      },
+      {
+        "day": 49,
+        "date": "2025-08-27T18:00:00.000Z",
+        "rewardPool": 96231.31435900809,
+        "totalShares": 0,
+        "penaltiesInPool": 0,
+        "calculated": true,
+        "lastUpdated": "2025-08-02T17:56:33.531Z"
+      },
+      {
+        "day": 50,
+        "date": "2025-08-28T18:00:00.000Z",
+        "rewardPool": 96154.32930752088,
+        "totalShares": 0,
+        "penaltiesInPool": 0,
+        "calculated": true,
+        "lastUpdated": "2025-08-02T17:56:33.531Z"
+      },
+      {
+        "day": 51,
+        "date": "2025-08-29T18:00:00.000Z",
+        "rewardPool": 96077.40584407486,
+        "totalShares": 0,
+        "penaltiesInPool": 0,
+        "calculated": true,
+        "lastUpdated": "2025-08-02T17:56:33.531Z"
+      },
+      {
+        "day": 52,
+        "date": "2025-08-30T18:00:00.000Z",
+        "rewardPool": 96000.5439193996,
+        "totalShares": 0,
+        "penaltiesInPool": 0,
+        "calculated": true,
+        "lastUpdated": "2025-08-02T17:56:33.531Z"
+      },
+      {
+        "day": 53,
+        "date": "2025-08-31T18:00:00.000Z",
+        "rewardPool": 95923.74348426408,
+        "totalShares": 0,
+        "penaltiesInPool": 0,
+        "calculated": true,
+        "lastUpdated": "2025-08-02T17:56:33.531Z"
+      },
+      {
+        "day": 54,
+        "date": "2025-09-01T18:00:00.000Z",
+        "rewardPool": 95847.00448947666,
+        "totalShares": 0,
+        "penaltiesInPool": 0,
+        "calculated": true,
+        "lastUpdated": "2025-08-02T17:56:33.531Z"
+      },
+      {
+        "day": 55,
+        "date": "2025-09-02T18:00:00.000Z",
+        "rewardPool": 95770.32688588508,
+        "totalShares": 0,
+        "penaltiesInPool": 0,
+        "calculated": true,
+        "lastUpdated": "2025-08-02T17:56:33.531Z"
+      },
+      {
+        "day": 56,
+        "date": "2025-09-03T18:00:00.000Z",
+        "rewardPool": 95693.71062437637,
+        "totalShares": 0,
+        "penaltiesInPool": 0,
+        "calculated": true,
+        "lastUpdated": "2025-08-02T17:56:33.531Z"
+      },
+      {
+        "day": 57,
+        "date": "2025-09-04T18:00:00.000Z",
+        "rewardPool": 95617.15565587686,
+        "totalShares": 0,
+        "penaltiesInPool": 0,
+        "calculated": true,
+        "lastUpdated": "2025-08-02T17:56:33.531Z"
+      },
+      {
+        "day": 58,
+        "date": "2025-09-05T18:00:00.000Z",
+        "rewardPool": 95540.66193135217,
+        "totalShares": 0,
+        "penaltiesInPool": 0,
+        "calculated": true,
+        "lastUpdated": "2025-08-02T17:56:33.531Z"
+      },
+      {
+        "day": 59,
+        "date": "2025-09-06T18:00:00.000Z",
+        "rewardPool": 95464.22940180708,
+        "totalShares": 0,
+        "penaltiesInPool": 0,
+        "calculated": true,
+        "lastUpdated": "2025-08-02T17:56:33.531Z"
+      },
+      {
+        "day": 60,
+        "date": "2025-09-07T18:00:00.000Z",
+        "rewardPool": 95387.85801828564,
+        "totalShares": 0,
+        "penaltiesInPool": 0,
+        "calculated": true,
+        "lastUpdated": "2025-08-02T17:56:33.531Z"
+      },
+      {
+        "day": 61,
+        "date": "2025-09-08T18:00:00.000Z",
+        "rewardPool": 95311.547731871,
+        "totalShares": 0,
+        "penaltiesInPool": 0,
+        "calculated": true,
+        "lastUpdated": "2025-08-02T17:56:33.531Z"
+      },
+      {
+        "day": 62,
+        "date": "2025-09-09T18:00:00.000Z",
+        "rewardPool": 95235.2984936855,
+        "totalShares": 0,
+        "penaltiesInPool": 0,
+        "calculated": true,
+        "lastUpdated": "2025-08-02T17:56:33.531Z"
+      },
+      {
+        "day": 63,
+        "date": "2025-09-10T18:00:00.000Z",
+        "rewardPool": 95159.11025489056,
+        "totalShares": 0,
+        "penaltiesInPool": 0,
+        "calculated": true,
+        "lastUpdated": "2025-08-02T17:56:33.531Z"
+      },
+      {
+        "day": 64,
+        "date": "2025-09-11T18:00:00.000Z",
+        "rewardPool": 95082.98296668664,
+        "totalShares": 0,
+        "penaltiesInPool": 0,
+        "calculated": true,
+        "lastUpdated": "2025-08-02T17:56:33.531Z"
+      },
+      {
+        "day": 65,
+        "date": "2025-09-12T18:00:00.000Z",
+        "rewardPool": 95006.9165803133,
+        "totalShares": 0,
+        "penaltiesInPool": 0,
+        "calculated": true,
+        "lastUpdated": "2025-08-02T17:56:33.531Z"
+      },
+      {
+        "day": 66,
+        "date": "2025-09-13T18:00:00.000Z",
+        "rewardPool": 94930.91104704904,
+        "totalShares": 0,
+        "penaltiesInPool": 0,
+        "calculated": true,
+        "lastUpdated": "2025-08-02T17:56:33.531Z"
+      },
+      {
+        "day": 67,
+        "date": "2025-09-14T18:00:00.000Z",
+        "rewardPool": 94854.9663182114,
+        "totalShares": 0,
+        "penaltiesInPool": 0,
+        "calculated": true,
+        "lastUpdated": "2025-08-02T17:56:33.531Z"
+      },
+      {
+        "day": 68,
+        "date": "2025-09-15T18:00:00.000Z",
+        "rewardPool": 94779.08234515683,
+        "totalShares": 0,
+        "penaltiesInPool": 0,
+        "calculated": true,
+        "lastUpdated": "2025-08-02T17:56:33.531Z"
+      },
+      {
+        "day": 69,
+        "date": "2025-09-16T18:00:00.000Z",
+        "rewardPool": 94703.2590792807,
+        "totalShares": 0,
+        "penaltiesInPool": 0,
+        "calculated": true,
+        "lastUpdated": "2025-08-02T17:56:33.531Z"
+      },
+      {
+        "day": 70,
+        "date": "2025-09-17T18:00:00.000Z",
+        "rewardPool": 94627.49647201727,
+        "totalShares": 0,
+        "penaltiesInPool": 0,
+        "calculated": true,
+        "lastUpdated": "2025-08-02T17:56:33.531Z"
+      },
+      {
+        "day": 71,
+        "date": "2025-09-18T18:00:00.000Z",
+        "rewardPool": 94551.79447483965,
+        "totalShares": 0,
+        "penaltiesInPool": 0,
+        "calculated": true,
+        "lastUpdated": "2025-08-02T17:56:33.531Z"
+      },
+      {
+        "day": 72,
+        "date": "2025-09-19T18:00:00.000Z",
+        "rewardPool": 94476.15303925978,
+        "totalShares": 0,
+        "penaltiesInPool": 0,
+        "calculated": true,
+        "lastUpdated": "2025-08-02T17:56:33.531Z"
+      },
+      {
+        "day": 73,
+        "date": "2025-09-20T18:00:00.000Z",
+        "rewardPool": 94400.57211682836,
+        "totalShares": 0,
+        "penaltiesInPool": 0,
+        "calculated": true,
+        "lastUpdated": "2025-08-02T17:56:33.531Z"
+      },
+      {
+        "day": 74,
+        "date": "2025-09-21T18:00:00.000Z",
+        "rewardPool": 94325.0516591349,
+        "totalShares": 0,
+        "penaltiesInPool": 0,
+        "calculated": true,
+        "lastUpdated": "2025-08-02T17:56:33.531Z"
+      },
+      {
+        "day": 75,
+        "date": "2025-09-22T18:00:00.000Z",
+        "rewardPool": 94249.59161780759,
+        "totalShares": 0,
+        "penaltiesInPool": 0,
+        "calculated": true,
+        "lastUpdated": "2025-08-02T17:56:33.531Z"
+      },
+      {
+        "day": 76,
+        "date": "2025-09-23T18:00:00.000Z",
+        "rewardPool": 94174.19194451334,
+        "totalShares": 0,
+        "penaltiesInPool": 0,
+        "calculated": true,
+        "lastUpdated": "2025-08-02T17:56:33.531Z"
+      },
+      {
+        "day": 77,
+        "date": "2025-09-24T18:00:00.000Z",
+        "rewardPool": 94098.85259095773,
+        "totalShares": 0,
+        "penaltiesInPool": 0,
+        "calculated": true,
+        "lastUpdated": "2025-08-02T17:56:33.531Z"
+      },
+      {
+        "day": 78,
+        "date": "2025-09-25T18:00:00.000Z",
+        "rewardPool": 94023.57350888496,
+        "totalShares": 0,
+        "penaltiesInPool": 0,
+        "calculated": true,
+        "lastUpdated": "2025-08-02T17:56:33.531Z"
+      },
+      {
+        "day": 79,
+        "date": "2025-09-26T18:00:00.000Z",
+        "rewardPool": 93948.35465007785,
+        "totalShares": 0,
+        "penaltiesInPool": 0,
+        "calculated": true,
+        "lastUpdated": "2025-08-02T17:56:33.531Z"
+      },
+      {
+        "day": 80,
+        "date": "2025-09-27T18:00:00.000Z",
+        "rewardPool": 93873.19596635779,
+        "totalShares": 0,
+        "penaltiesInPool": 0,
+        "calculated": true,
+        "lastUpdated": "2025-08-02T17:56:33.531Z"
+      },
+      {
+        "day": 81,
+        "date": "2025-09-28T18:00:00.000Z",
+        "rewardPool": 93798.0974095847,
+        "totalShares": 0,
+        "penaltiesInPool": 0,
+        "calculated": true,
+        "lastUpdated": "2025-08-02T17:56:33.531Z"
+      },
+      {
+        "day": 82,
+        "date": "2025-09-29T18:00:00.000Z",
+        "rewardPool": 93723.05893165704,
+        "totalShares": 0,
+        "penaltiesInPool": 0,
+        "calculated": true,
+        "lastUpdated": "2025-08-02T17:56:33.531Z"
+      },
+      {
+        "day": 83,
+        "date": "2025-09-30T18:00:00.000Z",
+        "rewardPool": 93648.08048451171,
+        "totalShares": 0,
+        "penaltiesInPool": 0,
+        "calculated": true,
+        "lastUpdated": "2025-08-02T17:56:33.531Z"
+      },
+      {
+        "day": 84,
+        "date": "2025-10-01T18:00:00.000Z",
+        "rewardPool": 93573.1620201241,
+        "totalShares": 0,
+        "penaltiesInPool": 0,
+        "calculated": true,
+        "lastUpdated": "2025-08-02T17:56:33.531Z"
+      },
+      {
+        "day": 85,
+        "date": "2025-10-02T18:00:00.000Z",
+        "rewardPool": 93498.303490508,
+        "totalShares": 0,
+        "penaltiesInPool": 0,
+        "calculated": true,
+        "lastUpdated": "2025-08-02T17:56:33.531Z"
+      },
+      {
+        "day": 86,
+        "date": "2025-10-03T18:00:00.000Z",
+        "rewardPool": 93423.5048477156,
+        "totalShares": 0,
+        "penaltiesInPool": 0,
+        "calculated": true,
+        "lastUpdated": "2025-08-02T17:56:33.531Z"
+      },
+      {
+        "day": 87,
+        "date": "2025-10-04T18:00:00.000Z",
+        "rewardPool": 93348.76604383742,
+        "totalShares": 0,
+        "penaltiesInPool": 0,
+        "calculated": true,
+        "lastUpdated": "2025-08-02T17:56:33.531Z"
+      },
+      {
+        "day": 88,
+        "date": "2025-10-05T18:00:00.000Z",
+        "rewardPool": 93274.08703100235,
+        "totalShares": 0,
+        "penaltiesInPool": 0,
+        "calculated": true,
+        "lastUpdated": "2025-08-02T17:56:33.531Z"
+      },
+      {
+        "day": 89,
+        "date": "2025-10-06T18:00:00.000Z",
+        "rewardPool": 0,
+        "totalShares": 0,
+        "penaltiesInPool": 0,
+        "calculated": true,
+        "lastUpdated": "2025-08-02T17:56:33.531Z"
+      },
+      {
+        "day": 90,
+        "date": "2025-10-07T18:00:00.000Z",
+        "rewardPool": 0,
+        "totalShares": 0,
+        "penaltiesInPool": 0,
+        "calculated": true,
+        "lastUpdated": "2025-08-02T17:56:33.531Z"
+      },
+      {
+        "day": 91,
+        "date": "2025-10-08T18:00:00.000Z",
+        "rewardPool": 0,
+        "totalShares": 0,
+        "penaltiesInPool": 0,
+        "calculated": true,
+        "lastUpdated": "2025-08-02T17:56:33.531Z"
+      },
+      {
+        "day": 92,
+        "date": "2025-10-09T18:00:00.000Z",
+        "rewardPool": 0,
+        "totalShares": 0,
+        "penaltiesInPool": 0,
+        "calculated": true,
+        "lastUpdated": "2025-08-02T17:56:33.531Z"
+      },
+      {
+        "day": 93,
+        "date": "2025-10-10T18:00:00.000Z",
+        "rewardPool": 0,
+        "totalShares": 0,
+        "penaltiesInPool": 0,
+        "calculated": true,
+        "lastUpdated": "2025-08-02T17:56:33.531Z"
+      },
+      {
+        "day": 94,
+        "date": "2025-10-11T18:00:00.000Z",
+        "rewardPool": 0,
+        "totalShares": 0,
+        "penaltiesInPool": 0,
+        "calculated": true,
+        "lastUpdated": "2025-08-02T17:56:33.531Z"
+      },
+      {
+        "day": 95,
+        "date": "2025-10-12T18:00:00.000Z",
+        "rewardPool": 0,
+        "totalShares": 0,
+        "penaltiesInPool": 0,
+        "calculated": true,
+        "lastUpdated": "2025-08-02T17:56:33.531Z"
+      },
+      {
+        "day": 96,
+        "date": "2025-10-13T18:00:00.000Z",
+        "rewardPool": 0,
+        "totalShares": 0,
+        "penaltiesInPool": 0,
+        "calculated": true,
+        "lastUpdated": "2025-08-02T17:56:33.531Z"
+      },
+      {
+        "day": 97,
+        "date": "2025-10-14T18:00:00.000Z",
+        "rewardPool": 0,
+        "totalShares": 0,
+        "penaltiesInPool": 0,
+        "calculated": true,
+        "lastUpdated": "2025-08-02T17:56:33.531Z"
+      },
+      {
+        "day": 98,
+        "date": "2025-10-15T18:00:00.000Z",
+        "rewardPool": 0,
+        "totalShares": 0,
+        "penaltiesInPool": 0,
+        "calculated": true,
+        "lastUpdated": "2025-08-02T17:56:33.531Z"
+      },
+      {
+        "day": 99,
+        "date": "2025-10-16T18:00:00.000Z",
+        "rewardPool": 0,
+        "totalShares": 0,
+        "penaltiesInPool": 0,
+        "calculated": true,
+        "lastUpdated": "2025-08-02T17:56:33.531Z"
+      },
+      {
+        "day": 100,
+        "date": "2025-10-17T18:00:00.000Z",
+        "rewardPool": 0,
+        "totalShares": 0,
+        "penaltiesInPool": 0,
+        "calculated": true,
+        "lastUpdated": "2025-08-02T17:56:33.531Z"
+      },
+      {
+        "day": 101,
+        "date": "2025-10-18T18:00:00.000Z",
+        "rewardPool": 0,
+        "totalShares": 0,
+        "penaltiesInPool": 0,
+        "calculated": true,
+        "lastUpdated": "2025-08-02T17:56:33.531Z"
+      },
+      {
+        "day": 102,
+        "date": "2025-10-19T18:00:00.000Z",
+        "rewardPool": 0,
+        "totalShares": 0,
+        "penaltiesInPool": 0,
+        "calculated": true,
+        "lastUpdated": "2025-08-02T17:56:33.531Z"
+      },
+      {
+        "day": 103,
+        "date": "2025-10-20T18:00:00.000Z",
+        "rewardPool": 0,
+        "totalShares": 0,
+        "penaltiesInPool": 0,
+        "calculated": true,
+        "lastUpdated": "2025-08-02T17:56:33.531Z"
+      },
+      {
+        "day": 104,
+        "date": "2025-10-21T18:00:00.000Z",
+        "rewardPool": 0,
+        "totalShares": 0,
+        "penaltiesInPool": 0,
+        "calculated": true,
+        "lastUpdated": "2025-08-02T17:56:33.532Z"
+      },
+      {
+        "day": 105,
+        "date": "2025-10-22T18:00:00.000Z",
+        "rewardPool": 0,
+        "totalShares": 0,
+        "penaltiesInPool": 0,
+        "calculated": true,
+        "lastUpdated": "2025-08-02T17:56:33.532Z"
+      },
+      {
+        "day": 106,
+        "date": "2025-10-23T18:00:00.000Z",
+        "rewardPool": 0,
+        "totalShares": 0,
+        "penaltiesInPool": 0,
+        "calculated": true,
+        "lastUpdated": "2025-08-02T17:56:33.532Z"
+      },
+      {
+        "day": 107,
+        "date": "2025-10-24T18:00:00.000Z",
+        "rewardPool": 0,
+        "totalShares": 0,
+        "penaltiesInPool": 0,
+        "calculated": true,
+        "lastUpdated": "2025-08-02T17:56:33.532Z"
+      },
+      {
+        "day": 108,
+        "date": "2025-10-25T18:00:00.000Z",
+        "rewardPool": 0,
+        "totalShares": 0,
+        "penaltiesInPool": 0,
+        "calculated": true,
+        "lastUpdated": "2025-08-02T17:56:33.532Z"
+      },
+      {
+        "day": 109,
+        "date": "2025-10-26T18:00:00.000Z",
+        "rewardPool": 0,
+        "totalShares": 0,
+        "penaltiesInPool": 0,
+        "calculated": true,
+        "lastUpdated": "2025-08-02T17:56:33.532Z"
+      },
+      {
+        "day": 110,
+        "date": "2025-10-27T18:00:00.000Z",
+        "rewardPool": 0,
+        "totalShares": 0,
+        "penaltiesInPool": 0,
+        "calculated": true,
+        "lastUpdated": "2025-08-02T17:56:33.532Z"
+      },
+      {
+        "day": 111,
+        "date": "2025-10-28T18:00:00.000Z",
+        "rewardPool": 0,
+        "totalShares": 0,
+        "penaltiesInPool": 0,
+        "calculated": true,
+        "lastUpdated": "2025-08-02T17:56:33.532Z"
+      }
+    ]
   },
-  "lastUpdated": "2025-08-02T17:55:40.453Z",
-  "lastProcessedBlock": 22891009,
+  "lastUpdated": "2025-08-02T18:00:37.712Z",
+  "lastProcessedBlock": 23055010,
   "currentProtocolDay": 23,
   "totalSupply": 17165.90007509387,
   "titanxTotalSupply": "105721966358217103049069895463830",
-  "totalTitanXBurnt": "194134780308886402104721493931",
-  "lastBlock": 23055000,
+  "totalTitanXBurnt": "194139783523312465937436962426",
+  "lastBlock": 23055025,
   "contractData": {
     "torusToken": {
       "address": "0xb47f575807fc5466285e1277ef8acfbb5c6686e8",
