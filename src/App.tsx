@@ -91,6 +91,8 @@ function App() {
   const [torusReleasesDays, setTorusReleasesDays] = useState<number>(9999);
   const [titanXUsageDays, setTitanXUsageDays] = useState<number>(9999);
   const [sharesReleasesDays, setSharesReleasesDays] = useState<number>(9999);
+  const [positionsEndingDays, setPositionsEndingDays] = useState<number>(30);
+  const [positionsEndingMode, setPositionsEndingMode] = useState<'count' | 'amount'>('count');
   const [dailyTitanXUsageDays, setDailyTitanXUsageDays] = useState<number>(9999);
   const [futureMaxSupplyDays, setFutureMaxSupplyDays] = useState<number>(30);
   const [torusStakedDays, setTorusStakedDays] = useState<number>(9999);
@@ -1196,6 +1198,69 @@ function App() {
     return convertToProtocolDayData(dateBasedResult);
   };
 
+  // Calculate positions ending by day (stakes and creates separately)
+  const calculatePositionsEndingByDay = () => {
+    console.log('📊 Calculating positions ending by day (stakes vs creates)');
+    
+    const now = new Date();
+    // Use 6 PM UTC boundary like CONTRACT_START_DATE
+    const today = new Date(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate());
+    today.setUTCHours(18, 0, 0, 0); // 6 PM UTC
+    if (now.getTime() < today.getTime()) {
+      // If current time is before 6 PM UTC today, use yesterday's 6 PM
+      today.setUTCDate(today.getUTCDate() - 1);
+    }
+    
+    // Initialize full date range from contract start to future
+    const positionsEnding: { [date: string]: { stakesCount: number; stakesAmount: number; createsCount: number; createsAmount: number } } = {};
+    
+    // Initialize all dates with zeros
+    const startDate = new Date(CONTRACT_START_DATE);
+    const endDate = new Date(today);
+    endDate.setUTCDate(endDate.getUTCDate() + 365); // Show future positions
+    
+    for (let d = new Date(startDate); d <= endDate; d.setUTCDate(d.getUTCDate() + 1)) {
+      const dateKey = d.toISOString().split('T')[0];
+      positionsEnding[dateKey] = { stakesCount: 0, stakesAmount: 0, createsCount: 0, createsAmount: 0 };
+    }
+    
+    // Count stakes ending each day
+    stakeData.forEach(stake => {
+      const maturityDate = stake.maturityDate instanceof Date ? stake.maturityDate : new Date(stake.maturityDate);
+      const dateKey = maturityDate.toISOString().split('T')[0];
+      
+      if (positionsEnding[dateKey] !== undefined) {
+        positionsEnding[dateKey].stakesCount++;
+        // Add principal amount for stakes
+        const principal = parseFloat(stake.principal || '0') / 1e18;
+        positionsEnding[dateKey].stakesAmount += principal;
+      }
+    });
+    
+    // Count creates ending each day
+    createData.forEach(create => {
+      const maturityDate = create.maturityDate instanceof Date ? create.maturityDate : new Date(create.maturityDate);
+      const dateKey = maturityDate.toISOString().split('T')[0];
+      
+      if (positionsEnding[dateKey] !== undefined) {
+        positionsEnding[dateKey].createsCount++;
+        // Add TORUS amount for creates
+        const torusAmount = parseFloat(create.torusAmount || '0') / 1e18;
+        positionsEnding[dateKey].createsAmount += torusAmount;
+      }
+    });
+    
+    // Convert to array format
+    const dateBasedResult = Object.entries(positionsEnding)
+      .map(([date, data]) => ({
+        date,
+        ...data
+      }));
+    
+    // Convert from date-based to protocol day-based with user timezone
+    return convertToProtocolDayData(dateBasedResult);
+  };
+
   // Calculate Buy & Process charts data
   const calculateDailyTorusBurned = (): { date: string; amount: number; day: number }[] => {
     if (!buyProcessData?.dailyData) return [];
@@ -1387,6 +1452,7 @@ function App() {
   
   // Move sharesReleases calculation AFTER createReleases
   const sharesReleases = loading || (stakeData.length === 0 && createData.length === 0) ? [] : calculateSharesReleases();
+  const positionsEndingByDay = loading || (stakeData.length === 0 && createData.length === 0) ? [] : calculatePositionsEndingByDay();
   const dailyTitanXUsage = loading || (stakeData.length === 0 && createData.length === 0) ? [] : calculateDailyTitanXUsage();
   
   // Add function to calculate Build-specific TitanX/ETH usage
@@ -1899,7 +1965,7 @@ function App() {
   }
 
   // Maintenance mode flag - set to true to show maintenance page
-  const isMaintenanceMode = false; // TODO: Change to false when backend work is complete
+  const isMaintenanceMode = true; // TODO: Change to false when backend work is complete
   
   if (isMaintenanceMode) {
     return <MaintenancePage />;
@@ -2807,6 +2873,113 @@ function App() {
         />
         <div className="chart-note">
           Shows the total shares that ended (historical) or will end (future) on each day from contract launch through 88 days ahead. Shares represent the user's proportion of the reward pool and are earned from both stakes and creates. When positions mature, these shares are released and converted to TORUS rewards based on the share-to-TORUS ratio at maturity.
+        </div>
+      </ExpandableChartSection>
+
+      {/* Combined Positions Ending Chart */}
+      <ExpandableChartSection
+        id="positions-ending"
+        title="Positions Ending by Future Date"
+        chartType="bar"
+        subtitle={`Stakes and Creates Ending Each Day (${positionsEndingMode === 'count' ? 'Count' : 'TORUS Amount'})`}
+        keyMetrics={[
+          {
+            label: `Stakes in ${positionsEndingDays}d`,
+            value: positionsEndingMode === 'count' 
+              ? positionsEndingByDay.slice(0, positionsEndingDays).reduce((sum, r) => sum + r.stakesCount, 0)
+              : `${positionsEndingByDay.slice(0, positionsEndingDays).reduce((sum, r) => sum + r.stakesAmount, 0).toFixed(0)} TORUS`,
+            trend: "up"
+          },
+          {
+            label: `Creates in ${positionsEndingDays}d`,
+            value: positionsEndingMode === 'count'
+              ? positionsEndingByDay.slice(0, positionsEndingDays).reduce((sum, r) => sum + r.createsCount, 0)
+              : `${positionsEndingByDay.slice(0, positionsEndingDays).reduce((sum, r) => sum + r.createsAmount, 0).toFixed(0)} TORUS`,
+            trend: "up"
+          },
+          {
+            label: "Peak Day Stakes",
+            value: positionsEndingMode === 'count'
+              ? Math.max(...positionsEndingByDay.slice(0, positionsEndingDays).map(r => r.stakesCount))
+              : `${Math.max(...positionsEndingByDay.slice(0, positionsEndingDays).map(r => r.stakesAmount)).toFixed(0)} TORUS`,
+            trend: "up"
+          },
+          {
+            label: "Peak Day Creates",
+            value: positionsEndingMode === 'count'
+              ? Math.max(...positionsEndingByDay.slice(0, positionsEndingDays).map(r => r.createsCount))
+              : `${Math.max(...positionsEndingByDay.slice(0, positionsEndingDays).map(r => r.createsAmount)).toFixed(0)} TORUS`,
+            trend: "up"
+          }
+        ]}
+        loading={chartsLoading}
+      >
+        <div className="flex items-center justify-between mb-4">
+          <DateRangeButtons 
+            selectedDays={positionsEndingDays}
+            onDaysChange={setPositionsEndingDays}
+          />
+          <div className="flex gap-2">
+            <button
+              onClick={() => setPositionsEndingMode('count')}
+              className={`px-3 py-1 rounded text-sm font-medium transition-colors ${
+                positionsEndingMode === 'count' 
+                  ? 'bg-blue-500 text-white' 
+                  : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
+              }`}
+            >
+              Count
+            </button>
+            <button
+              onClick={() => setPositionsEndingMode('amount')}
+              className={`px-3 py-1 rounded text-sm font-medium transition-colors ${
+                positionsEndingMode === 'amount' 
+                  ? 'bg-blue-500 text-white' 
+                  : 'bg-gray-700 text-gray-300 hover:bg-gray-600'
+              }`}
+            >
+              TORUS Amount
+            </button>
+          </div>
+        </div>
+        <PannableBarChart
+          key={`positions-ending-chart-${positionsEndingMode}`}
+          title="Positions Ending Each Day"
+          labels={positionsEndingByDay.map(r => {
+            return [`${r.date.substring(5)}`, `Day ${r.day}`];
+          })}
+          datasets={[
+            {
+              label: 'Stakes Ending',
+              data: positionsEndingByDay.map(r => positionsEndingMode === 'count' ? r.stakesCount : r.stakesAmount),
+              backgroundColor: '#3b82f6', // Blue for stakes
+            },
+            {
+              label: 'Creates Ending',
+              data: positionsEndingByDay.map(r => positionsEndingMode === 'count' ? r.createsCount : r.createsAmount),
+              backgroundColor: '#10b981', // Green for creates
+            },
+          ]}
+          height={600}
+          yAxisLabel={positionsEndingMode === 'count' ? 'Number of Positions' : 'TORUS Amount'}
+          xAxisLabel="Date / Contract Day"
+          windowSize={positionsEndingDays}
+          initialStartDay={currentProtocolDay}
+          chartType="historical"
+          showLegend={true}
+          formatTooltip={(value: number, datasetIndex?: number) => {
+            const type = datasetIndex === 0 ? 'Stakes' : 'Creates';
+            if (positionsEndingMode === 'count') {
+              return `${type}: ${value} positions`;
+            } else {
+              return `${type}: ${value.toFixed(2)} TORUS`;
+            }
+          }}
+          enableScaleToggle={true}
+          minBarHeight={2}
+        />
+        <div className="chart-note">
+          Shows when stake and create positions end (mature) each day. Stakes return the principal TORUS amount plus rewards, while creates generate new TORUS tokens. Toggle between counting positions or viewing TORUS amounts. This helps visualize future supply releases and activity patterns.
         </div>
       </ExpandableChartSection>
 
