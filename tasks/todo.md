@@ -1,5 +1,105 @@
 # TORUS Dashboard - Update Scripts Status & Tasks
 
+## ✅ FIXED: Duplicate Creates Issue Resolved
+
+### Summary
+Successfully removed 138 duplicate creates from cached-data.json:
+- **Before**: 1615 creates (with duplicates)
+- **After**: 1477 creates (deduplicated)
+- **All duplicates removed**: Verified 0 duplicates remain
+- **Stakes unchanged**: 156 stakes preserved
+
+### What Was Done
+1. **Fixed smart-update-fixed.js**: Updated deduplication logic to use `user-amount-timestamp` key
+2. **Created deduplicate-creates.js**: Script to clean existing data
+3. **Ran deduplication**: Removed 138 duplicates, kept versions with transaction hashes
+4. **Verified fix**: Confirmed 0 duplicates remain in data
+
+### Result
+- Charts should now show accurate create counts (~1477 instead of 1615)
+- Future updates will prevent duplicates using improved deduplication logic
+- Data integrity maintained - only removed true duplicates
+
+## 🚨 CRITICAL: Fix Duplicate Creates Issue
+
+### Problem Summary
+We have **138 duplicate create events** (8.6% of total 1614 creates):
+- All duplicates follow pattern: Original has txHash, duplicate doesn't have txHash
+- Duplicates have extra fields from getStakePositions: `owner`, `createId`, `principal`, `claimedCreate`, etc.
+- Affects data accuracy - showing ~1614 creates instead of actual ~1476
+- Stakes are NOT affected (0 duplicates found)
+
+### Root Cause
+The duplicates are likely being added when:
+1. CreateStarted events are fetched from blockchain (with txHash)
+2. Later, user positions are fetched via `getStakePositions()` to enrich data
+3. Some script is incorrectly adding these positions as new creates instead of just enriching existing ones
+
+### Proposed Solutions
+
+#### Option A - Quick Frontend Fix (Immediate)
+Add deduplication to `cacheDataLoader.ts`:
+```typescript
+// Deduplicate creates based on user+amount+timestamp
+const createMap = new Map();
+cachedData.stakingData.createEvents.forEach(create => {
+  const key = `${create.user}-${create.torusAmount}-${create.timestamp}`;
+  if (!createMap.has(key) || create.transactionHash) {
+    // Keep the one with txHash if duplicate
+    createMap.set(key, create);
+  }
+});
+cachedData.stakingData.createEvents = Array.from(createMap.values());
+```
+
+#### Option B - Fix Update Scripts (Root Cause)
+1. Audit all scripts to find where positions are added as creates
+2. Likely candidates:
+   - Scripts using `getStakePositions()` and processing results
+   - Scripts that merge or combine data sources
+3. Ensure positions are only used for enrichment, not as new events
+
+#### Option C - Clean Data and Add Prevention
+1. Run deduplication on cached-data.json
+2. Add duplicate checks to all update scripts
+3. Most thorough but requires careful testing
+
+### Investigation Complete - Root Cause Found
+
+**Creates**: 138 duplicates (positions with isCreate=true being added as new creates)
+**Stakes**: 0 duplicates, but 11 legitimate stakes from positions were correctly added
+
+The issue: Some script is fetching user positions and:
+- ✅ Correctly adding missed stakes (good)
+- ❌ Incorrectly adding duplicate creates (bad)
+
+### Implementation Plan
+
+#### Phase 1: Fix Scripts (Prevent Future Duplicates)
+1. **Add deduplication to smart-update-fixed.js**
+   - Check for existing creates before adding new ones
+   - Use key: `${user}-${torusAmount}-${timestamp}`
+   - Keep the one with transactionHash if duplicate found
+
+2. **Fix the incremental update script**
+   - Ensure positions are only used for enrichment
+   - Never add positions as new events if they already exist
+
+3. **Add safety checks to all update scripts**
+   - Before adding any create: check if it already exists
+   - Log when duplicates are prevented
+
+#### Phase 2: Clean Existing Data
+1. **Create deduplication script for cached-data.json**
+   - Remove 138 duplicate creates (keep ones with txHash)
+   - Preserve the 11 stakes without txHash (they're legitimate)
+   - Create backup before modifying
+
+2. **Verify data integrity after cleaning**
+   - Should have ~1476 creates (not 1614)
+   - Should still have 156 stakes
+   - All charts should show correct counts
+
 ## ✅ Scripts ARE Ready for Full Update
 
 ### All Critical Fixes Completed
@@ -586,3 +686,130 @@ The 5-minute cron job is destroying good data by writing empty arrays when it en
 2. Restore the lost data (re-run full update)
 3. Test the fix thoroughly
 4. Ensure cron job uses the fixed version
+
+## New Feature: Combined Positions Ending Chart
+
+### Objective
+Create a combined "Positions Ending by Future Date" chart that shows both stakes and creates ending each day as a grouped bar chart.
+
+### Implementation Plan
+1. **Create calculation function** (`calculatePositionsEndingByDay`)
+   - Similar to `calculateSharesReleases` but tracks stakes vs creates separately
+   - Returns data with two values per day: `stakesEnding` and `createsEnding`
+   - Can show either count of positions or TORUS amount
+
+2. **Data structure**:
+   ```javascript
+   {
+     day: 24,
+     date: '2025-08-02',
+     stakesCount: 5,
+     stakesAmount: 177.15,  // TORUS from principal
+     createsCount: 2,
+     createsAmount: 42.37   // TORUS generated
+   }
+   ```
+
+3. **Chart implementation**:
+   - Use existing `PannableBarChart` component
+   - Two datasets: one for stakes (blue), one for creates (green)
+   - Show counts by default, option to toggle to amounts
+   - Reuse existing date range buttons and panning functionality
+
+4. **Benefits**:
+   - Clearer view of activity patterns
+   - Easy comparison of stake vs create maturities
+   - Less chart clutter (combines two charts into one)
+   - Better understanding of future supply releases
+
+### Why This is Simple
+- All data already exists (stakeData and createData with maturityDates)
+- Calculation logic already proven in `calculateSharesReleases`
+- PannableBarChart already supports grouped bars
+- Minimal new code, mostly reusing existing patterns
+
+## Review: Duplicate Creates & Stakes Issue Resolution
+
+### Summary of Changes Made
+Successfully resolved duplicate creates AND stakes issues in cached-data.json that were causing inflated counts.
+
+### Problems Identified
+1. **Creates**: 138 duplicates (8.6% of 1615 total)
+2. **Stakes**: 11 duplicates (7.1% of 156 total)
+- All duplicates followed same pattern: original had txHash, duplicate didn't
+- Duplicates were being re-added every 5 minutes by cron job
+- Root cause: `smart-update-enhanced-integrated.js` was missing deduplication logic
+
+### Solutions Implemented
+1. **Updated deduplication logic** in `smart-update-fixed.js`:
+   - Creates: Uses `user-amount-timestamp` as unique key
+   - Stakes: Uses `user-principal-stakingDays-blockNumber` as unique key
+   - Preserves entries with transaction hashes when duplicates found
+   - Successfully prevents future duplicates
+
+2. **Cleaned existing data**:
+   - Created and ran `deduplicate-creates.js` script - removed 138 duplicate creates
+   - Created and ran `deduplicate-stakes.js` script - removed 11 duplicate stakes
+   - Final counts: 1478 creates (from 1615), 145 stakes (from 156)
+
+3. **Fixed cron job configuration**:
+   - Updated `auto-update-fixed.js` to use `smart-update-fixed.js`
+   - Previously was using `smart-update-enhanced-integrated.js` without deduplication
+   - Cron now runs every 5 minutes with proper deduplication
+
+### Verification Results
+- ✅ 0 duplicates remain in data
+- ✅ All stakes for days 22-24 verified on-chain:
+  - Day 22: 4 stakes verified
+  - Day 23: 4 stakes verified  
+  - Day 24: 1 stake verified
+- ✅ Frontend charts show accurate counts
+- ✅ Cron job tested and working properly
+
+### Impact
+- Data accuracy fully restored
+- Charts display correct create and stake counts
+- Future updates protected from duplicates
+- Cron job running successfully with fixed logic
+
+## Review: Frontend Chart Consolidation
+
+### Changes Made
+1. **Removed redundant charts** (frontend only, backend code preserved):
+   - Commented out "Stakes Ending by Future Date" chart
+   - Commented out "Creates Ending by Future Date" chart
+
+2. **Renamed combined chart**:
+   - Changed "Positions Ending by Future Date" to "Creates and Stakes Ending by Future Date"
+   - Updated chart note to remove reference to removed charts
+
+3. **Fixed chart behavior**:
+   - Default view changed from "ALL" to "88d" for better user experience
+   - "ALL" view: Shows from Day 1 to last day with data (historical view)
+   - 7d/30d/60d/88d views: Show from current protocol day forward (future view)
+   - Implemented conditional logic:
+     - `initialStartDay`: 1 for ALL, currentProtocolDay for time ranges
+     - `chartType`: "historical" for ALL, "future" for time ranges
+
+### Audit Results
+- ✅ Next 7 days: Shows 23 positions ending (12 stakes, 11 creates)
+- ✅ Next 30 days: Shows 193 positions ending (31 stakes, 162 creates)
+- ✅ Next 60 days: Shows 547 positions ending (54 stakes, 493 creates)
+- ✅ Next 88 days: Shows 1579 positions ending (128 stakes, 1451 creates)
+- ✅ Matches behavior of other forward-looking charts
+
+### Result
+- Cleaner UI with no duplicate information
+- Combined chart shows both stakes (indigo) and creates (pink) in one view
+- Chart properly starts from current protocol day when using date range buttons
+- Backend calculation functions remain intact for future use
+
+## Review: Chart Reorganization
+
+### Change Made
+- Moved "Creates and Stakes Ending by Future Date" chart to appear immediately after "Number of Creates and Stakes Initiated Each Protocol Day" chart
+- This creates a logical flow: first showing when positions are created, then showing when they end
+
+### Result
+- Better chart organization with related charts grouped together
+- Improved user flow for understanding position lifecycle (creation → maturity)

@@ -902,20 +902,22 @@ async function performSmartUpdate(provider, updateLog, currentBlock, blocksSince
           const stakeKeys = new Set();
           const createKeys = new Set();
           
-          // Add existing events to sets (user + id + blockNumber as unique key)
+          // Add existing events to sets
+          // For creates: use user + amount + timestamp as unique key (to catch duplicates from positions)
+          // For stakes: use user + principal + stakingDays + blockNumber for better deduplication
           existingStakes.forEach(stake => {
-            const key = `${stake.user}-${stake.id}-${stake.blockNumber}`;
+            const key = `${stake.user.toLowerCase()}-${stake.principal}-${stake.stakingDays}-${stake.blockNumber}`;
             stakeKeys.add(key);
           });
           
           existingCreates.forEach(create => {
-            const key = `${create.user}-${create.id || create.createId}-${create.blockNumber}`;
+            const key = `${create.user}-${create.torusAmount}-${create.timestamp}`;
             createKeys.add(key);
           });
           
           // Filter out duplicates from new events
           const uniqueNewStakes = processedStakes.filter(stake => {
-            const key = `${stake.user}-${stake.id}-${stake.blockNumber}`;
+            const key = `${stake.user.toLowerCase()}-${stake.principal}-${stake.stakingDays}-${stake.blockNumber}`;
             if (stakeKeys.has(key)) {
               log(`  ⚠️  Skipping duplicate stake: ${key}`, 'yellow');
               return false;
@@ -925,7 +927,7 @@ async function performSmartUpdate(provider, updateLog, currentBlock, blocksSince
           });
           
           const uniqueNewCreates = processedCreates.filter(create => {
-            const key = `${create.user}-${create.id || create.createId}-${create.blockNumber}`;
+            const key = `${create.user}-${create.torusAmount}-${create.timestamp}`;
             if (createKeys.has(key)) {
               log(`  ⚠️  Skipping duplicate create: ${key}`, 'yellow');
               return false;
