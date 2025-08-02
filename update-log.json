@@ -1,20 +1,9 @@
 {
   "startTime": 1754170500998,
   "rpcCalls": 0,
-  "lastBlockNumber": 23056335,
-  "lastUpdateTime": 1754173550298,
+  "lastBlockNumber": 23056363,
+  "lastUpdateTime": 1754173846301,
   "updateHistory": [
-    {
-      "timestamp": "2025-08-02T14:10:00.998Z",
-      "rpcCalls": 0,
-      "dataChanged": true,
-      "errors": [
-        "Event fetching: bad response (status=400, headers={\"date\":\"Sat, 02 Aug 2025 14:10:02 GMT\",\"content-type\":\"application/json\",\"transfer-encoding\":\"chunked\",\"connection\":\"close\",\"cf-ray\":\"968e280d49a47aec-SJC\",\"access-control-allow-origin\":\"*\",\"vary\":\"Accept-Encoding\",\"x-drpc-provider-id\":\"\",\"x-drpc-trace-id\":\"7a841f84288601bd420059e3adbe3df4\",\"strict-transport-security\":\"max-age=31536000; includeSubDomains\",\"access-control-allow-credentials\":\"true\",\"access-control-allow-methods\":\"GET, PUT, POST, DELETE, PATCH, OPTIONS\",\"access-control-allow-headers\":\"DNT,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range,Authorization\",\"access-control-max-age\":\"1728000\",\"cf-cache-status\":\"DYNAMIC\",\"server\":\"cloudflare\"}, body=\"{\\\"id\\\":52,\\\"jsonrpc\\\":\\\"2.0\\\",\\\"error\\\":{\\\"message\\\":\\\"ranges over 10000 blocks are not supported on freetier\\\",\\\"code\\\":35}}\", requestBody=\"{\\\"method\\\":\\\"eth_getLogs\\\",\\\"params\\\":[{\\\"fromBlock\\\":\\\"0x15f7816\\\",\\\"toBlock\\\":\\\"0x15fc635\\\",\\\"address\\\":\\\"0xc7cc775b21f9df85e043c7fdd9dac60af0b69507\\\",\\\"topics\\\":[\\\"0x9cfd25589d1eb8ad71e342a86a8524e83522e3936c0803048c08f6d9ad974f40\\\"]}],\\\"id\\\":52,\\\"jsonrpc\\\":\\\"2.0\\\"}\", requestMethod=\"POST\", url=\"https://eth.drpc.org\", code=SERVER_ERROR, version=web/5.8.0)"
-      ],
-      "stats": {
-        "rpcCalls": null
-      }
-    },
     {
       "timestamp": "2025-08-02T14:15:02.377Z",
       "rpcCalls": 0,
@@ -1051,7 +1040,14 @@
       "rpcCalls": 7,
       "dataChanged": true,
       "errors": []
+    },
+    {
+      "timestamp": "2025-08-02T22:30:46.301Z",
+      "block": 23056363,
+      "rpcCalls": 6,
+      "dataChanged": true,
+      "errors": []
     }
   ],
-  "totalRpcCalls": 52
+  "totalRpcCalls": 58
 }
