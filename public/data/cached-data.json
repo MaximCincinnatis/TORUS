@@ -26765,6 +26765,33 @@
         "costTitanX": "1404000000",
         "rawCostETH": "0",
         "rawCostTitanX": "1404000000000000000000000000"
+      },
+      {
+        "user": "0x7310d53d0010a26fea598a6697e4d7fd506484b5",
+        "owner": "0x7310d53d0010a26fea598a6697e4d7fd506484b5",
+        "createId": "4",
+        "torusAmount": "29428720353941546058",
+        "principal": "29428720353941546058",
+        "timestamp": 1754262107,
+        "endTime": 1761865307,
+        "blockNumber": 23063692,
+        "id": "4",
+        "createDays": 88,
+        "stakingDays": 88,
+        "maturityDate": "2025-10-30T23:01:47.000Z",
+        "startDate": "2025-08-03T23:01:47.000Z",
+        "protocolDay": 25,
+        "titanAmount": "0",
+        "titanXAmount": "0",
+        "ethAmount": "15574459525619044",
+        "shares": "0",
+        "power": "0",
+        "claimedCreate": false,
+        "claimedStake": false,
+        "costETH": "0.015574459525619044",
+        "costTitanX": "0",
+        "rawCostETH": "15574459525619044",
+        "rawCostTitanX": "0"
       }
     ],
     "stakeEvents": [
@@ -29408,9 +29435,9 @@
         "day": 25,
         "totalSupply": 17069.12379695596,
         "burnedSupply": 0,
-        "timestamp": "2025-08-03T23:00:03.252Z"
+        "timestamp": "2025-08-03T23:05:02.380Z"
       },
-      "currentBlock": 23063683,
+      "currentBlock": 23063707,
       "lastDeduplication": "2025-08-02T21:51:40.056Z",
       "duplicatesRemoved": 0
     },
@@ -30425,14 +30452,14 @@
       }
     ],
     "totalStakedInContract": 5814.3,
-    "lastBlock": 23063683
+    "lastBlock": 23063707
   },
-  "lastUpdated": "2025-08-03T23:00:46.706Z",
+  "lastUpdated": "2025-08-03T23:05:50.394Z",
   "lastProcessedBlock": 23055425,
   "currentProtocolDay": 25,
   "totalSupply": 17069.12379695596,
   "titanxTotalSupply": "105712130247855371397859111401151",
-  "totalTitanXBurnt": "201852805526764507815779601472",
+  "totalTitanXBurnt": "201865612760090810917448734734",
   "lastBlock": 23056089,
   "contractData": {
     "torusToken": {
