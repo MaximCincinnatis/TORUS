@@ -26792,6 +26792,33 @@
         "costTitanX": "0",
         "rawCostETH": "15574459525619044",
         "rawCostTitanX": "0"
+      },
+      {
+        "user": "0x619a69062d5443ad3d6d4126c51331fb3b3b6b9e",
+        "owner": "0x619a69062d5443ad3d6d4126c51331fb3b3b6b9e",
+        "createId": "2",
+        "torusAmount": "215810615928904671093",
+        "principal": "215810615928904671093",
+        "timestamp": 1754262779,
+        "endTime": 1761865979,
+        "blockNumber": 23063748,
+        "id": "2",
+        "createDays": 88,
+        "stakingDays": 88,
+        "maturityDate": "2025-10-30T23:12:59.000Z",
+        "startDate": "2025-08-03T23:12:59.000Z",
+        "protocolDay": 25,
+        "titanAmount": "0",
+        "titanXAmount": "0",
+        "ethAmount": "113984517452387470",
+        "shares": "0",
+        "power": "0",
+        "claimedCreate": false,
+        "claimedStake": false,
+        "costETH": "0.11398451745238747",
+        "costTitanX": "0",
+        "rawCostETH": "113984517452387470",
+        "rawCostTitanX": "0"
       }
     ],
     "stakeEvents": [
@@ -29435,9 +29462,9 @@
         "day": 25,
         "totalSupply": 17069.12379695596,
         "burnedSupply": 0,
-        "timestamp": "2025-08-03T23:10:02.432Z"
+        "timestamp": "2025-08-03T23:15:02.494Z"
       },
-      "currentBlock": 23063733,
+      "currentBlock": 23063756,
       "lastDeduplication": "2025-08-02T21:51:40.056Z",
       "duplicatesRemoved": 0
     },
@@ -30452,14 +30479,14 @@
       }
     ],
     "totalStakedInContract": 5814.3,
-    "lastBlock": 23063733
+    "lastBlock": 23063756
   },
-  "lastUpdated": "2025-08-03T23:10:46.295Z",
+  "lastUpdated": "2025-08-03T23:15:50.641Z",
   "lastProcessedBlock": 23055425,
   "currentProtocolDay": 25,
   "totalSupply": 17069.12379695596,
   "titanxTotalSupply": "105712130247855371397859111401151",
-  "totalTitanXBurnt": "201865612760090810917448734734",
+  "totalTitanXBurnt": "201959666937282196496353254618",
   "lastBlock": 23056089,
   "contractData": {
     "torusToken": {
