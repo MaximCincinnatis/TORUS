@@ -25631,6 +25631,33 @@
         "costTitanX": "95996662.76072313",
         "rawCostETH": "0",
         "rawCostTitanX": "95996662760723136010246911"
+      },
+      {
+        "user": "0x1c9909ae9b5a383687ecc8ab9e28edb7d1bbbedf",
+        "owner": "0x1c9909ae9b5a383687ecc8ab9e28edb7d1bbbedf",
+        "createId": "6",
+        "torusAmount": "51148836395861787514",
+        "principal": "51148836395861787514",
+        "timestamp": 1754217695,
+        "endTime": 1761820895,
+        "blockNumber": 23060006,
+        "id": "6",
+        "createDays": 88,
+        "stakingDays": 88,
+        "maturityDate": "2025-10-30T10:41:35.000Z",
+        "startDate": "2025-08-03T10:41:35.000Z",
+        "protocolDay": 24,
+        "titanAmount": "0",
+        "titanXAmount": "0",
+        "ethAmount": "28608306849897310",
+        "shares": "0",
+        "power": "0",
+        "claimedCreate": false,
+        "claimedStake": false,
+        "costETH": "0.02860830684989731",
+        "costTitanX": "0",
+        "rawCostETH": "28608306849897310",
+        "rawCostTitanX": "0"
       }
     ],
     "stakeEvents": [
@@ -28250,9 +28277,9 @@
         "day": 24,
         "totalSupply": 17120.73862434941,
         "burnedSupply": 0,
-        "timestamp": "2025-08-03T10:40:04.227Z"
+        "timestamp": "2025-08-03T10:45:02.573Z"
       },
-      "currentBlock": 23059998,
+      "currentBlock": 23060023,
       "lastDeduplication": "2025-08-02T21:51:40.056Z",
       "duplicatesRemoved": 0
     },
@@ -29267,14 +29294,14 @@
       }
     ],
     "totalStakedInContract": 5908.3,
-    "lastBlock": 23059998
+    "lastBlock": 23060023
   },
-  "lastUpdated": "2025-08-03T10:40:48.264Z",
+  "lastUpdated": "2025-08-03T10:45:47.478Z",
   "lastProcessedBlock": 23055425,
   "currentProtocolDay": 24,
   "totalSupply": 17120.73862434941,
   "titanxTotalSupply": "105713332309759153547105434479433",
-  "totalTitanXBurnt": "199073361826272012749010771932",
+  "totalTitanXBurnt": "199095584963222510644284483704",
   "lastBlock": 23056089,
   "contractData": {
     "torusToken": {
