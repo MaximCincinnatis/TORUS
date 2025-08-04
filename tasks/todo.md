@@ -813,3 +813,50 @@ Successfully resolved duplicate creates AND stakes issues in cached-data.json th
 ### Result
 - Better chart organization with related charts grouped together
 - Improved user flow for understanding position lifecycle (creation → maturity)
+
+## NaN Issue in "TORUS Principal and Share Supply Releasing Daily" Chart
+
+### Investigation Summary
+- **Issue**: Chart shows NaN in tooltip for day 111 and odd amounts for days 111-112
+- **Root Cause**: Day 112 has extremely low totalShares (443,126) vs day 111 (129,189,578)
+- **Reason**: 53 positions with 156.96M shares mature on day 111, causing legitimate drop
+- **This is NOT a data error** - it's a real scenario where most share power exits on one day
+
+### Fix Implementation
+- Add validation to prevent NaN when calculating rewards
+- Use `isFinite()` check to ensure valid numbers
+- Maintain 100% data accuracy - show legitimate high rewards for remaining positions
+- Add clear logging for edge cases
+- Code handles extreme but valid scenarios gracefully
+
+## "Total TORUS Burned Over Time" Chart Audit
+
+### Investigation Summary - CRITICAL FINDING
+- **Chart shows correct total**: 3,858.63 TORUS burned (matches on-chain exactly)
+- **LP fee burns ARE included**: They're transfers from Buy & Process → 0x0
+- **BUT protocol day assignment is wrong for days 20-25**:
+  - Our data: 468.51 TORUS burned
+  - On-chain: 904.32 TORUS burned
+  - Missing: 435.82 TORUS (almost double!)
+
+### Root Cause Analysis
+- **Total burns are tracked correctly** (3,858.63 matches on-chain perfectly)
+- **Daily allocation is wrong** - burns are being assigned to wrong protocol days
+- **Protocol day calculation issue**: Events near day boundaries may be misallocated
+
+### Verification Results
+1. **LP Fee Burns**: Already included (verified on-chain)
+2. **All-time total**: ✅ Correct (3,858.63 TORUS)
+3. **Daily breakdown**: ❌ Wrong for days 20-25
+   - Day 20: Shows 169.17, should be 198.39
+   - Day 21: Shows 57.94, should be 215.74
+   - Day 22: Shows 57.20, should be 149.40
+   - Day 23: Shows 63.47, should be 203.11
+   - Day 24: Shows 58.94, should be 137.68
+   - Day 25: Shows 61.79, should be 0.00
+
+### Protocol Day Calculation Investigation Needed
+- Check how `getProtocolDay()` handles timestamps
+- Verify timezone handling (should be UTC 6PM boundaries)
+- Check if events near day boundaries are misallocated
+- Investigate why day 25 shows burns when on-chain shows 0

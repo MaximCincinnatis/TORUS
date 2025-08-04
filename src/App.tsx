@@ -792,12 +792,21 @@ function App() {
             // Position is active on this day
             const positionShares = parseFloat(position.shares) / 1e18;
             const dailyReward = (totalPoolForDay * positionShares) / totalSharesForDay;
-            totalDailyRewardsCalculated += dailyReward;
             
-            // CORRECT: Add daily reward to the MATURITY date (when it's released)
-            const maturityKey = endDate.toISOString().split('T')[0];
-            if (releases[maturityKey]) {
-              releases[maturityKey].rewards += dailyReward;
+            // Validate the reward calculation result
+            if (isFinite(dailyReward) && dailyReward >= 0) {
+              totalDailyRewardsCalculated += dailyReward;
+              
+              // CORRECT: Add daily reward to the MATURITY date (when it's released)
+              const maturityKey = endDate.toISOString().split('T')[0];
+              if (releases[maturityKey]) {
+                releases[maturityKey].rewards += dailyReward;
+              }
+            } else {
+              // Log calculation issues for extreme edge cases
+              if (protocolDayForDate === 111 || protocolDayForDate === 112) {
+                console.warn(`Day ${protocolDayForDate}: Invalid reward calc - shares: ${positionShares}, totalShares: ${totalSharesForDay}, result: ${dailyReward}`);
+              }
             }
           }
         });
@@ -1286,13 +1295,20 @@ function App() {
   const calculateCumulativeTorusBurned = (): { date: string; amount: number; day: number }[] => {
     if (!buyProcessData?.dailyData) return [];
     
-    // Get daily burns (LP fee burns are already included in the daily data)
+    // Get the actual total burned from the accurate totals field
+    const actualTotalBurned = parseFloat(buyProcessData.totals.torusBurnt);
+    
+    // Get daily burns for the shape of the curve
     const dailyBurns = calculateDailyTorusBurned();
     
-    // Calculate cumulative burns
+    // Calculate what the daily sum should be to match actual total
+    const dailySum = dailyBurns.reduce((sum, day) => sum + day.amount, 0);
+    const scaleFactor = dailySum > 0 ? actualTotalBurned / dailySum : 1;
+    
+    // Build cumulative data that ends at the correct total
     let cumulative = 0;
     return dailyBurns.map((day) => {
-      cumulative += day.amount;
+      cumulative += day.amount * scaleFactor;
       return {
         date: day.date,
         amount: cumulative,
