@@ -28115,6 +28115,33 @@
         "costTitanX": "0",
         "rawCostETH": "24738491507367615",
         "rawCostTitanX": "0"
+      },
+      {
+        "user": "0x8251a2ee15fb7e9d87a822b1e0f3e2d7fa36f5fb",
+        "owner": "0x8251a2ee15fb7e9d87a822b1e0f3e2d7fa36f5fb",
+        "createId": "71",
+        "torusAmount": "53952653982226167773",
+        "principal": "53952653982226167773",
+        "timestamp": 1754320955,
+        "endTime": 1761924155,
+        "blockNumber": 23068567,
+        "id": "71",
+        "createDays": 88,
+        "stakingDays": 88,
+        "maturityDate": "2025-10-31T15:22:35.000Z",
+        "startDate": "2025-08-04T15:22:35.000Z",
+        "protocolDay": 25,
+        "titanAmount": "0",
+        "titanXAmount": "0",
+        "ethAmount": "27348736246557113",
+        "shares": "0",
+        "power": "0",
+        "claimedCreate": false,
+        "claimedStake": false,
+        "costETH": "0.027348736246557113",
+        "costTitanX": "0",
+        "rawCostETH": "27348736246557113",
+        "rawCostTitanX": "0"
       }
     ],
     "stakeEvents": [
@@ -30830,9 +30857,9 @@
         "day": 25,
         "totalSupply": 16951.851709620274,
         "burnedSupply": 0,
-        "timestamp": "2025-08-04T15:20:03.964Z"
+        "timestamp": "2025-08-04T15:25:03.577Z"
       },
-      "currentBlock": 23068554,
+      "currentBlock": 23068579,
       "lastDeduplication": "2025-08-02T21:51:40.056Z",
       "duplicatesRemoved": 0
     },
@@ -31847,14 +31874,14 @@
       }
     ],
     "totalStakedInContract": 5854.3,
-    "lastBlock": 23068554
+    "lastBlock": 23068579
   },
-  "lastUpdated": "2025-08-04T15:20:48.186Z",
+  "lastUpdated": "2025-08-04T15:25:52.240Z",
   "lastProcessedBlock": 23055425,
   "currentProtocolDay": 25,
   "totalSupply": 16951.851709620274,
   "titanxTotalSupply": "105740781082637658042725826421660",
-  "totalTitanXBurnt": "204175024183093239670837688023",
+  "totalTitanXBurnt": "204198508826932229580253241040",
   "lastBlock": 23056089,
   "contractData": {
     "torusToken": {
