@@ -28250,6 +28250,33 @@
         "costTitanX": "0",
         "rawCostETH": "25496951127097957",
         "rawCostTitanX": "0"
+      },
+      {
+        "user": "0x3fbe1fa0a4f151d35c44c0cd04f5e529745f4b83",
+        "owner": "0x3fbe1fa0a4f151d35c44c0cd04f5e529745f4b83",
+        "createId": "1",
+        "torusAmount": "5457774900784792655",
+        "principal": "5457774900784792655",
+        "timestamp": 1754338499,
+        "endTime": 1758572099,
+        "blockNumber": 23070022,
+        "id": "1",
+        "createDays": 49,
+        "stakingDays": 49,
+        "maturityDate": "2025-09-22T20:14:59.000Z",
+        "startDate": "2025-08-04T20:14:59.000Z",
+        "protocolDay": 26,
+        "titanAmount": "0",
+        "titanXAmount": "0",
+        "ethAmount": "5102450624565372",
+        "shares": "0",
+        "power": "0",
+        "claimedCreate": false,
+        "claimedStake": false,
+        "costETH": "0.005102450624565372",
+        "costTitanX": "0",
+        "rawCostETH": "5102450624565372",
+        "rawCostTitanX": "0"
       }
     ],
     "stakeEvents": [
@@ -31013,9 +31040,9 @@
         "day": 26,
         "totalSupply": 16926.718257504876,
         "burnedSupply": 0,
-        "timestamp": "2025-08-04T20:10:03.973Z"
+        "timestamp": "2025-08-04T20:15:04.474Z"
       },
-      "currentBlock": 23069997,
+      "currentBlock": 23070022,
       "lastDeduplication": "2025-08-02T21:51:40.056Z",
       "duplicatesRemoved": 0
     },
@@ -32030,14 +32057,14 @@
       }
     ],
     "totalStakedInContract": 5833.3,
-    "lastBlock": 23069997
+    "lastBlock": 23070022
   },
-  "lastUpdated": "2025-08-04T20:10:48.653Z",
+  "lastUpdated": "2025-08-04T20:15:51.157Z",
   "lastProcessedBlock": 23055425,
   "currentProtocolDay": 26,
   "totalSupply": 16926.718257504876,
   "titanxTotalSupply": "105742723505984756342900748308682",
-  "totalTitanXBurnt": "204280146165422247679360060848",
+  "totalTitanXBurnt": "204284410191584073147669810015",
   "lastBlock": 23056089,
   "contractData": {
     "torusToken": {
