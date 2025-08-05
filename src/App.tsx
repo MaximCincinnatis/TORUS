@@ -1552,6 +1552,13 @@ function App() {
   
   const lpFeeBurns = !lpFeeBurnsData ? [] : calculateLPFeeBurns();
   
+  // Debug LP fee burns
+  if (lpFeeBurns.length > 0) {
+    console.log('LP Fee Burns Data:', lpFeeBurns);
+    console.log('LP Fee Burns - Days with burns:', lpFeeBurns.filter(d => d.torusBurned > 0).map(d => `Day ${d.day}: ${d.torusBurned.toFixed(2)} TORUS`));
+    console.log('LP Fee Burns - Last day:', lpFeeBurns[lpFeeBurns.length - 1]);
+  }
+  
   // Calculate TORUS releases with rewards
   console.log('Checking conditions for torusReleasesWithRewards calculation:', {
     loading,

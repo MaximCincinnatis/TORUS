@@ -178,6 +178,7 @@ const PannableBarChart: React.FC<PannableBarChartProps> = ({
     });
   }
   
+  
   const visibleDatasets = datasets.map(dataset => ({
     ...dataset,
     data: dataset.data.slice(startIndex, endIndex).map(val => 
