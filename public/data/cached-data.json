@@ -30684,6 +30684,33 @@
         "costTitanX": "0",
         "rawCostETH": "4696066242892738",
         "rawCostTitanX": "0"
+      },
+      {
+        "user": "0xfc53e3882af1791f5a1f25b2aa21fc4147a0dcf2",
+        "owner": "0xfc53e3882af1791f5a1f25b2aa21fc4147a0dcf2",
+        "createId": "14",
+        "torusAmount": "11743231836868482550",
+        "principal": "11743231836868482550",
+        "timestamp": 1754517755,
+        "endTime": 1762120955,
+        "blockNumber": 23084880,
+        "id": "14",
+        "createDays": 88,
+        "stakingDays": 88,
+        "maturityDate": "2025-11-02T22:02:35.000Z",
+        "startDate": "2025-08-06T22:02:35.000Z",
+        "protocolDay": 28,
+        "titanAmount": "0",
+        "titanXAmount": "0",
+        "ethAmount": "5637533941407185",
+        "shares": "90939587344709528867200",
+        "power": "0",
+        "claimedCreate": false,
+        "claimedStake": false,
+        "costETH": "0.005637533941407185",
+        "costTitanX": "0",
+        "rawCostETH": "5637533941407185",
+        "rawCostTitanX": "0"
       }
     ],
     "stakeEvents": [
@@ -33495,9 +33522,9 @@
         "day": 28,
         "totalSupply": 18563.873256486662,
         "burnedSupply": 0,
-        "timestamp": "2025-08-06T22:00:04.946Z"
+        "timestamp": "2025-08-06T22:05:05.042Z"
       },
-      "currentBlock": 23084867,
+      "currentBlock": 23084892,
       "lastDeduplication": "2025-08-02T21:51:40.056Z",
       "duplicatesRemoved": 0
     },
@@ -34512,14 +34539,14 @@
       }
     ],
     "totalStakedInContract": 5909.3,
-    "lastBlock": 23084867
+    "lastBlock": 23084892
   },
-  "lastUpdated": "2025-08-06T22:01:12.686Z",
+  "lastUpdated": "2025-08-06T22:06:16.729Z",
   "lastProcessedBlock": 23055425,
   "currentProtocolDay": 28,
   "totalSupply": 18563.873256486662,
   "titanxTotalSupply": "105683769889416926872493349374011",
-  "totalTitanXBurnt": "210426530760203568375634648040",
+  "totalTitanXBurnt": "210431660283886083355742968809",
   "lastBlock": 23056089,
   "contractData": {
     "torusToken": {
