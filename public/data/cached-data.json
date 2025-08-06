@@ -29955,6 +29955,33 @@
         "costTitanX": "1315000000.0000002",
         "rawCostETH": "0",
         "rawCostTitanX": "1315000000000000000000000000"
+      },
+      {
+        "user": "0x5800a1de87b2003c641285f88a705190db4dd195",
+        "owner": "0x5800a1de87b2003c641285f88a705190db4dd195",
+        "createId": "2",
+        "torusAmount": "130552276666789300682",
+        "principal": "130552276666789300682",
+        "timestamp": 1754477867,
+        "endTime": 1762081067,
+        "blockNumber": 23081578,
+        "id": "2",
+        "createDays": 88,
+        "stakingDays": 88,
+        "maturityDate": "2025-11-02T10:57:47.000Z",
+        "startDate": "2025-08-06T10:57:47.000Z",
+        "protocolDay": 27,
+        "titanAmount": "1333000000000000000000000000",
+        "titanXAmount": "1333000000000000000000000000",
+        "ethAmount": "0",
+        "shares": "1010996830507616344481408",
+        "power": "0",
+        "claimedCreate": false,
+        "claimedStake": false,
+        "costETH": "0",
+        "costTitanX": "1333000000",
+        "rawCostETH": "0",
+        "rawCostTitanX": "1333000000000000000000000000"
       }
     ],
     "stakeEvents": [
@@ -32766,9 +32793,9 @@
         "day": 27,
         "totalSupply": 16746.33438869876,
         "burnedSupply": 0,
-        "timestamp": "2025-08-06T10:55:04.226Z"
+        "timestamp": "2025-08-06T11:00:05.068Z"
       },
-      "currentBlock": 23081564,
+      "currentBlock": 23081589,
       "lastDeduplication": "2025-08-02T21:51:40.056Z",
       "duplicatesRemoved": 0
     },
@@ -33783,14 +33810,14 @@
       }
     ],
     "totalStakedInContract": 5959.3,
-    "lastBlock": 23081564
+    "lastBlock": 23081589
   },
-  "lastUpdated": "2025-08-06T10:56:08.385Z",
+  "lastUpdated": "2025-08-06T11:01:13.588Z",
   "lastProcessedBlock": 23055425,
   "currentProtocolDay": 27,
   "totalSupply": 16746.33438869876,
   "titanxTotalSupply": "105688062679261368486518667475789",
-  "totalTitanXBurnt": "206974215537200924470657660879",
+  "totalTitanXBurnt": "207031667837200924470657660879",
   "lastBlock": 23056089,
   "contractData": {
     "torusToken": {
