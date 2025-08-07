@@ -74,6 +74,28 @@ export function calculateSharePoolPercentages(
   const minDay = Math.min(...rewardPoolData.map(data => data.day));
   const maxDay = Math.max(...rewardPoolData.map(data => data.day));
   
+  // Pre-calculate total shares for each day from actual positions
+  const totalSharesByDay = new Map<number, number>();
+  for (let day = minDay; day <= maxDay; day++) {
+    let totalShares = 0;
+    const dayDate = new Date(contractStartDate);
+    dayDate.setUTCDate(dayDate.getUTCDate() + day - 1);
+    
+    positions.forEach(position => {
+      const positionStart = new Date(parseInt(position.timestamp) * 1000);
+      const positionStartDay = Math.floor((positionStart.getTime() - contractStartDate.getTime()) / (24 * 60 * 60 * 1000)) + 1;
+      const maturityDate = new Date(position.maturityDate);
+      const maturityDay = Math.floor((maturityDate.getTime() - contractStartDate.getTime()) / (24 * 60 * 60 * 1000)) + 1;
+      
+      // Position is active if it started before or on this day and hasn't matured yet
+      if (day >= positionStartDay && day <= maturityDay) {
+        totalShares += parseFloat(position.shares) / 1e18;
+      }
+    });
+    
+    totalSharesByDay.set(day, totalShares);
+  }
+  
   positions.forEach(position => {
     // Validate position data
     if (!position || !position.user || !position.id || !position.type) {
@@ -132,17 +154,19 @@ export function calculateSharePoolPercentages(
       let sharePercentage = 0;
       let dailyReward = 0;
       
-      if (isActive && parseFloat(rewardData.totalShares.toString()) > 0) {
-        const totalShares = parseFloat(rewardData.totalShares.toString());
+      // Use calculated totalShares instead of faulty rewardData.totalShares
+      const calculatedTotalShares = totalSharesByDay.get(day) || 0;
+      
+      if (isActive && calculatedTotalShares > 0) {
         const rewardPool = parseFloat(rewardData.rewardPool.toString());
         
         // Validate reward pool data
-        if (isNaN(totalShares) || isNaN(rewardPool)) {
-          console.warn(`⚠️ Invalid reward data for day ${day}, skipping`);
+        if (isNaN(rewardPool)) {
+          console.warn(`⚠️ Invalid reward pool for day ${day}, skipping`);
           continue;
         }
         
-        sharePercentage = positionShares / totalShares;
+        sharePercentage = positionShares / calculatedTotalShares;
         dailyReward = rewardPool * sharePercentage;
         
         // Ensure daily reward is never negative
@@ -214,7 +238,9 @@ export function calculateFutureMaxSupply(
   let currentPool = lastRewardPool;
   
   // Update existing zero entries and add any missing days
-  for (let day = lastDayWithRewards + 1; day <= 96; day++) {
+  // Extend to current protocol day + 88 for proper projection
+  const targetDay = Math.max(96, (currentProtocolDay || 0) + 88);
+  for (let day = lastDayWithRewards + 1; day <= targetDay; day++) {
     currentPool = currentPool * (1 - dailyReductionRate);
     
     // Find existing entry for this day
@@ -233,9 +259,9 @@ export function calculateFutureMaxSupply(
     }
   }
   
-  console.log('🔍 Extended reward pool data from', lastDayWithRewards, 'to 96 days');
+  console.log('🔍 Extended reward pool data from', lastDayWithRewards, 'to', targetDay, 'days');
   console.log('🔍 Last actual reward pool (day', lastDayWithRewards, '):', lastRewardPool.toFixed(2));
-  console.log('🔍 Projected reward pool (day 96):', currentPool.toFixed(2));
+  console.log('🔍 Projected reward pool (day', targetDay, '):', currentPool.toFixed(2));
   
   // AUDIT: Check specific key days
   const day88Pool = parseFloat(extendedRewardPoolData.find(d => d.day === 88)?.rewardPool?.toString() || '0');
@@ -289,6 +315,28 @@ export function calculateFutureMaxSupply(
   // Track cumulative rewards from current day forward only
   let cumulativeFromStakes = 0;
   let cumulativeFromCreates = 0;
+  
+  // Pre-calculate total shares for each day from actual positions
+  const totalSharesByDay = new Map<number, number>();
+  for (let d = startDay; d <= maxDay; d++) {
+    let totalShares = 0;
+    const dayDate = new Date(contractStartDate);
+    dayDate.setUTCDate(dayDate.getUTCDate() + d - 1);
+    
+    positions.forEach(position => {
+      const positionStart = new Date(parseInt(position.timestamp) * 1000);
+      const positionStartDay = Math.floor((positionStart.getTime() - contractStartDate.getTime()) / (24 * 60 * 60 * 1000)) + 1;
+      const maturityDate = new Date(position.maturityDate);
+      const maturityDay = Math.floor((maturityDate.getTime() - contractStartDate.getTime()) / (24 * 60 * 60 * 1000)) + 1;
+      
+      // Position is active if it started before or on this day and hasn't matured yet
+      if (d >= positionStartDay && d <= maturityDay) {
+        totalShares += parseFloat(position.shares) / 1e18;
+      }
+    });
+    
+    totalSharesByDay.set(d, totalShares);
+  }
   
   for (let day = startDay; day <= maxDay; day++) {
     const rewardData = rewardPoolMap.get(day);
@@ -369,7 +417,7 @@ export function calculateFutureMaxSupply(
       totalMaxSupply,
       activePositions,
       dailyRewardPool: parseFloat(rewardData.rewardPool.toString()),
-      totalShares: parseFloat(rewardData.totalShares.toString()),
+      totalShares: totalSharesByDay.get(day) || 0,
       breakdown: {
         fromStakes: cumulativeFromStakes,
         fromCreates: cumulativeFromCreates,
