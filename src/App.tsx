@@ -755,11 +755,23 @@ function App() {
       // Find reward pool data for this day
       const poolDataForDay = rewardPoolData.find(pd => pd.day === protocolDayForDate);
       
-      if (poolDataForDay && parseFloat(poolDataForDay.totalShares) > 0) {
+      if (poolDataForDay) {
         const rewardPool = parseFloat(poolDataForDay.rewardPool); // Already in decimal form, not wei
         const penaltiesPool = parseFloat(poolDataForDay.penaltiesInPool); // Already in decimal form, not wei
         const totalPoolForDay = rewardPool + penaltiesPool;
-        const totalSharesForDay = parseFloat(poolDataForDay.totalShares); // Already in decimal form, not wei
+        
+        // FIX: Calculate totalShares from actual active positions instead of using faulty pool data
+        let totalSharesForDay = 0;
+        allPositions.forEach(position => {
+          const startDate = new Date(position.timestamp * 1000);
+          const endDate = position.maturityDate instanceof Date ? position.maturityDate : new Date(position.maturityDate);
+          if (date >= startDate && date < endDate) {
+            totalSharesForDay += parseFloat(position.shares) / 1e18;
+          }
+        });
+        
+        // Only proceed if there are active shares
+        if (totalSharesForDay > 0) {
         
         // Debug reward pool data for first few days
         if (i < 3) {
@@ -815,12 +827,11 @@ function App() {
           console.log(`  Active positions: ${activePositionsCount}`);
           console.log(`  Total daily rewards: ${totalDailyRewardsCalculated.toFixed(2)} TORUS`);
         }
+        } // Close the totalSharesForDay > 0 check
       } else {
         // Debug if no reward pool data
-        if (!poolDataForDay && i === 0) {
+        if (i === 0) {
           console.log(`⚠️ No reward pool data for protocol day ${protocolDayForDate}`);
-        } else if (poolDataForDay && parseFloat(poolDataForDay.totalShares) === 0 && i === 0) {
-          console.log(`⚠️ Total shares is 0 for protocol day ${protocolDayForDate}`);
         }
       }
     }
