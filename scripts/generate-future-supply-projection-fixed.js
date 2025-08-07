@@ -115,13 +115,15 @@ function calculatePositionProjections(positions, rewardPoolData, contractStartDa
 }
 
 // Generate extended reward pool data for future days
-function generateExtendedRewardPoolData(existingData, targetDay) {
+function generateExtendedRewardPoolData(existingData, targetDay, currentProtocolDay) {
   const extended = [...existingData];
   const lastActualDay = Math.max(...existingData.map(d => d.day));
   
-  // Generate projections for days 9-96 if needed
-  for (let day = lastActualDay + 1; day <= targetDay; day++) {
-    if (day >= 9 && day <= 96) {
+  // Generate projections for days 9 onwards up to currentProtocolDay + 88
+  const targetEndDay = currentProtocolDay + 88;
+  
+  for (let day = lastActualDay + 1; day <= Math.min(targetDay, targetEndDay); day++) {
+    if (day >= 9) {
       const prevDay = extended.find(d => d.day === day - 1);
       if (prevDay) {
         extended.push({
@@ -150,7 +152,7 @@ function calculateFutureMaxSupply(positions, rewardPoolData, currentSupply, cont
   
   // Find the range of days we need to project
   const maxMaturityDay = Math.max(...positionProjections.map(p => p.maturityDay));
-  const extendedRewardPoolData = generateExtendedRewardPoolData(rewardPoolData, maxMaturityDay);
+  const extendedRewardPoolData = generateExtendedRewardPoolData(rewardPoolData, maxMaturityDay, currentProtocolDay);
   
   // Create reward pool lookup
   const rewardPoolMap = new Map();
