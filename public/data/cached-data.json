@@ -34218,9 +34218,9 @@
         "day": 29,
         "totalSupply": 18475.94543024574,
         "burnedSupply": 0,
-        "timestamp": "2025-08-07T21:00:45.716Z"
+        "timestamp": "2025-08-07T21:03:10.771Z"
       },
-      "currentBlock": 23091726,
+      "currentBlock": 23091738,
       "lastDeduplication": "2025-08-02T21:51:40.056Z",
       "duplicatesRemoved": 0
     },
@@ -35232,12 +35232,57 @@
         "penaltiesInPool": 0,
         "calculated": true,
         "lastUpdated": "2025-08-02T18:02:27.874Z"
+      },
+      {
+        "day": 113,
+        "date": "2025-10-30T18:00:00.000Z",
+        "rewardPool": 91426.40455720185,
+        "totalShares": 443126.1023662867,
+        "penaltiesInPool": 0,
+        "calculated": true,
+        "lastUpdated": "2025-08-07T21:03:14.729Z"
+      },
+      {
+        "day": 114,
+        "date": "2025-10-31T18:00:00.000Z",
+        "rewardPool": 91353.26343355609,
+        "totalShares": 443126.1023662867,
+        "penaltiesInPool": 0,
+        "calculated": true,
+        "lastUpdated": "2025-08-07T21:03:14.729Z"
+      },
+      {
+        "day": 115,
+        "date": "2025-11-01T18:00:00.000Z",
+        "rewardPool": 91280.18082280924,
+        "totalShares": 443126.1023662867,
+        "penaltiesInPool": 0,
+        "calculated": true,
+        "lastUpdated": "2025-08-07T21:03:14.729Z"
+      },
+      {
+        "day": 116,
+        "date": "2025-11-02T18:00:00.000Z",
+        "rewardPool": 91207.15667815099,
+        "totalShares": 443126.1023662867,
+        "penaltiesInPool": 0,
+        "calculated": true,
+        "lastUpdated": "2025-08-07T21:03:14.729Z"
+      },
+      {
+        "day": 117,
+        "date": "2025-11-03T18:00:00.000Z",
+        "rewardPool": 91134.19095280847,
+        "totalShares": 443126.1023662867,
+        "penaltiesInPool": 0,
+        "calculated": true,
+        "lastUpdated": "2025-08-07T21:03:14.729Z"
       }
     ],
     "totalStakedInContract": 5964.3,
-    "lastBlock": 23091726
+    "lastBlock": 23091738
   },
-  "lastUpdated": "2025-08-07T21:02:18.173Z",
+  "lastUpdated": "2025-08-07T21:04:19.705Z",
   "lastProcessedBlock": 23055425,
   "currentProtocolDay": 29,
   "totalSupply": 18475.94543024574,
@@ -35264,18 +35309,18 @@
     {
       "tokenId": "1029195",
       "owner": "0xAa390a37006E22b5775A34f2147F81eBD6a63641",
-      "liquidity": "71051931648237654225591539",
+      "liquidity": "71094115680414946618365409",
       "tickLower": -887200,
       "tickUpper": 887200,
       "fee": 10000,
-      "tokensOwed0": "24689293637750875146",
-      "tokensOwed1": "701008052541912088155072833",
+      "tokensOwed0": "26433009991352549405",
+      "tokensOwed1": "717126289178420387277321567",
       "torusAmount": 9372.963610155968,
       "titanxAmount": 499951281756.08276,
-      "claimableTorus": 24.689293637750875,
-      "claimableTitanX": 701008052.5419121,
+      "claimableTorus": 26.43300999135255,
+      "claimableTitanX": 717126289.1784204,
       "claimableYield": 1100460096.9030616,
-      "lastChecked": "2025-08-07T19:10:07.521Z"
+      "lastChecked": "2025-08-07T21:03:12.287Z"
     },
     {
       "tokenId": "1030759",
@@ -35291,7 +35336,7 @@
       "claimableTorus": 0,
       "claimableTitanX": 0,
       "claimableYield": 0,
-      "lastChecked": "2025-08-07T19:10:08.543Z"
+      "lastChecked": "2025-08-07T21:03:13.253Z"
     },
     {
       "tokenId": "1032346",
@@ -35307,7 +35352,7 @@
       "claimableTorus": 0.1460776033756232,
       "claimableTitanX": 5003826.698754727,
       "claimableYield": 5003826.84483233,
-      "lastChecked": "2025-08-07T19:10:09.600Z"
+      "lastChecked": "2025-08-07T21:03:14.236Z"
     }
   ],
   "metadata": {
@@ -35320,8 +35365,8 @@
     "thirtyDay": []
   },
   "poolData": {
-    "sqrtPriceX96": "511917380133716851657763677235629",
-    "currentTick": 175480,
+    "sqrtPriceX96": "512221309087296702058457169828215",
+    "currentTick": 175492,
     "token0": "",
     "token1": "",
     "liquidity": "0",
@@ -35330,8 +35375,8 @@
   },
   "tokenPrices": {
     "torus": {
-      "usd": 417.4847168807677,
-      "lastUpdated": "2025-08-07T21:00:55.009Z"
+      "usd": 417.9805912719391,
+      "lastUpdated": "2025-08-07T21:03:15.373Z"
     },
     "titanx": {
       "usd": 0,
