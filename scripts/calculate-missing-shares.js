@@ -23,9 +23,9 @@ async function main() {
       return;
     }
     
-    // Count creates without shares
-    const createsWithoutShares = data.stakingData.createEvents.filter(c => !c.shares).length;
-    console.log(`Found ${createsWithoutShares} creates without shares`);
+    // Count creates without shares or with 0 shares
+    const createsWithoutShares = data.stakingData.createEvents.filter(c => !c.shares || c.shares === "0").length;
+    console.log(`Found ${createsWithoutShares} creates without shares or with 0 shares`);
     
     if (createsWithoutShares === 0) {
       console.log('✅ All creates already have shares');
@@ -35,7 +35,7 @@ async function main() {
     // Calculate shares for creates that don't have them
     let fixedCount = 0;
     data.stakingData.createEvents.forEach(create => {
-      if (!create.shares && create.timestamp && create.endTime && create.torusAmount) {
+      if ((!create.shares || create.shares === "0") && create.timestamp && create.endTime && create.torusAmount) {
         // Calculate length in days
         const startTime = parseInt(create.timestamp);
         const endTime = parseInt(create.endTime);

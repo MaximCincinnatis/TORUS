@@ -659,7 +659,10 @@ async function performSmartUpdate(provider, updateLog, currentBlock, blocksSince
         const contractABI = [
           'event Staked(address indexed user, uint256 stakeIndex, uint256 principal, uint256 stakingDays, uint256 shares)',
           'event Created(address indexed user, uint256 stakeIndex, uint256 torusAmount, uint256 endTime)',
-          'function getCurrentDayIndex() view returns (uint24)'
+          'function getCurrentDayIndex() view returns (uint24)',
+          'function rewardPool(uint256 day) view returns (uint256)',
+          'function totalShares(uint256 day) view returns (uint256)',
+          'function penaltiesInRewardPool(uint256 day) view returns (uint256)'
         ];
         
         const contract = new ethers.Contract(CONTRACTS.TORUS_CREATE_STAKE, contractABI, provider);
@@ -675,6 +678,97 @@ async function performSmartUpdate(provider, updateLog, currentBlock, blocksSince
             cachedData.currentProtocolDay = currentDayNumber;
             cachedData.stakingData.currentProtocolDay = currentDayNumber;
             updateStats.dataChanged = true;
+          }
+          
+          // Update rewardPoolData to extend to currentProtocolDay + 88
+          const targetDay = currentDayNumber + 88;
+          const existingRewardPoolData = cachedData.stakingData.rewardPoolData || [];
+          const lastExistingDay = existingRewardPoolData.length > 0 
+            ? Math.max(...existingRewardPoolData.map(d => d.day))
+            : 0;
+          
+          if (lastExistingDay < targetDay) {
+            log(`Extending rewardPoolData from day ${lastExistingDay + 1} to ${targetDay}...`, 'cyan');
+            
+            const newRewardPoolData = [];
+            
+            // For days 9+ that haven't occurred yet, generate projections
+            for (let day = lastExistingDay + 1; day <= targetDay; day++) {
+              if (day >= 9 && day > currentDayNumber) {
+                // Future day - use projection (0.08% daily reduction from day 9)
+                const prevDay = existingRewardPoolData.find(d => d.day === day - 1) || 
+                               newRewardPoolData.find(d => d.day === day - 1);
+                
+                if (prevDay) {
+                  const CONTRACT_START_DATE = new Date('2025-07-10T18:00:00.000Z');
+                  const dayDate = new Date(CONTRACT_START_DATE);
+                  dayDate.setUTCDate(dayDate.getUTCDate() + day - 1);
+                  
+                  newRewardPoolData.push({
+                    day: day,
+                    date: dayDate.toISOString(),
+                    rewardPool: prevDay.rewardPool * 0.9992, // 0.08% daily reduction
+                    totalShares: prevDay.totalShares, // Carry forward last known value
+                    penaltiesInPool: prevDay.penaltiesInPool || 0,
+                    calculated: true, // This is a projection
+                    lastUpdated: new Date().toISOString()
+                  });
+                }
+              } else if (day <= currentDayNumber) {
+                // Past or current day - try to fetch from contract
+                try {
+                  const [rewardPool, totalShares, penalties] = await Promise.all([
+                    contract.rewardPool(day),
+                    contract.totalShares(day),
+                    contract.penaltiesInRewardPool(day)
+                  ]);
+                  
+                  const CONTRACT_START_DATE = new Date('2025-07-10T18:00:00.000Z');
+                  const dayDate = new Date(CONTRACT_START_DATE);
+                  dayDate.setUTCDate(dayDate.getUTCDate() + day - 1);
+                  
+                  newRewardPoolData.push({
+                    day: day,
+                    date: dayDate.toISOString(),
+                    rewardPool: parseFloat(ethers.utils.formatEther(rewardPool)),
+                    totalShares: parseFloat(ethers.utils.formatEther(totalShares)),
+                    penaltiesInPool: parseFloat(ethers.utils.formatEther(penalties)),
+                    calculated: false, // These are actual contract values
+                    lastUpdated: new Date().toISOString()
+                  });
+                  
+                  updateStats.rpcCalls += 3;
+                } catch (e) {
+                  log(`  Failed to fetch day ${day}: ${e.message}`, 'yellow');
+                  // For days before 9, use initial values
+                  if (day < 9) {
+                    const CONTRACT_START_DATE = new Date('2025-07-10T18:00:00.000Z');
+                    const dayDate = new Date(CONTRACT_START_DATE);
+                    dayDate.setUTCDate(dayDate.getUTCDate() + day - 1);
+                    
+                    newRewardPoolData.push({
+                      day: day,
+                      date: dayDate.toISOString(),
+                      rewardPool: 100000, // Initial pool
+                      totalShares: 0,
+                      penaltiesInPool: 0,
+                      calculated: true,
+                      lastUpdated: new Date().toISOString()
+                    });
+                  }
+                }
+              }
+            }
+            
+            if (newRewardPoolData.length > 0) {
+              // Append new data to existing data
+              cachedData.stakingData.rewardPoolData = [
+                ...existingRewardPoolData,
+                ...newRewardPoolData
+              ];
+              updateStats.dataChanged = true;
+              log(`Extended rewardPoolData with ${newRewardPoolData.length} days (now up to day ${targetDay})`, 'green');
+            }
           }
         } catch (e) {
           log(`Failed to fetch current protocol day: ${e.message}`, 'yellow');
@@ -888,6 +982,16 @@ async function performSmartUpdate(provider, updateLog, currentBlock, blocksSince
             createData.ethAmount = paymentData.ethAmount;
             createData.titanAmount = paymentData.titanAmount;
             createData.titanXAmount = paymentData.titanXAmount;
+            
+            // Calculate shares for unclaimed creates (torusAmount * days * days)
+            // This matches the formula in calculate-missing-shares.js
+            if (!createData.shares || createData.shares === "0") {
+              const torusAmountBig = BigInt(createData.torusAmount);
+              const daysBig = BigInt(duration); // duration is already calculated above
+              const calculatedShares = torusAmountBig * daysBig * daysBig;
+              createData.shares = calculatedShares.toString();
+              log(`  ✓ Calculated shares for create ${createData.id}: ${duration} days, shares=${createData.shares}`, 'cyan');
+            }
             
             updateStats.rpcCalls++;
             
