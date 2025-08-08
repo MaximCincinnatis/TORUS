@@ -447,6 +447,10 @@ async function performSmartUpdate(provider, updateLog, currentBlock, blocksSince
       const originalCreateCount = cachedData.stakingData.createEvents?.length || 0;
       
       if (cachedData.stakingData.stakeEvents) {
+        // Ensure all stakes have type field before deduplication
+        cachedData.stakingData.stakeEvents.forEach(stake => {
+          if (!stake.type) stake.type = 'stake';
+        });
         cachedData.stakingData.stakeEvents = deduplicateEvents(
           cachedData.stakingData.stakeEvents,
           stake => `${stake.user}-${stake.id}-${stake.blockNumber}`
@@ -454,6 +458,10 @@ async function performSmartUpdate(provider, updateLog, currentBlock, blocksSince
       }
       
       if (cachedData.stakingData.createEvents) {
+        // Ensure all creates have type field before deduplication
+        cachedData.stakingData.createEvents.forEach(create => {
+          if (!create.type) create.type = 'create';
+        });
         cachedData.stakingData.createEvents = deduplicateEvents(
           cachedData.stakingData.createEvents,
           create => `${create.user}-${create.id || create.createId}-${create.blockNumber}`
@@ -708,7 +716,7 @@ async function performSmartUpdate(provider, updateLog, currentBlock, blocksSince
                     day: day,
                     date: dayDate.toISOString(),
                     rewardPool: prevDay.rewardPool * 0.9992, // 0.08% daily reduction
-                    totalShares: prevDay.totalShares, // Carry forward last known value
+                    totalShares: 0, // Don't carry forward - let frontend calculate from actual positions
                     penaltiesInPool: prevDay.penaltiesInPool || 0,
                     calculated: true, // This is a projection
                     lastUpdated: new Date().toISOString()
@@ -908,6 +916,9 @@ async function performSmartUpdate(provider, updateLog, currentBlock, blocksSince
             stakeData.costTitanX = paymentData.costTitanX;
             stakeData.rawCostTitanX = paymentData.rawCostTitanX;
             
+            // Add type field for frontend to distinguish stakes from creates
+            stakeData.type = 'stake';
+            
             updateStats.rpcCalls++;
             
             processedStakes.push(stakeData);
@@ -993,6 +1004,9 @@ async function performSmartUpdate(provider, updateLog, currentBlock, blocksSince
               log(`  ✓ Calculated shares for create ${createData.id}: ${duration} days, shares=${createData.shares}`, 'cyan');
             }
             
+            // Add type field for frontend to distinguish stakes from creates
+            createData.type = 'create';
+            
             updateStats.rpcCalls++;
             
             processedCreates.push(createData);
@@ -1006,15 +1020,23 @@ async function performSmartUpdate(provider, updateLog, currentBlock, blocksSince
           const stakeKeys = new Set();
           const createKeys = new Set();
           
-          // Add existing events to sets
+          // Add existing events to sets and ensure they have type field
           // For creates: use user + amount + timestamp as unique key (to catch duplicates from positions)
           // For stakes: use user + principal + stakingDays + blockNumber for better deduplication
           existingStakes.forEach(stake => {
+            // Ensure existing stakes have type field
+            if (!stake.type) {
+              stake.type = 'stake';
+            }
             const key = `${stake.user.toLowerCase()}-${stake.principal}-${stake.stakingDays}-${stake.blockNumber}`;
             stakeKeys.add(key);
           });
           
           existingCreates.forEach(create => {
+            // Ensure existing creates have type field
+            if (!create.type) {
+              create.type = 'create';
+            }
             const key = `${create.user}-${create.torusAmount}-${create.timestamp}`;
             createKeys.add(key);
           });
