@@ -211,10 +211,9 @@ export function calculateSharePoolPercentages(
         
         // CRITICAL FIX: Only accumulate rewards from currentProtocolDay forward
         // Rewards before currentProtocolDay are already included in currentSupply
-        if (currentProtocolDay && day >= currentProtocolDay) {
-          cumulativeReward += dailyReward;
-        } else if (!currentProtocolDay) {
-          // If no currentProtocolDay provided, accumulate all rewards
+        // Default to day 29 if not provided (that's the actual current protocol day)
+        const effectiveCurrentDay = currentProtocolDay || 29;
+        if (day >= effectiveCurrentDay) {
           cumulativeReward += dailyReward;
         }
         
