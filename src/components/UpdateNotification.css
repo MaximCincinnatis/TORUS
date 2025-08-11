@@ -80,6 +80,11 @@
   cursor: not-allowed;
 }
 
+/* Remove animation from button when disabled to prevent conflicts */
+.refresh-button:disabled.has-new-data {
+  animation: none;
+}
+
 .refresh-icon {
   display: inline-block;
   font-size: 16px;
@@ -89,7 +94,7 @@
 }
 
 .refresh-icon.spinning {
-  animation: spin 1s linear infinite;
+  animation: spin 2s linear infinite;
 }
 
 @keyframes spin {
