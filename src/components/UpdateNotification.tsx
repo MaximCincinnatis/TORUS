@@ -111,7 +111,7 @@ const UpdateNotification: React.FC<UpdateNotificationProps> = ({ lastUpdated, on
           className={`refresh-button ${hasNewData ? 'has-new-data' : ''}`}
           onClick={handleRefresh}
           disabled={isChecking}
-          title={hasNewData ? 'New data available, click to refresh' : 'Refresh data'}
+          title={hasNewData ? 'New data available, click to refresh' : 'Data is up to date'}
         >
           <span className={`refresh-icon ${isChecking ? 'spinning' : ''}`}>
             ↻
