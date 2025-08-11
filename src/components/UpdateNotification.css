@@ -38,12 +38,15 @@
   background: transparent;
   border: 1px solid rgba(251, 191, 36, 0.3);
   color: #fbbf24;
-  padding: 4px 8px;
+  width: 28px;
+  height: 28px;
+  padding: 0;
   border-radius: 4px;
   cursor: pointer;
   display: flex;
   align-items: center;
-  transition: all 0.2s ease;
+  justify-content: center;
+  transition: background 0.2s ease, border-color 0.2s ease;
   font-size: 12px;
 }
 
@@ -58,8 +61,11 @@
 }
 
 .refresh-icon {
-  transition: none;
-  display: block;
+  display: inline-block;
+  font-size: 16px;
+  line-height: 1;
+  font-weight: bold;
+  transform-origin: center;
 }
 
 .refresh-icon.spinning {

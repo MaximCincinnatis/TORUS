@@ -126,17 +126,9 @@ const UpdateNotification: React.FC<UpdateNotificationProps> = ({ lastUpdated, on
           disabled={isChecking}
           title="Refresh data"
         >
-          <svg 
-            className={`refresh-icon ${isChecking ? 'spinning' : ''}`} 
-            width="14" 
-            height="14" 
-            viewBox="0 0 24 24" 
-            fill="none" 
-            stroke="currentColor"
-          >
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 4v6h6M20 20v-6h-6" />
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M20.49 9A9 9 0 0 0 5.64 5.64L4 4m16 16l-1.64-1.64A9 9 0 0 1 3.51 15" />
-          </svg>
+          <span className={`refresh-icon ${isChecking ? 'spinning' : ''}`}>
+            ↻
+          </span>
         </button>
       </div>
 
