@@ -14,6 +14,18 @@
   padding: 6px 10px;
   border-radius: 6px;
   border: 1px solid rgba(255, 255, 255, 0.02);
+  animation: fadeIn 0.3s ease-in;
+}
+
+@keyframes fadeIn {
+  from { 
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to { 
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .update-time {
@@ -103,21 +115,27 @@
 }
 
 
-/* Mobile responsiveness */
+/* Hide desktop-only elements on mobile */
 @media (max-width: 768px) {
+  .desktop-only {
+    display: none;
+  }
+  
   .update-status {
     top: 10px;
     right: 10px;
-    font-size: 12px;
+    padding: 4px;
+    background: rgba(24, 24, 42, 0.3);
+    backdrop-filter: blur(2px);
   }
   
-  .update-banner-content {
-    font-size: 13px;
-    gap: 8px;
+  .refresh-button {
+    width: 32px;
+    height: 32px;
+    font-size: 16px;
   }
   
-  .update-action {
-    padding: 4px 12px;
-    font-size: 12px;
+  .refresh-icon {
+    font-size: 18px;
   }
 }

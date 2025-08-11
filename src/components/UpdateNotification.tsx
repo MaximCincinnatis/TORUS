@@ -95,15 +95,20 @@ const UpdateNotification: React.FC<UpdateNotificationProps> = ({ lastUpdated, on
     return '#ef4444'; // Red - stale data
   };
 
+  // Only show when new data is available or checking
+  if (!hasNewData && !isChecking) {
+    return null;
+  }
+
   return (
     <>
       {/* Header timestamp */}
       <div className="update-status">
-        <span className="update-time">
+        <span className="update-time desktop-only">
           {lastUpdated ? `Page data updated: ${timeAgo}` : 'Loading data...'}
         </span>
         <span 
-          className="live-indicator" 
+          className="live-indicator desktop-only" 
           style={{ backgroundColor: getLiveIndicatorColor() }}
           title={isChecking ? 'Checking for updates...' : 'Live status'}
         />
