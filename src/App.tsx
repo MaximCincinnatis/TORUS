@@ -1940,6 +1940,11 @@ function App() {
     return activeStakes;
   }, [stakeData]);
 
+  const memoizedTotalStakes = useMemo(() => {
+    if (stakeData.length === 0) return null;
+    return stakeData.length;
+  }, [stakeData]);
+
   const memoizedPercentStaked = useMemo(() => {
     if (stakeData.length === 0 || totalSupply === 0) return null;
     return percentStaked;
@@ -2131,22 +2136,27 @@ function App() {
             delay={0.2}
           />
           <SmartMetricCard
+            title="Total Stakes"
+            value={memoizedTotalStakes ? memoizedTotalStakes.toLocaleString() : null}
+            delay={0.25}
+          />
+          <SmartMetricCard
             title={<><img src="https://www.torus.win/torus.svg" alt="TORUS" style={{ width: '16px', height: '16px', marginRight: '6px', verticalAlign: 'middle' }} />Average Stake Size</>}
             value={memoizedAvgStakeSize ? memoizedAvgStakeSize.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : null}
             suffix={<span className="torus-text">TORUS</span>}
-            delay={0.3}
+            delay={0.35}
           />
           <SmartMetricCard
             title={<><img src="https://coin-images.coingecko.com/coins/images/32762/large/TitanXpng_%281%29.png?1704456654" alt="TitanX" style={{ width: '16px', height: '16px', marginRight: '6px', verticalAlign: 'middle', opacity: 0.8 }} />Total TitanX Used in Stakes</>}
             value={memoizedTotalTitanXFromStakes ? memoizedTotalTitanXFromStakes.toLocaleString('en-US', { maximumFractionDigits: 0 }) : null}
             suffix="TITANX"
-            delay={0.4}
+            delay={0.45}
           />
           <SmartMetricCard
             title={<><img src="/eth-logo.svg" alt="Ethereum" style={{ width: '16px', height: '16px', marginRight: '6px', verticalAlign: 'middle', backgroundColor: 'transparent' }} />Total ETH Used in Stakes</>}
             value={memoizedTotalETHFromStakes ? memoizedTotalETHFromStakes.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : null}
             suffix="ETH"
-            delay={0.5}
+            delay={0.55}
           />
         </div>
       </div>
@@ -2189,8 +2199,8 @@ function App() {
       {/* Charts Section */}
       <ExpandableChartSection
         id="max-supply-projection"
-        title="Maximum Possible Supply If All Positions Maintain Their Share Percentages"
-        subtitle="Future TORUS Max Supply Projection (includes future share pool payouts)"
+        title={<>Max <span className="torus-text">TORUS</span> Supply w/Future Share Payouts</>}
+        subtitle="Projected TORUS Supply Growth Including Future Share Pool Distributions"
         chartType="line"
         keyMetrics={[
           {
@@ -2233,15 +2243,15 @@ function App() {
           preCalculatedProjection={preCalculatedProjection}
         />
         <div className="chart-note">
-          This projection shows the accrued future supply based on existing positions only. It includes principal returns from stakes and new tokens from creates that will be added when positions mature. This does NOT project future share rewards beyond what current positions have already earned. New positions created after today will dilute existing share percentages and reduce actual rewards.
+          Projects the maximum possible TORUS supply growth assuming existing positions maintain their current share percentages throughout their lifetimes. This includes both principal returns from maturing positions AND estimated future share rewards if no new positions are created. The projection assumes the reward pool continues distributing TORUS tokens daily while existing positions retain their proportional shares. <strong>Important:</strong> Actual supply will likely be lower as new positions dilute existing share percentages and reduce per-position rewards.
         </div>
       </ExpandableChartSection>
 
       <ExpandableChartSection
         id="torus-rewards"
-        title={<><span style={{color: '#f59e0b'}}>TORUS</span> Principal and Share Supply Releasing Daily</>}
+        title={<><span className="torus-text">TORUS</span> Supply w/Past Share Payouts</>}
         chartType="bar"
-        subtitle="TORUS Released Each Day: Principal vs Accrued Share Rewards (does not add in future share pool payouts, only includes current accrued share payouts)"
+        subtitle="Daily TORUS Released: Principal + Accumulated Share Rewards from Matured Positions"
         keyMetrics={[
           {
             label: "Total Principal",
@@ -2315,7 +2325,7 @@ function App() {
           customLegendItems={[
             {
               label: 'Principal TORUS',
-              color: 'linear-gradient(to top, #fbbf24, #ec4899, #8b5cf6)',
+              color: 'linear-gradient(to top, #8b5cf6, #ec4899, #fbbf24)',
               logo: 'https://www.torus.win/torus.svg'
             },
             {
@@ -2344,7 +2354,7 @@ function App() {
           }}
         />
         <div className="chart-note">
-          Shows total TORUS released each day from positions that matured (historical) or will mature (future), spanning from contract launch through 88 days ahead. Purple bars show principal from stakes/creates ending. Blue bars show accrued share rewards that accumulated daily throughout each position's lifetime. <strong>Important:</strong> This chart only includes share rewards that have already been accrued by existing positions - it does NOT include future daily share pool distributions that will be available for new staking.
+          Shows total TORUS released daily from maturing positions, including both principal returns and accumulated share rewards. Purple bars represent the original principal amounts from stakes and creates. Blue bars show share rewards that were earned daily during each position's lifetime. This chart displays historical and future releases from existing positions only - it does NOT include ongoing daily TORUS distributions to the reward pool for new staking opportunities.
         </div>
       </ExpandableChartSection>
 

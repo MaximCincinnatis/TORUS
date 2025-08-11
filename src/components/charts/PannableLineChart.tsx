@@ -333,7 +333,7 @@ const PannableLineChart: React.FC<PannableLineChartProps> = ({
           }
           const gradient = ctx.createLinearGradient(0, chartArea.bottom, 0, chartArea.top);
           gradient.addColorStop(0, 'rgba(251, 191, 36, 0.3)');  // Yellow at bottom (30% opacity)
-          gradient.addColorStop(0.3, 'rgba(139, 92, 246, 0.3)');  // Purple starts early (more purple)
+          gradient.addColorStop(0.5, 'rgba(236, 72, 153, 0.35)');  // Pink in middle
           gradient.addColorStop(1, 'rgba(139, 92, 246, 0.4)');  // Purple at top (slightly more opacity)
           return gradient;
         }

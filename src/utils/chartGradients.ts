@@ -9,12 +9,12 @@ export const createGradient = (ctx: CanvasRenderingContext2D, chartArea: any, co
     return `rgba(${r}, ${g}, ${b}, ${alpha})`;
   };
   
-  // Special handling for TORUS gradient - yellow to pink to purple
+  // Special handling for TORUS gradient - purple to pink to yellow
   if (color1 === '#fbbf24' && color2 === '#8b5cf6') {
-    // TORUS gradient: yellow to pink to purple
-    gradient.addColorStop(0, hexToRgba('#fbbf24', opacity * 0.5));   // Yellow at bottom
+    // TORUS gradient: purple to pink to yellow
+    gradient.addColorStop(0, hexToRgba('#8b5cf6', opacity));         // Purple at bottom
     gradient.addColorStop(0.5, hexToRgba('#ec4899', opacity * 0.7)); // Pink in middle
-    gradient.addColorStop(1, hexToRgba('#8b5cf6', opacity));         // Purple at top
+    gradient.addColorStop(1, hexToRgba('#fbbf24', opacity * 0.5));   // Yellow at top
   } else if (color1 === '#ffffff' && color2 === '#16a34a') {
     // TitanX gradient: white to green with more green
     gradient.addColorStop(0, hexToRgba(color1, opacity * 0.4));  // White at bottom (less white)
