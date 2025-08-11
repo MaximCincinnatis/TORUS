@@ -12,6 +12,7 @@ import SkeletonCard from './components/loading/SkeletonCard';
 import LPPositionsTable from './components/lp/LPPositionsTable';
 import FutureMaxSupplyChart from './components/charts/FutureMaxSupplyChart';
 import DateRangeButtons from './components/charts/DateRangeButtons';
+import UpdateNotification from './components/UpdateNotification';
 import { getContractInfo, RewardPoolData } from './utils/ethersWeb3';
 import { getTokenInfo, SimpleLPPosition } from './utils/uniswapV3RealOwners';
 import { getMainDashboardDataWithCache, getLPPositionsWithCache } from './utils/cacheDataLoader';
@@ -232,6 +233,11 @@ function App() {
         creates: dashboardResult.data.createEvents?.length || 0,
         rewardPool: dashboardResult.data.rewardPoolData?.length || 0
       });
+      
+      // Set last updated time from cached data
+      if (dashboardResult.data.lastUpdated) {
+        setLastUpdatedTime(dashboardResult.data.lastUpdated);
+      }
       
       
       // STAGGERED LOADING FOR GRANULAR BUBBLES
@@ -2016,9 +2022,21 @@ function App() {
     return <MaintenancePage />;
   }
 
+  // Handle data refresh
+  const handleRefresh = () => {
+    // Smooth reload with a slight delay for better UX
+    setTimeout(() => {
+      window.location.reload();
+    }, 300);
+  };
+
   return (
     <>
       <Analytics />
+      <UpdateNotification 
+        lastUpdated={lastUpdatedTime} 
+        onRefresh={handleRefresh} 
+      />
       <Dashboard>
       {/* Dashboard Header */}
       <div className="dashboard-header">
