@@ -3490,13 +3490,13 @@ function App() {
       {/* LP Positions Section */}
       <ExpandableChartSection
         id="lp-positions"
-        title={<>Active Liquidity Positions on <span style={{color: '#3b82f6'}}>Uniswap V3</span></>}
+        title={<><span style={{color: '#3b82f6'}}>Uniswap V3</span> Liquidity Position</>}
         chartType="table"
-        subtitle="Uniswap V3 Liquidity Providers"
+        subtitle="TORUS Protocol Position #1029195"
         keyMetrics={[
           {
-            label: "Total Positions",
-            value: lpPositions.length,
+            label: "Position ID",
+            value: "1029195",
             trend: "neutral"
           },
           {
@@ -3520,7 +3520,7 @@ function App() {
 
       >
         <LPPositionsTable 
-          positions={lpPositions} 
+          positions={lpPositions.filter(position => position.tokenId === "1029195")} 
           loading={lpLoading}
           tokenInfo={lpTokenInfo || { token0IsTorus: true, token0IsTitanX: false }}
         />

@@ -20,6 +20,10 @@ export const createGradient = (ctx: CanvasRenderingContext2D, chartArea: any, co
     gradient.addColorStop(0, hexToRgba(color1, opacity * 0.4));  // White at bottom (less white)
     gradient.addColorStop(0.4, hexToRgba(color2, opacity * 0.6)); // Green starts earlier
     gradient.addColorStop(1, hexToRgba(color2, opacity));         // Full green at top
+  } else if (color1 === '#ec4899' && color2 === '#fbbf24') {
+    // Stakes gradient: solid pink to yellow
+    gradient.addColorStop(0, hexToRgba('#ec4899', opacity));      // Solid pink at bottom
+    gradient.addColorStop(1, hexToRgba('#fbbf24', opacity));      // Yellow at top
   } else {
     // Default gradient
     gradient.addColorStop(0, hexToRgba(color1, opacity * 0.3));
@@ -139,7 +143,7 @@ export const gradientPlugin = {
         colorScheme = {
           start: '#ec4899',  // Pink
           end: '#fbbf24',    // Yellow
-          border: '#f97316'
+          border: '#ec4899'
         }; // Pink to yellow for Stakes
       } else {
         // Default color scheme

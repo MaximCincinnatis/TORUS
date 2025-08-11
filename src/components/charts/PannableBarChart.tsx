@@ -235,6 +235,33 @@ const PannableBarChart: React.FC<PannableBarChartProps> = ({
     }
   }, [isDragging, dragStartX, dragStartIndex, currentWindowSize, maxStartIndex, startIndex, labels.length]);
 
+  // Touch event handlers for mobile
+  const handleTouchStart = (e: React.TouchEvent<HTMLDivElement>) => {
+    if (e.touches.length === 1) {
+      setIsDragging(true);
+      setDragStartX(e.touches[0].clientX);
+      setDragStartIndex(startIndex);
+      e.preventDefault();
+    }
+  };
+
+  const handleTouchMove = (e: React.TouchEvent<HTMLDivElement>) => {
+    if (!isDragging || e.touches.length !== 1) return;
+
+    const deltaX = e.touches[0].clientX - dragStartX;
+    const chartWidth = e.currentTarget.offsetWidth;
+    
+    const pixelsPerDataPoint = chartWidth / currentWindowSize;
+    const dataPointsMoved = Math.round(deltaX / pixelsPerDataPoint);
+    
+    const newStartIndex = Math.max(0, Math.min(maxStartIndex, dragStartIndex - dataPointsMoved));
+    setStartIndex(newStartIndex);
+  };
+
+  const handleTouchEnd = () => {
+    setIsDragging(false);
+  };
+
   // Mouse wheel zoom handler
   const handleWheel = useCallback((e: React.WheelEvent<HTMLDivElement>) => {
     e.preventDefault();
@@ -568,6 +595,9 @@ const PannableBarChart: React.FC<PannableBarChartProps> = ({
         onMouseDown={handleMouseDown}
         onMouseUp={() => setIsDragging(false)}
         onMouseLeave={() => {}}
+        onTouchStart={handleTouchStart}
+        onTouchMove={handleTouchMove}
+        onTouchEnd={handleTouchEnd}
         onWheel={handleWheel}
       >
         <div style={{ pointerEvents: isDragging ? 'none' : 'auto', height: '100%' }}>
