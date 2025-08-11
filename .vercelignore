@@ -1,0 +1,30 @@
+# Large log files and temporary data
+logs/
+*.log
+server.log
+*.tar.gz
+deployment.tar.gz
+
+# Test and audit files
+test-*.js
+audit-*.js
+*-audit.js
+*-test.js
+check-*.js
+debug-*.js
+analyze-*.js
+investigate-*.js
+
+# Node modules (already in .gitignore but also exclude from Vercel)
+node_modules/
+
+# Backup files
+backup-*/
+backups/
+*backup*
+
+# Test environments
+test-env-*/
+
+# Large temporary files
+temp-*.json

@@ -108,9 +108,6 @@ const LPPositionsTable: React.FC<LPPositionsTableProps> = ({ positions, loading,
 
   return (
     <div className="lp-positions-container">
-      <div className="lp-positions-header">
-        <p className="positions-count">{positions.length} positions found</p>
-      </div>
       
       <div className="lp-table-wrapper">
         <table className="lp-positions-table">
@@ -210,12 +207,6 @@ const LPPositionsTable: React.FC<LPPositionsTableProps> = ({ positions, loading,
             })}
           </tbody>
         </table>
-      </div>
-      
-      <div className="lp-positions-footer">
-        <p className="disclaimer">
-          * Data shows individual LP position holders with their actual TORUS and TitanX amounts and current claimable yield.
-        </p>
       </div>
     </div>
   );

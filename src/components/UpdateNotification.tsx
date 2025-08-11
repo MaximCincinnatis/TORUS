@@ -10,7 +10,7 @@ const UpdateNotification: React.FC<UpdateNotificationProps> = ({ lastUpdated, on
   const [showBanner, setShowBanner] = useState(false);
   const [timeAgo, setTimeAgo] = useState('');
   const [isChecking, setIsChecking] = useState(false);
-  const [serverLastUpdated, setServerLastUpdated] = useState<string | null>(null);
+  const [hasNewData, setHasNewData] = useState(false);
 
   // Format time ago
   const formatTimeAgo = useCallback((timestamp: string) => {
@@ -56,10 +56,9 @@ const UpdateNotification: React.FC<UpdateNotificationProps> = ({ lastUpdated, on
       const serverTime = response.headers.get('last-modified');
       if (serverTime) {
         const serverTimestamp = new Date(serverTime).toISOString();
-        setServerLastUpdated(serverTimestamp);
         
         if (lastUpdated && serverTimestamp > lastUpdated) {
-          setShowBanner(true);
+          setHasNewData(true);
         }
       }
     } catch (error) {
@@ -79,19 +78,8 @@ const UpdateNotification: React.FC<UpdateNotificationProps> = ({ lastUpdated, on
     return () => clearInterval(interval);
   }, [checkForUpdates]);
 
-  // Auto-hide banner after 30 seconds
-  useEffect(() => {
-    if (showBanner) {
-      const timer = setTimeout(() => {
-        setShowBanner(false);
-      }, 30000);
-      
-      return () => clearTimeout(timer);
-    }
-  }, [showBanner]);
-
   const handleRefresh = () => {
-    setShowBanner(false);
+    setHasNewData(false);
     onRefresh();
   };
 
@@ -113,7 +101,7 @@ const UpdateNotification: React.FC<UpdateNotificationProps> = ({ lastUpdated, on
       {/* Header timestamp */}
       <div className="update-status">
         <span className="update-time">
-          {lastUpdated ? `Updated ${timeAgo}` : 'Loading...'}
+          {lastUpdated ? `Page data updated: ${timeAgo}` : 'Loading data...'}
         </span>
         <span 
           className="live-indicator" 
@@ -121,29 +109,15 @@ const UpdateNotification: React.FC<UpdateNotificationProps> = ({ lastUpdated, on
           title={isChecking ? 'Checking for updates...' : 'Live status'}
         />
         <button 
-          className="refresh-button" 
+          className={`refresh-button ${hasNewData ? 'has-new-data' : ''}`}
           onClick={handleRefresh}
           disabled={isChecking}
-          title="Refresh data"
+          title={hasNewData ? 'New data available, click to refresh' : 'Refresh data'}
         >
           <span className={`refresh-icon ${isChecking ? 'spinning' : ''}`}>
             ↻
           </span>
         </button>
-      </div>
-
-      {/* Update banner */}
-      <div className={`update-banner ${showBanner ? 'show' : ''}`}>
-        <div className="update-banner-content">
-          <span className="update-icon">⚡</span>
-          <span className="update-message">New data available</span>
-          <button className="update-action" onClick={handleRefresh}>
-            Refresh now
-          </button>
-          <button className="update-dismiss" onClick={() => setShowBanner(false)}>
-            ×
-          </button>
-        </div>
       </div>
     </>
   );
