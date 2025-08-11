@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 import './UpdateNotification.css';
 
 interface UpdateNotificationProps {
@@ -11,6 +11,7 @@ const UpdateNotification: React.FC<UpdateNotificationProps> = ({ lastUpdated, on
   const [timeAgo, setTimeAgo] = useState('');
   const [isChecking, setIsChecking] = useState(false);
   const [hasNewData, setHasNewData] = useState(false);
+  const checkingRef = useRef(false);
 
   // Format time ago
   const formatTimeAgo = useCallback((timestamp: string) => {
@@ -44,8 +45,9 @@ const UpdateNotification: React.FC<UpdateNotificationProps> = ({ lastUpdated, on
 
   // Check for updates
   const checkForUpdates = useCallback(async () => {
-    if (isChecking) return;
+    if (checkingRef.current) return;
     
+    checkingRef.current = true;
     setIsChecking(true);
     try {
       const response = await fetch('/data/cached-data.json', {
@@ -65,8 +67,9 @@ const UpdateNotification: React.FC<UpdateNotificationProps> = ({ lastUpdated, on
       console.error('Error checking for updates:', error);
     } finally {
       setIsChecking(false);
+      checkingRef.current = false;
     }
-  }, [lastUpdated, isChecking]);
+  }, [lastUpdated]);
 
   // Poll for updates every 30 seconds
   useEffect(() => {
@@ -79,6 +82,7 @@ const UpdateNotification: React.FC<UpdateNotificationProps> = ({ lastUpdated, on
   }, [checkForUpdates]);
 
   const handleRefresh = () => {
+    if (isChecking) return;
     setHasNewData(false);
     onRefresh();
   };
