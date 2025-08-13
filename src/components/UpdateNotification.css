@@ -50,14 +50,16 @@
   background: transparent;
   border: 1px solid rgba(251, 191, 36, 0.3);
   color: #fbbf24;
-  width: 24px;
+  width: auto;
+  min-width: 24px;
   height: 24px;
-  padding: 0;
+  padding: 0 8px;
   border-radius: 4px;
   cursor: pointer;
   display: flex;
   align-items: center;
   justify-content: center;
+  gap: 6px;
   transition: background 0.2s ease, border-color 0.2s ease;
   font-size: 11px;
 }
@@ -114,11 +116,34 @@
   to { transform: rotate(360deg); }
 }
 
+/* Button text styles */
+.button-text {
+  font-size: 12px;
+  font-weight: 500;
+  white-space: nowrap;
+}
+
+.desktop-text {
+  display: inline;
+}
+
+.mobile-text {
+  display: none;
+}
+
 
 /* Hide desktop-only elements on mobile */
 @media (max-width: 768px) {
   .desktop-only {
     display: none;
+  }
+  
+  .desktop-text {
+    display: none;
+  }
+  
+  .mobile-text {
+    display: inline;
   }
   
   .update-status {
@@ -130,12 +155,17 @@
   }
   
   .refresh-button {
-    width: 32px;
+    min-width: 32px;
     height: 32px;
-    font-size: 16px;
+    font-size: 14px;
+    padding: 0 10px;
   }
   
   .refresh-icon {
     font-size: 18px;
+  }
+  
+  .button-text {
+    font-size: 14px;
   }
 }

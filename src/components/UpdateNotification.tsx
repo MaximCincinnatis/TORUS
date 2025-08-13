@@ -121,6 +121,12 @@ const UpdateNotification: React.FC<UpdateNotificationProps> = ({ lastUpdated, on
           <span className={`refresh-icon ${isChecking ? 'spinning' : ''}`}>
             ↻
           </span>
+          {hasNewData && (
+            <>
+              <span className="button-text desktop-text">Update Available</span>
+              <span className="button-text mobile-text">Update</span>
+            </>
+          )}
         </button>
       </div>
     </>
