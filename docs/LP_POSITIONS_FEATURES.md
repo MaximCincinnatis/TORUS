@@ -39,16 +39,10 @@ The Uniswap V3 Liquidity Providers table displays all active liquidity positions
 ### 5. **Claimable Yield**
 - **Type**: Numeric
 - **Purpose**: Estimated unclaimed fees
-- **Format**: "$X.XX"
-- **Note**: Calculated based on position's share of trading fees
+- **Format**: "X.XXX TORUS" and "X.XX TitanX"
+- **Note**: Shows both TORUS and TitanX claimable amounts
 
-### 6. **Est. APR (24hr)**
-- **Type**: Percentage
-- **Purpose**: Estimated annual percentage rate based on last 24hr fees
-- **Format**: "X.XX%"
-- **Note**: Not compounded, simple APR calculation
-
-### 7. **TitanX Price Range (Millions per TORUS)**
+### 6. **TitanX Price Range (Millions per TORUS)**
 - **Type**: Range or text
 - **Purpose**: Price boundaries for concentrated liquidity
 - **Features**:
@@ -57,7 +51,7 @@ The Uniswap V3 Liquidity Providers table displays all active liquidity positions
   - Values in millions of TitanX per TORUS
   - Formatted with commas
 
-### 8. **Status**
+### 7. **Status**
 - **Type**: Badge
 - **Purpose**: Shows if position is in active trading range
 - **States**:
