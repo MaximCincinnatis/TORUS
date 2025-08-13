@@ -173,6 +173,7 @@ const LPPositionsTable: React.FC<LPPositionsTableProps> = ({ positions, loading,
               
               // Full range positions are always in range
               const isInRange = isFullRange || position.inRange;
+              const isActive = position.isActive !== undefined ? position.isActive : true;
 
               return (
                 <tr key={`${position.owner}-${index}`} className={isTorusContract ? 'torus-contract-position' : ''}>
