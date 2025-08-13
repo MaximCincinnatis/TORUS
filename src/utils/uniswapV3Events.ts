@@ -88,14 +88,16 @@ export async function fetchLPPositionsFromEvents(fromBlock?: number): Promise<Si
           tickUpper: event.args.tickUpper,
           torusAmount: 0,
           titanxAmount: 0,
-          inRange: false
+          inRange: false,
+          isActive: false
         };
         
         // Add liquidity
         const newLiquidity = (BigInt(existing.liquidity) + BigInt(event.args.amount)).toString();
         positions.set(key, {
           ...existing,
-          liquidity: newLiquidity
+          liquidity: newLiquidity,
+          isActive: BigInt(newLiquidity) > BigInt(0)
         });
       }
     }
@@ -112,7 +114,8 @@ export async function fetchLPPositionsFromEvents(fromBlock?: number): Promise<Si
           if (newLiquidity > BigInt(0)) {
             positions.set(key, {
               ...existing,
-              liquidity: newLiquidity.toString()
+              liquidity: newLiquidity.toString(),
+              isActive: true
             });
           } else {
             positions.delete(key);
