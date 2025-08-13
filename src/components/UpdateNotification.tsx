@@ -123,7 +123,7 @@ const UpdateNotification: React.FC<UpdateNotificationProps> = ({ lastUpdated, on
           </button>
           {hasNewData && lastUpdated && (
             <span className="viewing-old-data desktop-only">
-              Viewing Data {timeAgo} Old
+              Viewing Data {timeAgo.replace(' ago', '')} Old
             </span>
           )}
         </div>
