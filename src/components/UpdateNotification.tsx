@@ -104,30 +104,34 @@ const UpdateNotification: React.FC<UpdateNotificationProps> = ({ lastUpdated, on
     <>
       {/* Header timestamp */}
       <div className="update-status">
-        <span className="update-time desktop-only">
-          {lastUpdated ? `Page data updated: ${timeAgo}` : 'Loading data...'}
-        </span>
+        <div className="update-content">
+          <button 
+            className={`refresh-button ${hasNewData ? 'has-new-data' : ''}`}
+            onClick={handleRefresh}
+            disabled={isChecking}
+            title={hasNewData ? 'New data available, click to refresh' : 'Data is up to date'}
+          >
+            <span className={`refresh-icon ${isChecking ? 'spinning' : ''}`}>
+              ↻
+            </span>
+            {hasNewData && (
+              <>
+                <span className="button-text desktop-text">Update Available</span>
+                <span className="button-text mobile-text">Update</span>
+              </>
+            )}
+          </button>
+          {hasNewData && lastUpdated && (
+            <span className="viewing-old-data desktop-only">
+              Viewing Data {timeAgo} Old
+            </span>
+          )}
+        </div>
         <span 
           className="live-indicator desktop-only" 
           style={{ backgroundColor: getLiveIndicatorColor() }}
           title={isChecking ? 'Checking for updates...' : 'Live status'}
         />
-        <button 
-          className={`refresh-button ${hasNewData ? 'has-new-data' : ''}`}
-          onClick={handleRefresh}
-          disabled={isChecking}
-          title={hasNewData ? 'New data available, click to refresh' : 'Data is up to date'}
-        >
-          <span className={`refresh-icon ${isChecking ? 'spinning' : ''}`}>
-            ↻
-          </span>
-          {hasNewData && (
-            <>
-              <span className="button-text desktop-text">Update Available</span>
-              <span className="button-text mobile-text">Update</span>
-            </>
-          )}
-        </button>
       </div>
     </>
   );

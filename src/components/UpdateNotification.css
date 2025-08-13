@@ -1,7 +1,7 @@
 /* Update Status - Header */
 .update-status {
   display: flex;
-  align-items: center;
+  align-items: flex-start;
   gap: 6px;
   color: #9ca3af;
   font-size: 12px;
@@ -15,6 +15,13 @@
   border-radius: 6px;
   border: 1px solid rgba(255, 255, 255, 0.02);
   animation: fadeIn 0.3s ease-in;
+}
+
+.update-content {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 4px;
 }
 
 @keyframes fadeIn {
@@ -131,6 +138,14 @@
   display: none;
 }
 
+/* Viewing old data text */
+.viewing-old-data {
+  font-size: 10px;
+  color: #9ca3af;
+  white-space: nowrap;
+  padding-left: 2px;
+}
+
 
 /* Hide desktop-only elements on mobile */
 @media (max-width: 768px) {
@@ -152,6 +167,11 @@
     padding: 4px;
     background: rgba(24, 24, 42, 0.3);
     backdrop-filter: blur(2px);
+  }
+  
+  .update-content {
+    flex-direction: row;
+    align-items: center;
   }
   
   .refresh-button {
