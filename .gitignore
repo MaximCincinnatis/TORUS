@@ -50,3 +50,26 @@ test-results/
 .claude/
 .vercel
 .env
+
+# Scripts and test files
+scripts/test-*.js
+scripts/audit-*.js
+scripts/check-*.js
+test-env*/
+logs/last-validation.json
+
+# Data backups
+public/data/backups/
+public/data/cached-data.backup-*.json
+public/data/*.backup-*.json
+
+# Temporary files
+*.tmp
+*.temp
+temp/
+tmp/
+
+# Auto-update processes
+auto-update*.js
+smart-update*.js
+*-fixed.js
