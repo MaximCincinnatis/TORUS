@@ -13,6 +13,7 @@ const mockPositions: SimpleLPPosition[] = [
     torusAmount: 100,
     titanxAmount: 3500000,
     inRange: true,
+    isActive: true,
   },
   {
     tokenId: '456',
@@ -23,6 +24,7 @@ const mockPositions: SimpleLPPosition[] = [
     torusAmount: 50,
     titanxAmount: 1750000,
     inRange: false,
+    isActive: true,
   },
 ];
 
