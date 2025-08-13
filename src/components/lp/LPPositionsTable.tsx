@@ -16,12 +16,19 @@ interface LPPositionsTableProps {
 }
 
 const LPPositionsTable: React.FC<LPPositionsTableProps> = ({ positions, loading, tokenInfo }) => {
-  // Note: Loading state is now handled by ExpandableChartSection
+  // Show loading state
+  if (loading) {
+    return (
+      <div className="lp-positions-loading">
+        <p>Loading LP positions...</p>
+      </div>
+    );
+  }
 
   if (positions.length === 0) {
     return (
       <div className="lp-positions-empty">
-        <p>No active LP positions found in recent blocks.</p>
+        <p>No active LP positions found</p>
         <p className="empty-subtitle">Positions may exist in earlier blocks or through NFT Position Manager.</p>
       </div>
     );
@@ -108,6 +115,10 @@ const LPPositionsTable: React.FC<LPPositionsTableProps> = ({ positions, loading,
 
   return (
     <div className="lp-positions-container">
+      <div className="lp-positions-header">
+        <h3>Active Liquidity Positions</h3>
+        <span className="position-count">{positions.length} positions found</span>
+      </div>
       
       <div className="lp-table-wrapper">
         <table className="lp-positions-table">

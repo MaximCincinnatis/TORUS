@@ -28,6 +28,7 @@ export interface SimpleLPPosition {
   torusAmount: number;  // Standard field - required
   titanxAmount: number; // Standard field - required
   inRange: boolean;
+  isActive: boolean;     // Whether the position has liquidity and is active
   // Optional enhanced fields
   claimableTorus?: number;
   claimableTitanX?: number;
@@ -93,7 +94,8 @@ async function tryDirectNFTApproach(positionManager: any, poolInfo: any): Promis
               tickUpper: positionData.tickUpper,
               torusAmount: token0IsTorus ? amounts.amount0 : amounts.amount1,
               titanxAmount: token0IsTorus ? amounts.amount1 : amounts.amount0,
-              inRange: isPositionInRange(poolInfo.currentTick, positionData.tickLower, positionData.tickUpper)
+              inRange: isPositionInRange(poolInfo.currentTick, positionData.tickLower, positionData.tickUpper),
+              isActive: positionData.liquidity > 0
             });
           }
         } catch (error) {
@@ -374,6 +376,7 @@ export async function fetchLPPositionsFromEvents(): Promise<SimpleLPPosition[]> 
                   torusAmount: token0IsTorus ? amounts.amount0 : amounts.amount1,
                   titanxAmount: token0IsTorus ? amounts.amount1 : amounts.amount0,
                   inRange: isPositionInRange(poolInfo.currentTick, Number(positionData.tickLower), Number(positionData.tickUpper)),
+                  isActive: positionData.liquidity > 0,
                   claimableTorus,
                   claimableTitanX
                 };
@@ -393,6 +396,7 @@ export async function fetchLPPositionsFromEvents(): Promise<SimpleLPPosition[]> 
                   torusAmount: 0,
                   titanxAmount: 0,
                   inRange: false,
+                  isActive: positionData.liquidity > 0,
                   claimableTorus: 0,
                   claimableTitanX: 0
                 };
