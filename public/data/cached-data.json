@@ -39724,6 +39724,34 @@
         "rawCostETH": "25893511759799490",
         "rawCostTitanX": "0",
         "type": "create"
+      },
+      {
+        "user": "0x1998afe7b72a44e3e51d8326e9e719571afbf6b5",
+        "owner": "0x1998afe7b72a44e3e51d8326e9e719571afbf6b5",
+        "createId": "2",
+        "torusAmount": "1104059586254574",
+        "principal": "1104059586254574",
+        "timestamp": 1755335003,
+        "endTime": 1755421403,
+        "blockNumber": 23152578,
+        "id": "2",
+        "createDays": 1,
+        "stakingDays": 1,
+        "maturityDate": "2025-08-17T09:03:23.000Z",
+        "startDate": "2025-08-16T09:03:23.000Z",
+        "protocolDay": 37,
+        "titanAmount": "0",
+        "titanXAmount": "0",
+        "ethAmount": "57541137243998",
+        "shares": "1104059586254574",
+        "power": "0",
+        "claimedCreate": false,
+        "claimedStake": false,
+        "costETH": "0.000057541137243998",
+        "costTitanX": "0",
+        "rawCostETH": "57541137243998",
+        "rawCostTitanX": "0",
+        "type": "create"
       }
     ],
     "stakeEvents": [
@@ -42963,9 +42991,9 @@
         "day": 37,
         "totalSupply": 21072.319470441147,
         "burnedSupply": 0,
-        "timestamp": "2025-08-16T09:00:08.325Z"
+        "timestamp": "2025-08-16T09:05:08.392Z"
       },
-      "currentBlock": 23152561,
+      "currentBlock": 23152586,
       "lastDeduplication": "2025-08-02T21:51:40.056Z",
       "duplicatesRemoved": 0
     },
@@ -44214,14 +44242,14 @@
       }
     ],
     "totalStakedInContract": 5515.3,
-    "lastBlock": 23152561
+    "lastBlock": 23152586
   },
-  "lastUpdated": "2025-08-16T09:00:39.748Z",
+  "lastUpdated": "2025-08-16T09:05:42.234Z",
   "lastProcessedBlock": 23055425,
   "currentProtocolDay": 37,
   "totalSupply": 21072.319470441147,
   "titanxTotalSupply": "105693405355172316079660784910569",
-  "totalTitanXBurnt": "222349960435425418727605942710",
+  "totalTitanXBurnt": "222350003107681844691474650509",
   "lastBlock": 23056089,
   "contractData": {
     "torusToken": {
