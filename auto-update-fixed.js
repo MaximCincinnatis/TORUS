@@ -106,7 +106,18 @@ async function main() {
     }
     
     // 5. Push to GitHub
-    if (!execCommand('git push origin master', 'Pushing to GitHub')) {
+    // Read token from file if it exists
+    const tokenFile = '.github-token';
+    let pushCommand = 'git push origin master';
+    
+    if (fs.existsSync(tokenFile)) {
+      const token = fs.readFileSync(tokenFile, 'utf8').trim();
+      const remoteUrl = execSync('git config --get remote.origin.url', { encoding: 'utf8' }).trim();
+      const repoPath = remoteUrl.replace(/https:\/\/.*@/, '').replace('https://', '');
+      pushCommand = `git push https://${token}@${repoPath} master`;
+    }
+    
+    if (!execCommand(pushCommand, 'Pushing to GitHub')) {
       process.exit(1);
     }
     
