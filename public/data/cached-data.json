@@ -47401,9 +47401,9 @@
         "day": 47,
         "totalSupply": 28479.782456269004,
         "burnedSupply": 0,
-        "timestamp": "2025-08-25T19:15:05.659Z"
+        "timestamp": "2025-08-25T19:20:04.263Z"
       },
-      "currentBlock": 23220147,
+      "currentBlock": 23220171,
       "lastDeduplication": "2025-08-02T21:51:40.056Z",
       "duplicatesRemoved": 0
     },
@@ -48742,9 +48742,9 @@
       }
     ],
     "totalStakedInContract": 6270.38,
-    "lastBlock": 23220147
+    "lastBlock": 23220171
   },
-  "lastUpdated": "2025-08-25T19:16:00.823Z",
+  "lastUpdated": "2025-08-25T19:21:09.279Z",
   "lastProcessedBlock": 23055425,
   "currentProtocolDay": 47,
   "totalSupply": 28479.782456269004,
@@ -48777,12 +48777,23 @@
       "fee": 10000,
       "tokensOwed0": "0",
       "tokensOwed1": "0",
-      "torusAmount": 0,
+      "torusAmount": 0.562520450993537,
       "titanxAmount": 114999999.99989024,
       "claimableTorus": 0,
       "claimableTitanX": 0,
       "claimableYield": 0,
-      "lastChecked": "2025-08-19T22:50:11.200Z"
+      "lastChecked": "2025-08-19T22:50:11.200Z",
+      "amount0": 0.562520450993537,
+      "amount1": 104584259.03801574,
+      "wethAmount": 104584259.03801574,
+      "torusValue": 334669628921.6504,
+      "wethValue": 334669628921.6504,
+      "totalValue": 669339257843.3008,
+      "claimableFees": {
+        "torus": 0,
+        "weth": 0
+      },
+      "lastUpdated": "2025-08-25T19:17:20.008Z"
     }
   ],
   "metadata": {
@@ -48801,7 +48812,8 @@
     "token1": "",
     "liquidity": "0",
     "feeGrowthGlobal0X128": "0",
-    "feeGrowthGlobal1X128": "0"
+    "feeGrowthGlobal1X128": "0",
+    "lastUpdated": "2025-08-25T19:17:20.009Z"
   },
   "tokenPrices": {
     "torus": {
