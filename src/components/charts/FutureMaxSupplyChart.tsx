@@ -49,7 +49,14 @@ const FutureMaxSupplyChart: React.FC<FutureMaxSupplyChartProps> = ({
     console.log('rewardPoolData:', rewardPoolData?.length || 0);
     console.log('currentSupply:', currentSupply, 'TORUS (this should reflect burns)');
     console.log('contractStartDate:', contractStartDate);
+    console.log('currentProtocolDay:', currentProtocolDay);
     console.log('preCalculatedProjection:', preCalculatedProjection?.length || 0, 'days');
+    
+    // DEBUG: Check if rewardPoolData is the issue
+    if (rewardPoolData?.length === 0) {
+      console.log('❌ PROBLEM: rewardPoolData is EMPTY!');
+      console.log('This causes calculateFutureMaxSupply to generate data starting from day 9');
+    }
     
     // Force console output to show
     console.log('🚀 FutureMaxSupplyChart component is loading...');
@@ -104,6 +111,15 @@ const FutureMaxSupplyChart: React.FC<FutureMaxSupplyChartProps> = ({
       console.log('📈 Projections loaded:', projections.length);
       console.log('First projection:', projections[0]);
       console.log('Last projection:', projections[projections.length - 1]);
+      
+      // DEBUG: Check if day 38 exists in projections
+      const day38 = projections.find(p => p.day === 38);
+      if (day38) {
+        console.log('✅ Day 38 EXISTS in projections:', day38);
+      } else {
+        console.log('❌ Day 38 MISSING from projections');
+        console.log('First 3 projection days:', projections.slice(0, 3).map(p => p.day));
+      }
       
       // Apply timeframe filtering - only show current day onward
       console.log('🔍 Using currentProtocolDay:', currentProtocolDay);

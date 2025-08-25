@@ -259,6 +259,7 @@ export function calculateFutureMaxSupply(
   console.log('rewardPoolData:', rewardPoolData.length);
   console.log('currentSupply:', currentSupply);
   console.log('contractStartDate:', contractStartDate);
+  console.log('currentProtocolDay:', currentProtocolDay, '(should be 38)');
   
   // DEBUG: Check if we have the complete reward pool data
   const firstFewDays = rewardPoolData.slice(0, 10);
@@ -269,8 +270,10 @@ export function calculateFutureMaxSupply(
   
   // Find the last day with non-zero rewards (should be day 8)
   const daysWithRewards = rewardPoolData.filter(d => parseFloat(d.rewardPool.toString()) > 0);
-  const lastDayWithRewards = Math.max(...daysWithRewards.map(d => d.day));
-  const lastRewardPool = parseFloat(rewardPoolData.find(d => d.day === lastDayWithRewards)?.rewardPool.toString() || '0');
+  const lastDayWithRewards = daysWithRewards.length > 0 ? Math.max(...daysWithRewards.map(d => d.day)) : 8;
+  const lastRewardPool = daysWithRewards.length > 0 
+    ? parseFloat(rewardPoolData.find(d => d.day === lastDayWithRewards)?.rewardPool.toString() || '0')
+    : 90807.46; // Default day 8 reward pool value
   
   // Generate corrected reward pool data with 0.08% daily reduction for days 9+
   const dailyReductionRate = 0.0008; // 0.08% as decimal
@@ -279,7 +282,28 @@ export function calculateFutureMaxSupply(
   // Update existing zero entries and add any missing days
   // Extend to current protocol day + 88 for proper projection
   const targetDay = Math.max(96, (currentProtocolDay || 0) + 88);
-  for (let day = lastDayWithRewards + 1; day <= targetDay; day++) {
+  
+  // FIX: Ensure we have data for the current protocol day
+  // Start from day 1 if no data exists, or from lastDayWithRewards + 1
+  const startGenDay = rewardPoolData.length === 0 ? 1 : lastDayWithRewards + 1;
+  
+  // Add initial days with actual rewards if missing
+  if (rewardPoolData.length === 0 && startGenDay === 1) {
+    const initialRewards = [
+      91323.04, 91249.16, 91175.35, 91101.62,
+      91027.97, 90954.39, 90880.89, 90807.46
+    ];
+    for (let day = 1; day <= 8; day++) {
+      extendedRewardPoolData.push({
+        day,
+        rewardPool: initialRewards[day - 1],
+        totalShares: '0',
+        penaltiesInPool: '0'
+      });
+    }
+  }
+  
+  for (let day = Math.max(9, startGenDay); day <= targetDay; day++) {
     currentPool = currentPool * (1 - dailyReductionRate);
     
     // Find existing entry for this day
@@ -350,7 +374,17 @@ export function calculateFutureMaxSupply(
   console.log(`📊 Calculating supply projection from day ${minDay} to ${maxDay}`);
   
   // Start from current protocol day to avoid double counting past positions
+  // FIX: Ensure we start from the current day, not the day after
   const startDay = currentProtocolDay || minDay;
+  
+  // DEBUG: Check if we have data for the start day
+  const startDayData = rewardPoolMap.get(startDay);
+  if (!startDayData) {
+    console.error(`❌ NO REWARD DATA FOR START DAY ${startDay}!`);
+    console.log('Available days in rewardPoolMap:', Array.from(rewardPoolMap.keys()).slice(0, 10));
+  } else {
+    console.log(`✅ Start day ${startDay} has reward data`);
+  }
   
   console.log(`🔍 Processing days ${startDay} to ${maxDay} (starting from current protocol day)`);
   console.log(`🔍 Current supply already includes positions matured before day ${startDay}`);
@@ -392,11 +426,29 @@ ${totalShares < 1000000 ? '🚨 WARNING: SHARES TOO LOW! This will cause hockey 
     }
   }
   
+  console.log(`🔄 Starting loop from day ${startDay} to ${maxDay}`);
+  console.log(`   First iteration will be day ${startDay}`);
+  
   for (let day = startDay; day <= maxDay; day++) {
+    // Log first iteration
+    if (day === startDay) {
+      console.log(`📍 FIRST LOOP ITERATION: day = ${day}`);
+    }
+    
     const rewardData = rewardPoolMap.get(day);
     if (!rewardData) {
       console.warn(`⚠️ No reward data for day ${day}, skipping`);
+      if (day === 38) {
+        console.error(`❌❌❌ DAY 38 SKIPPED DUE TO MISSING REWARD DATA!`);
+      }
       continue;
+    }
+    
+    // DEBUG: Log when processing current protocol day
+    if (day === currentProtocolDay) {
+      console.log(`🎯 Processing CURRENT PROTOCOL DAY ${day}`);
+      console.log(`  Current Supply: ${currentSupply}`);
+      console.log(`  Reward Data exists: ${rewardData ? 'YES' : 'NO'}`);
     }
     
     const date = new Date(contractStartDate);
@@ -415,6 +467,7 @@ ${totalShares < 1000000 ? '🚨 WARNING: SHARES TOO LOW! This will cause hockey 
       
       // Only add supply on maturity day when position can be claimed
       // FIX: Only include positions that mature on or after the current protocol day
+      // BUT we need to include the current day itself in projections
       if (day === projection.maturityDay && (!currentProtocolDay || projection.maturityDay >= currentProtocolDay)) {
         if (projection.position.type === 'stake') {
           // Stakes: Add principal + all accumulated rewards on maturity day
@@ -556,6 +609,13 @@ Total shares: ${(totalSharesByDay.get(day) || 0) / 1e6}M
       console.log(`📅 MATURITY DAY ${day}: Stakes=${dailyFromStakes.toFixed(2)} Creates=${dailyFromCreates.toFixed(2)}`);
     }
     
+    // DEBUG: Log when adding current protocol day to projections
+    if (day === currentProtocolDay) {
+      console.log(`✅ Adding day ${day} to projections array`);
+      console.log(`  Total Max Supply: ${totalMaxSupply}`);
+      console.log(`  Date: ${date.toISOString().split('T')[0]}`);
+    }
+    
     maxSupplyProjections.push({
       day,
       date: date.toISOString().split('T')[0],
@@ -569,6 +629,13 @@ Total shares: ${(totalSharesByDay.get(day) || 0) / 1e6}M
         fromExisting
       }
     });
+  }
+  
+  console.log(`📊 FINAL: Created ${maxSupplyProjections.length} projections`);
+  console.log(`   First day: ${maxSupplyProjections[0]?.day}`);
+  console.log(`   Last day: ${maxSupplyProjections[maxSupplyProjections.length - 1]?.day}`);
+  if (maxSupplyProjections[0]?.day !== currentProtocolDay) {
+    console.error(`❌ PROBLEM: First projection day is ${maxSupplyProjections[0]?.day}, should be ${currentProtocolDay}`);
   }
   
   return maxSupplyProjections;

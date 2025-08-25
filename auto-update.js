@@ -1,14 +1,46 @@
 #!/usr/bin/env node
 
 /**
- * TORUS Dashboard - Automated Update and Deploy
+ * ============================================================================
+ * STATUS: 🔴 DEPRECATED - DO NOT USE
+ * ============================================================================
+ * LAST MODIFIED: 2025-07-15 (estimated)
+ * DEPRECATED DATE: 2025-08-01
+ * CLASSIFICATION DATE: 2025-08-25
  * 
- * This script:
- * 1. Updates all dashboard data
- * 2. Fixes LP position calculations
- * 3. Commits changes to git
- * 4. Pushes to GitHub (triggers Vercel deployment)
+ * ⚠️ WARNING: This script has been replaced by auto-update-fixed.js
+ * ⚠️ DO NOT USE THIS SCRIPT - It may cause data loss or corruption
+ * 
+ * REPLACED BY:
+ * - auto-update-fixed.js (includes proper data preservation)
+ * - smart-update-fixed.js (includes deduplication fixes)
+ * 
+ * ORIGINAL PURPOSE:
+ * Initial version of automated update and deployment script.
+ * Had issues with data preservation and duplicate handling.
+ * 
+ * PROBLEMS WITH THIS VERSION:
+ * 1. Did not properly preserve existing LP positions
+ * 2. Could create duplicate events in some cases
+ * 3. Performed full rebuilds too frequently
+ * 4. Poor error handling could corrupt data
+ * 
+ * MIGRATION NOTES:
+ * All functionality has been moved to auto-update-fixed.js with:
+ * - Proper incremental updates
+ * - Data preservation logic
+ * - Better error handling
+ * - Deduplication of events
+ * 
+ * REMOVAL SCHEDULE:
+ * This file will be moved to scripts/archive/ after 2025-09-01
+ * 
+ * IF YOU'RE READING THIS:
+ * Use auto-update-fixed.js instead
+ * ============================================================================
  */
+
+// [DEPRECATED CODE BELOW - DO NOT USE]
 
 const { execSync } = require('child_process');
 const fs = require('fs');

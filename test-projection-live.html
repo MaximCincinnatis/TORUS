@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Test Projection Day Numbers</title>
+</head>
+<body>
+    <h1>Open Browser Console to See Debug Info</h1>
+    <p>Then navigate to http://localhost:3000</p>
+    <p>Look for console logs starting with 🔍 or 📊</p>
+    
+    <h2>Expected Output:</h2>
+    <pre>
+    📊 Filtering from day 38 forward
+    📊 AFTER filtering: First day shown: 38
+    </pre>
+    
+    <h2>Actual Issue:</h2>
+    <pre>
+    📊 AFTER filtering: First day shown: 39
+    </pre>
+    
+    <p>The issue is in the calculateFutureMaxSupply function where it processes days.</p>
+</body>
+</html>

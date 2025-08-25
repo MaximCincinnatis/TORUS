@@ -1,21 +1,56 @@
 #!/usr/bin/env node
 
 /**
- * TORUS Dashboard - Fixed Automated Update and Deploy
+ * ============================================================================
+ * STATUS: 🟢 ACTIVE - Primary Production Script
+ * ============================================================================
+ * LAST MODIFIED: 2025-08-17
+ * CLASSIFICATION DATE: 2025-08-25
  * 
- * This script:
- * 1. Uses smart-update-fixed.js for incremental updates
- * 2. Preserves existing data
- * 3. Commits changes to git
- * 4. Pushes to GitHub (triggers Vercel deployment)
- */
-
-/**
- * STATUS: ACTIVE - Primary production script
- * RUNS: Every 5 minutes via cron job (run-auto-update.sh)
- * PURPOSE: Orchestrates data updates and Git deployment
- * DEPENDENCIES: smart-update-fixed.js, Git, Vercel
- * CRITICAL: This is the main entry point for automated updates
+ * PURPOSE:
+ * Main automation script that orchestrates all data updates for the TORUS Dashboard.
+ * This is the PRIMARY ENTRY POINT for all automated updates.
+ * 
+ * EXECUTION:
+ * - Cron job: Every 5 minutes via /home/wsl/projects/TORUSspecs/torus-dashboard/run-auto-update.sh
+ * - Runs every 5 minutes, 24/7
+ * - Also runs on system reboot via run-updater-service.js
+ * 
+ * WORKFLOW:
+ * 1. Runs smart-update-fixed.js for incremental updates
+ * 2. Updates LP fee burns via update-lp-fee-burns.js
+ * 3. Checks if LP positions need updating
+ * 4. Commits changes to Git
+ * 5. Pushes to GitHub (triggers Vercel deployment)
+ * 
+ * DEPENDENCIES:
+ * - smart-update-fixed.js (REQUIRED - incremental update logic)
+ * - update-lp-fee-burns.js (REQUIRED - LP fee tracking)
+ * - incremental-lp-updater.js (OPTIONAL - LP position updates)
+ * - force-vercel-rebuild.js (OPTIONAL - deployment trigger)
+ * 
+ * OUTPUTS:
+ * - Updates: public/data/cached-data.json
+ * - Updates: public/data/buy-process-data.json
+ * - Updates: update-log.json
+ * - Updates: src/constants/buildTimestamp.ts
+ * - Git commits with timestamp
+ * 
+ * CRITICAL NOTES:
+ * ⚠️ DO NOT MODIFY without testing the full update cycle
+ * ⚠️ This script is the MAIN ENTRY POINT for production updates
+ * ⚠️ Errors here will stop all automated updates
+ * ⚠️ Always preserves existing data through smart merging
+ * 
+ * ERROR HANDLING:
+ * - Continues on non-critical errors (LP updates, etc.)
+ * - Logs all errors but doesn't stop the update cycle
+ * - Only commits if there are actual changes
+ * 
+ * MONITORING:
+ * - Check logs at: /home/wsl/projects/TORUSspecs/torus-dashboard/logs/auto-update-fixed.log
+ * - Monitor via: tail -f logs/auto-update-fixed.log
+ * ============================================================================
  */
 
 const { execSync } = require('child_process');

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Debug Projection</title>
+</head>
+<body>
+    <h1>Open Browser Console (F12) then Refresh http://localhost:3000</h1>
+    
+    <h2>Look for these console logs:</h2>
+    <ul>
+        <li>📊 Calculating supply projection from day X to Y</li>
+        <li>🔍 Processing days X to Y (starting from current protocol day)</li>
+        <li>📊 BEFORE filtering: First projection day: X</li>
+        <li>📊 Filtering from day 38 forward</li>
+        <li>📊 AFTER filtering: First day shown: X</li>
+    </ul>
+    
+    <h2>Expected:</h2>
+    <p>📊 AFTER filtering: First day shown: 38</p>
+    
+    <h2>If it shows 39:</h2>
+    <p>The projections array doesn't include day 38, possibly because:</p>
+    <ol>
+        <li>No reward data for day 38 (causes continue/skip)</li>
+        <li>Projection array starts from wrong index</li>
+        <li>Filter is excluding day 38</li>
+    </ol>
+</body>
+</html>
