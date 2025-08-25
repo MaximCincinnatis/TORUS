@@ -47401,9 +47401,9 @@
         "day": 47,
         "totalSupply": 28479.782456269004,
         "burnedSupply": 0,
-        "timestamp": "2025-08-25T19:35:06.053Z"
+        "timestamp": "2025-08-25T19:40:06.216Z"
       },
-      "currentBlock": 23220246,
+      "currentBlock": 23220271,
       "lastDeduplication": "2025-08-02T21:51:40.056Z",
       "duplicatesRemoved": 0
     },
@@ -48742,9 +48742,9 @@
       }
     ],
     "totalStakedInContract": 6270.38,
-    "lastBlock": 23220246
+    "lastBlock": 23220271
   },
-  "lastUpdated": "2025-08-25T19:36:03.111Z",
+  "lastUpdated": "2025-08-25T19:41:01.163Z",
   "lastProcessedBlock": 23055425,
   "currentProtocolDay": 47,
   "totalSupply": 28479.782456269004,
@@ -48768,6 +48768,30 @@
     }
   },
   "lpPositions": [
+    {
+      "tokenId": "1029195",
+      "owner": "0xAa390a37006E22b5775A34f2147F81eBD6a63641",
+      "liquidity": "84576273489094170053897631",
+      "tickLower": -887200,
+      "tickUpper": 887200,
+      "tokensOwed0": "84778096887892072033",
+      "tokensOwed1": "955621320233838277239655775",
+      "amount0": 20508.347881065158,
+      "amount1": 348791920187.1142,
+      "torusAmount": 20508.347881065158,
+      "wethAmount": 348791920187.1142,
+      "torusValue": 1116134144598765.4,
+      "wethValue": 1116134144598765.4,
+      "totalValue": 2232268289197530.8,
+      "claimableFees": {
+        "torus": 84.77809688789206,
+        "weth": 955621320.2338383
+      },
+      "claimableTorus": 84.77809688789206,
+      "claimableWeth": 955621320.2338383,
+      "lastUpdated": "2025-08-25T19:37:26.995Z",
+      "isProtocolPosition": true
+    },
     {
       "tokenId": "1030759",
       "owner": "0x9BBb45e12c4a75f7406Cb38e858Fa6C68A88f30d",
@@ -48813,7 +48837,7 @@
     "liquidity": "0",
     "feeGrowthGlobal0X128": "0",
     "feeGrowthGlobal1X128": "0",
-    "lastUpdated": "2025-08-25T19:17:20.009Z"
+    "lastUpdated": "2025-08-25T19:37:27.013Z"
   },
   "tokenPrices": {
     "torus": {
