@@ -1,16 +1,9 @@
 {
   "startTime": 1754170500998,
   "rpcCalls": 0,
-  "lastBlockNumber": 23221365,
-  "lastUpdateTime": 1756164076002,
+  "lastBlockNumber": 23221390,
+  "lastUpdateTime": 1756164373666,
   "updateHistory": [
-    {
-      "timestamp": "2025-08-25T15:51:02.054Z",
-      "block": 23219125,
-      "rpcCalls": 6,
-      "dataChanged": true,
-      "errors": []
-    },
     {
       "timestamp": "2025-08-25T15:52:16.299Z",
       "block": 23219131,
@@ -707,7 +700,14 @@
       "errors": [
         "Creates & Stakes update: Command failed: node scripts/update-creates-stakes-incremental.js"
       ]
+    },
+    {
+      "timestamp": "2025-08-25T23:26:13.667Z",
+      "block": 23221390,
+      "rpcCalls": 6,
+      "dataChanged": true,
+      "errors": []
     }
   ],
-  "totalRpcCalls": 40882
+  "totalRpcCalls": 40888
 }
