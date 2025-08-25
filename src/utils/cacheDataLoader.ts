@@ -254,15 +254,33 @@ export async function getLPPositionsWithCache(
 ): Promise<{ positions: SimpleLPPosition[]; source: 'cache' | 'rpc' }> {
   const cachedData = await loadCachedData();
   
-  if (cachedData && cachedData.lpPositions.length > 0) {
+  // Check if lpPositions exists and has data (handle undefined case)
+  if (cachedData && cachedData.lpPositions && cachedData.lpPositions.length > 0) {
     console.log('🚀 Using cached LP positions');
+    console.log(`Found ${cachedData.lpPositions.length} LP positions in cache`);
+    
     // Ensure positions use standard format
     const standardizedPositions = cachedData.lpPositions.map(pos => ({
       ...pos,
-      // Ensure we have the standard fields
-      torusAmount: pos.torusAmount ?? (pos as any).amount0 ?? 0,
-      titanxAmount: pos.titanxAmount ?? (pos as any).amount1 ?? 0
+      // Ensure we have the standard fields - check multiple possible field names
+      torusAmount: pos.torusAmount ?? pos.amount0 ?? (pos as any).torusAmount ?? 0,
+      titanxAmount: pos.titanxAmount ?? pos.amount1 ?? (pos as any).wethAmount ?? 0,
+      wethAmount: (pos as any).wethAmount ?? pos.amount1 ?? 0,
+      // Add liquidity if missing
+      liquidity: pos.liquidity || '0',
+      // Add owner if missing
+      owner: pos.owner || '',
+      // Add tokenId if missing
+      tokenId: pos.tokenId || '',
+      // Add tick values if present
+      tickLower: pos.tickLower ?? 0,
+      tickUpper: pos.tickUpper ?? 0,
+      // Add claimable fees if present
+      claimableTorus: pos.claimableTorus ?? (pos as any).claimableFees?.torus ?? 0,
+      claimableTitanX: pos.claimableTitanX ?? (pos as any).claimableFees?.weth ?? 0
     }));
+    
+    console.log('Standardized positions:', standardizedPositions);
     
     return {
       positions: standardizedPositions,
@@ -270,7 +288,7 @@ export async function getLPPositionsWithCache(
     };
   }
   
-  console.log('🔄 Falling back to RPC for LP positions');
+  console.log('🔄 No cached LP positions found, falling back to RPC');
   const positions = await fallbackFunction();
   
   return {

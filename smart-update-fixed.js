@@ -214,10 +214,21 @@ async function updateLPPositionsIncrementally(provider, cachedData, currentBlock
     removedPositions: 0
   };
   
+  // Protocol positions that should always be included
+  const PROTOCOL_LP_POSITIONS = ['1029195']; // Buy&Process contract position
+  
   try {
     // Get existing positions
     const existingPositions = cachedData.lpPositions || [];
     const existingTokenIds = new Set(existingPositions.map(p => p.tokenId));
+    
+    // Ensure protocol positions are included
+    for (const protocolId of PROTOCOL_LP_POSITIONS) {
+      if (!existingTokenIds.has(protocolId)) {
+        log(`⚠️ Protocol position #${protocolId} missing, will fetch it`, 'yellow');
+        existingTokenIds.add(protocolId);
+      }
+    }
     
     log(`Checking updates for ${existingPositions.length} existing LP positions...`, 'cyan');
     
@@ -410,6 +421,67 @@ async function updateLPPositionsIncrementally(provider, cachedData, currentBlock
         }
       } catch (e) {
         log(`Error checking for new positions: ${e.message}`, 'yellow');
+      }
+    }
+    
+    // Always ensure protocol positions are included
+    for (const protocolId of PROTOCOL_LP_POSITIONS) {
+      const hasPosition = updatedPositions.some(p => p.tokenId === protocolId);
+      
+      if (!hasPosition) {
+        log(`Fetching missing protocol position #${protocolId}...`, 'yellow');
+        try {
+          const [position, owner] = await Promise.all([
+            positionManager.positions(protocolId),
+            positionManager.ownerOf(protocolId).catch(() => null)
+          ]);
+          
+          if (owner && position.liquidity.toString() !== '0') {
+            // Calculate amounts if pool data available
+            let amount0 = 0;
+            let amount1 = 0;
+            
+            if (cachedData.poolData && cachedData.poolData.sqrtPriceX96) {
+              const calculated = calculatePositionAmounts(
+                position,
+                ethers.BigNumber.from(cachedData.poolData.sqrtPriceX96),
+                cachedData.poolData.currentTick
+              );
+              amount0 = calculated.amount0;
+              amount1 = calculated.amount1;
+            }
+            
+            // Calculate claimable fees
+            const claimableFees = await calculateClaimableFees(
+              protocolId,
+              owner,
+              position,
+              provider
+            );
+            
+            const protocolPosition = mapFieldNames({
+              tokenId: protocolId,
+              owner: owner,
+              liquidity: position.liquidity.toString(),
+              tickLower: position.tickLower,
+              tickUpper: position.tickUpper,
+              amount0: amount0,
+              amount1: amount1,
+              claimableTorus: claimableFees.claimableTorus,
+              claimableTitanX: claimableFees.claimableTitanX,
+              tokensOwed0: position.tokensOwed0.toString(),
+              tokensOwed1: position.tokensOwed1.toString(),
+              lastChecked: new Date().toISOString(),
+              isProtocolPosition: true
+            });
+            
+            updatedPositions.push(protocolPosition);
+            updateStats.newPositions++;
+            log(`  ✅ Added protocol position #${protocolId}`, 'green');
+          }
+        } catch (e) {
+          log(`  ❌ Error fetching protocol position #${protocolId}: ${e.message}`, 'red');
+        }
       }
     }
     
