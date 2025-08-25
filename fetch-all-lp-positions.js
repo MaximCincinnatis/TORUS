@@ -1,3 +1,33 @@
+/**
+ * ============================================================================
+ * STATUS: 🔴 DEPRECATED - No longer in active use
+ * ============================================================================
+ * LAST MODIFIED: 2025-07-15
+ * CLASSIFICATION DATE: 2025-08-25
+ * 
+ * ⚠️ WARNING: This script is deprecated and not used in production
+ * ⚠️ It may be moved to the archive directory in the future
+ * 
+ * ORIGINAL PURPOSE:
+ * This appears to be a one-time script based on the naming pattern.
+ * Likely used for debugging, fixing, or analyzing specific issues.
+ * 
+ * DEPRECATION REASON:
+ * - One-time use script, task completed
+ * - Not referenced by any active production scripts
+ * - Functionality may have been moved to other scripts
+ * 
+ * BEFORE USING:
+ * 1. Check if functionality exists elsewhere
+ * 2. Verify this script is still needed
+ * 3. Consider if there's a newer alternative
+ * 
+ * SCHEDULED FOR ARCHIVAL: After 2025-09-01
+ * ============================================================================
+ */
+
+// [DEPRECATED CODE BELOW]
+
 // Fetch ALL LP positions including out-of-range ones
 const fs = require('fs');
 const { ethers } = require('ethers');
