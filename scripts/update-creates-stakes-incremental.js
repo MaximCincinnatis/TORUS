@@ -2,6 +2,7 @@
  * Incremental update script for creates and stakes
  * Updates only new events since last update
  * Can be run every 5 minutes via cron
+ * Note: LP position fields (torusAmount, titanxAmount) are handled by dedicated LP update scripts
  */
 
 const { ethers } = require('ethers');

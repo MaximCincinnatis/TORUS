@@ -16,7 +16,6 @@ export async function calculateUnclaimedFees(position: any, tokenId: string) {
   const provider = getProvider();
   const pool = new ethers.Contract(POOL_ADDRESS, POOL_ABI, provider);
   
-  console.log(`\n💰 Calculating REAL unclaimed fees for token ${tokenId}...`);
   
   try {
     // Get current pool state
@@ -30,9 +29,6 @@ export async function calculateUnclaimedFees(position: any, tokenId: string) {
     const tickLower = Number(position.tickLower);
     const tickUpper = Number(position.tickUpper);
     
-    console.log(`  Current tick: ${currentTick}`);
-    console.log(`  Position range: ${tickLower} to ${tickUpper}`);
-    console.log(`  Liquidity: ${position.liquidity.toString()}`);
     
     // Get tick data
     const [tickLowerData, tickUpperData] = await Promise.all([
@@ -40,8 +36,6 @@ export async function calculateUnclaimedFees(position: any, tokenId: string) {
       pool.ticks(tickUpper)
     ]);
     
-    console.log(`  Global fee growth 0: ${feeGrowthGlobal0.toString()}`);
-    console.log(`  Global fee growth 1: ${feeGrowthGlobal1.toString()}`);
     
     // Calculate fee growth inside the position's range
     let feeGrowthInside0 = BigInt(0);
@@ -75,8 +69,6 @@ export async function calculateUnclaimedFees(position: any, tokenId: string) {
     feeGrowthInside0 = BigInt(feeGrowthGlobal0) - feeGrowthBelow0 - feeGrowthAbove0;
     feeGrowthInside1 = BigInt(feeGrowthGlobal1) - feeGrowthBelow1 - feeGrowthAbove1;
     
-    console.log(`  Fee growth inside 0: ${feeGrowthInside0.toString()}`);
-    console.log(`  Fee growth inside 1: ${feeGrowthInside1.toString()}`);
     
     // Calculate uncollected fees
     const feeGrowthInside0Last = BigInt(position.feeGrowthInside0LastX128);
@@ -92,22 +84,18 @@ export async function calculateUnclaimedFees(position: any, tokenId: string) {
       const feeGrowthDelta0 = feeGrowthInside0 - feeGrowthInside0Last;
       const uncollectedFees0 = (liquidity * feeGrowthDelta0) / Q128;
       tokensOwed0 += uncollectedFees0;
-      console.log(`  Uncollected fees 0: ${uncollectedFees0.toString()}`);
     }
     
     if (feeGrowthInside1 > feeGrowthInside1Last) {
       const feeGrowthDelta1 = feeGrowthInside1 - feeGrowthInside1Last;
       const uncollectedFees1 = (liquidity * feeGrowthDelta1) / Q128;
       tokensOwed1 += uncollectedFees1;
-      console.log(`  Uncollected fees 1: ${uncollectedFees1.toString()}`);
     }
     
     // Convert to decimal
     const totalOwed0 = Number(tokensOwed0) / 1e18;
     const totalOwed1 = Number(tokensOwed1) / 1e18;
     
-    console.log(`  TOTAL claimable TORUS: ${totalOwed0.toFixed(6)}`);
-    console.log(`  TOTAL claimable TitanX: ${totalOwed1.toFixed(2)} (${(totalOwed1 / 1e6).toFixed(2)}M)`);
     
     return {
       claimableTorus: totalOwed0,
@@ -117,7 +105,6 @@ export async function calculateUnclaimedFees(position: any, tokenId: string) {
     };
     
   } catch (error) {
-    console.error('Error calculating fees:', error);
     return {
       claimableTorus: 0,
       claimableTitanX: 0,

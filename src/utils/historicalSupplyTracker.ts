@@ -29,7 +29,6 @@ export function loadHistoricalSupplyData(): HistoricalSupplyData {
     try {
       return JSON.parse(stored);
     } catch (e) {
-      console.error('Error parsing historical supply data:', e);
     }
   }
   

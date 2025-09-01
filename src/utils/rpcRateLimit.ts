@@ -17,7 +17,6 @@ export class RpcRateLimit {
     
     if (timeSinceLastCall < this.minDelay) {
       const delayNeeded = this.minDelay - timeSinceLastCall;
-      console.log(`⏱️ Rate limiting: waiting ${delayNeeded}ms before ${context}`);
       await new Promise(resolve => setTimeout(resolve, delayNeeded));
     }
     
@@ -33,8 +32,6 @@ export class RpcRateLimit {
         // Check if it's a rate limit error (429)
         if (errorMsg.includes('429') || errorMsg.includes('rate limit')) {
           const backoffDelay = Math.pow(2, attempt) * 1000; // Exponential backoff
-          console.log(`⚠️ Rate limit hit on attempt ${attempt}/${this.maxRetries} for ${context}`);
-          console.log(`⏱️ Backing off for ${backoffDelay}ms...`);
           
           if (attempt < this.maxRetries) {
             await new Promise(resolve => setTimeout(resolve, backoffDelay));
@@ -44,7 +41,6 @@ export class RpcRateLimit {
         
         // If not a rate limit error or max retries reached, throw the error
         if (attempt === this.maxRetries) {
-          console.error(`❌ ${context} failed after ${this.maxRetries} attempts:`, errorMsg);
           throw error;
         }
         

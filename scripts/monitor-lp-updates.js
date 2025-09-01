@@ -5,6 +5,7 @@
  * 
  * Provides real-time monitoring of LP position updates
  * Shows recent logs, errors, and performance metrics
+ * Reads LP data with standardized fields: torusAmount, titanxAmount
  */
 
 const { getLogger } = require('../utils/logger');

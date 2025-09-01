@@ -86,11 +86,9 @@ export async function calculateFeesWithUniswapSDK(tokenId: string) {
       inRange: sdkPosition.tickLower <= pool.tickCurrent && pool.tickCurrent < sdkPosition.tickUpper
     };
     
-    console.log('Position data from Uniswap SDK:', result);
     return result;
     
   } catch (error) {
-    console.error('Error calculating with Uniswap SDK:', error);
     throw error;
   }
 }

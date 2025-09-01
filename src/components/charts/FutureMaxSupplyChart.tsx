@@ -43,48 +43,32 @@ const FutureMaxSupplyChart: React.FC<FutureMaxSupplyChartProps> = ({
 }) => {
   
   const chartData = useMemo(() => {
-    console.log('🔍 FutureMaxSupplyChart - Input Data:');
-    console.log('stakeEvents:', stakeEvents?.length || 0);
-    console.log('createEvents:', createEvents?.length || 0);
-    console.log('rewardPoolData:', rewardPoolData?.length || 0);
-    console.log('currentSupply:', currentSupply, 'TORUS (this should reflect burns)');
-    console.log('contractStartDate:', contractStartDate);
-    console.log('currentProtocolDay:', currentProtocolDay);
-    console.log('preCalculatedProjection:', preCalculatedProjection?.length || 0, 'days');
     
     // DEBUG: Check if rewardPoolData is the issue
     if (rewardPoolData?.length === 0) {
-      console.log('❌ PROBLEM: rewardPoolData is EMPTY!');
-      console.log('This causes calculateFutureMaxSupply to generate data starting from day 9');
     }
     
     // Force console output to show
-    console.log('🚀 FutureMaxSupplyChart component is loading...');
     
     // Check if we have pre-calculated projection data
     if (preCalculatedProjection && preCalculatedProjection.length > 0) {
-      console.log('✅ Using pre-calculated projection data');
       // Use pre-calculated data directly
       const projections = preCalculatedProjection;
       
       // Apply same filtering and processing as before
       let filteredProjections = projections.filter(p => p.day >= currentProtocolDay);
       
-      console.log(`📊 Pre-calculated: ${projections.length} days total`);
-      console.log(`📊 After filtering from day ${currentProtocolDay}: ${filteredProjections.length} days`);
       
       // Continue with same chart data formatting...
       // Skip to line 98 for the rest of the logic
     
     } else if (!stakeEvents?.length || !createEvents?.length || !rewardPoolData?.length) {
-      console.log('❌ Missing required data for chart');
       return {
         labels: [],
         datasets: [],
         customTooltipData: []
       };
     } else {
-      console.log('📊 Calculating projection from raw data (no pre-calculated data available)');
     }
 
     try {
@@ -95,8 +79,6 @@ const FutureMaxSupplyChart: React.FC<FutureMaxSupplyChartProps> = ({
       } else {
         // Convert events to positions
         const positions = convertToPositions(stakeEvents, createEvents);
-        console.log('📊 Converted positions:', positions.length);
-        console.log('First position:', positions[0]);
         
         // Calculate max supply projections (starting from current protocol day)
         projections = calculateFutureMaxSupply(
@@ -108,31 +90,19 @@ const FutureMaxSupplyChart: React.FC<FutureMaxSupplyChartProps> = ({
         );
       }
       
-      console.log('📈 Projections loaded:', projections.length);
-      console.log('First projection:', projections[0]);
-      console.log('Last projection:', projections[projections.length - 1]);
       
       // DEBUG: Check if day 38 exists in projections
       const day38 = projections.find(p => p.day === 38);
       if (day38) {
-        console.log('✅ Day 38 EXISTS in projections:', day38);
       } else {
-        console.log('❌ Day 38 MISSING from projections');
-        console.log('First 3 projection days:', projections.slice(0, 3).map(p => p.day));
       }
       
       // Apply timeframe filtering - only show current day onward
-      console.log('🔍 Using currentProtocolDay:', currentProtocolDay);
       
       // Get ALL projections from current day forward, don't limit by days
       // The PannableLineChart will handle windowing with the windowSize prop
       let filteredProjections = projections.filter(p => p.day >= currentProtocolDay);
       
-      console.log(`📊 BEFORE filtering: projections has ${projections.length} days`);
-      console.log(`📊 BEFORE filtering: First projection day: ${projections[0]?.day}, Last: ${projections[projections.length - 1]?.day}`);
-      console.log(`📊 Filtering from day ${currentProtocolDay} forward`);
-      console.log(`📊 AFTER filtering: ${filteredProjections.length} days available for panning`);
-      console.log(`📊 AFTER filtering: First day shown: ${filteredProjections[0]?.day}, Last: ${filteredProjections[filteredProjections.length - 1]?.day}`);
       
       // For past days, use historical supply data
       const adjustedProjections = filteredProjections.map(projection => {
@@ -158,8 +128,6 @@ const FutureMaxSupplyChart: React.FC<FutureMaxSupplyChartProps> = ({
         })})`
       );
       
-      console.log('📊 FIRST LABEL:', labels[0]);
-      console.log('📊 LAST LABEL:', labels[labels.length - 1]);
       
       const datasets = [
         {
@@ -205,13 +173,6 @@ const FutureMaxSupplyChart: React.FC<FutureMaxSupplyChartProps> = ({
         totalShares: Math.round(projection.totalShares)
       }));
       
-      console.log('📊 Chart Data Generated:');
-      console.log('Labels:', labels.slice(0, 5), '...');
-      console.log('Max Supply dataset:', datasets[1]?.data?.slice(0, 5), '...');
-      console.log('Min/Max values:', {
-        min: Math.min(...(datasets[1]?.data || [])),
-        max: Math.max(...(datasets[1]?.data || []))
-      });
       
       return {
         labels,
@@ -219,7 +180,6 @@ const FutureMaxSupplyChart: React.FC<FutureMaxSupplyChartProps> = ({
         customTooltipData
       };
     } catch (error) {
-      console.error('Error calculating max supply projections:', error);
       return {
         labels: [],
         datasets: [],

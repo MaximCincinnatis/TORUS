@@ -27,17 +27,13 @@ export function validateAndLogLPPosition(position: any, index: number): LPPositi
     
     // Additional business logic validation
     if (validated.torusAmount === 0 && validated.titanxAmount === 0 && validated.liquidity !== "0") {
-      console.warn(`LP Position ${validated.tokenId} has liquidity but zero amounts - may need recalculation`);
     }
     
     if (validated.claimableTorus === 0 && validated.claimableTitanX === 0 && validated.inRange) {
-      console.warn(`LP Position ${validated.tokenId} is in range but has zero claimable fees`);
     }
     
     return validated;
   } catch (error) {
-    console.error(`Invalid LP position at index ${index}:`, error);
-    console.error('Position data:', position);
     return null;
   }
 }
@@ -50,10 +46,8 @@ export function validateAndFilterLPPositions(positions: any[]): LPPosition[] {
     .map((pos, idx) => validateAndLogLPPosition(pos, idx))
     .filter((pos): pos is LPPosition => pos !== null);
   
-  console.log(`Validated ${validated.length} of ${positions.length} LP positions`);
   
   if (validated.length < positions.length) {
-    console.warn(`Filtered out ${positions.length - validated.length} invalid LP positions`);
   }
   
   return validated;
@@ -69,23 +63,18 @@ export function validateBeforeSave(data: any): CachedData {
     
     // Additional validation
     if (sanitized.lpPositions.length === 0) {
-      console.warn('Warning: No LP positions in data');
     }
     
     if (sanitized.stakingData.stakeEvents.length === 0) {
-      console.warn('Warning: No stake events in data');
     }
     
     // Check TitanX burned is reasonable (should be ~130B, not 999B)
     const titanxBurned = parseFloat(sanitized.totalTitanXBurnt) / 1e18 / 1e9;
     if (titanxBurned > 500) {
-      console.error(`TitanX burned amount seems too high: ${titanxBurned.toFixed(3)}B`);
-      console.error('This might be showing total dead address balance instead of TORUS-specific burns');
     }
     
     return sanitized;
   } catch (error) {
-    console.error('Data validation failed:', error);
     throw new Error(`Invalid data structure: ${error}`);
   }
 }
@@ -117,7 +106,6 @@ export function isLPPositionCorrupted(position: LPPosition): boolean {
   }
   
   if (issues.length > 0) {
-    console.warn(`Position ${position.tokenId} may be corrupted:`, issues);
     return true;
   }
   
@@ -154,7 +142,6 @@ export function mergeLPPositionsWithValidation(
         update.torusAmount === 0 && 
         update.titanxAmount === 0 && 
         existing.torusAmount > 0) {
-      console.log(`Preserving existing amounts for position ${update.tokenId}`);
       return;
     }
     
@@ -165,7 +152,6 @@ export function mergeLPPositionsWithValidation(
   });
   
   const merged = Array.from(positionMap.values());
-  console.log(`Merged to ${merged.length} valid LP positions`);
   
   return merged;
 }
@@ -175,7 +161,6 @@ export function mergeLPPositionsWithValidation(
  */
 export function validateRewardPoolData(data: any[]): boolean {
   if (!Array.isArray(data)) {
-    console.error('Reward pool data is not an array');
     return false;
   }
   
@@ -190,7 +175,6 @@ export function validateRewardPoolData(data: any[]): boolean {
   }
   
   if (missingDays.length > 0) {
-    console.warn(`Missing reward pool data for days: ${missingDays.join(', ')}`);
   }
   
   return true;

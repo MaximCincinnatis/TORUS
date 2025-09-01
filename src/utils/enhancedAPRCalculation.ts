@@ -67,13 +67,11 @@ export async function fetchPoolHistoricalData(days: number = 30): Promise<PoolHi
     const data = await response.json();
     
     if (data.errors) {
-      console.error('GraphQL errors:', data.errors);
       return [];
     }
 
     return data.data?.poolDayDatas || [];
   } catch (error) {
-    console.error('Error fetching pool historical data:', error);
     return [];
   }
 }
@@ -95,7 +93,6 @@ export function calculateLiquidityShare(
     const sharePercent = Number(posLiq * BigInt(10000) / totalLiq) / 100;
     return Math.min(sharePercent, 100); // Cap at 100%
   } catch (error) {
-    console.error('Error calculating liquidity share:', error);
     return 0;
   }
 }
@@ -194,7 +191,6 @@ export async function calculateEnhancedAPR(
   claimableTitanX: number = 0
 ): Promise<APRCalculationResult> {
   try {
-    console.log(`🧮 Calculating enhanced APR for position ${position.tokenId}`);
 
     // Fetch historical data with cache fallback
     const [sevenDayResult, thirtyDayResult] = await Promise.all([
@@ -205,9 +201,7 @@ export async function calculateEnhancedAPR(
     const sevenDayData = sevenDayResult.data;
     const thirtyDayData = thirtyDayResult.data;
     
-    console.log(`📊 Historical data sources: 7d=${sevenDayResult.source}, 30d=${thirtyDayResult.source}`);
 
-    console.log(`📊 Historical data: 7-day (${sevenDayData.length} points), 30-day (${thirtyDayData.length} points)`);
 
     // Get prices from cached data or use defaults
     // Note: In production, these should come from the cached data loader
@@ -222,7 +216,6 @@ export async function calculateEnhancedAPR(
       titanXPrice
     );
 
-    console.log(`💰 Position value: $${positionValueUSD.toFixed(4)} USD`);
 
     let sevenDayAPR = 0;
     let thirtyDayAPR = 0;
@@ -236,7 +229,6 @@ export async function calculateEnhancedAPR(
         positionValueUSD,
         7
       );
-      console.log(`📈 7-day volume-based APR: ${sevenDayAPR.toFixed(2)}%`);
     }
 
     if (thirtyDayData.length > 0) {
@@ -246,7 +238,6 @@ export async function calculateEnhancedAPR(
         positionValueUSD,
         30
       );
-      console.log(`📈 30-day volume-based APR: ${thirtyDayAPR.toFixed(2)}%`);
     }
 
     // Calculate real-time APR from claimable fees
@@ -259,7 +250,6 @@ export async function calculateEnhancedAPR(
         torusPrice,
         titanXPrice
       );
-      console.log(`⚡ Real-time APR: ${realTimeAPR.toFixed(2)}%`);
     }
 
     // Calculate weighted average APR
@@ -276,7 +266,6 @@ export async function calculateEnhancedAPR(
       confidence = 'medium';
     }
 
-    console.log(`✅ Enhanced APR calculation complete - Average: ${averageAPR.toFixed(2)}% (${confidence} confidence)`);
 
     return {
       sevenDayAPR,
@@ -288,7 +277,6 @@ export async function calculateEnhancedAPR(
     };
 
   } catch (error) {
-    console.error('❌ Error calculating enhanced APR:', error);
     
     // Fallback to simple calculation
     const fallbackAPR = position.estimatedAPR || 0;

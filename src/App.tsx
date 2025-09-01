@@ -60,8 +60,6 @@ const getDynamicDateRange = () => {
 };
 
 // Build info for debugging Vercel deployments
-console.log('Build timestamp:', new Date().toISOString());
-console.log('Deployment trigger:', '2025-07-16T18:55:00Z');
 
 function App() {
   const [loading, setLoading] = useState(true);
@@ -118,18 +116,12 @@ function App() {
       try {
         const response = await fetch(`/data/cached-data.json?t=${Date.now()}`, { cache: 'no-cache' });
         const data = await response.json();
-        console.log('🔥 TitanX Data Loaded:', {
-          totalTitanXBurnt: data.totalTitanXBurnt,
-          titanxTotalSupply: data.titanxTotalSupply,
-          parsed: data.totalTitanXBurnt ? (parseFloat(data.totalTitanXBurnt) / 1e18 / 1e9).toFixed(3) + 'B' : '0'
-        });
         setCachedTitanXData({
           totalTitanXBurnt: data.totalTitanXBurnt || "0",
           titanxTotalSupply: data.titanxTotalSupply || "0"
         });
         setLastUpdatedTime(data.lastUpdated || null);
       } catch (error) {
-        console.error('Error loading TitanX data:', error);
       }
     };
     loadCachedTitanXData();
@@ -141,13 +133,8 @@ function App() {
       try {
         const response = await fetch(`/data/buy-process-data.json?t=${Date.now()}`, { cache: 'no-cache' });
         const data = await response.json();
-        console.log('💰 Buy & Process Data Loaded:', {
-          totalTorusBurnt: data.totals?.torusBurnt,
-          dailyDataCount: data.dailyData?.length
-        });
         setBuyProcessData(data);
       } catch (error) {
-        console.error('Error loading Buy & Process data:', error);
       }
     };
     loadBuyProcessData();
@@ -159,13 +146,8 @@ function App() {
       try {
         const response = await fetch(`/data/buy-process-burns.json?t=${Date.now()}`, { cache: 'no-cache' });
         const data = await response.json();
-        console.log('🔥 LP Fee Burns Data Loaded:', {
-          totalTorusBurned: data.totals?.torusBurned,
-          feeCollections: data.totals?.feeCollections
-        });
         setLpFeeBurnsData(data);
       } catch (error) {
-        console.error('Error loading LP Fee Burns data:', error);
       }
     };
     loadLpFeeBurnsData();
@@ -174,7 +156,6 @@ function App() {
   const loadLPPositions = async () => {
     setLpLoading(true);
     try {
-      console.log('🔍 Starting LP positions fetch with cache...');
       
       // Only use cached LP positions - backend handles updates
       const [lpResult, tokenInfo] = await Promise.all([
@@ -182,16 +163,11 @@ function App() {
         getTokenInfo()
       ]);
       
-      console.log(`✅ Fetched ${lpResult.positions.length} LP positions from ${lpResult.source}`);
       if (lpResult.positions.length > 0) {
-        console.log('First LP position:', lpResult.positions[0]);
       }
       setLpPositions(lpResult.positions);
       setLpTokenInfo(tokenInfo);
-      console.log('Token info:', tokenInfo);
     } catch (error) {
-      console.error('❌ Error loading LP positions:', error);
-      console.error('Stack trace:', error instanceof Error ? error.stack : 'No stack trace available');
       setLpPositions([]);
     } finally {
       setLpLoading(false);
@@ -199,23 +175,18 @@ function App() {
   };
 
   const loadData = async (forceFullRefresh: boolean = false) => {
-    console.log('🔄 LOADDATA CALLED - Loading from cached JSON only');
     setLoading(true);
     
     // Always load from cache only - no more RPC calls
     
     try {
-      console.log('📡 Starting data fetch...');
       // First, verify contract connectivity
       const contractInfo = await getContractInfo();
-      console.log('Contract info:', contractInfo);
       setContractInfo(contractInfo);
       
-      console.log('📊 About to fetch dashboard data with cache...');
       
       // Only use cached data - backend handles all updates
       const dashboardResult = await getMainDashboardDataWithCache(async () => {
-        console.log('⚠️ Cache miss - this should not happen with backend updates');
         // Return empty data if cache miss (shouldn't happen)
         return {
           stakeEvents: [],
@@ -228,11 +199,6 @@ function App() {
       });
       
       
-      console.log(`✅ Dashboard data loaded from ${dashboardResult.source}:`, {
-        stakes: dashboardResult.data.stakeEvents?.length || 0,
-        creates: dashboardResult.data.createEvents?.length || 0,
-        rewardPool: dashboardResult.data.rewardPoolData?.length || 0
-      });
       
       // Set last updated time from cached data
       if (dashboardResult.data.lastUpdated) {
@@ -247,27 +213,19 @@ function App() {
       setCurrentProtocolDay(dashboardResult.data.currentProtocolDay || 0);
       setTotalStakedInContract(dashboardResult.data.totalStakedInContract || 0);
       setTotalsLoading(false);
-      console.log('✅ Basic metrics loaded');
       
       // 2. Stake data loads immediately to test bubble loading
       setStakeData(dashboardResult.data.stakeEvents || []);
-      console.log('✅ Stake metrics loaded');
       
       // 3. Create data loads immediately to test bubble loading
       setCreateData(dashboardResult.data.createEvents || []);
-      console.log('✅ Create metrics loaded');
       
       // 4. Reward pool data loads after 150ms
       setTimeout(() => {
         setRewardPoolData(dashboardResult.data.rewardPoolData || []);
-        console.log('✅ Reward pool data loaded');
       }, 150);
       
       // Update contract info with cached TitanX burn data
-      console.log('🔥 TitanX Burn Data Check:', {
-        totalTitanXBurnt: dashboardResult.data.totalTitanXBurnt,
-        titanxTotalSupply: dashboardResult.data.titanxTotalSupply
-      });
       
       if (dashboardResult.data.totalTitanXBurnt || dashboardResult.data.titanxTotalSupply) {
         setContractInfo((prev: any) => ({
@@ -281,7 +239,6 @@ function App() {
       // Set pre-calculated projection data if available
       if (dashboardResult.data.chartData?.futureSupplyProjection) {
         setPreCalculatedProjection(dashboardResult.data.chartData.futureSupplyProjection);
-        console.log('✅ Loaded pre-calculated projection:', dashboardResult.data.chartData.futureSupplyProjection.length, 'days');
       }
       
       // Charts can display once we have stake/create data
@@ -291,14 +248,11 @@ function App() {
       setProjectionLoading(false);
       
       
-      console.log(`Fetched ${dashboardResult.data.stakeEvents?.length || 0} stake events and ${dashboardResult.data.createEvents?.length || 0} create events`);
       
       // DEBUG: Log first few events to see their structure
       if (dashboardResult.data.stakeEvents?.length > 0) {
-        console.log('Sample stake event:', dashboardResult.data.stakeEvents[0]);
       }
       if (dashboardResult.data.createEvents?.length > 0) {
-        console.log('Sample create event:', dashboardResult.data.createEvents[0]);
       }
       
       
@@ -314,11 +268,9 @@ function App() {
           snapshot.totalSupply,
           snapshot.burnedSupply
         );
-        console.log('Updated daily supply snapshot for day', snapshot.day);
       }
       
       // Data already set from cache above
-      console.log('Data loaded - Stakes:', dashboardResult.data.stakeEvents?.length || 0, 'Creates:', dashboardResult.data.createEvents?.length || 0);
       
       
       // Small delay to show completion
@@ -326,7 +278,6 @@ function App() {
         setLoading(false);
       }, 500);
     } catch (error) {
-      console.error('Error loading data:', error);
       // No data on error - only show live data
       setStakeData([]);
       setCreateData([]);
@@ -353,15 +304,10 @@ function App() {
       today.setUTCDate(today.getUTCDate() - 1);
     }
     
-    console.log('=== STAKE RELEASES (WITH HISTORY) ===');
-    console.log('Total stakes:', stakeData.length);
-    console.log('Today:', today.toISOString().split('T')[0]);
-    console.log('Contract start:', CONTRACT_START_DATE.toISOString().split('T')[0]);
     
     // Initialize full date range from contract start to future
     const releases = initializeFullDateMap();
     const { daysSinceStart, futureDays, totalDays } = getFullDateRange();
-    console.log(`Date range: ${daysSinceStart} days of history + ${futureDays} days future = ${totalDays} total days`);
     
     // Count stakes maturing on each day
     let futureStakes = 0;
@@ -376,17 +322,14 @@ function App() {
         } else if (typeof stake.maturityDate === 'string') {
           maturityDate = new Date(stake.maturityDate);
         } else {
-          console.error(`Invalid maturityDate format for stake ${idx}:`, stake.maturityDate);
           return; // Skip this stake
         }
         
         // Validate the date
         if (isNaN(maturityDate.getTime())) {
-          console.error(`Invalid maturityDate for stake ${idx}:`, stake.maturityDate);
           return; // Skip this stake
         }
       } catch (error) {
-        console.error(`Error parsing maturityDate for stake ${idx}:`, error);
         return; // Skip this stake
       }
       
@@ -395,7 +338,6 @@ function App() {
       // Debug first few stakes
       if (idx < 5) {
         const isPast = maturityDate <= today;
-        console.log(`Stake ${idx}: maturityDate=${dateKey}, principal=${(parseFloat(stake.principal)/1e18).toFixed(2)} TORUS, duration=${stake.stakingDays} days ${isPast ? '(PAST)' : '(FUTURE)'}`);
       }
       
       // Include ALL stakes - both past and future
@@ -412,13 +354,9 @@ function App() {
           futureStakes++;
         }
       } else {
-        console.log(`WARNING: Stake maturity date ${dateKey} is outside date range`);
       }
     });
     
-    console.log(`Active stakes (ending in future): ${futureStakes}`);
-    console.log(`Unique maturity dates: ${stakeDates.size}`);
-    console.log('Dates with stakes:', Array.from(stakeDates.entries()).map(([date, count]) => `${date} (${count} stakes)`).join(', '));
     
     const dateBasedResult = Object.entries(releases).map(([date, count]) => ({
       date,
@@ -428,12 +366,6 @@ function App() {
     const totalCount = dateBasedResult.reduce((sum, r) => sum + r.count, 0);
     const daysWithStakes = dateBasedResult.filter(r => r.count > 0).length;
     
-    console.log(`\nRESULT SUMMARY:`);
-    console.log(`Total release entries: ${dateBasedResult.length}`);
-    console.log(`Total count in results: ${totalCount}`);
-    console.log(`Days with stakes: ${daysWithStakes}`);
-    console.log(`First 5 result entries:`, dateBasedResult.slice(0, 5));
-    console.log('=== END STAKE DEBUG ===\n');
     
     // Convert from date-based to protocol day-based with user timezone
     return convertToProtocolDayData(dateBasedResult);
@@ -449,15 +381,11 @@ function App() {
       today.setUTCDate(today.getUTCDate() - 1);
     }
     
-    console.log('=== CREATE RELEASES (WITH HISTORY) ===');
-    console.log('Total creates:', createData.length);
     
     // Initialize full date range from contract start to future
     const releases = initializeFullDateMap();
     const { daysSinceStart, futureDays, totalDays } = getFullDateRange();
-    console.log(`Date range: ${daysSinceStart} days of history + ${futureDays} days future = ${totalDays} total days`);
     
-    console.log('=== CREATE RELEASES DATES ===');
     // Count creates maturing on each day (both past and future)
     let pastCreates = 0;
     let futureCreates = 0;
@@ -478,17 +406,12 @@ function App() {
         }
         
         if (index < 5) { // Log first 5 for debugging
-          console.log(`Create ${index}: maturityDate=${dateKey}, endTime=${create.endTime}, timestamp=${create.timestamp}, isPast=${maturityDate <= today}`);
         }
       }
     });
     
-    console.log(`Historical creates (already ended): ${pastCreates}`);
-    console.log(`Future creates (still active): ${futureCreates}`);
     
     const totalEnding = Object.values(releases).reduce((sum, count) => sum + count, 0);
-    console.log(`Total creates ending in next ${MAX_CHART_DAYS} days: ${totalEnding}`);
-    console.log('=== END CREATE RELEASES ===\n');
     
     const dateBasedResult = Object.entries(releases).map(([date, count]) => ({
       date,
@@ -498,11 +421,9 @@ function App() {
     // Debug: Check for non-integer values
     const nonIntegerCounts = dateBasedResult.filter(r => r.count !== Math.floor(r.count));
     if (nonIntegerCounts.length > 0) {
-      console.log('🚨 WARNING: Non-integer create counts detected:', nonIntegerCounts);
     }
     
     // Debug: Show first few entries
-    console.log('First 5 create release entries:', dateBasedResult.slice(0, 5));
     
     // Convert from date-based to protocol day-based with user timezone
     return convertToProtocolDayData(dateBasedResult);
@@ -623,13 +544,10 @@ function App() {
       today.setUTCDate(today.getUTCDate() - 1);
     }
     
-    console.log('=== TORUS RELEASES (WITH HISTORY) ===');
-    console.log('Total creates:', createData.length);
     
     // Initialize full date range from contract start to future
     const releases = initializeFullDateMap();
     const { daysSinceStart, futureDays, totalDays } = getFullDateRange();
-    console.log(`Date range: ${daysSinceStart} days of history + ${futureDays} days future = ${totalDays} total days`);
     
     // Sum TORUS amounts by maturity date (both past and future)
     let historicalAmount = 0;
@@ -651,9 +569,6 @@ function App() {
       }
     });
     
-    console.log(`Historical TORUS released (already ended): ${historicalAmount.toFixed(2)}`);
-    console.log(`Future TORUS to be released: ${futureAmount.toFixed(2)}`);
-    console.log('=== END TORUS RELEASES ===\n');
     
     const dateBasedResult = Object.entries(releases).map(([date, amount]) => ({
       date,
@@ -665,7 +580,6 @@ function App() {
   };
 
   const calculateTorusReleasesWithRewards = () => {
-    console.log('%c🔍 CALCULATING TORUS RELEASES WITH REWARDS (WITH HISTORY) 🔍', 'background: #8b5cf6; color: white; font-weight: bold; font-size: 20px; padding: 10px');
     
     const now = new Date();
     // Use 6 PM UTC boundary like CONTRACT_START_DATE
@@ -681,7 +595,6 @@ function App() {
     const { startDate, totalDays, daysSinceStart, futureDays } = getFullDateRange();
     const msPerDay = 24 * 60 * 60 * 1000;
     
-    console.log(`Date range: ${daysSinceStart} days of history + ${futureDays} days future = ${totalDays} total days`);
     
     // Initialize all dates with zero values
     for (let i = 0; i < totalDays; i++) {
@@ -727,11 +640,6 @@ function App() {
     
     // Now calculate daily rewards for each active position
     const allPositions = [...createData, ...stakeData];
-    console.log(`Calculating rewards for ${allPositions.length} total positions`);
-    console.log(`  - Creates: ${createData.length}`);
-    console.log(`  - Stakes: ${stakeData.length}`);
-    console.log(`Historical principal (already released): ${historicalPrincipal.toFixed(2)} TORUS`);
-    console.log(`Future principal (to be released): ${futurePrincipal.toFixed(2)} TORUS`);
     
     // Debug: Check maturity date distribution
     const maturityDistribution: { [key: string]: number } = {};
@@ -744,14 +652,10 @@ function App() {
     });
     
     const futureMaturityDates = Object.keys(maturityDistribution).sort();
-    console.log(`Positions mature across ${futureMaturityDates.length} different future dates`);
-    console.log(`First maturity: ${futureMaturityDates[0]}`);
-    console.log(`Last maturity: ${futureMaturityDates[futureMaturityDates.length - 1]}`);
     
     // Check how many positions mature in September vs October
     const septemberMaturities = futureMaturityDates.filter(d => d.includes('2025-09')).length;
     const octoberMaturities = futureMaturityDates.filter(d => d.includes('2025-10')).length;
-    console.log(`September maturity dates: ${septemberMaturities}, October: ${octoberMaturities}`);
     
     // For each day in our full date range (past and future)
     for (let i = 0; i < totalDays; i++) {
@@ -781,19 +685,10 @@ function App() {
         
         // Debug reward pool data for first few days
         if (i < 3) {
-          console.log(`\nDay ${i} reward pool data:`);
-          console.log(`  Reward pool: ${rewardPool.toFixed(2)} TORUS`);
-          console.log(`  Penalties pool: ${penaltiesPool.toFixed(2)} TORUS`);
-          console.log(`  Total pool: ${totalPoolForDay.toFixed(2)} TORUS`);
-          console.log(`  Total shares in system: ${totalSharesForDay.toFixed(2)}`);
         }
         
         // Debug first day
         if (i === 0) {
-          console.log(`\nDay ${i} (${date.toISOString().split('T')[0]}):`);
-          console.log(`  Protocol day: ${protocolDayForDate}`);
-          console.log(`  Total pool: ${totalPoolForDay.toFixed(2)} TORUS`);
-          console.log(`  Total shares: ${totalSharesForDay.toFixed(2)}`);
         }
         
         // Calculate rewards for each active position on this day
@@ -823,21 +718,17 @@ function App() {
             } else {
               // Log calculation issues for extreme edge cases
               if (protocolDayForDate === 111 || protocolDayForDate === 112) {
-                console.warn(`Day ${protocolDayForDate}: Invalid reward calc - shares: ${positionShares}, totalShares: ${totalSharesForDay}, result: ${dailyReward}`);
               }
             }
           }
         });
         
         if (i === 0) {
-          console.log(`  Active positions: ${activePositionsCount}`);
-          console.log(`  Total daily rewards: ${totalDailyRewardsCalculated.toFixed(2)} TORUS`);
         }
         } // Close the totalSharesForDay > 0 check
       } else {
         // Debug if no reward pool data
         if (i === 0) {
-          console.log(`⚠️ No reward pool data for protocol day ${protocolDayForDate}`);
         }
       }
     }
@@ -852,11 +743,6 @@ function App() {
     const totalRewards = Object.values(releases).reduce((sum, r) => sum + r.rewards, 0);
     const totalAmount = Object.values(releases).reduce((sum, r) => sum + r.total, 0);
     
-    console.log('\nTORUS Release Summary:');
-    console.log(`  Total Principal: ${totalPrincipal.toFixed(2)} TORUS`);
-    console.log(`  Total Rewards: ${totalRewards.toFixed(2)} TORUS`);
-    console.log(`  Total Amount: ${totalAmount.toFixed(2)} TORUS`);
-    console.log(`  Reward/Principal Ratio: ${totalPrincipal > 0 ? (totalRewards/totalPrincipal * 100).toFixed(2) : 0}%`);
     
     // Find days with highest rewards
     const sortedByRewards = Object.entries(releases)
@@ -864,26 +750,16 @@ function App() {
       .sort((a, b) => b[1].rewards - a[1].rewards)
       .slice(0, 10); // Show top 10 to see the pattern
     
-    console.log('\n⚠️ TOP 10 DAYS BY REWARDS (POTENTIAL CHART OVERFLOW ISSUE):');
     sortedByRewards.forEach(([date, data], i) => {
-      console.log(`  ${i+1}. ${date}: Principal=${data.principal.toFixed(2)}, Rewards=${data.rewards.toFixed(2)}, Total=${data.total.toFixed(2)}`);
     });
     
     // Check for extremely high values that could break chart
     const highValueDays = Object.entries(releases).filter(([_, data]) => data.total > 50000);
     if (highValueDays.length > 0) {
-      console.log('\n🚨 EXTREMELY HIGH VALUE DAYS (>50K TORUS):');
       highValueDays.forEach(([date, data]) => {
-        console.log(`  ${date}: Total=${data.total.toFixed(2)} TORUS (P=${data.principal.toFixed(2)}, R=${data.rewards.toFixed(2)})`);
       });
     }
     
-    console.log('\nSample release data with rewards:', Object.entries(releases).slice(0, 3).map(([date, data]) => ({
-      date,
-      principal: data.principal.toFixed(2),
-      rewards: data.rewards.toFixed(2),
-      total: data.total.toFixed(2)
-    })));
     
     // Debug: Check for significant releases after September 12
     const dateBasedResult = Object.entries(releases).map(([date, data]) => ({
@@ -898,21 +774,16 @@ function App() {
       return date >= new Date('2025-09-12') && day.total > 0;
     });
     
-    console.log(`\n%c=== RELEASES AFTER SEPT 12 (${lateReleases.length} days with releases) ===`, 'background: #f59e0b; color: white; font-weight: bold; padding: 8px');
     lateReleases.slice(0, 15).forEach(day => {
-      console.log(`${day.date}: ${day.total.toFixed(2)} TORUS total (${day.principal.toFixed(2)} principal + ${day.rewards.toFixed(2)} rewards)`);
     });
     
     const totalLateReleases = lateReleases.reduce((sum, day) => sum + day.total, 0);
-    console.log(`Total releases from Sept 12 onward: ${totalLateReleases.toFixed(2)} TORUS`);
-    console.log('=== END LATE RELEASES DEBUG ===\n');
     
     // Convert from date-based to protocol day-based with user timezone
     return convertToProtocolDayData(dateBasedResult);
   };
 
   const calculateTitanXUsage = () => {
-    console.log('%c🔍 CALCULATING TITANX USAGE (WITH HISTORY) 🔍', 'background: #f59e0b; color: white; font-weight: bold; font-size: 20px; padding: 10px');
     
     const now = new Date();
     // Use 6 PM UTC boundary like CONTRACT_START_DATE
@@ -923,12 +794,10 @@ function App() {
       today.setUTCDate(today.getUTCDate() - 1);
     }
     
-    console.log(`Processing ${createData.length} creates for TitanX...`);
     
     // Initialize full date range from contract start to future
     const usage = initializeFullDateMap();
     const { daysSinceStart, futureDays, totalDays } = getFullDateRange();
-    console.log(`Date range: ${daysSinceStart} days of history + ${futureDays} days future = ${totalDays} total days`);
     
     // Count creates with titanAmount
     const datesWithTitanX: Set<string> = new Set();
@@ -953,16 +822,10 @@ function App() {
         
         // Log first 5 creates with TitanX
         if (index < 5 && create.titanAmount !== '0') {
-          console.log(`Create ${index}: date=${dateKey}, titanX=${amount.toFixed(2)}, isPast=${maturityDate <= today}`);
         }
       }
     });
     
-    console.log(`Total dates with TitanX: ${datesWithTitanX.size}`);
-    console.log(`Sample dates with TitanX: ${Array.from(datesWithTitanX).sort().slice(0, 5).join(', ')}`);
-    console.log(`Historical TitanX used (already ended): ${historicalTitanX.toFixed(2)}`);
-    console.log(`Future TitanX to be used: ${futureTitanX.toFixed(2)}`);
-    console.log('=== END TITANX USAGE ===\n');
     
     const dateBasedResult = Object.entries(usage).map(([date, amount]) => ({
       date,
@@ -974,7 +837,6 @@ function App() {
   };
 
   const calculateDailyTitanXUsage = () => {
-    console.log('%c🔍 CALCULATING DAILY TITANX USAGE (CREATES + STAKES) 🔍', 'background: #16a34a; color: white; font-weight: bold; font-size: 20px; padding: 10px');
     
     const now = new Date();
     // Use 6 PM UTC boundary like CONTRACT_START_DATE
@@ -1003,7 +865,6 @@ function App() {
       dailyUsage[day] = { creates: 0, stakes: 0 };
     }
     
-    console.log(`Processing ${createData.length} creates for daily TitanX usage...`);
     
     // Process creates - use the timestamp when TitanX was paid (not maturity)
     createData.forEach((create) => {
@@ -1018,7 +879,6 @@ function App() {
       }
     });
     
-    console.log(`Processing ${stakeData.length} stakes for daily TitanX usage...`);
     
     // Process stakes - use the timestamp when TitanX was paid
     stakeData.forEach((stake) => {
@@ -1062,34 +922,25 @@ function App() {
     const totalCreates = result.reduce((sum, day) => sum + day.creates, 0);
     const totalStakes = result.reduce((sum, day) => sum + day.stakes, 0);
     const day1Data = result.find(d => d.day === 1);
-    console.log(`Total TitanX from creates: ${totalCreates.toFixed(2)}`);
-    console.log(`Total TitanX from stakes: ${totalStakes.toFixed(2)}`);
-    console.log(`Total TitanX used: ${(totalCreates + totalStakes).toFixed(2)}`);
     
     // Log specific days 15-19 for debugging
     const targetDays = [15, 16, 17, 18, 19];
-    console.log('\n🎯 Days 15-19 TitanX Usage (Chart Debug):');
     targetDays.forEach(day => {
       const dayData = result.find(d => d.day === day);
       if (dayData) {
         const total = dayData.creates + dayData.stakes;
-        console.log(`  Day ${day}: Creates=${dayData.creates.toFixed(2)}, Stakes=${dayData.stakes.toFixed(2)}, Total=${total.toFixed(2)} TitanX ${total > 1e9 ? `(${(total/1e9).toFixed(1)}B)` : ''}`);
       } else {
-        console.log(`  Day ${day}: No data found`);
       }
     });
     
-    console.log('=== END DAILY TITANX USAGE ===\n');
     
     return result;
   };
 
   const calculateTorusStakedPerDay = () => {
-    console.log('%c🔍 CALCULATING TORUS STAKED PER CONTRACT DAY 🔍', 'background: #8b5cf6; color: white; font-weight: bold; font-size: 20px; padding: 10px');
     
     const stakedPerDay: { [key: number]: number } = {};
     
-    console.log(`Processing ${stakeData.length} stakes for daily aggregation...`);
     
     // Get the current protocol day to limit the range (from contract via cached data)
     const currentDay = currentProtocolDay || 1; // Fallback to day 1 if not loaded
@@ -1112,7 +963,6 @@ function App() {
         
         // Log first few for debugging
         if (index < 5) {
-          console.log(`Stake ${index}: contract day ${contractDay}, principal=${principal.toFixed(2)} TORUS, timestamp=${stake.timestamp}`);
         }
       }
     });
@@ -1120,9 +970,6 @@ function App() {
     const totalStakedAcrossDays = Object.values(stakedPerDay).reduce((sum, amount) => sum + amount, 0);
     const daysWithStakes = Object.values(stakedPerDay).filter(amount => amount > 0).length;
     
-    console.log(`Total TORUS staked: ${totalStakedAcrossDays.toFixed(2)} TORUS`);
-    console.log(`Days with stakes: ${daysWithStakes} out of ${maxDay} days`);
-    console.log(`Current protocol day: ${currentDay}`);
     
     // Return array format matching other charts
     return Object.entries(stakedPerDay)
@@ -1134,7 +981,6 @@ function App() {
   };
 
   const calculateSharesReleases = () => {
-    console.log('%c🔍 CALCULATING SHARES RELEASES (WITH HISTORY) 🔍', 'background: #ff0000; color: white; font-weight: bold; font-size: 20px; padding: 10px');
     
     const now = new Date();
     // Use 6 PM UTC boundary like CONTRACT_START_DATE
@@ -1148,10 +994,8 @@ function App() {
     // Initialize full date range from contract start to future
     const sharesReleases = initializeFullDateMap();
     const { daysSinceStart, futureDays, totalDays } = getFullDateRange();
-    console.log(`Date range: ${daysSinceStart} days of history + ${futureDays} days future = ${totalDays} total days`);
     
     // Add shares from stakes ending each day (both past and future)
-    console.log(`Processing ${stakeData.length} stakes...`);
     let historicalSharesStakes = 0;
     let futureSharesStakes = 0;
     
@@ -1172,8 +1016,6 @@ function App() {
     });
     
     // Add shares from creates ending each day (both past and future)
-    console.log(`\n=== SHARES FROM CREATES DEBUG ===`);
-    console.log(`Processing ${createData.length} creates...`);
     const datesWithShares: Set<string> = new Set();
     let historicalSharesCreates = 0;
     let futureSharesCreates = 0;
@@ -1195,22 +1037,10 @@ function App() {
         
         // Log first 5 creates with shares
         if (index < 5) {
-          console.log(`Create ${index}: date=${dateKey}, shares=${shares.toFixed(2)}, isPast=${maturityDate <= today}`);
         }
       }
     });
     
-    console.log(`Total dates with shares from creates: ${datesWithShares.size}`);
-    console.log(`Sample dates with shares: ${Array.from(datesWithShares).sort().slice(0, 5).join(', ')}`);
-    console.log(`Historical shares (already released):`)
-    console.log(`  - From stakes: ${historicalSharesStakes.toFixed(2)}`);
-    console.log(`  - From creates: ${historicalSharesCreates.toFixed(2)}`);
-    console.log(`  - Total: ${(historicalSharesStakes + historicalSharesCreates).toFixed(2)}`);
-    console.log(`Future shares (to be released):`);
-    console.log(`  - From stakes: ${futureSharesStakes.toFixed(2)}`);
-    console.log(`  - From creates: ${futureSharesCreates.toFixed(2)}`);
-    console.log(`  - Total: ${(futureSharesStakes + futureSharesCreates).toFixed(2)}`);
-    console.log('=== END SHARES RELEASES ===\n');
     
     // Return all dates (including those with 0 shares) to align with other charts
     const dateBasedResult = Object.entries(sharesReleases)
@@ -1225,7 +1055,6 @@ function App() {
 
   // Calculate positions ending by day (stakes and creates separately)
   const calculatePositionsEndingByDay = () => {
-    console.log('📊 Calculating positions ending by day (stakes vs creates)');
     
     const now = new Date();
     // Use 6 PM UTC boundary like CONTRACT_START_DATE
@@ -1281,15 +1110,9 @@ function App() {
         ...data
       }));
     
-    console.log(`Total positions ending entries: ${dateBasedResult.length}`);
-    console.log(`First date: ${dateBasedResult[0]?.date}`);
-    console.log(`Last date: ${dateBasedResult[dateBasedResult.length - 1]?.date}`);
-    console.log(`Positions with stakes: ${dateBasedResult.filter(d => d.stakesCount > 0).length}`);
-    console.log(`Positions with creates: ${dateBasedResult.filter(d => d.createsCount > 0).length}`);
     
     // Convert from date-based to protocol day-based with user timezone
     const result = convertToProtocolDayData(dateBasedResult);
-    console.log(`After conversion: ${result.length} days, from day ${result[0]?.day} to day ${result[result.length - 1]?.day}`);
     return result;
   };
 
@@ -1347,19 +1170,14 @@ function App() {
   };
 
   const calculateTitanXEthUsage = (): { date: string; titanX: number; eth: number; day: number }[] => {
-    console.log('🔍 calculateTitanXEthUsage called');
-    console.log('buyProcessData available:', !!buyProcessData);
-    console.log('buyProcessData.dailyData available:', !!buyProcessData?.dailyData);
     
     if (!buyProcessData?.dailyData) return [];
     
     // Log the first daily data entry to see the structure
     if (buyProcessData.dailyData.length > 0) {
-      console.log('First daily data entry structure:', buyProcessData.dailyData[0]);
       // Check a few entries to find one with ETH
       const entriesWithETH = buyProcessData.dailyData.filter((day: any) => day.ethUsedForBurns > 0);
       if (entriesWithETH.length > 0) {
-        console.log('Found entries with ETH for burns:', entriesWithETH);
       }
     }
     
@@ -1373,29 +1191,19 @@ function App() {
     // If total ETH was used but daily data shows 0, distribute it across days with burns
     const totalEthUsed = parseFloat(buyProcessData.totals.ethUsedForBurns || '0');
     if (totalEthUsed > 0 && dateBasedData.every((d: { date: string; titanX: number; eth: number }) => d.eth === 0)) {
-      console.log('⚠️ ETH total exists but daily data is 0. This might be a data issue.');
       // For now, we'll show the data as is (all zeros)
       // In a real scenario, this should be fixed in the data source
     }
     
     // Debug: Log first few entries to check ETH values
-    console.log('%c=== TITANX/ETH USAGE DATA ===', 'background: #f59e0b; color: white; font-weight: bold; font-size: 14px; padding: 8px');
-    console.log('TitanX/ETH Usage Data (first 5 entries):', dateBasedData.slice(0, 5));
-    console.log('ETH values:', dateBasedData.slice(0, 10).map((d: { date: string; titanX: number; eth: number }) => ({ date: d.date, eth: d.eth })));
     
     // Check if any ETH values are non-zero
     const nonZeroEthDays = dateBasedData.filter((d: { date: string; titanX: number; eth: number }) => d.eth > 0);
-    console.log(`Days with ETH usage: ${nonZeroEthDays.length} out of ${dateBasedData.length} days`);
     if (nonZeroEthDays.length > 0) {
-      console.log('First few days with ETH usage:', nonZeroEthDays.slice(0, 5));
     }
     
     // Log totals from buyProcessData
     if (buyProcessData?.totals) {
-      console.log('Buy Process Totals:');
-      console.log('- Total ETH Used for Burns:', buyProcessData.totals.ethUsedForBurns);
-      console.log('- Total TitanX Used for Burns:', buyProcessData.totals.titanXUsedForBurns);
-      console.log('- Total TORUS Burnt:', buyProcessData.totals.torusBurnt);
     }
     
     // Use the protocol day directly from the data to avoid date conversion issues
@@ -1406,7 +1214,6 @@ function App() {
       day: day.protocolDay
     })).sort((a: any, b: any) => a.day - b.day);
     
-    console.log('Final result:', result);
     return result;
   };
 
@@ -1419,7 +1226,6 @@ function App() {
   
   // Calculate daily creates and stakes count
   const calculateDailyCreatesStakes = (): { date: string; day: number; creates: number; stakes: number }[] => {
-    console.log('%c🔍 CALCULATING DAILY CREATES & STAKES COUNT 🔍', 'background: #8b5cf6; color: white; font-weight: bold; font-size: 20px; padding: 10px');
     
     const dailyData: { [key: number]: { creates: number; stakes: number } } = {};
     
@@ -1438,8 +1244,6 @@ function App() {
       dailyData[day] = { creates: 0, stakes: 0 };
     }
     
-    console.log(`Processing ${createData.length} creates for daily count...`);
-    console.log(`Current day range: 1 to ${maxDay}`);
     
     // Count creates per day - use the timestamp when create was initiated
     createData.forEach((create) => {
@@ -1451,7 +1255,6 @@ function App() {
       }
     });
     
-    console.log(`Processing ${stakeData.length} stakes for daily count...`);
     
     // Count stakes per day - use the timestamp when stake was initiated
     stakeData.forEach((stake) => {
@@ -1479,10 +1282,6 @@ function App() {
     const totalCreates = result.reduce((sum, day) => sum + day.creates, 0);
     const totalStakes = result.reduce((sum, day) => sum + day.stakes, 0);
     const daysWithActivity = result.filter(day => day.creates > 0 || day.stakes > 0);
-    console.log(`Total creates: ${totalCreates}`);
-    console.log(`Total stakes: ${totalStakes}`);
-    console.log(`Days with activity: ${daysWithActivity.length}/${result.length}`);
-    console.log('=== END DAILY CREATES & STAKES COUNT ===\n');
     
     return result;
   };
@@ -1571,24 +1370,13 @@ function App() {
   
   // Debug LP fee burns
   if (lpFeeBurns.length > 0) {
-    console.log('LP Fee Burns Data:', lpFeeBurns);
-    console.log('LP Fee Burns - Days with burns:', lpFeeBurns.filter(d => d.torusBurned > 0).map(d => `Day ${d.day}: ${d.torusBurned.toFixed(2)} TORUS`));
-    console.log('LP Fee Burns - Last day:', lpFeeBurns[lpFeeBurns.length - 1]);
   }
   
   // Calculate TORUS releases with rewards
-  console.log('Checking conditions for torusReleasesWithRewards calculation:', {
-    loading,
-    stakeDataLength: stakeData.length,
-    createDataLength: createData.length,
-    rewardPoolDataLength: rewardPoolData.length
-  });
   const torusReleasesWithRewards = loading || (stakeData.length === 0 && createData.length === 0) || rewardPoolData.length === 0 ? [] : calculateTorusReleasesWithRewards();
   
   // Calculate future supply projection - SIMPLIFIED to match bar chart data exactly
   const calculateSupplyProjection = () => {
-    console.log('\n%c=== SUPPLY PROJECTION DEBUG ===', 'background: #22c55e; color: white; font-weight: bold; font-size: 16px; padding: 10px');
-    console.log(`Available torusReleasesWithRewards: ${torusReleasesWithRewards.length} entries`);
     
     // Get current total supply from actual data
     const currentSupply = totalSupply || 19626.60;
@@ -1598,11 +1386,7 @@ function App() {
     // Use ALL available data - PannableLineChart will handle windowing
     const releaseData = torusReleasesWithRewards; // Use all data for panning
     
-    console.log(`Using ${releaseData.length} release data points`);
-    console.log(`Starting supply: ${currentSupply.toFixed(2)} TORUS`);
     if (releaseData.length > 0) {
-      console.log(`First release: ${releaseData[0].date} - ${releaseData[0].total} TORUS`);
-      console.log(`Last release: ${releaseData[releaseData.length - 1].date} - ${releaseData[releaseData.length - 1].total} TORUS`);
     }
     
     releaseData.forEach((release, i) => {
@@ -1613,7 +1397,6 @@ function App() {
       
       // Debug significant releases and September/October dates
       if (dailyRelease > 100 || release.date.includes('2025-09') || release.date.includes('2025-10') || i >= 85) {
-        console.log(`Day ${i+1} (${release.date}, Contract Day ${contractDay}): Principal=${release.principal.toFixed(2)}, Rewards=${release.rewards.toFixed(2)}, Total=${dailyRelease.toFixed(2)}, Cumulative=${cumulativeSupply.toFixed(2)}`);
       }
       
       projection.push({
@@ -1627,10 +1410,6 @@ function App() {
     });
     
     const maxRelease = Math.max(...projection.map(p => p.released));
-    console.log(`Generated ${projection.length} days of projection`);
-    console.log(`Final cumulative supply: ${projection[projection.length - 1]?.supply.toLocaleString()}`);
-    console.log(`Maximum daily release: ${maxRelease.toLocaleString()}`);
-    console.log('=== END SUPPLY PROJECTION DEBUG ===\n');
     
     return projection;
   };
@@ -1639,23 +1418,14 @@ function App() {
   
   // Debug: Log the actual projection array length and last few entries
   if (!loading && supplyProjection.length > 0) {
-    console.log(`\n%c=== SUPPLY PROJECTION VALIDATION ===`, 'background: #ff6b6b; color: white; font-weight: bold; padding: 8px');
-    console.log(`Total projection entries: ${supplyProjection.length}`);
-    console.log(`Expected: ${MAX_CHART_DAYS} days`);
     if (supplyProjection.length > 85) {
-      console.log(`Last 3 entries:`);
       supplyProjection.slice(-3).forEach((entry, i) => {
-        console.log(`  ${85 + i + 1}: ${entry.date} - Supply: ${entry.supply.toFixed(2)}`);
       });
     }
-    console.log(`First entry: ${supplyProjection[0].date}`);
-    console.log(`Last entry: ${supplyProjection[supplyProjection.length - 1].date}`);
-    console.log('=== END VALIDATION ===\n');
   }
   
   // Debug: Log dates with data for both charts
   if (!loading && createData.length > 0) {
-    console.log('\n%c=== DAY 84 vs DAY 88 ANALYSIS ===', 'background: #ff0000; color: white; font-weight: bold; font-size: 16px; padding: 10px');
     
     // Calculate the specific dates for day 84 and 88
     const now = new Date();
@@ -1674,8 +1444,6 @@ function App() {
     const day84Key = day84Date.toISOString().split('T')[0];
     const day88Key = day88Date.toISOString().split('T')[0];
     
-    console.log(`Day 84 date: ${day84Key}`);
-    console.log(`Day 88 date: ${day88Key}`);
     
     // Get data for these specific days
     const day84TitanX = titanXUsage.find(t => t.date === day84Key)?.amount || 0;
@@ -1687,20 +1455,8 @@ function App() {
     const day84Shares = sharesReleases.find(s => s.date === day84Key)?.shares || 0;
     const day88Shares = sharesReleases.find(s => s.date === day88Key)?.shares || 0;
     
-    console.log('\nDay 84 values:');
-    console.log(`  - TitanX: ${day84TitanX.toLocaleString()}`);
-    console.log(`  - TORUS: ${day84Torus.toLocaleString()}`);
-    console.log(`  - Shares: ${day84Shares.toLocaleString()}`);
     
-    console.log('\nDay 88 values:');
-    console.log(`  - TitanX: ${day88TitanX.toLocaleString()}`);
-    console.log(`  - TORUS: ${day88Torus.toLocaleString()}`);
-    console.log(`  - Shares: ${day88Shares.toLocaleString()}`);
     
-    console.log('\nComparison:');
-    console.log(`  - TitanX: Day 88 is ${day88TitanX > day84TitanX ? 'HIGHER' : 'LOWER'} than Day 84`);
-    console.log(`  - TORUS: Day 88 is ${day88Torus > day84Torus ? 'HIGHER' : 'LOWER'} than Day 84`);
-    console.log(`  - Shares: Day 88 is ${day88Shares > day84Shares ? 'HIGHER' : 'LOWER'} than Day 84`);
     
     // Find all creates ending on these days
     const day84Creates = createData.filter(c => {
@@ -1712,36 +1468,28 @@ function App() {
       return maturityDate.toISOString().split('T')[0] === day88Key;
     });
     
-    console.log(`\nCreates ending on Day 84: ${day84Creates.length}`);
     day84Creates.forEach((c, i) => {
       if (i < 3) { // Show first 3
-        console.log(`  - Create ${i}: amount=${(parseFloat(c.torusAmount)/1e18).toFixed(2)}, days=${c.stakingDays}, shares=${(parseFloat(c.shares)/1e18).toFixed(2)}`);
       }
     });
     
-    console.log(`\nCreates ending on Day 88: ${day88Creates.length}`);
     day88Creates.forEach((c, i) => {
       if (i < 3) { // Show first 3
-        console.log(`  - Create ${i}: amount=${(parseFloat(c.torusAmount)/1e18).toFixed(2)}, days=${c.stakingDays}, shares=${(parseFloat(c.shares)/1e18).toFixed(2)}`);
       }
     });
     
     // Calculate expected shares vs actual
-    console.log('\nShares calculation check:');
     if (day84Creates.length > 0) {
       const c = day84Creates[0];
       const expectedShares = (parseFloat(c.torusAmount) / 1e18) * c.stakingDays * c.stakingDays;
       const actualShares = parseFloat(c.shares) / 1e18;
-      console.log(`Day 84 first create: expected=${expectedShares.toFixed(2)}, actual=${actualShares.toFixed(2)}, match=${Math.abs(expectedShares - actualShares) < 0.01}`);
     }
     if (day88Creates.length > 0) {
       const c = day88Creates[0];
       const expectedShares = (parseFloat(c.torusAmount) / 1e18) * c.stakingDays * c.stakingDays;
       const actualShares = parseFloat(c.shares) / 1e18;
-      console.log(`Day 88 first create: expected=${expectedShares.toFixed(2)}, actual=${actualShares.toFixed(2)}, match=${Math.abs(expectedShares - actualShares) < 0.01}`);
     }
     
-    console.log('=== END DAY ANALYSIS ===\n');
   }
   
   // Helper to calculate contract day for events (for charts)
@@ -1771,7 +1519,6 @@ function App() {
   
   // Debug: Check if stakes are beyond 88 days
   if (!loading && stakeData.length > 0) {
-    console.log('\n=== STAKE MATURITY ANALYSIS ===');
     const now = new Date();
     // Use 6 PM UTC boundary like CONTRACT_START_DATE
     const today = new Date(now.getUTCFullYear(), now.getUTCMonth(), now.getUTCDate());
@@ -1797,16 +1544,11 @@ function App() {
     endOf88thDay.setDate(endOf88thDay.getDate() + 88);
     endOf88thDay.setHours(23, 59, 59, 999);
     
-    console.log(`Active stakes total: ${activeStakes}`);
-    console.log(`Stakes within 88 days: ${stakesWithin88Days}`);
-    console.log(`Stakes beyond 88 days: ${stakesBeyond88Days}`);
     
     // Show sample stake dates
-    console.log('\nSample stake maturity dates:');
     stakeData.slice(0, 5).forEach((stake, i) => {
       const maturityDate = stake.maturityDate instanceof Date ? stake.maturityDate : new Date(stake.maturityDate);
       const daysFromNow = Math.floor((maturityDate.getTime() - today.getTime()) / (1000 * 60 * 60 * 24));
-      console.log(`  Stake ${i}: maturityDate=${maturityDate.toISOString().split('T')[0]} (${daysFromNow} days from now), stakingDays=${stake.stakingDays}, timestamp=${stake.timestamp}`);
       
       // Calculate what the maturity date SHOULD be
       const stakeTimestamp = parseInt(stake.timestamp);
@@ -1814,12 +1556,8 @@ function App() {
       const expectedMaturityTimestamp = stakeTimestamp + (stakingDays * 86400);
       const expectedMaturityDate = new Date(expectedMaturityTimestamp * 1000);
       
-      console.log(`    -> Stake timestamp: ${new Date(stakeTimestamp * 1000).toISOString()}`);
-      console.log(`    -> Expected maturity: ${expectedMaturityDate.toISOString().split('T')[0]}`);
-      console.log(`    -> Actual maturity: ${maturityDate.toISOString().split('T')[0]}`);
       
       if (expectedMaturityDate.getTime() !== maturityDate.getTime()) {
-        console.log(`    ⚠️ MISMATCH! Expected ${expectedMaturityDate.toISOString()} but got ${maturityDate.toISOString()}`);
       }
     });
   }
@@ -1846,7 +1584,6 @@ function App() {
       // Since amount already has 18 decimals, shares have 18 decimals too
       const sharesValue = parseFloat(item.shares) / 1e18;
       if (!isNaN(sharesValue)) {
-        console.log(`Active position - Shares: ${item.shares}, Shares/1e18: ${sharesValue}, Days: ${item.stakingDays}`);
         return sum + sharesValue;
       }
     }
@@ -1882,11 +1619,6 @@ function App() {
     ? parseFloat(cachedTitanXData.totalTitanXBurnt) / 1e18 
     : 0;
   
-  console.log('🔥 TitanX Burn Display Calculation:', {
-    cachedData: cachedTitanXData,
-    totalTitanXBurned,
-    inBillions: (totalTitanXBurned / 1e9).toFixed(3) + 'B'
-  });
   
   const titanxTotalSupply = cachedTitanXData.titanxTotalSupply 
     ? parseFloat(cachedTitanXData.titanxTotalSupply) / 1e18 
@@ -1894,12 +1626,6 @@ function App() {
   
   const percentTitanXBurned = titanxTotalSupply > 0 ? (totalTitanXBurned / titanxTotalSupply) * 100 : 0;
   
-  console.log('🔥 TitanX Metrics Debug:', {
-    contractInfo: contractInfo,
-    totalTitanXBurned,
-    titanxTotalSupply,
-    percentTitanXBurned
-  });
   
   // MEMOIZED CALCULATIONS FOR GRANULAR LOADING
   const memoizedTotalSupply = useMemo(() => totalSupply, [totalSupply]);
@@ -1927,17 +1653,10 @@ function App() {
   // Stake metrics with useMemo
   const memoizedTotalStaked = useMemo(() => {
     // Use the on-chain balance if available, otherwise fall back to calculated sum
-    console.log('Calculating memoizedTotalStaked:', {
-      totalStakedInContract,
-      totalStakedIncludingMatured,
-      stakeDataLength: stakeData.length
-    });
     if (totalStakedInContract > 0) {
-      console.log('Using totalStakedInContract:', totalStakedInContract);
       return totalStakedInContract;
     }
     if (stakeData.length === 0) return null;
-    console.log('Using totalStakedIncludingMatured:', totalStakedIncludingMatured);
     return totalStakedIncludingMatured;
   }, [totalStakedInContract, stakeData, totalStakedIncludingMatured]);
 
@@ -1997,22 +1716,9 @@ function App() {
     return totalETHFromCreates;
   }, [createData]);
 
-  console.log('Supply metrics:', { 
-    totalSupply, 
-    totalStakedInContract,
-    totalStakedIncludingMatured, 
-    totalTorusLocked, 
-    burnedSupply, 
-    percentStaked, 
-    percentBurned 
-  });
   
-  console.log(`Total active shares: ${totalShares}`);
-  console.log(`Total creates: ${createData.length}, Active creates: ${activeCreates}`);
-  console.log(`Sample create shares calculation: amount * days * days`);
   if (createData.length > 0) {
     const sample = createData[0];
-    console.log(`Sample: ${sample.torusAmount} * ${sample.stakingDays} * ${sample.stakingDays} = ${sample.shares}`);
   }
 
   // Maintenance mode flag - set to true to show maintenance page

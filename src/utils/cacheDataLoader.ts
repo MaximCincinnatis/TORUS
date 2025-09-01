@@ -24,7 +24,6 @@ async function getWorkingProviderWithRotation(): Promise<ethers.providers.JsonRp
     const rpcUrl = WORKING_RPC_ENDPOINTS[currentRpcIndex];
     
     try {
-      console.log(`🔄 Trying RPC provider: ${rpcUrl}`);
       const provider = new ethers.providers.JsonRpcProvider(rpcUrl);
       
       // Quick test with timeout to avoid 429 errors
@@ -39,11 +38,9 @@ async function getWorkingProviderWithRotation(): Promise<ethers.providers.JsonRp
         ]);
       }, `Cache loader RPC test for ${rpcUrl}`);
       
-      console.log(`✅ Connected to RPC provider: ${rpcUrl}`);
       return provider;
       
     } catch (error) {
-      console.log(`❌ RPC provider ${rpcUrl} failed:`, error instanceof Error ? error.message : 'Unknown error');
       
       // Auto-rotate to next provider
       currentRpcIndex = (currentRpcIndex + 1) % WORKING_RPC_ENDPOINTS.length;
@@ -151,7 +148,6 @@ export interface CachedData {
  */
 export async function loadCachedData(): Promise<CachedData | null> {
   try {
-    console.log('📦 Loading cached data from JSON...');
     
     // Try multiple sources in order
     const sources = [
@@ -164,7 +160,6 @@ export async function loadCachedData(): Promise<CachedData | null> {
     let sourceUsed = '';
     
     for (const source of sources) {
-      console.log(`📂 Trying to fetch from ${source.name}: ${source.url}`);
       
       try {
         response = await fetch(`${source.url}?t=${Date.now()}`, {
@@ -176,39 +171,27 @@ export async function loadCachedData(): Promise<CachedData | null> {
         
         if (response.ok) {
           sourceUsed = source.name;
-          console.log(`✅ Successfully loaded from ${source.name}`);
           break;
         } else {
-          console.warn(`⚠️ ${source.name} failed: ${response.status} ${response.statusText}`);
         }
       } catch (error) {
-        console.warn(`⚠️ ${source.name} error:`, error);
       }
     }
     
     if (!response || !response.ok) {
-      console.warn('❌ All data sources failed, will use RPC fallback');
       return null;
     }
     
     // Capture the file's actual last modified time from HTTP headers
     const lastModified = response.headers.get('last-modified');
-    console.log('🕐 File last modified header:', lastModified);
     
     const cachedData: CachedData = await response.json();
     
     // Override the JSON's lastUpdated with the actual file modification time
     if (lastModified) {
       const fileModifiedTime = new Date(lastModified).toISOString();
-      console.log('📅 Using file modification time:', fileModifiedTime, 'instead of JSON lastUpdated:', cachedData.lastUpdated);
       cachedData.lastUpdated = fileModifiedTime;
     }
-    console.log('📄 JSON loaded successfully, size:', JSON.stringify(cachedData).length, 'chars');
-    console.log('📊 Raw cache contains:', {
-      stakes: cachedData.stakingData?.stakeEvents?.length || 0,
-      creates: cachedData.stakingData?.createEvents?.length || 0,
-      lpPositions: cachedData.lpPositions?.length || 0
-    });
     
     // Validate cache freshness
     const lastUpdated = new Date(cachedData.lastUpdated);
@@ -216,24 +199,18 @@ export async function loadCachedData(): Promise<CachedData | null> {
     const minutesSinceUpdate = (now.getTime() - lastUpdated.getTime()) / (1000 * 60);
     
     if (minutesSinceUpdate > cachedData.metadata.cacheExpiryMinutes) {
-      console.warn(`⏰ Cached data is ${minutesSinceUpdate.toFixed(1)} minutes old (expiry: ${cachedData.metadata.cacheExpiryMinutes} min)`);
       
       if (!cachedData.metadata.fallbackToRPC) {
-        console.log('🔒 Using expired cache (fallback disabled)');
         return cachedData;
       }
       
-      console.log('🔄 Cache expired, will use RPC fallback');
       return null;
     }
     
-    console.log(`✅ Loaded fresh cached data from ${sourceUsed} (${minutesSinceUpdate.toFixed(1)} minutes old)`);
-    console.log(`📊 Cache contains: ${cachedData.lpPositions?.length || 0} LP positions, ${cachedData.historicalData?.sevenDay?.length || 0} historical days`);
     
     return cachedData;
     
   } catch (error) {
-    console.error('❌ Error loading cached data:', error);
     return null;
   }
 }
@@ -256,8 +233,6 @@ export async function getLPPositionsWithCache(
   
   // Check if lpPositions exists and has data (handle undefined case)
   if (cachedData && cachedData.lpPositions && cachedData.lpPositions.length > 0) {
-    console.log('🚀 Using cached LP positions');
-    console.log(`Found ${cachedData.lpPositions.length} LP positions in cache`);
     
     // Ensure positions use standard format
     const standardizedPositions = cachedData.lpPositions.map(pos => ({
@@ -280,7 +255,6 @@ export async function getLPPositionsWithCache(
       claimableTitanX: pos.claimableTitanX ?? (pos as any).claimableFees?.weth ?? 0
     }));
     
-    console.log('Standardized positions:', standardizedPositions);
     
     return {
       positions: standardizedPositions,
@@ -288,7 +262,6 @@ export async function getLPPositionsWithCache(
     };
   }
   
-  console.log('🔄 No cached LP positions found, falling back to RPC');
   const positions = await fallbackFunction();
   
   return {
@@ -310,7 +283,6 @@ export async function getHistoricalDataWithCache(
     const historicalData = days <= 7 ? cachedData.historicalData.sevenDay : cachedData.historicalData.thirtyDay;
     
     if (historicalData.length > 0) {
-      console.log(`🚀 Using cached historical data (${days} days)`);
       return {
         data: historicalData.slice(0, days), // Return requested number of days
         source: 'cache'
@@ -318,7 +290,6 @@ export async function getHistoricalDataWithCache(
     }
   }
   
-  console.log(`🔄 Falling back to subgraph for historical data (${days} days)`);
   const data = await fallbackFunction(days);
   
   return {
@@ -336,7 +307,6 @@ export async function getPoolDataWithCache(
   const cachedData = await loadCachedData();
   
   if (cachedData && cachedData.poolData) {
-    console.log('🚀 Using cached pool data');
     return {
       data: {
         sqrtPriceX96: cachedData.poolData.sqrtPriceX96,
@@ -348,7 +318,6 @@ export async function getPoolDataWithCache(
     };
   }
   
-  console.log('🔄 Falling back to RPC for pool data');
   const data = await fallbackFunction();
   
   return {
@@ -366,18 +335,6 @@ export async function getMainDashboardDataWithCache(
   const cachedData = await loadCachedData();
   
   if (cachedData && cachedData.stakingData) {
-    console.log('🚀 Using cached main dashboard data');
-    console.log('📦 Cache contains:', {
-      stakeEvents: cachedData.stakingData.stakeEvents?.length || 0,
-      createEvents: cachedData.stakingData.createEvents?.length || 0,
-      rewardPoolData: cachedData.stakingData.rewardPoolData?.length || 0,
-      currentProtocolDay: cachedData.stakingData.currentProtocolDay,
-      totalSupply: cachedData.stakingData.totalSupply,
-      burnedSupply: cachedData.stakingData.burnedSupply,
-      totalStakedInContract: cachedData.stakingData.totalStakedInContract,
-      totalTitanXBurnt: cachedData.totalTitanXBurnt,
-      titanxTotalSupply: cachedData.titanxTotalSupply
-    });
     
     // Check if incremental updates are available
     let finalData = cachedData;
@@ -394,20 +351,16 @@ export async function getMainDashboardDataWithCache(
         const shouldUpdate = await shouldUpdateIncrementally(cachedData, provider);
         
         if (shouldUpdate) {
-          console.log('🔄 Getting incremental updates...');
           const updates = await getIncrementalUpdates(cachedData, provider);
           
           if (updates.updated) {
             finalData = mergeIncrementalUpdates(cachedData, updates);
             source = 'cache+incremental';
-            console.log('✅ Applied incremental updates');
           }
         }
       } catch (error) {
-        console.warn('⚠️ Could not get incremental updates, using cached data:', error instanceof Error ? error.message : 'Unknown error');
       }
     } else {
-      console.log('📊 Using cached data (incremental updates disabled)');
     }
     
     // Convert string dates back to Date objects for cached data
@@ -421,12 +374,6 @@ export async function getMainDashboardDataWithCache(
       maturityDate: new Date(event.maturityDate)
     }));
     
-    console.log('✅ Converted dates for cache:', {
-      stakeEvents: stakeEvents.length,
-      createEvents: createEvents.length,
-      sampleStakeDate: stakeEvents[0]?.maturityDate,
-      sampleCreateDate: createEvents[0]?.maturityDate
-    });
 
     // Set last updated timestamp in cache
     const { DataCache } = await import('./cache');
@@ -452,7 +399,6 @@ export async function getMainDashboardDataWithCache(
     };
   }
   
-  console.log('🔄 Falling back to RPC for main dashboard data');
   const data = await fallbackFunction();
   
   return {

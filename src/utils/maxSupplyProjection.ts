@@ -101,24 +101,20 @@ export function calculateSharePoolPercentages(
     
     // Debug: Alert if totalShares drops too low
     if (day >= 110 && day <= 117 && totalShares < 10000000) { // Less than 10M shares
-      console.error(`🚨 Day ${day}: Only ${(totalShares/1e6).toFixed(2)}M shares active! This will cause reward spikes!`);
     }
   }
   
   positions.forEach(position => {
     // Validate position data
     if (!position || !position.user || !position.id || !position.type) {
-      console.warn('⚠️ Invalid position data, skipping:', position);
       return;
     }
     
     if (!position.shares || isNaN(parseFloat(position.shares))) {
-      console.warn('⚠️ Invalid shares in position, skipping:', position);
       return;
     }
     
     if (!position.maturityDate) {
-      console.warn('⚠️ Missing maturity date in position, skipping:', position);
       return;
     }
     
@@ -126,7 +122,6 @@ export function calculateSharePoolPercentages(
     const maturityDate = new Date(position.maturityDate);
     
     if (isNaN(maturityDate.getTime())) {
-      console.warn('⚠️ Invalid maturity date in position, skipping:', position);
       return;
     }
     
@@ -136,7 +131,6 @@ export function calculateSharePoolPercentages(
     const positionShares = parseFloat(position.shares) / 1e18;
     
     if (positionShares <= 0) {
-      console.warn('⚠️ Position has zero or negative shares, skipping:', position);
       return;
     }
     
@@ -148,7 +142,6 @@ export function calculateSharePoolPercentages(
     for (let day = minDay; day <= endDay; day++) {
       const rewardData = rewardPoolMap.get(day);
       if (!rewardData) {
-        console.warn(`⚠️ No reward data for day ${day} in position calculation`);
         continue;
       }
       
@@ -176,7 +169,6 @@ export function calculateSharePoolPercentages(
         
         // Validate reward pool data
         if (isNaN(rewardPool)) {
-          console.warn(`⚠️ Invalid reward pool for day ${day}, skipping`);
           continue;
         }
         
@@ -185,27 +177,17 @@ export function calculateSharePoolPercentages(
         
         // Debug for suspicious days - log the actual calculation
         if (day >= 109 && day <= 117 && dailyReward > 500) {
-          console.log(`🚨 HUGE DAILY REWARD on Day ${day} for Position ${positionKey}:`);
-          console.log(`   Position Shares: ${positionShares.toFixed(0)}`);
-          console.log(`   Total Shares Active: ${calculatedTotalShares.toFixed(0)}`); 
-          console.log(`   Share %: ${(sharePercentage * 100).toFixed(4)}%`);
-          console.log(`   Daily Reward Pool: ${rewardPool.toFixed(2)} TORUS`);
-          console.log(`   Daily Reward Earned: ${dailyReward.toFixed(2)} TORUS`);
-          console.log(`   Cumulative So Far: ${cumulativeReward.toFixed(2)} TORUS`);
           if (dailyReward > rewardPool) {
-            console.error(`   ERROR: Daily reward exceeds pool!`);
           }
         }
         
         // Sanity check: A position can't get more than the entire daily pool
         if (dailyReward > rewardPool) {
-          console.warn(`⚠️ Position trying to claim ${dailyReward.toFixed(2)} from pool of ${rewardPool.toFixed(2)} on day ${day}. Capping at pool size.`);
           dailyReward = rewardPool;
         }
         
         // Ensure daily reward is never negative
         if (dailyReward < 0) {
-          console.warn(`⚠️ Negative daily reward detected: ${dailyReward}, setting to 0`);
           dailyReward = 0;
         }
         
@@ -219,7 +201,6 @@ export function calculateSharePoolPercentages(
         
         // Alert if cumulative rewards are getting huge
         if (cumulativeReward > 1000000) { // More than 1M TORUS accumulated
-          console.error(`Position ${positionKey} has accumulated ${cumulativeReward.toFixed(0)} TORUS by day ${day}`);
         }
       }
       
@@ -254,16 +235,9 @@ export function calculateFutureMaxSupply(
   contractStartDate: Date,
   currentProtocolDay?: number
 ): MaxSupplyProjection[] {
-  console.log('🔍 calculateFutureMaxSupply called with:');
-  console.log('positions:', positions.length);
-  console.log('rewardPoolData:', rewardPoolData.length);
-  console.log('currentSupply:', currentSupply);
-  console.log('contractStartDate:', contractStartDate);
-  console.log('currentProtocolDay:', currentProtocolDay, '(should be 38)');
   
   // DEBUG: Check if we have the complete reward pool data
   const firstFewDays = rewardPoolData.slice(0, 10);
-  console.log('🔍 First 10 days of reward pool data:', firstFewDays.map(d => ({ day: d.day, rewardPool: d.rewardPool })));
   
   // CRITICAL FIX: Generate missing reward pool data for proper projections
   const extendedRewardPoolData = [...rewardPoolData];
@@ -324,37 +298,27 @@ export function calculateFutureMaxSupply(
     }
   }
   
-  console.log('🔍 Extended reward pool data from', lastDayWithRewards, 'to', targetDay, 'days');
-  console.log('🔍 Last actual reward pool (day', lastDayWithRewards, '):', lastRewardPool.toFixed(2));
-  console.log('🔍 Projected reward pool (day', targetDay, '):', currentPool.toFixed(2));
   
   // AUDIT: Check specific key days
   const day88Pool = parseFloat(extendedRewardPoolData.find(d => d.day === 88)?.rewardPool?.toString() || '0');
-  console.log('🎯 AUDIT: Day 88 reward pool:', day88Pool.toFixed(2));
   
   // Calculate total rewards with extended data
   const totalPossibleRewards = extendedRewardPoolData.reduce((sum, d) => sum + parseFloat(d.rewardPool.toString()), 0);
-  console.log('🔍 Total possible rewards (with projections):', totalPossibleRewards.toFixed(2));
-  console.log('🔍 Current supply + all rewards would be:', (currentSupply + totalPossibleRewards).toFixed(2));
   
   // Validate input parameters
   if (!positions || positions.length === 0) {
-    console.warn('⚠️ No positions provided, returning empty projections');
     return [];
   }
   
   if (!extendedRewardPoolData || extendedRewardPoolData.length === 0) {
-    console.warn('⚠️ No reward pool data provided, returning empty projections');
     return [];
   }
   
   if (currentSupply < 0) {
-    console.warn('⚠️ Current supply is negative, using 0');
     currentSupply = 0;
   }
   
   if (!contractStartDate || isNaN(contractStartDate.getTime())) {
-    console.error('❌ Invalid contract start date provided');
     return [];
   }
   
@@ -371,7 +335,6 @@ export function calculateFutureMaxSupply(
   const minDay = Math.min(...extendedRewardPoolData.map(data => data.day));
   const maxDay = Math.max(...extendedRewardPoolData.map(data => data.day));
   
-  console.log(`📊 Calculating supply projection from day ${minDay} to ${maxDay}`);
   
   // Start from current protocol day to avoid double counting past positions
   // FIX: Ensure we start from the current day, not the day after
@@ -380,14 +343,9 @@ export function calculateFutureMaxSupply(
   // DEBUG: Check if we have data for the start day
   const startDayData = rewardPoolMap.get(startDay);
   if (!startDayData) {
-    console.error(`❌ NO REWARD DATA FOR START DAY ${startDay}!`);
-    console.log('Available days in rewardPoolMap:', Array.from(rewardPoolMap.keys()).slice(0, 10));
   } else {
-    console.log(`✅ Start day ${startDay} has reward data`);
   }
   
-  console.log(`🔍 Processing days ${startDay} to ${maxDay} (starting from current protocol day)`);
-  console.log(`🔍 Current supply already includes positions matured before day ${startDay}`);
   
   // Track cumulative rewards from current day forward only
   let cumulativeFromStakes = 0;
@@ -415,40 +373,24 @@ export function calculateFutureMaxSupply(
     
     // Log critical days with clear formatting
     if (day >= 110 && day <= 117) {
-      console.log(`
-========================================
-📊 TOTALSHARES CALCULATION FOR DAY ${day}
-========================================
-Active Positions: ${activeCount}
-Total Shares: ${totalShares.toLocaleString()} (${totalShares.toFixed(0)})
-${totalShares < 1000000 ? '🚨 WARNING: SHARES TOO LOW! This will cause hockey stick!' : '✅ Shares look reasonable'}
-========================================`);
     }
   }
   
-  console.log(`🔄 Starting loop from day ${startDay} to ${maxDay}`);
-  console.log(`   First iteration will be day ${startDay}`);
   
   for (let day = startDay; day <= maxDay; day++) {
     // Log first iteration
     if (day === startDay) {
-      console.log(`📍 FIRST LOOP ITERATION: day = ${day}`);
     }
     
     const rewardData = rewardPoolMap.get(day);
     if (!rewardData) {
-      console.warn(`⚠️ No reward data for day ${day}, skipping`);
       if (day === 38) {
-        console.error(`❌❌❌ DAY 38 SKIPPED DUE TO MISSING REWARD DATA!`);
       }
       continue;
     }
     
     // DEBUG: Log when processing current protocol day
     if (day === currentProtocolDay) {
-      console.log(`🎯 Processing CURRENT PROTOCOL DAY ${day}`);
-      console.log(`  Current Supply: ${currentSupply}`);
-      console.log(`  Reward Data exists: ${rewardData ? 'YES' : 'NO'}`);
     }
     
     const date = new Date(contractStartDate);
@@ -483,16 +425,6 @@ ${totalShares < 1000000 ? '🚨 WARNING: SHARES TOO LOW! This will cause hockey 
             const startDay = Math.floor((positionStart.getTime() - contractStartDate.getTime()) / (24 * 60 * 60 * 1000)) + 1;
             const activeDays = day - startDay;
             const avgDailyReward = accumulatedRewards / activeDays;
-            console.warn(`
-🚨🚨🚨 MASSIVE REWARDS DETECTED 🚨🚨🚨
-Day ${day}: Stake ${projection.position.id} maturing
-Position Shares: ${shares.toLocaleString()}
-Active from day ${startDay} to ${day} (${activeDays} days)
-Accumulated Rewards: ${accumulatedRewards.toLocaleString()} TORUS
-Average Daily Reward: ${avgDailyReward.toFixed(2)} TORUS/day
-Principal: ${principal.toFixed(2)} TORUS
-Daily pool is only ~91K TORUS!
-`);
           }
           
           dailyFromStakes += principal + accumulatedRewards;
@@ -510,16 +442,6 @@ Daily pool is only ~91K TORUS!
             const startDay = Math.floor((positionStart.getTime() - contractStartDate.getTime()) / (24 * 60 * 60 * 1000)) + 1;
             const activeDays = day - startDay;
             const avgDailyReward = accumulatedRewards / activeDays;
-            console.warn(`
-🚨🚨🚨 MASSIVE REWARDS DETECTED 🚨🚨🚨
-Day ${day}: Create ${projection.position.id} maturing
-Position Shares: ${shares.toLocaleString()}
-Active from day ${startDay} to ${day} (${activeDays} days)
-Accumulated Rewards: ${accumulatedRewards.toLocaleString()} TORUS
-Average Daily Reward: ${avgDailyReward.toFixed(2)} TORUS/day
-New Tokens: ${newTokens.toFixed(2)} TORUS
-Daily pool is only ~91K TORUS!
-`);
           }
           
           dailyFromCreates += newTokens + accumulatedRewards;
@@ -535,30 +457,12 @@ Daily pool is only ~91K TORUS!
     
     // Log if there's a massive jump
     if (dailyFromStakes > 10000000 || dailyFromCreates > 10000000) {
-      console.error(`
-🚨 FOUND THE BUG - MASSIVE DAILY RELEASE on Day ${day}:
-  Daily stakes: ${dailyFromStakes.toFixed(2)} TORUS (was ${prevCumulativeStakes.toFixed(2)}, now ${cumulativeFromStakes.toFixed(2)})
-  Daily creates: ${dailyFromCreates.toFixed(2)} TORUS (was ${prevCumulativeCreates.toFixed(2)}, now ${cumulativeFromCreates.toFixed(2)})
-  ${positionProjections.size} total position projections
-`);
     }
     
     // Debug logging for days with suspicious values
     if (day >= 110 && day <= 117) {
       const totalSharesForDay = totalSharesByDay.get(day) || 0;
       const totalSupplyForDay = currentSupply + cumulativeFromStakes + cumulativeFromCreates;
-      console.log(`
-=====================================
-🎯 MAX SUPPLY CALCULATION - DAY ${day}
-=====================================
-Total Shares Active: ${totalSharesForDay.toLocaleString()}
-Daily Stakes Maturing: ${dailyFromStakes.toFixed(2)} TORUS
-Daily Creates Maturing: ${dailyFromCreates.toFixed(2)} TORUS
-Cumulative Stakes: ${cumulativeFromStakes.toFixed(2)} TORUS
-Cumulative Creates: ${cumulativeFromCreates.toFixed(2)} TORUS
-TOTAL MAX SUPPLY: ${totalSupplyForDay.toLocaleString()} TORUS
-${totalSupplyForDay > 1000000 ? '🚨🚨🚨 HOCKEY STICK DETECTED! Supply > 1M TORUS!' : ''}
-=====================================`);
     }
     
     // Calculate total max supply as current supply + all accumulated rewards
@@ -570,50 +474,29 @@ ${totalSupplyForDay > 1000000 ? '🚨🚨🚨 HOCKEY STICK DETECTED! Supply > 1M
       const prevSupply = maxSupplyProjections[maxSupplyProjections.length - 1].totalMaxSupply;
       const increase = totalMaxSupply - prevSupply;
       if (increase > 10000000) { // More than 10M increase
-        console.error(`
-🚨🚨🚨 MASSIVE SUPPLY SPIKE DETECTED 🚨🚨🚨
-Day ${day}: Supply jumped from ${(prevSupply/1e6).toFixed(2)}M to ${(totalMaxSupply/1e6).toFixed(2)}M
-Increase: ${(increase/1e6).toFixed(2)}M TORUS
-Daily stakes maturing: ${dailyFromStakes.toFixed(2)}
-Daily creates maturing: ${dailyFromCreates.toFixed(2)}
-Active positions: ${activePositions}
-Total shares: ${(totalSharesByDay.get(day) || 0) / 1e6}M
-`);
       }
     }
     
     // Validate that total max supply is never negative and never decreases
     if (totalMaxSupply < currentSupply) {
-      console.warn(`⚠️ Max supply ${totalMaxSupply} less than current supply ${currentSupply}, using current supply`);
       totalMaxSupply = currentSupply;
       cumulativeFromStakes = Math.max(0, cumulativeFromStakes);
       cumulativeFromCreates = Math.max(0, cumulativeFromCreates);
     }
     
     if (day <= 15 || day === 88) { // Debug first 15 days and day 88
-      console.log(`Day ${day}: totalMaxSupply=${totalMaxSupply.toFixed(2)} (current=${currentSupply} + stakes=${cumulativeFromStakes.toFixed(2)} + creates=${cumulativeFromCreates.toFixed(2)})`);
-      console.log(`  Daily: stakes=${dailyFromStakes.toFixed(2)}, creates=${dailyFromCreates.toFixed(2)}, RewardPool: ${parseFloat(rewardData.rewardPool.toString()).toFixed(2)}, ActivePositions: ${activePositions}`);
     }
     
     // CRITICAL AUDIT for day 88
     if (day === 88) {
-      console.log('🎯 CRITICAL AUDIT - Day 88 Results:');
-      console.log(`  Max Supply: ${totalMaxSupply.toFixed(2)} TORUS`);
-      console.log(`  Target: ~8,800,000 TORUS`);
-      console.log(`  Match: ${totalMaxSupply >= 8000000 ? '✅ PASS' : '❌ FAIL'}`);
-      console.log(`  Breakdown: current=${currentSupply} + stakes=${cumulativeFromStakes.toFixed(2)} + creates=${cumulativeFromCreates.toFixed(2)}`);
     }
     
     // Debug maturity days
     if (dailyFromStakes > 0 || dailyFromCreates > 0) {
-      console.log(`📅 MATURITY DAY ${day}: Stakes=${dailyFromStakes.toFixed(2)} Creates=${dailyFromCreates.toFixed(2)}`);
     }
     
     // DEBUG: Log when adding current protocol day to projections
     if (day === currentProtocolDay) {
-      console.log(`✅ Adding day ${day} to projections array`);
-      console.log(`  Total Max Supply: ${totalMaxSupply}`);
-      console.log(`  Date: ${date.toISOString().split('T')[0]}`);
     }
     
     maxSupplyProjections.push({
@@ -631,11 +514,7 @@ Total shares: ${(totalSharesByDay.get(day) || 0) / 1e6}M
     });
   }
   
-  console.log(`📊 FINAL: Created ${maxSupplyProjections.length} projections`);
-  console.log(`   First day: ${maxSupplyProjections[0]?.day}`);
-  console.log(`   Last day: ${maxSupplyProjections[maxSupplyProjections.length - 1]?.day}`);
   if (maxSupplyProjections[0]?.day !== currentProtocolDay) {
-    console.error(`❌ PROBLEM: First projection day is ${maxSupplyProjections[0]?.day}, should be ${currentProtocolDay}`);
   }
   
   return maxSupplyProjections;

@@ -127,6 +127,15 @@ async function saveUpdatedData(data) {
   const dataDir = path.dirname(DATA_FILE);
   await fs.mkdir(dataDir, { recursive: true });
 
+  // Ensure LP positions have standardized field names for consistency
+  if (data.lpPositions) {
+    data.lpPositions = data.lpPositions.map(pos => ({
+      ...pos,
+      torusAmount: pos.torusAmount || pos.amount0,
+      titanxAmount: pos.titanxAmount || pos.amount1
+    }));
+  }
+  
   // Add metadata
   const dataWithMeta = {
     ...data,

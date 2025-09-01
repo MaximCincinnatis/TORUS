@@ -32,7 +32,6 @@ async function calculateV3Fees(tokenId) {
   const pool = new ethers.Contract(POOL_ADDRESS, POOL_ABI, provider);
   const positionManager = new ethers.Contract(NFT_POSITION_MANAGER, POSITION_MANAGER_ABI, provider);
   
-  console.log(`\nCalculating fees for position ${tokenId}...`);
   
   // Get position data
   const position = await positionManager.positions(tokenId);
@@ -44,17 +43,10 @@ async function calculateV3Fees(tokenId) {
   const tokensOwed0 = BigInt(position.tokensOwed0.toString());
   const tokensOwed1 = BigInt(position.tokensOwed1.toString());
   
-  console.log(`Liquidity: ${liquidity.toString()}`);
-  console.log(`Ticks: ${tickLower} to ${tickUpper}`);
-  console.log(`Current tokensOwed0: ${tokensOwed0.toString()}`);
-  console.log(`Current tokensOwed1: ${tokensOwed1.toString()}`);
   
   if (liquidity === 0n) {
-    console.log('Position has 0 liquidity - fees should already be in tokensOwed');
     const torus = Number(tokensOwed0) / 1e18;
     const titanx = Number(tokensOwed1) / 1e18;
-    console.log(`Claimable TORUS: ${torus.toFixed(6)}`);
-    console.log(`Claimable TitanX: ${titanx.toFixed(2)} (${(titanx / 1e6).toFixed(2)}M)`);
     return;
   }
   
@@ -66,7 +58,6 @@ async function calculateV3Fees(tokenId) {
   ]);
   
   const currentTick = Number(slot0.tick);
-  console.log(`Current pool tick: ${currentTick}`);
   
   // Get tick data
   const [lowerTick, upperTick] = await Promise.all([
@@ -101,11 +92,6 @@ async function calculateV3Fees(tokenId) {
   feeGrowthInside0 = subIn256(subIn256(BigInt(feeGrowthGlobal0.toString()), feeGrowthBelow0), feeGrowthAbove0);
   feeGrowthInside1 = subIn256(subIn256(BigInt(feeGrowthGlobal1.toString()), feeGrowthBelow1), feeGrowthAbove1);
   
-  console.log(`\nFee growth calculations:`);
-  console.log(`feeGrowthInside0: ${feeGrowthInside0.toString()}`);
-  console.log(`feeGrowthInside1: ${feeGrowthInside1.toString()}`);
-  console.log(`feeGrowthInside0Last: ${feeGrowthInside0Last.toString()}`);
-  console.log(`feeGrowthInside1Last: ${feeGrowthInside1Last.toString()}`);
   
   // Calculate uncollected fees
   let uncollectedFees0 = 0n;
@@ -117,9 +103,6 @@ async function calculateV3Fees(tokenId) {
   uncollectedFees0 = (liquidity * feeGrowthDelta0) / Q128;
   uncollectedFees1 = (liquidity * feeGrowthDelta1) / Q128;
   
-  console.log(`\nFee growth deltas:`);
-  console.log(`Delta0: ${feeGrowthDelta0.toString()}`);
-  console.log(`Delta1: ${feeGrowthDelta1.toString()}`);
   
   // Total claimable = tokensOwed + uncollected
   const totalClaimable0 = tokensOwed0 + uncollectedFees0;
@@ -128,17 +111,12 @@ async function calculateV3Fees(tokenId) {
   const torus = Number(totalClaimable0) / 1e18;
   const titanx = Number(totalClaimable1) / 1e18;
   
-  console.log(`\n✅ TOTAL CLAIMABLE:`);
-  console.log(`TORUS: ${torus.toFixed(6)}`);
-  console.log(`TitanX: ${titanx.toFixed(2)} (${(titanx / 1e6).toFixed(2)}M)`);
   
   if (titanx > 38000000 && titanx < 40000000 && torus > 0.7 && torus < 0.8) {
-    console.log(`\n🎯 FOUND IT! This matches the 39M TitanX and 0.763 TORUS!`);
   }
 }
 
 async function main() {
-  console.log('Testing proper V3 fee calculation for all positions...');
   
   await calculateV3Fees('1029236');
   await calculateV3Fees('1030051');

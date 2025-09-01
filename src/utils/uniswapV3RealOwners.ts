@@ -42,7 +42,6 @@ export interface SimpleLPPosition {
 // Fallback approach: Try checking known NFT token IDs directly
 async function tryDirectNFTApproach(positionManager: any, poolInfo: any): Promise<SimpleLPPosition[]> {
   const positions: SimpleLPPosition[] = [];
-  console.log('🔄 Trying direct NFT approach...');
   
   // Try checking token IDs in a reasonable range
   // Most Uniswap V3 positions are created sequentially
@@ -72,7 +71,6 @@ async function tryDirectNFTApproach(positionManager: any, poolInfo: any): Promis
           
           if (isTORUSPool && positionData.liquidity > 0) {
             const realOwner = await positionManager.ownerOf(tokenId);
-            console.log(`✅ Found TORUS position! Token ID: ${tokenId}, Owner: ${realOwner}`);
             
             // Calculate token amounts
             const amounts = calculateTokenAmounts(
@@ -109,7 +107,6 @@ async function tryDirectNFTApproach(positionManager: any, poolInfo: any): Promis
     }
   }
   
-  console.log(`🎯 Direct NFT approach found ${positions.length} positions`);
   return positions;
 }
 
@@ -131,28 +128,19 @@ export async function getPoolInfo() {
       token1: token1Address
     };
   } catch (error) {
-    console.error('Error fetching pool info:', error);
     throw error;
   }
 }
 
 // Debug function to test specific token IDs
 async function debugSpecificPosition(tokenId: string, positionManager: any) {
-  console.log(`\n🔬 DEBUG: Testing specific token ID ${tokenId}`);
   try {
     const owner = await positionManager.ownerOf(tokenId);
     const position = await positionManager.positions(tokenId);
     
-    console.log(`  Owner: ${owner}`);
-    console.log(`  Token0: ${position.token0}`);
-    console.log(`  Token1: ${position.token1}`);
-    console.log(`  Liquidity: ${position.liquidity.toString()}`);
-    console.log(`  tokensOwed0: ${position.tokensOwed0.toString()}`);
-    console.log(`  tokensOwed1: ${position.tokensOwed1.toString()}`);
     
     return { owner, position };
   } catch (error) {
-    console.log(`  Error fetching position: ${error}`);
     return null;
   }
 }
@@ -163,66 +151,43 @@ export async function fetchLPPositionsFromEvents(): Promise<SimpleLPPosition[]> 
   const positionManager = new ethers.Contract(NFT_POSITION_MANAGER, POSITION_MANAGER_ABI, provider);
   
   try {
-    console.log('🔍 Fetching REAL individual LP position owners...');
-    console.log('Provider:', provider);
-    console.log('Pool Address:', POOL_ADDRESS);
-    console.log('Position Manager:', NFT_POSITION_MANAGER);
     
     // Test some known token IDs first
-    console.log('\n🧪 Testing known TORUS LP positions...');
     await debugSpecificPosition('780889', positionManager);
     await debugSpecificPosition('797216', positionManager);
     await debugSpecificPosition('798833', positionManager);
     
     // Test finding ALL positions for the target address
-    console.log('\n🔍 Searching for ALL positions for 0xCe32...32b6');
     await findAllPositionsForAddress('0xCe32E10b205FBf49F3bB7132f7378751Af1832b6');
     
-    console.log('📡 Testing provider network connection...');
     try {
       const network = await provider.getNetwork();
-      console.log('✅ Provider connected to network:', network);
     } catch (networkError) {
-      console.error('❌ Network connection failed:', networkError);
       throw networkError;
     }
     
-    console.log('📊 Getting pool state...');
     let poolInfo;
     try {
       poolInfo = await getPoolInfo();
-      console.log('✅ Pool info retrieved:', poolInfo);
     } catch (poolError) {
-      console.error('❌ Pool info failed:', poolError);
       throw poolError;
     }
     
-    console.log('🔢 Getting current block number...');
     const currentBlock = await provider.getBlockNumber();
-    console.log('✅ Current block:', currentBlock);
     const startBlock = currentBlock - 50000; // Maximum RPC block range limit
     
-    console.log(`Searching for individual LP holders from block ${startBlock} to ${currentBlock}`);
     
     // Get Mint events from TORUS pool
-    console.log('Creating mint filter...');
     const mintFilter = poolContract.filters.Mint();
-    console.log('Querying for mint events...');
     const mintEvents = await poolContract.queryFilter(mintFilter, startBlock, currentBlock);
-    console.log(`Found ${mintEvents.length} Mint events in TORUS pool`);
     
     if (mintEvents.length === 0) {
-      console.log('❌ No recent Mint events found - trying different approach');
-      console.log('Block range searched:', startBlock, 'to', currentBlock);
       
       // Try a smaller, more recent range
       const recentStartBlock = currentBlock - 10000;
-      console.log(`Trying smaller range: ${recentStartBlock} to ${currentBlock}`);
       const recentMintEvents = await poolContract.queryFilter(mintFilter, recentStartBlock, currentBlock);
-      console.log(`Found ${recentMintEvents.length} recent Mint events`);
       
       if (recentMintEvents.length === 0) {
-        console.log('❌ No Mint events found in any range - trying direct NFT approach');
         
         // Fallback: Try to find positions by checking NFT token IDs directly
         // This is less efficient but may catch positions we missed
@@ -244,9 +209,6 @@ export async function fetchLPPositionsFromEvents(): Promise<SimpleLPPosition[]> 
       
       const blockNumber = mintEvent.blockNumber;
       
-      console.log(`Processing Mint ${i + 1} from block ${blockNumber}`);
-      console.log(`  Tick Range: ${mintEvent.args.tickLower} to ${mintEvent.args.tickUpper}`);
-      console.log(`  Amount: ${mintEvent.args.amount.toString()}`);
       
       // Find IncreaseLiquidity events in nearby blocks
       const searchFromBlock = blockNumber - 2;
@@ -260,7 +222,6 @@ export async function fetchLPPositionsFromEvents(): Promise<SimpleLPPosition[]> 
           searchToBlock
         );
         
-        console.log(`  Found ${increaseLiquidityEvents.length} IncreaseLiquidity events nearby`);
         
         // Look for matching NFT positions
         for (const incEvent of increaseLiquidityEvents) {
@@ -289,22 +250,11 @@ export async function fetchLPPositionsFromEvents(): Promise<SimpleLPPosition[]> 
               
               // Special debug for the address with known claimable yield
               if (realOwner.toLowerCase() === '0xce32e10b205fbf49f3bb7132f7378751af1832b6') {
-                console.log(`  🎯 FOUND TARGET ADDRESS 0xCe32...32b6!`);
               }
               
-              console.log(`  ✅ FOUND INDIVIDUAL LP HOLDER!`);
-              console.log(`    Token ID: ${tokenId}`);
-              console.log(`    Real Owner: ${realOwner}`);
-              console.log(`    Liquidity: ${positionData.liquidity.toString()}`);
-              console.log(`    🔍 DEBUG Position Data:`);
-              console.log(`    tokensOwed0: ${positionData.tokensOwed0.toString()}`);
-              console.log(`    tokensOwed1: ${positionData.tokensOwed1.toString()}`);
-              console.log(`    feeGrowthInside0LastX128: ${positionData.feeGrowthInside0LastX128.toString()}`);
-              console.log(`    feeGrowthInside1LastX128: ${positionData.feeGrowthInside1LastX128.toString()}`);
               
               // Calculate actual token amounts
               try {
-                console.log(`    Calculating token amounts...`);
                 const amounts = calculateTokenAmounts(
                   positionData.liquidity.toString(),
                   poolInfo.sqrtPriceX96,
@@ -314,8 +264,6 @@ export async function fetchLPPositionsFromEvents(): Promise<SimpleLPPosition[]> 
                   18
                 );
                 
-                console.log(`    ✅ TORUS Amount: ${amounts.amount0.toFixed(4)}`);
-                console.log(`    ✅ TitanX Amount: ${amounts.amount1.toFixed(4)}`);
                 
                 // Calculate claimable fees by simulating a collect call
                 // This is what Uniswap interface does to show accurate fees
@@ -347,22 +295,16 @@ export async function fetchLPPositionsFromEvents(): Promise<SimpleLPPosition[]> 
                   claimableTorus = Number(ethers.utils.formatUnits(decoded.amount0, 18));
                   claimableTitanX = Number(ethers.utils.formatUnits(decoded.amount1, 18));
                   
-                  console.log(`    💰 Simulated collect - TORUS: ${claimableTorus.toFixed(6)}, TitanX: ${claimableTitanX.toFixed(2)}`);
                   
                 } catch (err) {
                   // Fallback to tokensOwed if simulation fails
-                  console.log(`    ⚠️  Collect simulation failed, using tokensOwed`);
                   const tokensOwed0Str = positionData.tokensOwed0.toString();
                   const tokensOwed1Str = positionData.tokensOwed1.toString();
                   claimableTorus = parseFloat(tokensOwed0Str) / 1e18;
                   claimableTitanX = parseFloat(tokensOwed1Str) / 1e18;
                 }
                 
-                console.log(`    🔍 Calculated claimableTorus: ${claimableTorus}`);
-                console.log(`    🔍 Calculated claimableTitanX: ${claimableTitanX}`);
                 
-                console.log(`    💰 Claimable TORUS: ${claimableTorus.toFixed(4)}`);
-                console.log(`    💰 Claimable TitanX: ${claimableTitanX.toFixed(4)}`);
                 
                 // Determine which token is which based on pool configuration
                 const token0IsTorus = poolInfo.token0.toLowerCase() === '0xb47f575807fc5466285e1277ef8acfbb5c6686e8'.toLowerCase();
@@ -381,11 +323,9 @@ export async function fetchLPPositionsFromEvents(): Promise<SimpleLPPosition[]> 
                   claimableTitanX
                 };
                 
-                console.log(`    ✅ Adding position to results:`, position);
                 foundPositions.set(tokenId, position);
                 
               } catch (calcError) {
-                console.error(`    ❌ Token calculation failed:`, calcError);
                 // Still add position with basic info
                 const position: SimpleLPPosition = {
                   tokenId,
@@ -417,20 +357,13 @@ export async function fetchLPPositionsFromEvents(): Promise<SimpleLPPosition[]> 
     }
     
     const positions = Array.from(foundPositions.values());
-    console.log(`\n🎯 FOUND ${positions.length} REAL INDIVIDUAL LP POSITIONS!`);
     
     if (positions.length > 0) {
       const uniqueOwners = new Set(positions.map(p => p.owner));
-      console.log(`Unique owners: ${uniqueOwners.size}`);
       
       positions.forEach((pos, i) => {
-        console.log(`${i + 1}. Owner: ${pos.owner}`);
-        console.log(`   TORUS: ${pos.torusAmount.toFixed(2)}`);
-        console.log(`   TitanX: ${pos.titanxAmount.toFixed(2)}`);
-        console.log(`   In Range: ${pos.inRange ? '✅' : '❌'}`);
       });
     } else {
-      console.log('❌ No individual LP positions found');
     }
     
     return positions.sort((a, b) => 
@@ -438,21 +371,13 @@ export async function fetchLPPositionsFromEvents(): Promise<SimpleLPPosition[]> 
     );
     
   } catch (error) {
-    console.error('❌ CRITICAL ERROR fetching real LP positions:', error);
-    console.error('Error type:', typeof error);
-    console.error('Error message:', error instanceof Error ? error.message : String(error));
-    console.error('Error stack:', error instanceof Error ? error.stack : 'No stack trace');
     
     // Try to provide more specific error info
     if (error instanceof Error) {
       if (error.message.includes('network')) {
-        console.error('🌐 NETWORK ERROR - RPC provider might be inaccessible from Vercel');
       } else if (error.message.includes('timeout')) {
-        console.error('⏰ TIMEOUT ERROR - Request taking too long');
       } else if (error.message.includes('rate limit')) {
-        console.error('🚫 RATE LIMIT ERROR - Too many requests');
       } else if (error.message.includes('block range')) {
-        console.error('📊 BLOCK RANGE ERROR - Requested too many blocks');
       }
     }
     

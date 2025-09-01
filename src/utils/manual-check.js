@@ -13,60 +13,41 @@ const POSITION_MANAGER_ABI = [
 async function manualCheck() {
   const positionManager = new ethers.Contract(NFT_POSITION_MANAGER, POSITION_MANAGER_ABI, provider);
   
-  console.log('Manual check for address:', TARGET_ADDRESS);
-  console.log('Checking specific token IDs we found...\n');
   
   // Check the token IDs we found
   const tokenIds = ['1030051', '1031465'];
   
   for (const tokenId of tokenIds) {
-    console.log(`\nChecking Token ID: ${tokenId}`);
     try {
       const owner = await positionManager.ownerOf(tokenId);
-      console.log(`  Owner: ${owner}`);
       
       if (owner.toLowerCase() === TARGET_ADDRESS.toLowerCase()) {
         const position = await positionManager.positions(tokenId);
-        console.log(`  Token0: ${position.token0}`);
-        console.log(`  Token1: ${position.token1}`);
-        console.log(`  Fee: ${position.fee}`);
-        console.log(`  Liquidity: ${position.liquidity.toString()}`);
-        console.log(`  TickLower: ${position.tickLower}`);
-        console.log(`  TickUpper: ${position.tickUpper}`);
-        console.log(`  tokensOwed0: ${position.tokensOwed0.toString()}`);
-        console.log(`  tokensOwed1: ${position.tokensOwed1.toString()}`);
         
         // Convert to human readable
         const torus = Number(position.tokensOwed0) / 1e18;
         const titanx = Number(position.tokensOwed1) / 1e18;
-        console.log(`  Claimable TORUS: ${torus.toFixed(6)}`);
-        console.log(`  Claimable TitanX: ${titanx.toFixed(6)}`);
       }
     } catch (err) {
-      console.log(`  Error: ${err.message}`);
     }
   }
   
   // Search for more positions via Transfer events
-  console.log('\n\nSearching for ALL positions via Transfer events...');
   const currentBlock = await provider.getBlockNumber();
   const fromBlock = currentBlock - 1000; // Stay within 1k block limit
   
   const filter = positionManager.filters.Transfer(null, TARGET_ADDRESS);
   const events = await positionManager.queryFilter(filter, fromBlock, currentBlock);
   
-  console.log(`Found ${events.length} Transfer events TO this address`);
   
   const uniqueTokens = new Set();
   for (const event of events) {
     uniqueTokens.add(event.args.tokenId.toString());
   }
   
-  console.log(`Unique token IDs received: ${Array.from(uniqueTokens).join(', ')}`);
   
   // Check each one
   for (const tokenId of uniqueTokens) {
-    console.log(`\nChecking Token ID: ${tokenId}`);
     try {
       const owner = await positionManager.ownerOf(tokenId);
       if (owner.toLowerCase() === TARGET_ADDRESS.toLowerCase()) {
@@ -77,15 +58,9 @@ async function manualCheck() {
                        position.token1.toLowerCase() === '0xf19308f923582a6f7c465e5ce7a9dc1bec6665b1';
         
         if (isTorus) {
-          console.log(`  ✅ TORUS Position!`);
-          console.log(`  Liquidity: ${position.liquidity.toString()}`);
-          console.log(`  tokensOwed0: ${position.tokensOwed0.toString()}`);
-          console.log(`  tokensOwed1: ${position.tokensOwed1.toString()}`);
           
           const torus = Number(position.tokensOwed0) / 1e18;
           const titanx = Number(position.tokensOwed1) / 1e18;
-          console.log(`  Claimable TORUS: ${torus.toFixed(6)}`);
-          console.log(`  Claimable TitanX: ${(titanx / 1e6).toFixed(2)}M`);
         }
       }
     } catch (err) {

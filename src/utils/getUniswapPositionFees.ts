@@ -41,7 +41,6 @@ export async function getUniswapPositionFees(tokenId: string): Promise<PositionW
   const positionManager = new ethers.Contract(NFT_POSITION_MANAGER, POSITION_MANAGER_ABI, provider);
   
   try {
-    console.log(`Getting Uniswap position fees for token ${tokenId}...`);
     
     // Get position data
     const [position, owner] = await Promise.all([
@@ -76,9 +75,6 @@ export async function getUniswapPositionFees(tokenId: string): Promise<PositionW
       const collectable0 = decoded.amount0;
       const collectable1 = decoded.amount1;
       
-      console.log(`Simulated collect results:`);
-      console.log(`  Token0 (TORUS): ${ethers.utils.formatUnits(collectable0, 18)}`);
-      console.log(`  Token1 (TitanX): ${ethers.utils.formatUnits(collectable1, 18)}`);
       
       // This should match what Uniswap shows!
       return {
@@ -95,7 +91,6 @@ export async function getUniswapPositionFees(tokenId: string): Promise<PositionW
       };
       
     } catch (callError) {
-      console.error('Error simulating collect:', callError);
       
       // Fallback to just tokensOwed
       return {
@@ -113,26 +108,20 @@ export async function getUniswapPositionFees(tokenId: string): Promise<PositionW
     }
     
   } catch (error) {
-    console.error('Error getting position fees:', error);
     return null;
   }
 }
 
 // Test function
 export async function testPositionFees() {
-  console.log('Testing Uniswap position fee calculation...\n');
   
   const positions = ['1029236', '1030051', '1031465'];
   
   for (const tokenId of positions) {
     const fees = await getUniswapPositionFees(tokenId);
     if (fees) {
-      console.log(`\nPosition ${tokenId}:`);
-      console.log(`  Claimable TORUS: ${fees.claimableTorus.toFixed(6)}`);
-      console.log(`  Claimable TitanX: ${fees.claimableTitanX.toFixed(2)} (${(fees.claimableTitanX / 1e6).toFixed(2)}M)`);
       
       if (fees.claimableTitanX > 38000000 && fees.claimableTitanX < 40000000) {
-        console.log('  🎯 THIS MATCHES THE 39M TITANX!');
       }
     }
   }

@@ -17,13 +17,11 @@ export async function findAllPositionsForAddress(targetAddress: string) {
   const provider = getProvider();
   const positionManager = new ethers.Contract(NFT_POSITION_MANAGER, POSITION_MANAGER_ABI, provider);
   
-  console.log(`\n🔎 Finding ALL positions for address: ${targetAddress}`);
   
   try {
     // Method 1: Try to get balance and enumerate tokens
     try {
       const balance = await positionManager.balanceOf(targetAddress);
-      console.log(`  Balance of NFTs: ${balance.toString()}`);
       
       const positions = [];
       for (let i = 0; i < balance; i++) {
@@ -38,32 +36,24 @@ export async function findAllPositionsForAddress(targetAddress: string) {
           );
           
           if (isTORUSPool) {
-            console.log(`  ✅ Found TORUS position NFT #${tokenId}`);
-            console.log(`     Liquidity: ${position.liquidity.toString()}`);
-            console.log(`     tokensOwed0: ${position.tokensOwed0.toString()}`);
-            console.log(`     tokensOwed1: ${position.tokensOwed1.toString()}`);
             positions.push({ tokenId: tokenId.toString(), position });
           }
         } catch (err) {
-          console.log(`  Error reading token at index ${i}:`, err);
         }
       }
       
       return positions;
     } catch (err) {
-      console.log('  tokenOfOwnerByIndex not supported, trying Transfer events...');
     }
     
     // Method 2: Search Transfer events TO the address
     const currentBlock = await provider.getBlockNumber();
     const fromBlock = currentBlock - 100000; // Look back further
     
-    console.log(`  Searching Transfer events from block ${fromBlock} to ${currentBlock}`);
     
     const transferFilter = positionManager.filters.Transfer(null, targetAddress);
     const transfers = await positionManager.queryFilter(transferFilter, fromBlock, currentBlock);
     
-    console.log(`  Found ${transfers.length} Transfer events TO this address`);
     
     const uniqueTokenIds = new Set<string>();
     for (const transfer of transfers) {
@@ -72,7 +62,6 @@ export async function findAllPositionsForAddress(targetAddress: string) {
       }
     }
     
-    console.log(`  Unique token IDs received: ${Array.from(uniqueTokenIds).join(', ')}`);
     
     // Check each token ID
     const positions = [];
@@ -81,7 +70,6 @@ export async function findAllPositionsForAddress(targetAddress: string) {
         // Verify current owner
         const currentOwner = await positionManager.ownerOf(tokenId);
         if (currentOwner.toLowerCase() !== targetAddress.toLowerCase()) {
-          console.log(`  Token ${tokenId} no longer owned by target (now owned by ${currentOwner})`);
           continue;
         }
         
@@ -94,21 +82,15 @@ export async function findAllPositionsForAddress(targetAddress: string) {
         );
         
         if (isTORUSPool) {
-          console.log(`  ✅ Found TORUS position NFT #${tokenId}`);
-          console.log(`     Liquidity: ${position.liquidity.toString()}`);
-          console.log(`     tokensOwed0: ${position.tokensOwed0.toString()}`);
-          console.log(`     tokensOwed1: ${position.tokensOwed1.toString()}`);
           positions.push({ tokenId, position });
         }
       } catch (err) {
-        console.log(`  Error checking token ${tokenId}:`, err);
       }
     }
     
     return positions;
     
   } catch (error) {
-    console.error('Error finding positions:', error);
     return [];
   }
 }
@@ -117,6 +99,5 @@ export async function findAllPositionsForAddress(targetAddress: string) {
 export async function testFindPositions() {
   const testAddress = '0xCe32E10b205FBf49F3bB7132f7378751Af1832b6';
   const positions = await findAllPositionsForAddress(testAddress);
-  console.log(`\n📊 Total TORUS positions found for ${testAddress}: ${positions.length}`);
   return positions;
 }

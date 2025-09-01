@@ -8,15 +8,12 @@ export const fetchContractData = async () => {
     
     // Get current block
     const currentBlock = await web3.eth.getBlockNumber();
-    console.log('Current block:', currentBlock);
     
     // Try to get some basic blockchain data
     const balance = await web3.eth.getBalance(CONTRACTS.TORUS_CREATE_STAKE);
-    console.log('Contract balance:', web3.utils.fromWei(balance, 'ether'), 'ETH');
     
     // Get contract code to verify it exists
     const code = await web3.eth.getCode(CONTRACTS.TORUS_CREATE_STAKE);
-    console.log('Contract exists:', code !== '0x');
     
     return {
       currentBlock: Number(currentBlock),
@@ -24,7 +21,6 @@ export const fetchContractData = async () => {
       contractExists: code !== '0x'
     };
   } catch (error) {
-    console.error('Error fetching contract data:', error);
     return null;
   }
 };

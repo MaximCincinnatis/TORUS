@@ -47,13 +47,11 @@ export async function fetchPoolData(): Promise<PoolData | null> {
     const data = await response.json();
     
     if (data.errors) {
-      console.error('GraphQL errors:', data.errors);
       return null;
     }
 
     return data.data?.pool || null;
   } catch (error) {
-    console.error('Error fetching pool data:', error);
     return null;
   }
 }
@@ -125,7 +123,6 @@ export async function fetchLPPositions(first: number = 100, skip: number = 0): P
     const data = await response.json();
     
     if (data.errors) {
-      console.error('GraphQL errors:', data.errors);
       return [];
     }
 
@@ -154,7 +151,6 @@ export async function fetchLPPositions(first: number = 100, skip: number = 0): P
       },
     }));
   } catch (error) {
-    console.error('Error fetching LP positions:', error);
     return [];
   }
 }
@@ -176,11 +172,9 @@ export async function fetchAllLPPositions(): Promise<UniswapV3Position[]> {
     
     // Prevent infinite loops
     if (skip > 10000) {
-      console.warn('Reached maximum position fetch limit');
       break;
     }
   }
   
-  console.log(`Fetched ${allPositions.length} total LP positions`);
   return allPositions;
 }

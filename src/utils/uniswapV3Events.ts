@@ -39,7 +39,6 @@ export async function getPoolInfo() {
       token1: token1Address
     };
   } catch (error) {
-    console.error('Error fetching pool info:', error);
     throw error;
   }
 }
@@ -49,36 +48,29 @@ export async function fetchLPPositionsFromEvents(fromBlock?: number): Promise<Si
   const poolContract = new ethers.Contract(POOL_ADDRESS, POOL_ABI, provider);
   
   try {
-    console.log('🔍 fetchLPPositionsFromEvents called - using Pool events approach');
     // Get current pool state
     const poolInfo = await getPoolInfo();
-    console.log('Pool info retrieved:', poolInfo);
     const currentBlock = await provider.getBlockNumber();
     const startBlock = fromBlock || currentBlock - 50000; // Maximum RPC block range limit
     
-    console.log(`Fetching Pool Mint events from block ${startBlock} to ${currentBlock}`);
     
     // Get Mint events from the pool
     const mintFilter = poolContract.filters.Mint();
     const mintEvents = await poolContract.queryFilter(mintFilter, startBlock, currentBlock);
-    console.log(`Found ${mintEvents.length} Mint events`);
     
     // Get Burn events
     const burnFilter = poolContract.filters.Burn();
     const burnEvents = await poolContract.queryFilter(burnFilter, startBlock, currentBlock);
-    console.log(`Found ${burnEvents.length} Burn events`);
     
     // Track positions by tick range (since we can't easily get individual NFT owners)
     const positions = new Map<string, SimpleLPPosition>();
     
     // Process Mint events
-    console.log('Processing Mint events...');
     for (const event of mintEvents) {
       if ('args' in event && event.args) {
         // Use tick range as the key since all positions go through Position Manager
         const key = `${event.args.tickLower}-${event.args.tickUpper}`;
         
-        console.log(`Mint event - Amount: ${event.args.amount}, Ticks: ${event.args.tickLower} to ${event.args.tickUpper}`);
         
         const existing = positions.get(key) || {
           tokenId: key, // Use the key as a pseudo-tokenId
@@ -103,7 +95,6 @@ export async function fetchLPPositionsFromEvents(fromBlock?: number): Promise<Si
     }
     
     // Process Burn events
-    console.log('Processing Burn events...');
     for (const event of burnEvents) {
       if ('args' in event && event.args) {
         const key = `${event.args.tickLower}-${event.args.tickUpper}`;
@@ -149,16 +140,13 @@ export async function fetchLPPositionsFromEvents(fromBlock?: number): Promise<Si
       }
     }
     
-    console.log(`Processed ${activePositions.length} active LP positions`);
     if (activePositions.length > 0) {
-      console.log('Sample position:', activePositions[0]);
     }
     
     return activePositions.sort((a, b) => 
       BigInt(b.liquidity) > BigInt(a.liquidity) ? 1 : -1
     );
   } catch (error) {
-    console.error('Error fetching LP positions:', error);
     return [];
   }
 }

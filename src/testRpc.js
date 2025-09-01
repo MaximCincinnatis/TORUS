@@ -12,16 +12,13 @@ async function testRpc(url) {
   try {
     const provider = new ethers.JsonRpcProvider(url);
     const blockNumber = await provider.getBlockNumber();
-    console.log(`✓ ${url} - Block: ${blockNumber}`);
     return true;
   } catch (error) {
-    console.log(`✗ ${url} - Error: ${error.message}`);
     return false;
   }
 }
 
 async function testAll() {
-  console.log('Testing RPC endpoints...\n');
   for (const url of RPC_ENDPOINTS) {
     await testRpc(url);
   }

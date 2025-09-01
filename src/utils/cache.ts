@@ -22,7 +22,6 @@ export class DataCache {
     try {
       localStorage.setItem(this.getKey(key), JSON.stringify(cacheItem));
     } catch (error) {
-      console.warn('Failed to cache data:', error);
     }
   }
 
@@ -49,7 +48,6 @@ export class DataCache {
 
       return cacheItem.data;
     } catch (error) {
-      console.warn('Failed to read cache:', error);
       return null;
     }
   }
@@ -58,7 +56,6 @@ export class DataCache {
     try {
       localStorage.removeItem(this.getKey(key));
     } catch (error) {
-      console.warn('Failed to remove cache:', error);
     }
   }
 
@@ -71,7 +68,6 @@ export class DataCache {
         }
       });
     } catch (error) {
-      console.warn('Failed to clear cache:', error);
     }
   }
 
@@ -99,9 +95,7 @@ export class DataCache {
       this.remove('stake_events');
       this.remove('create_events');
       this.remove('last_block_number');
-      console.log('🗑️ Cleared all cached blockchain data');
     } catch (error) {
-      console.warn('Failed to clear cached data:', error);
     }
   }
 }

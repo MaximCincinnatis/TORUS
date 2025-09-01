@@ -1,6 +1,7 @@
 /**
  * Modified version of full update that only processes a specific block range
  * For testing consistency with incremental update
+ * Note: LP position field mappings (torusAmount, titanxAmount) handled by dedicated LP scripts
  */
 
 const { ethers } = require('ethers');

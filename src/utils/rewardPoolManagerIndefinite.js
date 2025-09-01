@@ -57,7 +57,6 @@ async function fetchRewardPoolRange(provider, contract, fromDay, toDay) {
       const results = await Promise.all(batchPromises);
       rewardData.push(...results);
     } catch (error) {
-      console.error(`Error fetching days ${day}-${batchEnd}:`, error.message);
       // Add calculated fallback data
       for (let d = day; d <= batchEnd; d++) {
         rewardData.push(createFallbackDayData(d));
@@ -120,7 +119,6 @@ function createFallbackDayData(day) {
 async function updateRewardPoolsIndefinite(provider, cachedData, currentProtocolDay, daysToProject = 365) {
   const contract = new ethers.Contract(STAKE_CONTRACT_ADDRESS, STAKE_CONTRACT_ABI, provider);
   
-  console.log(`Updating reward pools for days 1-${currentProtocolDay + daysToProject}`);
   
   // Fetch historical data (days 1 to current)
   const historicalData = await fetchRewardPoolRange(provider, contract, 1, currentProtocolDay);
@@ -143,9 +141,6 @@ async function updateRewardPoolsIndefinite(provider, cachedData, currentProtocol
   // Update cached data
   cachedData.stakingData.rewardPoolData = allRewardData;
   
-  console.log(`✅ Updated ${allRewardData.length} days of reward data`);
-  console.log(`   Days 1-88: Base rewards + penalties`);
-  console.log(`   Days 89+: Penalties only`);
   
   return cachedData;
 }

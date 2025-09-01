@@ -14,19 +14,16 @@ const ABI = [
 async function findAllNFTs() {
   const contract = new ethers.Contract(NFT_POSITION_MANAGER, ABI, provider);
   
-  console.log(`Finding ALL Uniswap V3 NFTs for ${TARGET}...\n`);
   
   // Method 1: Get balance and enumerate
   try {
     const balance = await contract.balanceOf(TARGET);
-    console.log(`Balance: ${balance} NFTs\n`);
     
     const torusPositions = [];
     
     for (let i = 0; i < balance; i++) {
       try {
         const tokenId = await contract.tokenOfOwnerByIndex(TARGET, i);
-        console.log(`\nChecking NFT #${i + 1}: Token ID ${tokenId}`);
         
         const position = await contract.positions(tokenId);
         
@@ -34,19 +31,12 @@ async function findAllNFTs() {
                        position.token1.toLowerCase() === '0xf19308f923582a6f7c465e5ce7a9dc1bec6665b1';
         
         if (isTorus) {
-          console.log(`  ✅ TORUS position!`);
-          console.log(`  Liquidity: ${position.liquidity.toString()}`);
-          console.log(`  tokensOwed0: ${position.tokensOwed0.toString()}`);
-          console.log(`  tokensOwed1: ${position.tokensOwed1.toString()}`);
           
           const torus = Number(position.tokensOwed0) / 1e18;
           const titanx = Number(position.tokensOwed1) / 1e18;
           
-          console.log(`  Claimable TORUS: ${torus.toFixed(6)}`);
-          console.log(`  Claimable TitanX: ${titanx.toFixed(2)} (${(titanx / 1e6).toFixed(2)}M)`);
           
           if (titanx > 38000000 && titanx < 40000000) {
-            console.log(`  🎯 THIS IS THE 39M TitanX POSITION!`);
           }
           
           torusPositions.push({
@@ -58,24 +48,17 @@ async function findAllNFTs() {
             claimableTitanX: titanx
           });
         } else {
-          console.log(`  ❌ Not TORUS (${position.token0} / ${position.token1})`);
         }
       } catch (err) {
-        console.log(`  Error reading token ${i}: ${err.message}`);
       }
     }
     
-    console.log(`\n\nSUMMARY: Found ${torusPositions.length} TORUS positions`);
-    console.log('Total claimable across all TORUS positions:');
     
     const totalTorus = torusPositions.reduce((sum, p) => sum + p.claimableTorus, 0);
     const totalTitanX = torusPositions.reduce((sum, p) => sum + p.claimableTitanX, 0);
     
-    console.log(`  TORUS: ${totalTorus.toFixed(6)}`);
-    console.log(`  TitanX: ${totalTitanX.toFixed(2)} (${(totalTitanX / 1e6).toFixed(2)}M)`);
     
   } catch (err) {
-    console.error('Error:', err);
   }
 }
 

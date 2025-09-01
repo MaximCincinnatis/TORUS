@@ -142,14 +142,6 @@ const PannableBarChart: React.FC<PannableBarChartProps> = ({
         if (chartType === 'historical') {
           // Historical charts: show windowSize days BEFORE current day (inclusive)
           const startIdx = Math.max(0, dayIndex - windowSize + 1);
-          console.log('Historical chart setup:', {
-            initialStartDay,
-            dayIndex,
-            windowSize,
-            startIdx,
-            endIdx: startIdx + windowSize - 1,
-            showingDays: `${startIdx + 1} to ${startIdx + windowSize}`
-          });
           setStartIndex(startIdx);
         } else {
           // Future charts: show windowSize days FROM current day (inclusive)
@@ -169,13 +161,6 @@ const PannableBarChart: React.FC<PannableBarChartProps> = ({
   
   // Debug for burn charts
   if (chartType === 'historical' && currentWindowSize < 9999 && visibleLabels.length === 1) {
-    console.log('Historical chart showing only 1 bar:', {
-      startIndex,
-      endIndex,
-      currentWindowSize,
-      labelsLength: labels.length,
-      visibleLabelsLength: visibleLabels.length
-    });
   }
   
   
@@ -479,21 +464,6 @@ const PannableBarChart: React.FC<PannableBarChartProps> = ({
   
   // Debug: Log data for charts with multiple y-axes
   if (multipleYAxes && visibleDatasets.length > 1) {
-    console.log('Multiple Y-Axes Chart Data:', {
-      datasetsCount: visibleDatasets.length,
-      dataset0: { 
-        label: visibleDatasets[0].label, 
-        yAxisID: visibleDatasets[0].yAxisID,
-        dataLength: visibleDatasets[0].data.length,
-        firstValues: visibleDatasets[0].data.slice(0, 5)
-      },
-      dataset1: { 
-        label: visibleDatasets[1].label, 
-        yAxisID: visibleDatasets[1].yAxisID,
-        dataLength: visibleDatasets[1].data.length,
-        firstValues: visibleDatasets[1].data.slice(0, 5)
-      }
-    });
   }
 
   const navButtonStyle: React.CSSProperties = {

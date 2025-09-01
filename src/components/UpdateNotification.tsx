@@ -59,7 +59,6 @@ const UpdateNotification: React.FC<UpdateNotificationProps> = ({ lastUpdated, on
         setHasNewData(true);
       }
     } catch (error) {
-      console.error('Error checking for updates:', error);
     } finally {
       setIsChecking(false);
       checkingRef.current = false;

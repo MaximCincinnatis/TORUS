@@ -23,7 +23,6 @@ async function getWorkingProviderWithRotation(): Promise<ethers.providers.JsonRp
     const rpcUrl = WORKING_RPC_ENDPOINTS[currentRpcIndex];
     
     try {
-      console.log(`🔄 Incremental updater trying RPC: ${rpcUrl}`);
       const provider = new ethers.providers.JsonRpcProvider(rpcUrl);
       
       // Quick test with timeout to avoid 429 errors
@@ -38,11 +37,9 @@ async function getWorkingProviderWithRotation(): Promise<ethers.providers.JsonRp
         ]);
       }, `Incremental updater RPC test for ${rpcUrl}`);
       
-      console.log(`✅ Incremental updater connected to: ${rpcUrl}`);
       return provider;
       
     } catch (error) {
-      console.log(`❌ Incremental updater RPC ${rpcUrl} failed:`, error instanceof Error ? error.message : 'Unknown error');
       
       // Auto-rotate to next provider
       currentRpcIndex = (currentRpcIndex + 1) % WORKING_RPC_ENDPOINTS.length;
@@ -69,11 +66,9 @@ async function retryWithBackoff<T>(
       return await fn();
     } catch (error) {
       lastError = error;
-      console.warn(`⚠️ RPC call failed (attempt ${i + 1}/${maxRetries}):`, error instanceof Error ? error.message : 'Unknown error');
       
       if (i < maxRetries - 1) {
         const delay = initialDelay * Math.pow(2, i);
-        console.log(`⏳ Waiting ${delay}ms before retry...`);
         await new Promise(resolve => setTimeout(resolve, delay));
       }
     }
@@ -97,7 +92,6 @@ export async function getIncrementalUpdates(
   cachedData: any,
   provider: ethers.providers.JsonRpcProvider
 ): Promise<IncrementalUpdate> {
-  console.log('🔄 Getting incremental updates from cached data...');
   
   // Get the last block from cached data
   const lastBlock = cachedData.stakingData?.metadata?.currentBlock || 
@@ -108,12 +102,9 @@ export async function getIncrementalUpdates(
     return provider.getBlockNumber();
   }, 'Get current block number for incremental updates');
   
-  console.log(`📊 Last cached block: ${lastBlock}`);
-  console.log(`📊 Current block: ${currentBlock}`);
   
   // If we're up to date, return empty
   if (currentBlock <= lastBlock) {
-    console.log('✅ Cache is up to date, no incremental updates needed');
     return {
       newStakeEvents: [],
       newCreateEvents: [],
@@ -124,11 +115,9 @@ export async function getIncrementalUpdates(
   }
   
   const blocksToUpdate = currentBlock - lastBlock;
-  console.log(`📊 Blocks to update: ${blocksToUpdate}`);
   
   // Only update if there are enough new blocks (avoid constant small updates)
   if (blocksToUpdate < 10) {
-    console.log('⏳ Not enough new blocks, skipping incremental update');
     return {
       newStakeEvents: [],
       newCreateEvents: [],
@@ -139,7 +128,6 @@ export async function getIncrementalUpdates(
   }
   
   try {
-    console.log(`🔄 Fetching new events from block ${lastBlock + 1} to ${currentBlock}...`);
     
     // Get working provider with auto-rotation
     const workingProvider = await getWorkingProviderWithRotation();
@@ -156,11 +144,9 @@ export async function getIncrementalUpdates(
     const STAKED_TOPIC = '0x30d029df1ad6f5ef19929e6de4d6362e883e452dc13ab3e7b0fb8e827c7e5a03';
     
     if (blocksToUpdate > MAX_BLOCK_RANGE) {
-      console.log(`📦 Block range too large (${blocksToUpdate}), fetching in chunks...`);
       
       for (let fromBlock = lastBlock + 1; fromBlock <= currentBlock; fromBlock += MAX_BLOCK_RANGE) {
         const toBlock = Math.min(fromBlock + MAX_BLOCK_RANGE - 1, currentBlock);
-        console.log(`  Fetching blocks ${fromBlock} to ${toBlock}...`);
         
         try {
           // Use getLogs with topics for better performance, with retry logic
@@ -208,7 +194,6 @@ export async function getIncrementalUpdates(
           await new Promise(resolve => setTimeout(resolve, 100));
           
         } catch (error) {
-          console.error(`❌ Error fetching chunk ${fromBlock}-${toBlock}:`, error);
           throw error;
         }
       }
@@ -253,7 +238,6 @@ export async function getIncrementalUpdates(
           transactionHash: log.transactionHash
         }));
       } catch (error) {
-        console.error(`❌ Error fetching events:`, error);
         throw error;
       }
     }
@@ -317,8 +301,6 @@ export async function getIncrementalUpdates(
       };
     }).filter(event => event !== null);
     
-    console.log(`✅ Found ${processedStakeEvents.length} new stake events`);
-    console.log(`✅ Found ${processedCreateEvents.length} new create events`);
     
     return {
       newStakeEvents: processedStakeEvents,
@@ -329,7 +311,6 @@ export async function getIncrementalUpdates(
     };
     
   } catch (error) {
-    console.error('❌ Error fetching incremental updates:', error);
     return {
       newStakeEvents: [],
       newCreateEvents: [],
@@ -351,7 +332,6 @@ export function mergeIncrementalUpdates(
     return cachedData;
   }
   
-  console.log('🔄 Merging incremental updates with cached data...');
   
   const updatedData = { ...cachedData };
   
@@ -377,8 +357,6 @@ export function mergeIncrementalUpdates(
   
   updatedData.lastUpdated = new Date().toISOString();
   
-  console.log(`✅ Merged ${updates.newStakeEvents.length} stake events and ${updates.newCreateEvents.length} create events`);
-  console.log(`📊 Total events: ${updatedData.stakingData.stakeEvents.length} stakes, ${updatedData.stakingData.createEvents.length} creates`);
   
   return updatedData;
 }
@@ -404,7 +382,6 @@ export async function shouldUpdateIncrementally(
     return blocksToUpdate >= 10;
     
   } catch (error) {
-    console.error('❌ Error checking if incremental update needed:', error);
     return false;
   }
 }

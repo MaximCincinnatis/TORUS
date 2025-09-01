@@ -28,7 +28,6 @@ const TOTAL_REWARD_DAYS = 365; // Extended to include penalty rewards
  * @returns {Promise<Array>} Array of reward pool data
  */
 async function fetchRewardPoolData(provider, startDay = 1, endDay = null) {
-  console.log(`📊 Fetching reward pool data from day ${startDay} to ${endDay || 'current'}`);
   
   try {
     const contract = new ethers.Contract(STAKE_CONTRACT_ADDRESS, STAKE_CONTRACT_ABI, provider);
@@ -50,7 +49,6 @@ async function fetchRewardPoolData(provider, startDay = 1, endDay = null) {
     // Fetch in batches
     for (let batchStart = startDay; batchStart <= endDay; batchStart += batchSize) {
       const batchEnd = Math.min(batchStart + batchSize - 1, endDay);
-      console.log(`  Fetching days ${batchStart}-${batchEnd}...`);
       
       const batchPromises = [];
       for (let day = batchStart; day <= batchEnd; day++) {
@@ -66,12 +64,10 @@ async function fetchRewardPoolData(provider, startDay = 1, endDay = null) {
           await new Promise(resolve => setTimeout(resolve, 100));
         }
       } catch (error) {
-        console.error(`❌ Error fetching batch ${batchStart}-${batchEnd}:`, error.message);
         // Continue with next batch instead of failing completely
       }
     }
     
-    console.log(`✅ Fetched ${rewardPoolData.length} days of reward pool data`);
     
     // Calculate future rewards for chart display
     const currentDay = await contract.getCurrentDayIndex();
@@ -105,7 +101,6 @@ async function fetchRewardPoolData(provider, startDay = 1, endDay = null) {
     return rewardPoolData;
     
   } catch (error) {
-    console.error('❌ Error in fetchRewardPoolData:', error);
     throw error;
   }
 }
@@ -128,7 +123,6 @@ async function fetchSingleDayData(contract, day) {
       penaltiesInPool: parseFloat(ethers.utils.formatEther(penalties)) * 1e18
     };
   } catch (error) {
-    console.error(`❌ Error fetching day ${day}:`, error.message);
     // Return calculated fallback data
     return calculateRewardPoolForDay(day);
   }

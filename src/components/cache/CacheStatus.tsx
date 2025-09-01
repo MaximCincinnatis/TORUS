@@ -27,7 +27,6 @@ const CacheStatus: React.FC = () => {
       const status = await getCacheStatus();
       setCacheInfo(status);
     } catch (error) {
-      console.error('Error loading cache status:', error);
     } finally {
       setLoading(false);
     }

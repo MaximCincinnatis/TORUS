@@ -172,7 +172,6 @@ export const gradientPlugin = {
       
       // Preserve yAxisID if it exists
       if (dataset.yAxisID) {
-        console.log(`Dataset ${i} has yAxisID: ${dataset.yAxisID}`);
       }
     });
   }

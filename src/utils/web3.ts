@@ -17,7 +17,6 @@ export const getCreateStakeContract = () => {
     const web3 = getWeb3();
     return new web3.eth.Contract(CREATE_STAKE_ABI as any, CONTRACTS.TORUS_CREATE_STAKE);
   } catch (error) {
-    console.error('Error creating contract instance:', error);
     return null;
   }
 };
@@ -43,7 +42,6 @@ export const fetchStakeEvents = async (fromBlock: number = 0): Promise<StakeEven
   const contract = getCreateStakeContract();
   
   if (!contract) {
-    console.warn('Contract not initialized, returning empty events');
     return [];
   }
   
@@ -74,7 +72,6 @@ export const fetchStakeEvents = async (fromBlock: number = 0): Promise<StakeEven
       };
     });
   } catch (error) {
-    console.error('Error fetching stake events:', error);
     return [];
   }
 };
@@ -83,7 +80,6 @@ export const fetchCreateEvents = async (fromBlock: number = 0): Promise<CreateEv
   const contract = getCreateStakeContract();
   
   if (!contract) {
-    console.warn('Contract not initialized, returning empty events');
     return [];
   }
   
@@ -105,7 +101,6 @@ export const fetchCreateEvents = async (fromBlock: number = 0): Promise<CreateEv
       timestamp: event.returnValues.timestamp,
     }));
   } catch (error) {
-    console.error('Error fetching create events:', error);
     return [];
   }
 };
