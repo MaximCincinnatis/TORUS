@@ -50799,16 +50799,16 @@
         "type": "stake"
       }
     ],
-    "totalSupply": 56023.683673158324,
+    "totalSupply": 55978.475980597854,
     "currentProtocolDay": 56,
     "metadata": {
       "dailySupplySnapshot": {
         "day": 56,
-        "totalSupply": 56023.683673158324,
+        "totalSupply": 55978.475980597854,
         "burnedSupply": 0,
-        "timestamp": "2025-09-03T19:00:04.174Z"
+        "timestamp": "2025-09-03T19:03:10.080Z"
       },
-      "currentBlock": 23284532,
+      "currentBlock": 23284547,
       "lastDeduplication": "2025-08-02T21:51:40.056Z",
       "duplicatesRemoved": 0
     },
@@ -52228,12 +52228,12 @@
       }
     ],
     "totalStakedInContract": 17388.57,
-    "lastBlock": 23284532
+    "lastBlock": 23284547
   },
-  "lastUpdated": "2025-09-03T19:01:05.106Z",
+  "lastUpdated": "2025-09-03T19:04:20.894Z",
   "lastProcessedBlock": 23055425,
   "currentProtocolDay": 56,
-  "totalSupply": 56023.683673158324,
+  "totalSupply": 55978.475980597854,
   "titanxTotalSupply": "105576511952557292307296636881507",
   "totalTitanXBurnt": "231094645254509390503381418466",
   "lastBlock": 23056089,
@@ -52254,32 +52254,6 @@
     }
   },
   "lpPositions": [
-    {
-      "tokenId": "1029195",
-      "owner": "0xAa390a37006E22b5775A34f2147F81eBD6a63641",
-      "liquidity": "100808119364941998109141767",
-      "tickLower": -887200,
-      "tickUpper": 887200,
-      "tokensOwed0": "88988205063834748188",
-      "tokensOwed1": "619347022374285041006858859",
-      "torusAmount": 20508.347881065158,
-      "wethAmount": 348791920187.1142,
-      "torusValue": 1116134144598765.4,
-      "wethValue": 1116134144598765.4,
-      "totalValue": 2232268289197530.8,
-      "claimableFees": {
-        "torus": 84.77809688789206,
-        "weth": 955621320.2338383
-      },
-      "claimableTorus": 88.98820506383476,
-      "claimableWeth": 955621320.2338383,
-      "lastUpdated": "2025-08-25T19:37:26.995Z",
-      "isProtocolPosition": true,
-      "claimableTitanX": 619347022.374285,
-      "lastChecked": "2025-09-03T18:55:05.607Z",
-      "titanxAmount": 351616853333.47833,
-      "claimableYield": 985484211.817017
-    },
     {
       "tokenId": "1030759",
       "owner": "0x9BBb45e12c4a75f7406Cb38e858Fa6C68A88f30d",
@@ -52316,8 +52290,8 @@
     "thirtyDay": []
   },
   "poolData": {
-    "sqrtPriceX96": "231769084045403789047934364775169",
-    "currentTick": 159631,
+    "sqrtPriceX96": "232073449656240879089142441520027",
+    "currentTick": 159657,
     "token0": "",
     "token1": "",
     "liquidity": "0",
@@ -52327,8 +52301,8 @@
   },
   "tokenPrices": {
     "torus": {
-      "usd": 85.57597213443346,
-      "lastUpdated": "2025-09-03T18:55:07.211Z"
+      "usd": 85.80088121198823,
+      "lastUpdated": "2025-09-03T19:03:17.982Z"
     },
     "titanx": {
       "usd": 0,
