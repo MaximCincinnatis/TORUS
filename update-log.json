@@ -1,16 +1,9 @@
 {
   "startTime": 1754170500998,
   "rpcCalls": 0,
-  "lastBlockNumber": 23391637,
-  "lastUpdateTime": 1758218836051,
+  "lastBlockNumber": 23419021,
+  "lastUpdateTime": 1758550124456,
   "updateHistory": [
-    {
-      "timestamp": "2025-09-18T09:51:57.913Z",
-      "block": 23389175,
-      "rpcCalls": 6,
-      "dataChanged": true,
-      "errors": []
-    },
     {
       "timestamp": "2025-09-18T09:56:53.194Z",
       "block": 23389201,
@@ -703,7 +696,16 @@
       "rpcCalls": 6,
       "dataChanged": true,
       "errors": []
+    },
+    {
+      "timestamp": "2025-09-22T14:08:44.456Z",
+      "block": 23419021,
+      "rpcCalls": 63,
+      "dataChanged": true,
+      "errors": [
+        "Future supply projection update: Unexpected end of JSON input"
+      ]
     }
   ],
-  "totalRpcCalls": 86364
+  "totalRpcCalls": 86427
 }
