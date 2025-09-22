@@ -1,16 +1,9 @@
 {
   "startTime": 1754170500998,
   "rpcCalls": 0,
-  "lastBlockNumber": 23419021,
-  "lastUpdateTime": 1758550124456,
+  "lastBlockNumber": 23419071,
+  "lastUpdateTime": 1758550286697,
   "updateHistory": [
-    {
-      "timestamp": "2025-09-18T09:56:53.194Z",
-      "block": 23389201,
-      "rpcCalls": 6,
-      "dataChanged": true,
-      "errors": []
-    },
     {
       "timestamp": "2025-09-18T10:01:59.189Z",
       "block": 23389225,
@@ -705,7 +698,14 @@
       "errors": [
         "Future supply projection update: Unexpected end of JSON input"
       ]
+    },
+    {
+      "timestamp": "2025-09-22T14:11:26.697Z",
+      "block": 23419071,
+      "rpcCalls": 6,
+      "dataChanged": true,
+      "errors": []
     }
   ],
-  "totalRpcCalls": 86427
+  "totalRpcCalls": 86433
 }
