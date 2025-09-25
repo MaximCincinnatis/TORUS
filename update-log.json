@@ -1,16 +1,9 @@
 {
   "startTime": 1754170500998,
   "rpcCalls": 0,
-  "lastBlockNumber": 23437190,
-  "lastUpdateTime": 1758768960262,
+  "lastBlockNumber": 23437205,
+  "lastUpdateTime": 1758769111418,
   "updateHistory": [
-    {
-      "timestamp": "2025-09-24T19:07:34.164Z",
-      "block": 23434865,
-      "rpcCalls": 6,
-      "dataChanged": true,
-      "errors": []
-    },
     {
       "timestamp": "2025-09-24T19:13:28.268Z",
       "block": 23434890,
@@ -702,14 +695,19 @@
       "errors": []
     },
     {
-      "timestamp": "2025-09-25T02:56:00.262Z",
-      "block": 23437190,
-      "rpcCalls": 5,
+      "timestamp": "2025-09-25T02:52:38.290Z",
+      "block": 23437180,
+      "rpcCalls": 6,
       "dataChanged": true,
-      "errors": [
-        "Pool update: missing revert data in call exception; Transaction reverted without a reason string [ See: https://links.ethers.org/v5-errors-CALL_EXCEPTION ] (data=\"0x\", transaction={\"to\":\"0x7ff1f30F6E7EeC2ff3F0D1b60739115BDF88190F\",\"data\":\"0x3850c7bd\",\"accessList\":null}, error={\"reason\":\"bad response\",\"code\":\"SERVER_ERROR\",\"status\":408,\"headers\":{\"date\":\"Thu, 25 Sep 2025 02:52:23 GMT\",\"content-type\":\"application/json\",\"transfer-encoding\":\"chunked\",\"connection\":\"close\",\"cf-ray\":\"9847399a2d6a2f1b-LAX\",\"access-control-allow-origin\":\"*\",\"vary\":\"Accept-Encoding\",\"x-drpc-owner-id\":\"cb501251-31a8-4028-8b0a-54679f15c385\",\"x-drpc-owner-tier\":\"free\",\"x-drpc-provider-id\":\"drpc-core-free\",\"x-drpc-trace-id\":\"ec8bbdf751da0839bb6e5f549d0c998c\",\"strict-transport-security\":\"max-age=31536000; includeSubDomains\",\"access-control-allow-credentials\":\"true\",\"access-control-allow-methods\":\"GET, PUT, POST, DELETE, PATCH, OPTIONS\",\"access-control-allow-headers\":\"DNT,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range,Authorization\",\"access-control-max-age\":\"1728000\",\"cf-cache-status\":\"DYNAMIC\",\"server\":\"cloudflare\"},\"body\":\"{\\\"id\\\":48,\\\"jsonrpc\\\":\\\"2.0\\\",\\\"error\\\":{\\\"message\\\":\\\"Request timeout on the free tier, please upgrade your tier to the paid one\\\",\\\"code\\\":30}}\",\"requestBody\":\"{\\\"method\\\":\\\"eth_call\\\",\\\"params\\\":[{\\\"to\\\":\\\"0x7ff1f30f6e7eec2ff3f0d1b60739115bdf88190f\\\",\\\"data\\\":\\\"0x3850c7bd\\\"},\\\"latest\\\"],\\\"id\\\":48,\\\"jsonrpc\\\":\\\"2.0\\\"}\",\"requestMethod\":\"POST\",\"url\":\"https://eth.drpc.org\"}, code=CALL_EXCEPTION, version=providers/5.7.2)"
-      ]
+      "errors": []
+    },
+    {
+      "timestamp": "2025-09-25T02:58:31.418Z",
+      "block": 23437205,
+      "rpcCalls": 6,
+      "dataChanged": true,
+      "errors": []
     }
   ],
-  "totalRpcCalls": 90947
+  "totalRpcCalls": 90954
 }
