@@ -58761,6 +58761,31 @@
         "claimedAt": "0",
         "isCreate": false,
         "type": "stake"
+      },
+      {
+        "user": "0x19bD6fD9350A7cB5f125C7794ECd7f8BfF2f9E08",
+        "id": "28",
+        "principal": "21000000000000000000",
+        "shares": "162624000000000000000000",
+        "duration": "88",
+        "timestamp": "1758902111",
+        "blockNumber": 23448217,
+        "stakingDays": 88,
+        "maturityDate": "2025-12-23T15:55:11.000Z",
+        "startDate": "2025-09-26T15:55:11.000Z",
+        "protocolDay": 78,
+        "power": "0",
+        "claimedCreate": false,
+        "claimedStake": false,
+        "costETH": "0.000403260623560376",
+        "costTitanX": "0",
+        "rawCostETH": "403260623560376",
+        "rawCostTitanX": "0",
+        "rewards": "0",
+        "penalties": "0",
+        "claimedAt": "0",
+        "isCreate": false,
+        "type": "stake"
       }
     ],
     "totalSupply": 375948.71658169,
@@ -58770,9 +58795,9 @@
         "day": 78,
         "totalSupply": 375948.71658169,
         "burnedSupply": 0,
-        "timestamp": "2025-09-26T15:55:04.273Z"
+        "timestamp": "2025-09-26T16:00:04.872Z"
       },
-      "currentBlock": 23448216,
+      "currentBlock": 23448240,
       "lastDeduplication": "2025-08-02T21:51:40.056Z",
       "duplicatesRemoved": 0
     },
@@ -60389,15 +60414,15 @@
         "lastUpdated": "2025-09-25T18:05:05.422Z"
       }
     ],
-    "totalStakedInContract": 194492.39,
-    "lastBlock": 23448216
+    "totalStakedInContract": 194513.39,
+    "lastBlock": 23448240
   },
-  "lastUpdated": "2025-09-26T15:58:18.012Z",
+  "lastUpdated": "2025-09-26T16:03:19.974Z",
   "lastProcessedBlock": 23055425,
   "currentProtocolDay": 78,
   "totalSupply": 375948.71658169,
   "titanxTotalSupply": "105553243770869585106695467447443",
-  "totalTitanXBurnt": "237356384449269764752378470259",
+  "totalTitanXBurnt": "237356860996637008574162486684",
   "lastBlock": 23056089,
   "contractData": {
     "torusToken": {
