@@ -59254,6 +59254,31 @@
         "claimedAt": "0",
         "isCreate": false,
         "type": "stake"
+      },
+      {
+        "user": "0xfF077304887049815c16D222191703670a2DAd85",
+        "id": "7",
+        "principal": "9000000000000000000",
+        "shares": "69696000000000000000000",
+        "duration": "88",
+        "timestamp": "1758968315",
+        "blockNumber": 23453701,
+        "stakingDays": 88,
+        "maturityDate": "2025-12-24T10:18:35.000Z",
+        "startDate": "2025-09-27T10:18:35.000Z",
+        "protocolDay": 79,
+        "power": "0",
+        "claimedCreate": false,
+        "claimedStake": false,
+        "costETH": "0",
+        "costTitanX": "4790155.508942639",
+        "rawCostETH": "0",
+        "rawCostTitanX": "4790155508942639058000000",
+        "rewards": "0",
+        "penalties": "0",
+        "claimedAt": "0",
+        "isCreate": false,
+        "type": "stake"
       }
     ],
     "totalSupply": 406024.4613252979,
@@ -59263,9 +59288,9 @@
         "day": 79,
         "totalSupply": 406024.4613252979,
         "burnedSupply": 0,
-        "timestamp": "2025-09-27T10:15:02.901Z"
+        "timestamp": "2025-09-27T10:20:03.892Z"
       },
-      "currentBlock": 23453683,
+      "currentBlock": 23453707,
       "lastDeduplication": "2025-08-02T21:51:40.056Z",
       "duplicatesRemoved": 0
     },
@@ -60891,15 +60916,15 @@
         "lastUpdated": "2025-09-27T00:22:26.715Z"
       }
     ],
-    "totalStakedInContract": 227920.39,
-    "lastBlock": 23453683
+    "totalStakedInContract": 227929.39,
+    "lastBlock": 23453707
   },
-  "lastUpdated": "2025-09-27T10:17:14.101Z",
+  "lastUpdated": "2025-09-27T10:22:13.561Z",
   "lastProcessedBlock": 23450736,
   "currentProtocolDay": 79,
   "totalSupply": 406024.4613252979,
   "titanxTotalSupply": "105535597752147002104966036587040",
-  "totalTitanXBurnt": "238127536247426776322562061999",
+  "totalTitanXBurnt": "238127742703129211750305461799",
   "lastBlock": 23056089,
   "contractData": {
     "torusToken": {
@@ -60945,8 +60970,8 @@
     "thirtyDay": []
   },
   "poolData": {
-    "sqrtPriceX96": "80037474361319227356049554587885",
-    "currentTick": 138365,
+    "sqrtPriceX96": "80041347963785794193784040018606",
+    "currentTick": 138366,
     "token0": "",
     "token1": "",
     "liquidity": "0",
