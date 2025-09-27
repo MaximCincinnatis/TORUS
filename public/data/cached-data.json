@@ -59281,16 +59281,16 @@
         "type": "stake"
       }
     ],
-    "totalSupply": 433296.8179688067,
-    "currentProtocolDay": 79,
+    "totalSupply": 432967.39340725244,
+    "currentProtocolDay": 80,
     "metadata": {
       "dailySupplySnapshot": {
         "day": 79,
-        "totalSupply": 433296.8179688067,
+        "totalSupply": 432967.39340725244,
         "burnedSupply": 0,
-        "timestamp": "2025-09-27T18:00:04.190Z"
+        "timestamp": "2025-09-27T18:05:03.325Z"
       },
-      "currentBlock": 23455988,
+      "currentBlock": 23456013,
       "lastDeduplication": "2025-08-02T21:51:40.056Z",
       "duplicatesRemoved": 0
     },
@@ -60914,15 +60914,24 @@
         "penaltiesInPool": 0,
         "calculated": true,
         "lastUpdated": "2025-09-27T00:22:26.715Z"
+      },
+      {
+        "day": 168,
+        "date": "2025-12-24T18:00:00.000Z",
+        "rewardPool": 87489.31901124035,
+        "totalShares": 0,
+        "penaltiesInPool": 0,
+        "calculated": true,
+        "lastUpdated": "2025-09-27T18:05:05.293Z"
       }
     ],
     "totalStakedInContract": 227929.39,
-    "lastBlock": 23455988
+    "lastBlock": 23456013
   },
-  "lastUpdated": "2025-09-27T18:02:22.419Z",
+  "lastUpdated": "2025-09-27T18:07:21.831Z",
   "lastProcessedBlock": 23450736,
-  "currentProtocolDay": 79,
-  "totalSupply": 433296.8179688067,
+  "currentProtocolDay": 80,
+  "totalSupply": 432967.39340725244,
   "titanxTotalSupply": "105535566652566239612566502713184",
   "totalTitanXBurnt": "238127742703129211750305461799",
   "lastBlock": 23056089,
@@ -60970,8 +60979,8 @@
     "thirtyDay": []
   },
   "poolData": {
-    "sqrtPriceX96": "73267903431975134291449197292299",
-    "currentTick": 136597,
+    "sqrtPriceX96": "73407326636113146247802008165281",
+    "currentTick": 136635,
     "token0": "",
     "token1": "",
     "liquidity": "0",
@@ -60981,8 +60990,8 @@
   },
   "tokenPrices": {
     "torus": {
-      "usd": 8.552013173618803,
-      "lastUpdated": "2025-09-27T17:45:07.411Z"
+      "usd": 8.584591792551308,
+      "lastUpdated": "2025-09-27T18:05:05.764Z"
     },
     "titanx": {
       "usd": 0,
