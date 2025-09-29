@@ -1,18 +1,9 @@
 {
   "startTime": 1754170500998,
   "rpcCalls": 0,
-  "lastBlockNumber": 23467464,
-  "lastUpdateTime": 1759134815184,
+  "lastBlockNumber": 23467489,
+  "lastUpdateTime": 1759135031463,
   "updateHistory": [
-    {
-      "timestamp": "2025-09-29T00:47:15.465Z",
-      "block": 23465153,
-      "rpcCalls": 7,
-      "dataChanged": true,
-      "errors": [
-        "Buy & Process update: Command failed: node scripts/update-buy-process-data.js"
-      ]
-    },
     {
       "timestamp": "2025-09-29T00:52:10.813Z",
       "block": 23465178,
@@ -713,7 +704,14 @@
       "errors": [
         "Pool update: missing revert data in call exception; Transaction reverted without a reason string [ See: https://links.ethers.org/v5-errors-CALL_EXCEPTION ] (data=\"0x\", transaction={\"to\":\"0x7ff1f30F6E7EeC2ff3F0D1b60739115BDF88190F\",\"data\":\"0x3850c7bd\",\"accessList\":null}, error={\"reason\":\"bad response\",\"code\":\"SERVER_ERROR\",\"status\":504,\"headers\":{\"date\":\"Mon, 29 Sep 2025 08:30:05 GMT\",\"content-type\":\"text/plain; charset=UTF-8\",\"content-length\":\"15\",\"connection\":\"close\",\"x-frame-options\":\"SAMEORIGIN\",\"referrer-policy\":\"same-origin\",\"cache-control\":\"private, max-age=0, no-store, no-cache, must-revalidate, post-check=0, pre-check=0\",\"expires\":\"Thu, 01 Jan 1970 00:00:01 GMT\",\"server\":\"cloudflare\",\"cf-ray\":\"986a1dc6cd42f472-LAX\"},\"body\":\"error code: 504\",\"requestBody\":\"{\\\"method\\\":\\\"eth_call\\\",\\\"params\\\":[{\\\"to\\\":\\\"0x7ff1f30f6e7eec2ff3f0d1b60739115bdf88190f\\\",\\\"data\\\":\\\"0x3850c7bd\\\"},\\\"latest\\\"],\\\"id\\\":48,\\\"jsonrpc\\\":\\\"2.0\\\"}\",\"requestMethod\":\"POST\",\"url\":\"https://eth.drpc.org\"}, code=CALL_EXCEPTION, version=providers/5.7.2)"
       ]
+    },
+    {
+      "timestamp": "2025-09-29T08:37:11.463Z",
+      "block": 23467489,
+      "rpcCalls": 6,
+      "dataChanged": true,
+      "errors": []
     }
   ],
-  "totalRpcCalls": 98844
+  "totalRpcCalls": 98850
 }
