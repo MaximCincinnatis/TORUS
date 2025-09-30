@@ -60332,6 +60332,31 @@
         "claimedAt": "0",
         "isCreate": false,
         "type": "stake"
+      },
+      {
+        "user": "0x31B2cCC54F749C290E8Bb4518670E274a41E9aD7",
+        "id": "168",
+        "principal": "832000000000000000000",
+        "shares": "6443008000000000000000000",
+        "duration": "88",
+        "timestamp": "1759261217",
+        "blockNumber": 23477938,
+        "stakingDays": 88,
+        "maturityDate": "2025-12-27T19:40:17.000Z",
+        "startDate": "2025-09-30T19:40:17.000Z",
+        "protocolDay": 83,
+        "power": "0",
+        "claimedCreate": false,
+        "claimedStake": false,
+        "costETH": "0",
+        "costTitanX": "0",
+        "rawCostETH": "0",
+        "rawCostTitanX": "0",
+        "rewards": "0",
+        "penalties": "0",
+        "claimedAt": "0",
+        "isCreate": false,
+        "type": "stake"
       }
     ],
     "totalSupply": 555749.9252385974,
@@ -60343,7 +60368,7 @@
         "burnedSupply": 0,
         "timestamp": "2025-09-30T19:35:04.228Z"
       },
-      "currentBlock": 23477927,
+      "currentBlock": 23477951,
       "lastDeduplication": "2025-08-02T21:51:40.056Z",
       "duplicatesRemoved": 0
     },
@@ -62006,9 +62031,9 @@
       }
     ],
     "totalStakedInContract": 273307.01,
-    "lastBlock": 23477927
+    "lastBlock": 23477951
   },
-  "lastUpdated": "2025-09-30T19:38:38.317Z",
+  "lastUpdated": "2025-09-30T19:44:00.648Z",
   "lastProcessedBlock": 23450736,
   "currentProtocolDay": 83,
   "totalSupply": 555749.9252385974,
