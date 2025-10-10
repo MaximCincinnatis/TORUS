@@ -1,16 +1,9 @@
 {
   "startTime": 1754170500998,
   "rpcCalls": 0,
-  "lastBlockNumber": 23548914,
-  "lastUpdateTime": 1760118638863,
+  "lastBlockNumber": 23548925,
+  "lastUpdateTime": 1760118762794,
   "updateHistory": [
-    {
-      "timestamp": "2025-10-10T09:32:50.342Z",
-      "block": 23546444,
-      "rpcCalls": 6,
-      "dataChanged": true,
-      "errors": []
-    },
     {
       "timestamp": "2025-10-10T09:37:44.087Z",
       "block": 23546469,
@@ -704,12 +697,21 @@
       "errors": []
     },
     {
-      "timestamp": "2025-10-10T17:50:38.863Z",
-      "block": 23548914,
+      "timestamp": "2025-10-10T17:48:11.770Z",
+      "block": 23548900,
+      "rpcCalls": 6,
+      "dataChanged": true,
+      "errors": [
+        "Creates & Stakes update: Command failed: node scripts/update-creates-stakes-incremental.js"
+      ]
+    },
+    {
+      "timestamp": "2025-10-10T17:52:42.794Z",
+      "block": 23548925,
       "rpcCalls": 6,
       "dataChanged": true,
       "errors": []
     }
   ],
-  "totalRpcCalls": 117831
+  "totalRpcCalls": 117837
 }
