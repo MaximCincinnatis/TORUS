@@ -1,18 +1,9 @@
 {
   "startTime": 1754170500998,
   "rpcCalls": 0,
-  "lastBlockNumber": 23551883,
-  "lastUpdateTime": 1760154739912,
+  "lastBlockNumber": 23551908,
+  "lastUpdateTime": 1760155056574,
   "updateHistory": [
-    {
-      "timestamp": "2025-10-10T16:19:28.468Z",
-      "block": 23548455,
-      "rpcCalls": 5,
-      "dataChanged": true,
-      "errors": [
-        "Pool update: missing revert data in call exception; Transaction reverted without a reason string [ See: https://links.ethers.org/v5-errors-CALL_EXCEPTION ] (data=\"0x\", transaction={\"to\":\"0x7ff1f30F6E7EeC2ff3F0D1b60739115BDF88190F\",\"data\":\"0x3850c7bd\",\"accessList\":null}, error={\"reason\":\"bad response\",\"code\":\"SERVER_ERROR\",\"status\":408,\"headers\":{\"date\":\"Fri, 10 Oct 2025 16:15:06 GMT\",\"content-type\":\"application/json\",\"transfer-encoding\":\"chunked\",\"connection\":\"close\",\"cf-ray\":\"98c76a14e8b831ad-LAS\",\"access-control-allow-origin\":\"*\",\"vary\":\"Accept-Encoding\",\"x-drpc-owner-id\":\"cb501251-31a8-4028-8b0a-54679f15c385\",\"x-drpc-owner-tier\":\"free\",\"x-drpc-provider-id\":\"drpc-core-free\",\"x-drpc-trace-id\":\"0829a3a77cdb90857b90f24b962dbc2d\",\"strict-transport-security\":\"max-age=31536000; includeSubDomains\",\"access-control-allow-credentials\":\"true\",\"access-control-allow-methods\":\"GET, PUT, POST, DELETE, PATCH, OPTIONS\",\"access-control-allow-headers\":\"DNT,Keep-Alive,User-Agent,X-Requested-With,If-Modified-Since,Cache-Control,Content-Type,Range,Authorization\",\"access-control-max-age\":\"1728000\",\"cf-cache-status\":\"DYNAMIC\",\"server\":\"cloudflare\",\"alt-svc\":\"h3=\\\":443\\\"; ma=86400\"},\"body\":\"{\\\"id\\\":48,\\\"jsonrpc\\\":\\\"2.0\\\",\\\"error\\\":{\\\"message\\\":\\\"Request timeout on the free tier, please upgrade your tier to the paid one\\\",\\\"code\\\":30}}\",\"requestBody\":\"{\\\"method\\\":\\\"eth_call\\\",\\\"params\\\":[{\\\"to\\\":\\\"0x7ff1f30f6e7eec2ff3f0d1b60739115bdf88190f\\\",\\\"data\\\":\\\"0x3850c7bd\\\"},\\\"latest\\\"],\\\"id\\\":48,\\\"jsonrpc\\\":\\\"2.0\\\"}\",\"requestMethod\":\"POST\",\"url\":\"https://eth.drpc.org\"}, code=CALL_EXCEPTION, version=providers/5.7.2)"
-      ]
-    },
     {
       "timestamp": "2025-10-10T16:22:57.548Z",
       "block": 23548481,
@@ -634,82 +625,89 @@
       "errors": []
     },
     {
-      "timestamp": "2025-10-11T02:12:31.420Z",
-      "block": 23551385,
+      "timestamp": "2025-10-11T02:09:58.878Z",
+      "block": 23551372,
       "rpcCalls": 6,
       "dataChanged": true,
       "errors": []
     },
     {
-      "timestamp": "2025-10-11T02:22:37.638Z",
-      "block": 23551435,
+      "timestamp": "2025-10-11T02:17:32.991Z",
+      "block": 23551410,
+      "rpcCalls": 6,
+      "dataChanged": true,
+      "errors": []
+    },
+    {
+      "timestamp": "2025-10-11T02:27:27.139Z",
+      "block": 23551460,
       "rpcCalls": 7,
       "dataChanged": true,
       "errors": []
     },
     {
-      "timestamp": "2025-10-11T02:32:25.006Z",
-      "block": 23551485,
+      "timestamp": "2025-10-11T02:37:24.944Z",
+      "block": 23551510,
       "rpcCalls": 6,
       "dataChanged": true,
       "errors": []
     },
     {
-      "timestamp": "2025-10-11T02:42:17.766Z",
-      "block": 23551535,
+      "timestamp": "2025-10-11T02:47:32.053Z",
+      "block": 23551560,
       "rpcCalls": 6,
       "dataChanged": true,
       "errors": []
     },
     {
-      "timestamp": "2025-10-11T02:52:38.820Z",
-      "block": 23551585,
+      "timestamp": "2025-10-11T02:57:25.352Z",
+      "block": 23551609,
       "rpcCalls": 7,
       "dataChanged": true,
       "errors": []
     },
     {
-      "timestamp": "2025-10-11T03:02:19.894Z",
-      "block": 23551634,
+      "timestamp": "2025-10-11T03:07:22.677Z",
+      "block": 23551659,
       "rpcCalls": 6,
       "dataChanged": true,
       "errors": []
     },
     {
-      "timestamp": "2025-10-11T03:12:13.653Z",
-      "block": 23551684,
+      "timestamp": "2025-10-11T03:17:18.590Z",
+      "block": 23551708,
       "rpcCalls": 6,
       "dataChanged": true,
       "errors": []
     },
     {
-      "timestamp": "2025-10-11T03:22:17.444Z",
-      "block": 23551733,
+      "timestamp": "2025-10-11T03:27:26.048Z",
+      "block": 23551758,
       "rpcCalls": 6,
       "dataChanged": true,
       "errors": []
     },
     {
-      "timestamp": "2025-10-11T03:32:28.940Z",
-      "block": 23551783,
+      "timestamp": "2025-10-11T03:37:20.524Z",
+      "block": 23551808,
       "rpcCalls": 6,
       "dataChanged": true,
       "errors": []
     },
     {
-      "timestamp": "2025-10-11T03:42:36.273Z",
-      "block": 23551834,
+      "timestamp": "2025-10-11T03:47:19.426Z",
+      "block": 23551858,
       "rpcCalls": 6,
       "dataChanged": true,
       "errors": []
     },
     {
-      "timestamp": "2025-10-11T03:52:19.912Z",
-      "block": 23551883,
+      "timestamp": "2025-10-11T03:57:36.574Z",
+      "block": 23551908,
       "rpcCalls": 6,
       "dataChanged": true,
       "errors": []
     }
   ],
-  "totalRpcCalls": 118316
+  "totalRpcCalls": 118322
 }
