@@ -66407,6 +66407,31 @@
         "claimedAt": "0",
         "isCreate": false,
         "type": "stake"
+      },
+      {
+        "user": "0x9331fEBE7545ba66FDDe303068598897fe8cef36",
+        "id": "1",
+        "principal": "242000000000000000000",
+        "shares": "1874048000000000000000000",
+        "duration": "88",
+        "timestamp": "1760469587",
+        "blockNumber": 23577981,
+        "stakingDays": 88,
+        "maturityDate": "2026-01-10T19:19:47.000Z",
+        "startDate": "2025-10-14T19:19:47.000Z",
+        "protocolDay": 97,
+        "power": "0",
+        "claimedCreate": false,
+        "claimedStake": false,
+        "costETH": "0",
+        "costTitanX": "130672703.60008708",
+        "rawCostETH": "0",
+        "rawCostTitanX": "130672703600087080311000000",
+        "rewards": "0",
+        "penalties": "0",
+        "claimedAt": "0",
+        "isCreate": false,
+        "type": "stake"
       }
     ],
     "totalSupply": 4594486.7721971115,
@@ -66416,9 +66441,9 @@
         "day": 97,
         "totalSupply": 4594486.7721971115,
         "burnedSupply": 0,
-        "timestamp": "2025-10-14T19:19:31.210Z"
+        "timestamp": "2025-10-14T19:20:06.472Z"
       },
-      "currentBlock": 23577979,
+      "currentBlock": 23577982,
       "lastDeduplication": "2025-08-02T21:51:40.056Z",
       "duplicatesRemoved": 0
     },
@@ -68206,15 +68231,15 @@
         "lastUpdated": "2025-10-14T18:00:15.317Z"
       }
     ],
-    "totalStakedInContract": 1137602.28458,
-    "lastBlock": 23577979
+    "totalStakedInContract": 1137844.28458,
+    "lastBlock": 23577982
   },
-  "lastUpdated": "2025-10-14T19:27:10.206Z",
+  "lastUpdated": "2025-10-14T19:27:51.531Z",
   "lastProcessedBlock": 23450736,
   "currentProtocolDay": 97,
   "totalSupply": 4594486.7721971115,
   "titanxTotalSupply": "105552189949401228267543196321389",
-  "totalTitanXBurnt": "259374477916650569115609701096",
+  "totalTitanXBurnt": "259380109910175732868771105196",
   "lastBlock": 23056089,
   "contractData": {
     "torusToken": {
