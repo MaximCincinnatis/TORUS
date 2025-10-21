@@ -1,3 +1,3 @@
 // Auto-generated file to trigger Vercel rebuilds
-export const BUILD_TIMESTAMP = '2025-10-21T15:14:45.214Z';
-export const BUILD_NUMBER = 1761059685214;
+export const BUILD_TIMESTAMP = '2025-10-21T15:19:20.954Z';
+export const BUILD_NUMBER = 1761059960954;
