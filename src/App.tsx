@@ -2740,12 +2740,12 @@ function App() {
             {
               label: 'ETH from Creates',
               data: dailyETHUsage.map(r => Math.round(r.creates * 10000) / 10000),
-              backgroundColor: 'rgba(59, 130, 246, 0.6)', // Blue for ETH
+              backgroundColor: 'rgba(168, 85, 247, 0.7)', // Purple-pink for Creates
             },
             {
               label: 'ETH from Stakes',
               data: dailyETHUsage.map(r => Math.round(r.stakes * 10000) / 10000),
-              backgroundColor: 'rgba(37, 99, 235, 0.8)', // Darker blue for stakes
+              backgroundColor: 'rgba(20, 184, 166, 0.7)', // Teal-green for Stakes
             },
           ]}
           height={600}
