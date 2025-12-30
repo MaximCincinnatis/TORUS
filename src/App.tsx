@@ -650,8 +650,8 @@ function App() {
       const poolDataForDay = rewardPoolData.find(pd => pd.day === protocolDayForDate);
       
       if (poolDataForDay) {
-        const rewardPool = parseFloat(poolDataForDay.rewardPool); // Already in decimal form, not wei
-        const penaltiesPool = parseFloat(poolDataForDay.penaltiesInPool); // Already in decimal form, not wei
+        const rewardPool = parseFloat(String(poolDataForDay.rewardPool)); // Already in decimal form, not wei
+        const penaltiesPool = parseFloat(String(poolDataForDay.penaltiesInPool)); // Already in decimal form, not wei
         const totalPoolForDay = rewardPool + penaltiesPool;
         
         // FIX: Calculate totalShares from actual active positions instead of using faulty pool data
