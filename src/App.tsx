@@ -1987,12 +1987,12 @@ function App() {
           },
           {
             label: "Total Shares",
-            value: rewardPoolData.length > 0 ? Math.round(parseFloat(rewardPoolData[rewardPoolData.length - 1]?.totalShares || "0")).toLocaleString() : "0",
+            value: rewardPoolData.length > 0 ? Math.round(parseFloat(String(rewardPoolData[rewardPoolData.length - 1]?.totalShares || "0"))).toLocaleString() : "0",
             trend: "up"
           },
           {
             label: "Daily Reward Pool",
-            value: rewardPoolData.length > 0 ? Math.round(parseFloat(rewardPoolData[rewardPoolData.length - 1]?.rewardPool || "0")).toLocaleString() : "0",
+            value: rewardPoolData.length > 0 ? Math.round(parseFloat(String(rewardPoolData[rewardPoolData.length - 1]?.rewardPool || "0"))).toLocaleString() : "0",
             trend: "up"
           },
           {
