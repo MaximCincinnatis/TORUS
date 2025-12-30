@@ -1288,7 +1288,7 @@ async function gitPush() {
       return false;
     }
     
-    execSync('git add public/data/cached-data.json', { stdio: 'inherit' });
+    execSync('git add public/data/*.json', { stdio: 'inherit' }); // Add all data JSON files
     
     const message = `Smart update (fixed) - ${new Date().toISOString()}
 
