@@ -1,18 +1,9 @@
 {
   "startTime": 1754170500998,
   "rpcCalls": 0,
-  "lastBlockNumber": 24122806,
-  "lastUpdateTime": 1767065744183,
+  "lastBlockNumber": 24122831,
+  "lastUpdateTime": 1767066039728,
   "updateHistory": [
-    {
-      "timestamp": "2025-12-29T20:20:08.402Z",
-      "block": 24120645,
-      "rpcCalls": 6,
-      "dataChanged": true,
-      "errors": [
-        "Buy & Process update: Command failed: node scripts/update-buy-process-data.js"
-      ]
-    },
     {
       "timestamp": "2025-12-29T20:25:10.613Z",
       "block": 24120671,
@@ -805,7 +796,14 @@
       "rpcCalls": 7,
       "dataChanged": true,
       "errors": []
+    },
+    {
+      "timestamp": "2025-12-30T03:40:39.728Z",
+      "block": 24122831,
+      "rpcCalls": 6,
+      "dataChanged": true,
+      "errors": []
     }
   ],
-  "totalRpcCalls": 237446
+  "totalRpcCalls": 237452
 }
