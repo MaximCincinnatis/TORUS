@@ -80,7 +80,7 @@ async function checkUniswapAPI() {
     'https://app.uniswap.org/api/positions'
   ];
   
-  possibleEndpoints.forEach(endpoint => /* console removed */);
+  possibleEndpoints.forEach(() => { /* console removed */ });
 }
 
 async function main() {
