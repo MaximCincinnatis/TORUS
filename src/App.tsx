@@ -13,7 +13,7 @@ import LPPositionsTable from './components/lp/LPPositionsTable';
 import FutureMaxSupplyChart from './components/charts/FutureMaxSupplyChart';
 import DateRangeButtons from './components/charts/DateRangeButtons';
 import UpdateNotification from './components/UpdateNotification';
-import { RewardPoolData } from './utils/ethersWeb3';
+import { RewardPoolData } from './utils/maxSupplyProjection';
 import { getTokenInfo, SimpleLPPosition } from './utils/uniswapV3RealOwners';
 import { getMainDashboardDataWithCache, getLPPositionsWithCache } from './utils/cacheDataLoader';
 import { updateDailySnapshot } from './utils/historicalSupplyTracker';
