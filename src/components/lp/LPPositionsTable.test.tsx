@@ -1,7 +1,7 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import LPPositionsTable from './LPPositionsTable';
-import { SimpleLPPosition } from '../../utils/uniswapV3RealOwners';
+import { SimpleLPPosition } from '../../utils/lpTypes';
 
 const mockPositions: SimpleLPPosition[] = [
   {

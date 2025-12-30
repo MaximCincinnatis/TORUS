@@ -1,4 +1,4 @@
-import { SimpleLPPosition } from './uniswapV3RealOwners';
+import { SimpleLPPosition } from './lpTypes';
 import { getHistoricalDataWithCache } from './cacheDataLoader';
 
 const UNISWAP_V3_SUBGRAPH_URL = 'https://api.thegraph.com/subgraphs/name/uniswap/uniswap-v3';

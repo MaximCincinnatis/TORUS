@@ -1,7 +1,7 @@
 import { ethers } from 'ethers';
 import { getProvider } from './ethersWeb3';
 import { calculateTokenAmounts, isPositionInRange } from './uniswapV3Math';
-import type { SimpleLPPosition } from './uniswapV3RealOwners';
+import type { SimpleLPPosition } from './lpTypes';
 
 const POOL_ADDRESS = '0x7ff1f30F6E7EeC2ff3F0D1b60739115BDF88190F';
 
@@ -16,8 +16,8 @@ const POOL_ABI = [
 ];
 
 
-// Use the standard SimpleLPPosition from uniswapV3RealOwners
-export type { SimpleLPPosition } from './uniswapV3RealOwners';
+// Use the standard SimpleLPPosition from lpTypes
+export type { SimpleLPPosition } from './lpTypes';
 
 export async function getPoolInfo() {
   const provider = getProvider();

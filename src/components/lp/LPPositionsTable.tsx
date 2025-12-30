@@ -1,5 +1,5 @@
 import React from 'react';
-import { SimpleLPPosition } from '../../utils/uniswapV3RealOwners';
+import { SimpleLPPosition } from '../../utils/lpTypes';
 import { tickToTitanXPrice } from '../../utils/uniswapV3Math';
 import { CONTRACTS } from '../../constants/contracts';
 import './LPPositionsTable.css';

@@ -1,4 +1,4 @@
-import { SimpleLPPosition } from './uniswapV3RealOwners';
+import { SimpleLPPosition } from './lpTypes';
 import { PoolHistoricalData } from './enhancedAPRCalculation';
 import { getIncrementalUpdates, mergeIncrementalUpdates, shouldUpdateIncrementally } from './incrementalUpdater';
 import { ethers } from 'ethers';
