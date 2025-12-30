@@ -13,7 +13,7 @@ import LPPositionsTable from './components/lp/LPPositionsTable';
 import FutureMaxSupplyChart from './components/charts/FutureMaxSupplyChart';
 import DateRangeButtons from './components/charts/DateRangeButtons';
 import UpdateNotification from './components/UpdateNotification';
-import { getContractInfo, RewardPoolData } from './utils/ethersWeb3';
+import { RewardPoolData } from './utils/ethersWeb3';
 import { getTokenInfo, SimpleLPPosition } from './utils/uniswapV3RealOwners';
 import { getMainDashboardDataWithCache, getLPPositionsWithCache } from './utils/cacheDataLoader';
 import { updateDailySnapshot } from './utils/historicalSupplyTracker';
@@ -79,7 +79,6 @@ function App() {
   const [lpPositions, setLpPositions] = useState<SimpleLPPosition[]>([]);
   const [lpTokenInfo, setLpTokenInfo] = useState<any>(null);
   const [lpLoading, setLpLoading] = useState(true);
-  const [contractInfo, setContractInfo] = useState<any>(null);
   const [cachedTitanXData, setCachedTitanXData] = useState<{totalTitanXBurnt?: string, titanxTotalSupply?: string}>({});
   const [lastUpdatedTime, setLastUpdatedTime] = useState<string | null>(null);
   const [buyProcessData, setBuyProcessData] = useState<any>(null);
@@ -178,14 +177,9 @@ function App() {
   const loadData = async (forceFullRefresh: boolean = false) => {
     setLoading(true);
     
-    // Always load from cache only - no more RPC calls
-    
+    // Always load from cache only - no RPC calls from frontend
+
     try {
-      // First, verify contract connectivity
-      const contractInfo = await getContractInfo();
-      setContractInfo(contractInfo);
-      
-      
       // Only use cached data - backend handles all updates
       const dashboardResult = await getMainDashboardDataWithCache(async () => {
         // Return empty data if cache miss (shouldn't happen)
@@ -225,18 +219,7 @@ function App() {
       setTimeout(() => {
         setRewardPoolData(dashboardResult.data.rewardPoolData || []);
       }, 150);
-      
-      // Update contract info with cached TitanX burn data
-      
-      if (dashboardResult.data.totalTitanXBurnt || dashboardResult.data.titanxTotalSupply) {
-        setContractInfo((prev: any) => ({
-          ...prev,
-          totalTitanXBurnt: dashboardResult.data.totalTitanXBurnt || "0",
-          titanxTotalSupply: dashboardResult.data.titanxTotalSupply || "0"
-        }));
-      }
-      
-      
+
       // Set pre-calculated projection data if available
       if (dashboardResult.data.chartData?.futureSupplyProjection) {
         setPreCalculatedProjection(dashboardResult.data.chartData.futureSupplyProjection);
