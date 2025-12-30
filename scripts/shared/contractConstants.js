@@ -72,13 +72,12 @@ const PROTOCOL_CONSTANTS = {
   RPC_DELAY: 150
 };
 
-// RPC Providers
+// Primary RPC from environment with public fallbacks
+const PRIMARY_RPC = process.env.ETH_RPC_URL || 'http://192.168.0.73:18547';
 const RPC_PROVIDERS = [
+  PRIMARY_RPC,
   'https://ethereum.publicnode.com',
-  'https://eth.llamarpc.com',
-  'https://rpc.ankr.com/eth',
-  'https://cloudflare-eth.com',
-  'https://eth-mainnet.public.blastapi.io'
+  'https://eth.llamarpc.com'
 ];
 
 // Helper function to get protocol day from timestamp

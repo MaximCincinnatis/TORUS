@@ -22,7 +22,8 @@ const TEST_END_BLOCK = parseInt(process.env.TEST_END_BLOCK || '22890772');
 console.log(`🧪 LIMITED FULL UPDATE - Blocks ${TEST_START_BLOCK} to ${TEST_END_BLOCK}`);
 console.log('=' .repeat(60));
 
-const provider = new ethers.providers.JsonRpcProvider('https://ethereum.publicnode.com');
+const RPC_URL = process.env.ETH_RPC_URL || 'http://192.168.0.73:18547';
+const provider = new ethers.providers.JsonRpcProvider(RPC_URL);
 
 // Contract ABI for getStakePositions
 const STAKE_CONTRACT_ABI = [{

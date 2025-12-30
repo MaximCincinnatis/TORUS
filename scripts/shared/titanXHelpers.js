@@ -59,7 +59,8 @@ async function getActualTitanXFromStake(transactionHash, provider) {
  * Test function to verify the helper works correctly
  */
 async function testTitanXExtraction() {
-  const provider = new ethers.providers.JsonRpcProvider('https://ethereum.publicnode.com');
+  const RPC_URL = process.env.ETH_RPC_URL || 'http://192.168.0.73:18547';
+  const provider = new ethers.providers.JsonRpcProvider(RPC_URL);
   
   console.log('Testing TitanX extraction from known stake transactions...\n');
   

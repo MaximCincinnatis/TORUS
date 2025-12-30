@@ -20,15 +20,12 @@ const {
 const { standardizeLPPosition } = require('../../src/utils/lpPositionContract');
 const { safeMergeLPPositions } = require('../../shared/useLPPositionStandard');
 
-// Working RPC providers (all public, no API keys)
+// Primary RPC from environment with fallbacks
+const PRIMARY_RPC = process.env.ETH_RPC_URL || 'http://192.168.0.73:18547';
 const WORKING_RPC_PROVIDERS = [
-  'https://eth.drpc.org',
-  'https://rpc.payload.de',
-  'https://eth-mainnet.public.blastapi.io',
-  'https://rpc.flashbots.net',
+  PRIMARY_RPC,
   'https://ethereum.publicnode.com',
-  'https://eth.llamarpc.com',
-  'https://rpc.ankr.com/eth'
+  'https://eth.llamarpc.com'
 ];
 
 // Contract addresses

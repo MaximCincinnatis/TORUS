@@ -2,16 +2,14 @@ import { ethers } from 'ethers';
 import { CONTRACTS, CREATE_STAKE_ABI, TORUS_TOKEN_ABI } from '../constants/contracts';
 import { DataCache } from './cache';
 
-// List of working RPC endpoints (all public, no API keys)
-const RPC_ENDPOINTS = [
+// Primary RPC from environment, with public fallbacks
+const PRIMARY_RPC = process.env.REACT_APP_ETH_RPC_URL || 'http://192.168.0.73:18547';
+const FALLBACK_ENDPOINTS = [
   'https://eth.drpc.org',
-  'https://rpc.payload.de',
-  'https://eth-mainnet.public.blastapi.io',
-  'https://rpc.flashbots.net',
   'https://ethereum.publicnode.com',
-  'https://eth.llamarpc.com',
-  'https://rpc.ankr.com/eth'
+  'https://eth.llamarpc.com'
 ];
+const RPC_ENDPOINTS = [PRIMARY_RPC, ...FALLBACK_ENDPOINTS];
 
 let currentRpcIndex = 0;
 let provider = new ethers.providers.JsonRpcProvider(RPC_ENDPOINTS[currentRpcIndex]);

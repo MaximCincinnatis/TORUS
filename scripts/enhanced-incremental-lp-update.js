@@ -8,7 +8,7 @@ const { calculatePositionStats } = require('../utils/lpPositionStates');
 const { backupLPData, getMostRecentBackup } = require('../utils/dataBackup');
 
 // Configuration
-const RPC_URL = process.env.ETH_RPC_URL || 'https://eth.llamarpc.com';
+const RPC_URL = process.env.ETH_RPC_URL || 'http://192.168.0.73:18547';
 const POSITION_MANAGER_ADDRESS = '0xC36442b4a4522E871399CD717aBDD847Ab11FE88';
 const POOL_ADDRESS = '0x7ff1f30F6E7EeC2ff3F0D1b60739115BDF88190F';
 const DATA_FILE = path.join(__dirname, '../data/cached-data.json');

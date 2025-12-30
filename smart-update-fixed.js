@@ -166,10 +166,11 @@ function deduplicateEvents(events, keyFunction) {
 
 // Get working RPC provider
 async function getProvider() {
+  const PRIMARY_RPC = process.env.ETH_RPC_URL || 'http://192.168.0.73:18547';
   const providers = [
+    PRIMARY_RPC,
     'https://eth.drpc.org',
-    'https://rpc.payload.de',
-    'https://eth-mainnet.public.blastapi.io'
+    'https://ethereum.publicnode.com'
   ];
   
   for (const url of providers) {

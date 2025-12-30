@@ -16,12 +16,12 @@ const {
   TOTAL_REWARD_DAYS 
 } = require('../../src/utils/rewardPoolManager');
 
-// RPC providers
+// Primary RPC from environment with fallbacks
+const PRIMARY_RPC = process.env.ETH_RPC_URL || 'http://192.168.0.73:18547';
 const RPC_PROVIDERS = [
-  'https://eth.drpc.org',
-  'https://rpc.payload.de',
-  'https://eth-mainnet.public.blastapi.io',
+  PRIMARY_RPC,
   'https://ethereum.publicnode.com',
+  'https://eth.llamarpc.com'
 ];
 
 async function main() {

@@ -28,14 +28,12 @@ const {
 const { getActualTitanXFromStake } = require('../shared/titanXHelpers');
 const { generateFutureSupplyProjection } = require('../generate-future-supply-projection-fixed');
 
-// Working RPC providers (tested and verified)
+// Primary RPC from environment with fallbacks
+const PRIMARY_RPC = process.env.ETH_RPC_URL || 'http://192.168.0.73:18547';
 const WORKING_RPC_PROVIDERS = [
+  PRIMARY_RPC,
   'https://ethereum.publicnode.com',
-  'https://eth.llamarpc.com',
-  'https://rpc.payload.de',
-  'https://eth-mainnet.public.blastapi.io',
-  'https://rpc.flashbots.net',
-  'https://eth.drpc.org'
+  'https://eth.llamarpc.com'
 ];
 
 // Rate limiting configuration

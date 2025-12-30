@@ -15,12 +15,12 @@ const path = require('path');
 // Import validation and recovery utilities
 const { DataValidator, AlertSystem, DataRecovery } = require('./data-validator');
 
-// RPC endpoints with fallbacks
+// Primary RPC from environment with fallbacks
+const PRIMARY_RPC = process.env.ETH_RPC_URL || 'http://192.168.0.73:18547';
 const RPC_ENDPOINTS = [
-  'https://eth.drpc.org',
+  PRIMARY_RPC,
   'https://ethereum.publicnode.com',
-  'https://eth.llamarpc.com',
-  'https://rpc.payload.de'
+  'https://eth.llamarpc.com'
 ];
 
 // Get working provider with fallback

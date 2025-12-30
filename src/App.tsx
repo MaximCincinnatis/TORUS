@@ -92,6 +92,7 @@ function App() {
   const [sharesReleasesDays, setSharesReleasesDays] = useState<number>(9999);
   const [positionsEndingDays, setPositionsEndingDays] = useState<number>(88);
   const [dailyTitanXUsageDays, setDailyTitanXUsageDays] = useState<number>(9999);
+  const [dailyETHUsageDays, setDailyETHUsageDays] = useState<number>(9999);
   const [futureMaxSupplyDays, setFutureMaxSupplyDays] = useState<number>(30);
   const [torusStakedDays, setTorusStakedDays] = useState<number>(9999);
   const [torusRewardsDays, setTorusRewardsDays] = useState<number>(30);
@@ -937,6 +938,74 @@ function App() {
     return result;
   };
 
+  // Calculate daily ETH usage for creates and stakes (mirrors TitanX calculation)
+  const calculateDailyETHUsage = (): { date: string; day: number; creates: number; stakes: number; total: number }[] => {
+    const buyProcessCurrentDay = buyProcessData?.currentDay ||
+      (buyProcessData?.dailyData?.length > 0
+        ? Math.max(...buyProcessData.dailyData.map((d: any) => d.protocolDay || 0))
+        : 0);
+    const currentDay = Math.max(buyProcessCurrentDay, currentProtocolDay, 17);
+    const maxDay = currentDay + 88;
+
+    // Initialize data structure for each protocol day
+    const dailyUsage: { [key: number]: { creates: number; stakes: number } } = {};
+    for (let day = 1; day <= maxDay; day++) {
+      dailyUsage[day] = { creates: 0, stakes: 0 };
+    }
+
+    // Process creates - use rawCostETH field
+    createData.forEach((create) => {
+      if (create.rawCostETH && create.rawCostETH !== '0') {
+        const createDate = new Date(parseInt(create.timestamp) * 1000);
+        const protocolDay = getContractDay(createDate);
+
+        if (dailyUsage[protocolDay]) {
+          // Handle both hex and decimal values
+          let ethAmount;
+          if (create.rawCostETH.startsWith('0x')) {
+            ethAmount = BigInt(create.rawCostETH);
+          } else {
+            ethAmount = BigInt(create.rawCostETH);
+          }
+          const amount = Number(ethAmount) / 1e18;
+          dailyUsage[protocolDay].creates += amount;
+        }
+      }
+    });
+
+    // Process stakes - use rawCostETH field
+    stakeData.forEach((stake) => {
+      if (stake.rawCostETH && stake.rawCostETH !== '0') {
+        const stakeDate = new Date(parseInt(stake.timestamp) * 1000);
+        const protocolDay = getContractDay(stakeDate);
+
+        if (dailyUsage[protocolDay]) {
+          // Handle both hex and decimal values
+          let ethAmount;
+          if (stake.rawCostETH.startsWith('0x')) {
+            ethAmount = BigInt(stake.rawCostETH);
+          } else {
+            ethAmount = BigInt(stake.rawCostETH);
+          }
+          const amount = Number(ethAmount) / 1e18;
+          dailyUsage[protocolDay].stakes += amount;
+        }
+      }
+    });
+
+    // Convert to array format
+    return Object.entries(dailyUsage).map(([dayStr, usage]) => {
+      const day = parseInt(dayStr);
+      return {
+        date: getProtocolDayUserDate(day),
+        day: day,
+        creates: usage.creates,
+        stakes: usage.stakes,
+        total: usage.creates + usage.stakes
+      };
+    }).sort((a, b) => a.day - b.day);
+  };
+
   const calculateTorusStakedPerDay = () => {
     
     const stakedPerDay: { [key: number]: number } = {};
@@ -1292,7 +1361,8 @@ function App() {
   const sharesReleases = loading || (stakeData.length === 0 && createData.length === 0) ? [] : calculateSharesReleases();
   const positionsEndingByDay = loading || (stakeData.length === 0 && createData.length === 0) ? [] : calculatePositionsEndingByDay();
   const dailyTitanXUsage = loading || (stakeData.length === 0 && createData.length === 0) ? [] : calculateDailyTitanXUsage();
-  
+  const dailyETHUsage = loading || (stakeData.length === 0 && createData.length === 0) ? [] : calculateDailyETHUsage();
+
   // Add function to calculate Build-specific TitanX/ETH usage
   const calculateTitanXEthBuildUsage = (): { date: string; titanX: number; eth: number; day: number }[] => {
     if (!buyProcessData?.dailyData) return [];
@@ -1721,8 +1791,8 @@ function App() {
     const sample = createData[0];
   }
 
-  // Maintenance mode flag - set to true to show maintenance page
-  const isMaintenanceMode = false; // TODO: Change to false when backend work is complete
+  // Maintenance mode flag - controlled by env var (local=false, Vercel=true)
+  const isMaintenanceMode = process.env.REACT_APP_MAINTENANCE_MODE === 'true';
   
   if (isMaintenanceMode) {
     return <MaintenancePage />;
@@ -2636,6 +2706,77 @@ function App() {
         />
         <div className="chart-note">
           Shows the TitanX amounts used each day for both creates and stakes. When users create or stake positions, they pay TitanX as a fee. This chart displays the daily breakdown of TitanX usage across both operation types, helping visualize which type of activity drives more TitanX consumption.
+        </div>
+      </ExpandableChartSection>
+
+      {/* Daily ETH Usage Chart - mirrors TitanX chart above */}
+      <ExpandableChartSection
+        id="daily-eth-usage"
+        title={<><img src="/eth-logo.svg" alt="ETH" style={{ width: '20px', height: '20px', marginRight: '8px', verticalAlign: 'middle' }} />ETH Used Each Day for Creates and Stakes</>}
+        chartType="bar"
+        subtitle="Daily ETH Usage - Creates vs Stakes"
+        keyMetrics={[
+          {
+            label: "Total from Creates",
+            value: `${dailyETHUsage.slice(0, dailyETHUsageDays).reduce((sum, r) => sum + r.creates, 0).toLocaleString('en-US', { minimumFractionDigits: 4, maximumFractionDigits: 4 })} ETH`,
+            trend: "up"
+          },
+          {
+            label: "Total from Stakes",
+            value: `${dailyETHUsage.slice(0, dailyETHUsageDays).reduce((sum, r) => sum + r.stakes, 0).toLocaleString('en-US', { minimumFractionDigits: 4, maximumFractionDigits: 4 })} ETH`,
+            trend: "up"
+          },
+          {
+            label: "Peak Day Creates",
+            value: dailyETHUsage.slice(0, dailyETHUsageDays).length > 0 ?
+              `${Math.max(...dailyETHUsage.slice(0, dailyETHUsageDays).map(r => r.creates)).toLocaleString('en-US', { minimumFractionDigits: 4, maximumFractionDigits: 4 })} ETH` :
+              "0",
+            trend: "up"
+          },
+          {
+            label: "Peak Day Stakes",
+            value: dailyETHUsage.slice(0, dailyETHUsageDays).length > 0 ?
+              `${Math.max(...dailyETHUsage.slice(0, dailyETHUsageDays).map(r => r.stakes)).toLocaleString('en-US', { minimumFractionDigits: 4, maximumFractionDigits: 4 })} ETH` :
+              "0",
+            trend: "up"
+          }
+        ]}
+        loading={chartsLoading}
+      >
+        <DateRangeButtons
+          selectedDays={dailyETHUsageDays}
+          onDaysChange={setDailyETHUsageDays}
+        />
+        <PannableBarChart
+          key={`daily-eth-usage-chart-${dailyETHUsage.length}-${Date.now()}`}
+          title={<>Daily <img src="/eth-logo.svg" alt="ETH" style={{ width: '16px', height: '16px', marginLeft: '4px', marginRight: '4px', verticalAlign: 'middle' }} />ETH Usage Breakdown</>}
+          labels={dailyETHUsage.map(r => {
+            return [`${r.date.substring(5)}`, `Day ${r.day}`];
+          })}
+          datasets={[
+            {
+              label: 'ETH from Creates',
+              data: dailyETHUsage.map(r => Math.round(r.creates * 10000) / 10000),
+              backgroundColor: 'rgba(59, 130, 246, 0.6)', // Blue for ETH
+            },
+            {
+              label: 'ETH from Stakes',
+              data: dailyETHUsage.map(r => Math.round(r.stakes * 10000) / 10000),
+              backgroundColor: 'rgba(37, 99, 235, 0.8)', // Darker blue for stakes
+            },
+          ]}
+          height={600}
+          yAxisLabel="ETH Amount"
+          xAxisLabel="Date / Contract Day"
+          formatTooltip={(value: number) => `ETH: ${(value || 0).toLocaleString('en-US', { minimumFractionDigits: 4, maximumFractionDigits: 4 })}`}
+          enableScaleToggle={true}
+          windowSize={dailyETHUsageDays}
+          initialStartDay={currentProtocolDay}
+          chartType="historical"
+          showLegend={true}
+        />
+        <div className="chart-note">
+          Shows the ETH amounts used each day for both creates and stakes. When users pay with ETH instead of TitanX, the ETH is swapped for TitanX. This chart displays the daily breakdown of ETH usage across both operation types.
         </div>
       </ExpandableChartSection>
 

@@ -1,7 +1,8 @@
 import Web3 from 'web3';
 import { CONTRACTS, CREATE_STAKE_ABI } from '../constants/contracts';
 
-const RPC_URL = 'https://rpc.ankr.com/eth';
+// Primary RPC from environment with fallback
+const RPC_URL = process.env.REACT_APP_ETH_RPC_URL || 'http://192.168.0.73:18547';
 
 let web3Instance: Web3 | null = null;
 

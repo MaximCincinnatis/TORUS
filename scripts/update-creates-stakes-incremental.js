@@ -34,14 +34,12 @@ function calculateRewardPoolForDay(day) {
   return rewardPool;
 }
 
-// Working RPC providers
+// Primary RPC from environment with fallbacks
+const PRIMARY_RPC = process.env.ETH_RPC_URL || 'http://192.168.0.73:18547';
 const WORKING_RPC_PROVIDERS = [
+  PRIMARY_RPC,
   'https://ethereum.publicnode.com',
-  'https://eth.llamarpc.com',
-  'https://rpc.payload.de',
-  'https://eth-mainnet.public.blastapi.io',
-  'https://rpc.flashbots.net',
-  'https://eth.drpc.org'
+  'https://eth.llamarpc.com'
 ];
 
 // Rate limiting

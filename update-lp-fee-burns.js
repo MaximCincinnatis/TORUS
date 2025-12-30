@@ -16,7 +16,8 @@ const COLLECT_TOPIC = '0x70935338e69775456a85ddef226c395fb668b63fa0115f5f20610b3
 const DATA_FILE = './public/data/buy-process-burns.json';
 
 async function updateLPFeeBurns() {
-  const provider = new ethers.providers.JsonRpcProvider('https://eth.drpc.org');
+  const RPC_URL = process.env.ETH_RPC_URL || 'http://192.168.0.73:18547';
+  const provider = new ethers.providers.JsonRpcProvider(RPC_URL);
   
   try {
     // Load existing data
