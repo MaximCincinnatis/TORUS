@@ -1,16 +1,9 @@
 {
   "startTime": 1754170500998,
   "rpcCalls": 0,
-  "lastBlockNumber": 24141706,
-  "lastUpdateTime": 1767293739149,
+  "lastBlockNumber": 24141731,
+  "lastUpdateTime": 1767294043139,
   "updateHistory": [
-    {
-      "timestamp": "2026-01-01T11:35:44.591Z",
-      "block": 24139516,
-      "rpcCalls": 6,
-      "dataChanged": true,
-      "errors": []
-    },
     {
       "timestamp": "2026-01-01T11:40:37.718Z",
       "block": 24139539,
@@ -703,7 +696,14 @@
       "rpcCalls": 6,
       "dataChanged": true,
       "errors": []
+    },
+    {
+      "timestamp": "2026-01-01T19:00:43.139Z",
+      "block": 24141731,
+      "rpcCalls": 10,
+      "dataChanged": true,
+      "errors": []
     }
   ],
-  "totalRpcCalls": 242632
+  "totalRpcCalls": 242642
 }
