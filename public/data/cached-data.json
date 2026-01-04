@@ -79615,16 +79615,16 @@
         "type": "stake"
       }
     ],
-    "totalSupply": 7663455.253866369,
-    "currentProtocolDay": 178,
+    "totalSupply": 7663171.359412157,
+    "currentProtocolDay": 179,
     "metadata": {
       "dailySupplySnapshot": {
         "day": 178,
-        "totalSupply": 7663455.253866369,
+        "totalSupply": 7663171.359412157,
         "burnedSupply": 0,
-        "timestamp": "2026-01-04T18:00:02.157Z"
+        "timestamp": "2026-01-04T18:04:21.101Z"
       },
-      "currentBlock": 24162948,
+      "currentBlock": 24162970,
       "lastDeduplication": "2025-08-02T21:51:40.056Z",
       "duplicatesRemoved": 0
     },
@@ -82139,15 +82139,24 @@
         "penaltiesInPool": 0,
         "calculated": true,
         "lastUpdated": "2026-01-03T18:05:01.943Z"
+      },
+      {
+        "day": 267,
+        "date": "2026-04-02T18:00:00.000Z",
+        "rewardPool": 80824.89468121396,
+        "totalShares": 0,
+        "penaltiesInPool": 0,
+        "calculated": true,
+        "lastUpdated": "2026-01-04T18:04:21.163Z"
       }
     ],
     "totalStakedInContract": 3517113.24358,
-    "lastBlock": 24162948
+    "lastBlock": 24162970
   },
-  "lastUpdated": "2026-01-04T18:00:44.450Z",
+  "lastUpdated": "2026-01-04T18:04:59.752Z",
   "lastProcessedBlock": 23450736,
-  "currentProtocolDay": 178,
-  "totalSupply": 7663455.253866369,
+  "currentProtocolDay": 179,
+  "totalSupply": 7663171.359412157,
   "titanxTotalSupply": "102118844116094786109359981890020",
   "totalTitanXBurnt": "332318524473961714991703617085",
   "lastBlock": 23056089,
@@ -82171,14 +82180,14 @@
     {
       "tokenId": "1029195",
       "owner": "0xAa390a37006E22b5775A34f2147F81eBD6a63641",
-      "liquidity": "1107761375844883465222433766",
+      "liquidity": "1107793201047533883290927188",
       "tickLower": -887200,
       "tickUpper": 887200,
-      "claimableTorus": 3017.870806112742,
-      "claimableTitanX": 1680578728.2333775,
-      "tokensOwed0": "3017870806112741872750",
-      "tokensOwed1": "1680578728233377443684305397",
-      "lastChecked": "2026-01-04T16:55:02.399Z",
+      "claimableTorus": 3090.6149572932804,
+      "claimableTitanX": 1691610296.7281706,
+      "tokensOwed0": "3090614957293280401267",
+      "tokensOwed1": "1691610296728170586477809216",
+      "lastChecked": "2026-01-04T18:04:21.148Z",
       "isProtocolPosition": true,
       "torusAmount": 1096190.1906362185,
       "titanxAmount": 1084288466365.7351,
@@ -82195,8 +82204,8 @@
     "thirtyDay": []
   },
   "poolData": {
-    "sqrtPriceX96": "63781846767173478180137959851999",
-    "currentTick": 133824,
+    "sqrtPriceX96": "63796810197830185966197838797831",
+    "currentTick": 133829,
     "token0": "",
     "token1": "",
     "liquidity": "0",
