@@ -79938,6 +79938,31 @@
         "claimedAt": "0",
         "isCreate": false,
         "type": "stake"
+      },
+      {
+        "user": "0x31B2cCC54F749C290E8Bb4518670E274a41E9aD7",
+        "id": "272",
+        "principal": "1000000000000000000000",
+        "shares": "7744000000000000000000000",
+        "duration": "88",
+        "timestamp": "1767633935",
+        "blockNumber": 24169942,
+        "stakingDays": 88,
+        "maturityDate": "2026-04-03T17:25:35.000Z",
+        "startDate": "2026-01-05T17:25:35.000Z",
+        "protocolDay": 179,
+        "power": "0",
+        "claimedCreate": false,
+        "claimedStake": false,
+        "costETH": "0.018879491052502844",
+        "costTitanX": "0",
+        "rawCostETH": "18879491052502844",
+        "rawCostTitanX": "0",
+        "rewards": "0",
+        "penalties": "0",
+        "claimedAt": "0",
+        "isCreate": false,
+        "type": "stake"
       }
     ],
     "totalSupply": 7848921.414960621,
@@ -79947,9 +79972,9 @@
         "day": 179,
         "totalSupply": 7848921.414960621,
         "burnedSupply": 0,
-        "timestamp": "2026-01-05T17:25:03.061Z"
+        "timestamp": "2026-01-05T17:30:02.710Z"
       },
-      "currentBlock": 24169938,
+      "currentBlock": 24169964,
       "lastDeduplication": "2025-08-02T21:51:40.056Z",
       "duplicatesRemoved": 0
     },
@@ -82475,15 +82500,15 @@
         "lastUpdated": "2026-01-04T18:04:21.163Z"
       }
     ],
-    "totalStakedInContract": 3515536.71458,
-    "lastBlock": 24169938
+    "totalStakedInContract": 3516536.71458,
+    "lastBlock": 24169964
   },
-  "lastUpdated": "2026-01-05T17:25:54.566Z",
+  "lastUpdated": "2026-01-05T17:30:56.979Z",
   "lastProcessedBlock": 23450736,
   "currentProtocolDay": 179,
   "totalSupply": 7848921.414960621,
   "titanxTotalSupply": "102118119116094786109402747013604",
-  "totalTitanXBurnt": "333993066554647806819296039831",
+  "totalTitanXBurnt": "334017675782603510900159878476",
   "lastBlock": 23056089,
   "contractData": {
     "torusToken": {
