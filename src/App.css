@@ -902,9 +902,53 @@ html {
   background-clip: text;
   -webkit-text-fill-color: transparent;
   animation: titleShimmer 6s ease-in-out infinite;
-  display: inline-block;
-  padding-right: 4px;
-  margin-right: 4px;
+  display: inline;
+  padding: 0;  /* Reset ALL sides to prevent spacing issues */
+  margin: 0;
+}
+
+/* ETH text styling - blue accent (same pattern as torus-text) */
+.eth-text {
+  font-family: 'Instrument Serif', Georgia, serif;
+  font-style: italic;
+  font-weight: 400;
+  background: linear-gradient(135deg, #627EEA 0%, #8c9eff 50%, #627EEA 100%);
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: titleShimmer 6s ease-in-out infinite;
+  display: inline;
+  padding: 0;  /* Reset ALL sides to prevent spacing issues */
+  margin: 0;
+}
+
+/* TitanX text styling - green accent (same pattern as torus-text/eth-text) */
+.titanx-text {
+  font-family: 'Instrument Serif', Georgia, serif;
+  font-style: italic;
+  font-weight: 400;
+  background: linear-gradient(135deg, #22c55e 0%, #4ade80 50%, #22c55e 100%);
+  background-size: 200% 100%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+  animation: titleShimmer 6s ease-in-out infinite;
+  display: inline;
+  padding: 0;  /* Reset ALL sides to prevent spacing issues */
+  margin: 0;
+}
+
+/* Override torus-text/eth-text/titanx-text when used inside metric card suffixes */
+/* Simplify styling for proper auto-fit in flex container */
+.metric-suffix .torus-text,
+.metric-suffix .eth-text,
+.metric-suffix .titanx-text {
+  display: inline;           /* Not inline-block - better flex compatibility */
+  padding-right: 0;
+  margin-right: 0;
+  font-family: inherit;      /* Use parent's JetBrains Mono for consistent sizing */
+  font-style: normal;        /* Remove italic for cleaner look in metrics */
 }
 
 @keyframes titleShimmer {

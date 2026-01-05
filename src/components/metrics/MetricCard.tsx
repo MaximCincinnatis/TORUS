@@ -10,13 +10,21 @@ interface MetricCardProps {
 }
 
 const MetricCard: React.FC<MetricCardProps> = ({ title, value, subtitle, prefix, suffix }) => {
-  // Determine font size class based on value length
+  // Determine font size class based on TOTAL content length (value + suffix)
+  // This ensures the entire content fits within the card without clipping
   const valueStr = value.toString();
+
+  // Calculate suffix length: strings use actual length, React nodes estimate ~6 chars
+  const suffixLength = suffix ? (typeof suffix === 'string' ? suffix.length : 6) : 0;
+  const totalLength = valueStr.length + suffixLength;
+
   let sizeClass = '';
-  
-  if (valueStr.length > 15) {
+
+  if (totalLength > 20) {
+    sizeClass = 'extremely-long-number';
+  } else if (totalLength > 15) {
     sizeClass = 'very-long-number';
-  } else if (valueStr.length > 10) {
+  } else if (totalLength > 10) {
     sizeClass = 'long-number';
   }
   

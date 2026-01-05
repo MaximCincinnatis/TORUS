@@ -60,7 +60,7 @@
 .metric-title {
   font-family: 'JetBrains Mono', monospace;
   color: rgba(255, 255, 255, 0.5);
-  font-size: 12px;
+  font-size: 15px;  /* 25% larger than 12px */
   font-weight: 300;
   margin: 0 0 12px 0;
   text-transform: uppercase;
@@ -76,8 +76,9 @@
   display: flex;
   align-items: baseline;
   flex-wrap: nowrap;
-  word-break: break-word;
+  white-space: nowrap;       /* Force single line - no breaking */
   overflow: hidden;
+  text-overflow: ellipsis;   /* Graceful fallback if still overflows */
 }
 
 /* Responsive font sizes based on content length */
@@ -86,15 +87,19 @@
 }
 
 .metric-value.very-long-number {
-  font-size: 16px;
+  font-size: 14px;
+}
+
+.metric-value.extremely-long-number {
+  font-size: 12px;
 }
 
 .metric-prefix,
 .metric-suffix {
-  font-size: 16px;
+  font-size: inherit;  /* Scale with parent .metric-value for auto-fit */
   color: #ccc;
   margin: 0 4px;
-  flex-shrink: 0;
+  flex-shrink: 1;      /* Allow shrinking when space is tight */
 }
 
 .metric-subtitle {

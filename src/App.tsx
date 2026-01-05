@@ -1917,23 +1917,23 @@ function App() {
             delay={0.1}
           />
           <SmartMetricCard
-            title={<><img src="/eth-logo.svg" alt="Ethereum" style={{ width: '16px', height: '16px', marginRight: '6px', verticalAlign: 'middle', backgroundColor: 'transparent' }} />Total ETH Input</>}
+            title={<><img src="/eth-logo.svg" alt="Ethereum" style={{ width: '16px', height: '16px', marginRight: '6px', verticalAlign: 'middle', backgroundColor: 'transparent' }} />Total <span className="eth-text">ETH</span> Input</>}
             value={memoizedTotalETHInput ? memoizedTotalETHInput.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : null}
-            suffix="ETH"
+            suffix={<span className="eth-text">ETH</span>}
             delay={0.2}
           />
           <SmartMetricCard
-            title={<><img src="https://coin-images.coingecko.com/coins/images/32762/large/TitanXpng_%281%29.png?1704456654" alt="TitanX" style={{ width: '16px', height: '16px', marginRight: '6px', verticalAlign: 'middle', opacity: 0.8 }} />Total TitanX Burned</>}
+            title={<><img src="https://coin-images.coingecko.com/coins/images/32762/large/TitanXpng_%281%29.png?1704456654" alt="TitanX" style={{ width: '16px', height: '16px', marginRight: '6px', verticalAlign: 'middle', opacity: 0.8 }} />Total <span className="titanx-text">TitanX</span> Burned</>}
             value={memoizedTitanXBurned ? (
               memoizedTitanXBurned > 1e9 ? 
                 `${(memoizedTitanXBurned / 1e9).toFixed(3)}B` : 
                 memoizedTitanXBurned.toLocaleString('en-US', { maximumFractionDigits: 0 })
             ) : null}
-            suffix={memoizedTitanXBurned && memoizedTitanXBurned > 1e9 ? "" : "TITANX"}
+            suffix={memoizedTitanXBurned && memoizedTitanXBurned > 1e9 ? "" : <span className="titanx-text">TITANX</span>}
             delay={0.3}
           />
           <SmartMetricCard
-            title={<><img src="https://coin-images.coingecko.com/coins/images/32762/large/TitanXpng_%281%29.png?1704456654" alt="TitanX" style={{ width: '16px', height: '16px', marginRight: '6px', verticalAlign: 'middle', opacity: 0.8 }} />% of TitanX Supply Burned</>}
+            title={<><img src="https://coin-images.coingecko.com/coins/images/32762/large/TitanXpng_%281%29.png?1704456654" alt="TitanX" style={{ width: '16px', height: '16px', marginRight: '6px', verticalAlign: 'middle', opacity: 0.8 }} />% of <span className="titanx-text">TitanX</span> Supply Burned</>}
             value={memoizedPercentTitanXBurned ? memoizedPercentTitanXBurned.toFixed(4) : null}
             suffix="%"
             delay={0.4}
@@ -1974,15 +1974,15 @@ function App() {
             delay={0.35}
           />
           <SmartMetricCard
-            title={<><img src="https://coin-images.coingecko.com/coins/images/32762/large/TitanXpng_%281%29.png?1704456654" alt="TitanX" style={{ width: '16px', height: '16px', marginRight: '6px', verticalAlign: 'middle', opacity: 0.8 }} />Total TitanX Used in Stakes</>}
+            title={<><img src="https://coin-images.coingecko.com/coins/images/32762/large/TitanXpng_%281%29.png?1704456654" alt="TitanX" style={{ width: '16px', height: '16px', marginRight: '6px', verticalAlign: 'middle', opacity: 0.8 }} />Total <span className="titanx-text">TitanX</span> Used in Stakes</>}
             value={memoizedTotalTitanXFromStakes ? memoizedTotalTitanXFromStakes.toLocaleString('en-US', { maximumFractionDigits: 0 }) : null}
-            suffix="TITANX"
+            suffix={<span className="titanx-text">TITANX</span>}
             delay={0.45}
           />
           <SmartMetricCard
-            title={<><img src="/eth-logo.svg" alt="Ethereum" style={{ width: '16px', height: '16px', marginRight: '6px', verticalAlign: 'middle', backgroundColor: 'transparent' }} />Total ETH Used in Stakes</>}
+            title={<><img src="/eth-logo.svg" alt="Ethereum" style={{ width: '16px', height: '16px', marginRight: '6px', verticalAlign: 'middle', backgroundColor: 'transparent' }} />Total <span className="eth-text">ETH</span> Used in Stakes</>}
             value={memoizedTotalETHFromStakes ? memoizedTotalETHFromStakes.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : null}
-            suffix="ETH"
+            suffix={<span className="eth-text">ETH</span>}
             delay={0.55}
           />
         </div>
@@ -2003,21 +2003,21 @@ function App() {
             delay={0.1}
           />
           <SmartMetricCard
-            title={<><img src="https://coin-images.coingecko.com/coins/images/32762/large/TitanXpng_%281%29.png?1704456654" alt="TitanX" style={{ width: '16px', height: '16px', marginRight: '6px', verticalAlign: 'middle', opacity: 0.8 }} />Avg TitanX per Create</>}
+            title={<><img src="https://coin-images.coingecko.com/coins/images/32762/large/TitanXpng_%281%29.png?1704456654" alt="TitanX" style={{ width: '16px', height: '16px', marginRight: '6px', verticalAlign: 'middle', opacity: 0.8 }} />Avg <span className="titanx-text">TitanX</span> per Create</>}
             value={memoizedAvgTitanXPerCreate ? memoizedAvgTitanXPerCreate.toLocaleString('en-US', { maximumFractionDigits: 2 }) : null}
-            suffix="TITANX"
+            suffix={<span className="titanx-text">TITANX</span>}
             delay={0.2}
           />
           <SmartMetricCard
-            title={<><img src="https://coin-images.coingecko.com/coins/images/32762/large/TitanXpng_%281%29.png?1704456654" alt="TitanX" style={{ width: '16px', height: '16px', marginRight: '6px', verticalAlign: 'middle', opacity: 0.8 }} />Total TitanX Used in Creates</>}
+            title={<><img src="https://coin-images.coingecko.com/coins/images/32762/large/TitanXpng_%281%29.png?1704456654" alt="TitanX" style={{ width: '16px', height: '16px', marginRight: '6px', verticalAlign: 'middle', opacity: 0.8 }} />Total <span className="titanx-text">TitanX</span> Used in Creates</>}
             value={memoizedTotalTitanXUsed ? memoizedTotalTitanXUsed.toLocaleString('en-US', { maximumFractionDigits: 0 }) : null}
-            suffix="TITANX"
+            suffix={<span className="titanx-text">TITANX</span>}
             delay={0.3}
           />
           <SmartMetricCard
-            title={<><img src="/eth-logo.svg" alt="Ethereum" style={{ width: '16px', height: '16px', marginRight: '6px', verticalAlign: 'middle', backgroundColor: 'transparent' }} />Total ETH Used in Creates</>}
+            title={<><img src="/eth-logo.svg" alt="Ethereum" style={{ width: '16px', height: '16px', marginRight: '6px', verticalAlign: 'middle', backgroundColor: 'transparent' }} />Total <span className="eth-text">ETH</span> Used in Creates</>}
             value={memoizedTotalETHFromCreates ? memoizedTotalETHFromCreates.toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 }) : null}
-            suffix="ETH"
+            suffix={<span className="eth-text">ETH</span>}
             delay={0.4}
           />
         </div>
@@ -2745,7 +2745,7 @@ function App() {
       {/* Daily ETH Usage Chart - mirrors TitanX chart above */}
       <ExpandableChartSection
         id="daily-eth-usage"
-        title={<><img src="/eth-logo.svg" alt="ETH" style={{ width: '20px', height: '20px', marginRight: '8px', verticalAlign: 'middle' }} />ETH Used Each Day for Creates and Stakes</>}
+        title={<><img src="/eth-logo.svg" alt="ETH" style={{ width: '20px', height: '20px', marginRight: '8px', verticalAlign: 'middle' }} /><span className="eth-text">ETH</span> Used Each Day for Creates and Stakes</>}
         chartType="bar"
         subtitle="Daily ETH Usage - Creates vs Stakes"
         keyMetrics={[
