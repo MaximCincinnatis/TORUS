@@ -1801,11 +1801,61 @@ function App() {
       <div className="dashboard-header">
         <div className="logo-container">
           <div className="header-left">
-            <img src="https://www.torus.win/torus.svg" alt="TORUS Logo" className="torus-logo" />
+            {/* Animated TORUS Logo SVG */}
+            <div className="header-logo-wrapper">
+              <svg
+                className="header-logo-svg"
+                width="88"
+                height="88"
+                viewBox="0 0 264 262"
+                fill="none"
+              >
+                {/* Outer ring - slow rotation */}
+                <circle
+                  className="header-ring-outer"
+                  cx="132"
+                  cy="131"
+                  r="128"
+                  fill="none"
+                  stroke="url(#headerOuterGlow)"
+                  strokeWidth="2"
+                />
+                {/* Inner torus rings - staggered pulse */}
+                {[0, 45, 90, 135, 180, 225, 270, 315].map((rotation, i) => (
+                  <circle
+                    key={i}
+                    className="header-ring-inner"
+                    cx="132"
+                    cy="131"
+                    r="58"
+                    fill="none"
+                    stroke="url(#headerTorusGradient)"
+                    strokeWidth="2"
+                    style={{
+                      animationDelay: `${i * 0.15}s`,
+                      transform: `rotate(${rotation}deg)`,
+                      transformOrigin: '132px 131px'
+                    }}
+                  />
+                ))}
+                <defs>
+                  <linearGradient id="headerTorusGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stopColor="#F2CE30" />
+                    <stop offset="50%" stopColor="#BD2BE2" />
+                    <stop offset="100%" stopColor="#79115C" />
+                  </linearGradient>
+                  <linearGradient id="headerOuterGlow" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stopColor="#fbbf24" stopOpacity="0.9" />
+                    <stop offset="50%" stopColor="#8b5cf6" stopOpacity="0.6" />
+                    <stop offset="100%" stopColor="#fbbf24" stopOpacity="0.9" />
+                  </linearGradient>
+                </defs>
+              </svg>
+            </div>
             <div className="header-text">
               <h1 className="dashboard-title">
                 <span className="torus-text">TORUS</span>
-                <span style={{ fontWeight: 700 }}>Info.fyi</span>
+                <span className="title-suffix">Info.fyi</span>
               </h1>
               <div className="dashboard-subtitle">
                 ANALYTICS & INSIGHTS
