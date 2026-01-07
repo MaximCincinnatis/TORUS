@@ -80238,6 +80238,31 @@
         "claimedAt": "0",
         "isCreate": false,
         "type": "stake"
+      },
+      {
+        "user": "0x0B013cCa6335dD62353cA60ECec9C39b5227D270",
+        "id": "29",
+        "principal": "1000000000000000000000",
+        "shares": "7744000000000000000000000",
+        "duration": "88",
+        "timestamp": "1767775775",
+        "blockNumber": 24181712,
+        "stakingDays": 88,
+        "maturityDate": "2026-04-05T08:49:35.000Z",
+        "startDate": "2026-01-07T08:49:35.000Z",
+        "protocolDay": 181,
+        "power": "0",
+        "claimedCreate": false,
+        "claimedStake": false,
+        "costETH": "0.018888975597630038",
+        "costTitanX": "0",
+        "rawCostETH": "18888975597630038",
+        "rawCostTitanX": "0",
+        "rewards": "0",
+        "penalties": "0",
+        "claimedAt": "0",
+        "isCreate": false,
+        "type": "stake"
       }
     ],
     "totalSupply": 8161887.809900592,
@@ -80247,9 +80272,9 @@
         "day": 181,
         "totalSupply": 8161887.809900592,
         "burnedSupply": 0,
-        "timestamp": "2026-01-07T08:45:02.774Z"
+        "timestamp": "2026-01-07T08:50:02.540Z"
       },
-      "currentBlock": 24181688,
+      "currentBlock": 24181713,
       "lastDeduplication": "2025-08-02T21:51:40.056Z",
       "duplicatesRemoved": 0
     },
@@ -82793,15 +82818,15 @@
         "lastUpdated": "2026-01-06T18:05:02.794Z"
       }
     ],
-    "totalStakedInContract": 3598921.11558,
-    "lastBlock": 24181688
+    "totalStakedInContract": 3599921.11558,
+    "lastBlock": 24181713
   },
-  "lastUpdated": "2026-01-07T08:45:43.622Z",
+  "lastUpdated": "2026-01-07T08:50:44.209Z",
   "lastProcessedBlock": 23450736,
   "currentProtocolDay": 181,
   "totalSupply": 8161887.809900592,
   "titanxTotalSupply": "101748841588032013317279656982521",
-  "totalTitanXBurnt": "339075706794563339158935032791",
+  "totalTitanXBurnt": "339100350353680602375974293894",
   "lastBlock": 23056089,
   "contractData": {
     "torusToken": {
