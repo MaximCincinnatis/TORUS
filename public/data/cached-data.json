@@ -80338,6 +80338,31 @@
         "claimedAt": "0",
         "isCreate": false,
         "type": "stake"
+      },
+      {
+        "user": "0xDB5E99BA5b01fda2F1C53BB7F0b72C96378E1859",
+        "id": "7",
+        "principal": "10000000000000000000000",
+        "shares": "77440000000000000000000000",
+        "duration": "88",
+        "timestamp": "1767813323",
+        "blockNumber": 24184831,
+        "stakingDays": 88,
+        "maturityDate": "2026-04-05T19:15:23.000Z",
+        "startDate": "2026-01-07T19:15:23.000Z",
+        "protocolDay": 182,
+        "power": "0",
+        "claimedCreate": false,
+        "claimedStake": false,
+        "costETH": "0",
+        "costTitanX": "5780188349.652819",
+        "rawCostETH": "0",
+        "rawCostTitanX": "5780188349652819600000000000",
+        "rewards": "0",
+        "penalties": "0",
+        "claimedAt": "0",
+        "isCreate": false,
+        "type": "stake"
       }
     ],
     "totalSupply": 8236248.622950219,
@@ -80347,9 +80372,9 @@
         "day": 182,
         "totalSupply": 8236248.622950219,
         "burnedSupply": 0,
-        "timestamp": "2026-01-07T19:15:02.402Z"
+        "timestamp": "2026-01-07T19:17:06.590Z"
       },
-      "currentBlock": 24184829,
+      "currentBlock": 24184839,
       "lastDeduplication": "2025-08-02T21:51:40.056Z",
       "duplicatesRemoved": 0
     },
@@ -82902,15 +82927,15 @@
         "lastUpdated": "2026-01-07T18:04:59.583Z"
       }
     ],
-    "totalStakedInContract": 3586684.89158,
-    "lastBlock": 24184829
+    "totalStakedInContract": 3596684.89158,
+    "lastBlock": 24184839
   },
-  "lastUpdated": "2026-01-07T19:15:39.781Z",
+  "lastUpdated": "2026-01-07T19:17:44.762Z",
   "lastProcessedBlock": 23450736,
   "currentProtocolDay": 182,
   "totalSupply": 8236248.622950219,
   "titanxTotalSupply": "101748851588032013317280562952185",
-  "totalTitanXBurnt": "339581886859524760019428082039",
+  "totalTitanXBurnt": "339831012977394796544188082039",
   "lastBlock": 23056089,
   "contractData": {
     "torusToken": {
