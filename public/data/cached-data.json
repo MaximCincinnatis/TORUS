@@ -80538,6 +80538,31 @@
         "claimedAt": "0",
         "isCreate": false,
         "type": "stake"
+      },
+      {
+        "user": "0x31B2cCC54F749C290E8Bb4518670E274a41E9aD7",
+        "id": "279",
+        "principal": "4192783000000000000000",
+        "shares": "32468911552000000000000000",
+        "duration": "88",
+        "timestamp": "1768015043",
+        "blockNumber": 24201553,
+        "stakingDays": 88,
+        "maturityDate": "2026-04-08T03:17:23.000Z",
+        "startDate": "2026-01-10T03:17:23.000Z",
+        "protocolDay": 184,
+        "power": "0",
+        "claimedCreate": false,
+        "claimedStake": false,
+        "costETH": "0",
+        "costTitanX": "2427393581.0477505",
+        "rawCostETH": "0",
+        "rawCostTitanX": "2427393581047750395741200000",
+        "rewards": "0",
+        "penalties": "0",
+        "claimedAt": "0",
+        "isCreate": false,
+        "type": "stake"
       }
     ],
     "totalSupply": 8462163.395838447,
@@ -80547,9 +80572,9 @@
         "day": 184,
         "totalSupply": 8462163.395838447,
         "burnedSupply": 0,
-        "timestamp": "2026-01-10T03:15:02.684Z"
+        "timestamp": "2026-01-10T03:20:02.292Z"
       },
-      "currentBlock": 24201540,
+      "currentBlock": 24201565,
       "lastDeduplication": "2025-08-02T21:51:40.056Z",
       "duplicatesRemoved": 0
     },
@@ -83120,15 +83145,15 @@
         "lastUpdated": "2026-01-09T18:05:02.562Z"
       }
     ],
-    "totalStakedInContract": 3506886.70058,
-    "lastBlock": 24201540
+    "totalStakedInContract": 3511079.48358,
+    "lastBlock": 24201565
   },
-  "lastUpdated": "2026-01-10T03:15:45.598Z",
+  "lastUpdated": "2026-01-10T03:20:47.242Z",
   "lastProcessedBlock": 23450736,
   "currentProtocolDay": 184,
   "totalSupply": 8462163.395838447,
   "titanxTotalSupply": "101591470744530404437549090716255",
-  "totalTitanXBurnt": "340391823927904848890887204551",
+  "totalTitanXBurnt": "340496444591248006932943650271",
   "lastBlock": 23056089,
   "contractData": {
     "torusToken": {
