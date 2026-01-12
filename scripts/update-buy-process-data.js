@@ -474,14 +474,13 @@ const CONTRACT_START_DATE = new Date('2025-07-10T18:00:00.000Z');
     // Convert back to array and sort
     mergedDailyData = Array.from(dailyDataMap.values()).sort((a, b) => a.date.localeCompare(b.date));
     
-    // For existing data without timestamps, we need to determine protocol day based on date
-    // This is a best effort - assumes activity happened after 6 PM UTC on that date
+    // ALWAYS recalculate protocolDay from date to ensure consistency
+    // Fix for duplicate protocolDay bug: events on different dates can have same protocolDay
+    // when calculated from timestamp (protocol days start at 18:00 UTC, spanning 2 calendar dates)
+    // By deriving protocolDay from the date key at 18:00 UTC, each date maps to exactly one protocolDay
     mergedDailyData.forEach(day => {
-      if (!day.protocolDay || day.protocolDay === 0) {
-        // For historical data, assume events happened after protocol day start
-        const dateAtProtocolStart = new Date(day.date + 'T18:00:00.000Z');
-        day.protocolDay = getProtocolDay(dateAtProtocolStart.getTime() / 1000);
-      }
+      const dateAtProtocolStart = new Date(day.date + 'T18:00:00.000Z');
+      day.protocolDay = getProtocolDay(dateAtProtocolStart.getTime() / 1000);
     });
     
     // Calculate actual totals from Transfer events
