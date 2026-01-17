@@ -1,8 +1,8 @@
 {
-  "lastUpdated": "2026-01-17T00:00:47.020Z",
+  "lastUpdated": "2026-01-17T00:05:46.823Z",
   "currentDay": 191,
   "totals": {
-    "torusBurnt": "3987330.897240464062678444",
+    "torusBurnt": "3987716.326738177349770484",
     "titanXBurnt": "0.0",
     "ethBurn": "12.460320167451390758",
     "titanXUsedForBurns": "2103543008857.325014054077118289",
@@ -3256,14 +3256,31 @@
       "torusPurchased": 2189.9499396392007,
       "fractalTitanX": 0,
       "fractalETH": 0
+    },
+    {
+      "date": "2026-01-17",
+      "protocolDay": 192,
+      "buyAndBurnCount": 2,
+      "buyAndBuildCount": 0,
+      "fractalCount": 0,
+      "torusBurned": 385.4294977132871,
+      "titanXUsed": 82229532.67557321,
+      "ethUsed": 0,
+      "titanXUsedForBurns": 82229532.67557321,
+      "ethUsedForBurns": 0,
+      "titanXUsedForBuilds": 0,
+      "ethUsedForBuilds": 0,
+      "torusPurchased": 0,
+      "fractalTitanX": 0,
+      "fractalETH": 0
     }
   ],
   "eventCounts": {
-    "buyAndBurn": 25323,
+    "buyAndBurn": 25325,
     "buyAndBuild": 11614,
     "fractal": 1
   },
   "metadata": {
-    "lastBlock": 24250737
+    "lastBlock": 24250762
   }
 }
