@@ -81665,16 +81665,16 @@
         "type": "stake"
       }
     ],
-    "totalSupply": 10568382.704345286,
-    "currentProtocolDay": 198,
+    "totalSupply": 10567566.175192714,
+    "currentProtocolDay": 199,
     "metadata": {
       "dailySupplySnapshot": {
         "day": 198,
-        "totalSupply": 10568382.704345286,
+        "totalSupply": 10567566.175192714,
         "burnedSupply": 0,
-        "timestamp": "2026-01-24T18:00:01.680Z"
+        "timestamp": "2026-01-24T18:05:01.906Z"
       },
-      "currentBlock": 24306302,
+      "currentBlock": 24306327,
       "lastDeduplication": "2025-08-02T21:51:40.056Z",
       "duplicatesRemoved": 0
     },
@@ -84369,15 +84369,24 @@
         "penaltiesInPool": 0,
         "calculated": true,
         "lastUpdated": "2026-01-23T18:05:02.663Z"
+      },
+      {
+        "day": 287,
+        "date": "2026-04-22T18:00:00.000Z",
+        "rewardPool": 79541.47765762139,
+        "totalShares": 0,
+        "penaltiesInPool": 0,
+        "calculated": true,
+        "lastUpdated": "2026-01-24T18:05:02.012Z"
       }
     ],
     "totalStakedInContract": 2726023.23566,
-    "lastBlock": 24306302
+    "lastBlock": 24306327
   },
-  "lastUpdated": "2026-01-24T18:00:44.083Z",
+  "lastUpdated": "2026-01-24T18:05:41.547Z",
   "lastProcessedBlock": 23450736,
-  "currentProtocolDay": 198,
-  "totalSupply": 10568382.704345286,
+  "currentProtocolDay": 199,
+  "totalSupply": 10567566.175192714,
   "titanxTotalSupply": "98304634155653909025569925558730",
   "totalTitanXBurnt": "347578146679081917646562677882",
   "lastBlock": 23056089,
@@ -84425,8 +84434,8 @@
     "thirtyDay": []
   },
   "poolData": {
-    "sqrtPriceX96": "45860296046846881986022106771282",
-    "currentTick": 127226,
+    "sqrtPriceX96": "45872845251508683261166590446963",
+    "currentTick": 127232,
     "token0": "",
     "token1": "",
     "liquidity": "0",
@@ -84436,8 +84445,8 @@
   },
   "tokenPrices": {
     "torus": {
-      "usd": 3.34077764798378,
-      "lastUpdated": "2026-01-24T17:05:02.131Z"
+      "usd": 3.3523718750740197,
+      "lastUpdated": "2026-01-24T18:05:02.024Z"
     },
     "titanx": {
       "usd": 0,
