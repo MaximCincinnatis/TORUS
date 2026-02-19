@@ -83288,6 +83288,31 @@
         "claimedAt": "0",
         "isCreate": false,
         "type": "stake"
+      },
+      {
+        "user": "0xC393911354354b00aab75e7a980cF879DA7069c2",
+        "id": "6",
+        "principal": "6700000000000000000000",
+        "shares": "51884800000000000000000000",
+        "duration": "88",
+        "timestamp": "1771503923",
+        "blockNumber": 24490878,
+        "stakingDays": 88,
+        "maturityDate": "2026-05-18T12:25:23.000Z",
+        "startDate": "2026-02-19T12:25:23.000Z",
+        "protocolDay": 224,
+        "power": "0",
+        "claimedCreate": false,
+        "claimedStake": false,
+        "costETH": "0.12780866357773",
+        "costTitanX": "0",
+        "rawCostETH": "127808663577730000",
+        "rawCostTitanX": "0",
+        "rewards": "0",
+        "penalties": "0",
+        "claimedAt": "0",
+        "isCreate": false,
+        "type": "stake"
       }
     ],
     "totalSupply": 10891311.832163043,
@@ -83297,9 +83322,9 @@
         "day": 224,
         "totalSupply": 10891311.832163043,
         "burnedSupply": 0,
-        "timestamp": "2026-02-19T12:25:07.966Z"
+        "timestamp": "2026-02-19T12:30:04.819Z"
       },
-      "currentBlock": 24490876,
+      "currentBlock": 24490901,
       "lastDeduplication": "2025-08-02T21:51:40.056Z",
       "duplicatesRemoved": 0
     },
@@ -86230,15 +86255,15 @@
         "lastUpdated": "2026-02-18T21:30:08.585Z"
       }
     ],
-    "totalStakedInContract": 2139997.63996401,
-    "lastBlock": 24490876
+    "totalStakedInContract": 2146697.63996401,
+    "lastBlock": 24490901
   },
-  "lastUpdated": "2026-02-19T12:26:15.214Z",
+  "lastUpdated": "2026-02-19T12:31:14.266Z",
   "lastProcessedBlock": 23450736,
   "currentProtocolDay": 224,
   "totalSupply": 10891311.832163043,
   "titanxTotalSupply": "96607443457803384845390172917031",
-  "totalTitanXBurnt": "357164581769567654892821045916",
+  "totalTitanXBurnt": "357335531588010341260569753353",
   "lastBlock": 23056089,
   "contractData": {
     "torusToken": {
