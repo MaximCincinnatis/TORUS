@@ -1959,7 +1959,7 @@ function App() {
           />
           <SmartMetricCard
             title="Active Stakes"
-            value={memoizedActiveStakes ? memoizedActiveStakes.toLocaleString() : null}
+            value={memoizedActiveStakes !== null ? memoizedActiveStakes.toLocaleString() : null}
             delay={0.2}
           />
           <SmartMetricCard
@@ -1999,7 +1999,7 @@ function App() {
           />
           <SmartMetricCard
             title="Active Creates"
-            value={memoizedActiveCreates ? memoizedActiveCreates.toLocaleString() : null}
+            value={memoizedActiveCreates !== null ? memoizedActiveCreates.toLocaleString() : null}
             delay={0.1}
           />
           <SmartMetricCard
