@@ -1,6 +1,6 @@
 {
-  "lastUpdated": "2026-03-03T18:46:14.536Z",
-  "lastBlock": 24578808,
+  "lastUpdated": "2026-03-03T18:51:10.630Z",
+  "lastBlock": 24578833,
   "nftPosition": {},
   "feeDrivenBurns": [
     {
@@ -192,13 +192,23 @@
       "titanxCollected": "3131804424.953690117365168305",
       "torusBurned": "9065.052369000450010467",
       "burnPercentage": "100.00"
+    },
+    {
+      "blockNumber": 24578826,
+      "timestamp": 1772563787,
+      "date": "2026-03-03T18:49:47.000Z",
+      "transactionHash": "0x77cb6ca4ef28ef09ae0e5356d5aef8bbdbdc17fb466023c05e0b028f0c86a2b2",
+      "torusCollected": "5769.716395286860551695",
+      "titanxCollected": "1948505911.077678968647792941",
+      "torusBurned": "5769.716395286860551695",
+      "burnPercentage": "100.00"
     }
   ],
   "totals": {
-    "feeCollections": 19,
-    "torusCollected": "90259.692439654485907202",
-    "torusBurned": "90259.692439654485907202",
-    "titanxCollected": "80580753545.086179442501236179",
+    "feeCollections": 20,
+    "torusCollected": "96029.408834941346458897",
+    "torusBurned": "96029.408834941346458897",
+    "titanxCollected": "82529259456.16385841114902912",
     "averageBurnRate": "100.00"
   }
 }
