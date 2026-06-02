@@ -1,57 +1,7 @@
 import { SimpleLPPosition } from './lpTypes';
 import { PoolHistoricalData } from './enhancedAPRCalculation';
-import { getIncrementalUpdates, mergeIncrementalUpdates, shouldUpdateIncrementally } from './incrementalUpdater';
-import { ethers } from 'ethers';
-import { RpcRateLimit } from './rpcRateLimit';
-
-// Working RPC endpoints (all public, no API keys)
-const WORKING_RPC_ENDPOINTS = [
-  'https://eth.drpc.org',
-  'https://rpc.payload.de',
-  'https://eth-mainnet.public.blastapi.io',
-  'https://rpc.flashbots.net',
-  'https://ethereum.publicnode.com',
-  'https://eth.llamarpc.com',
-  'https://rpc.ankr.com/eth'
-];
-
-let currentRpcIndex = 0;
-
-async function getWorkingProviderWithRotation(): Promise<ethers.providers.JsonRpcProvider> {
-  const maxRetries = WORKING_RPC_ENDPOINTS.length;
-  
-  for (let i = 0; i < maxRetries; i++) {
-    const rpcUrl = WORKING_RPC_ENDPOINTS[currentRpcIndex];
-    
-    try {
-      const provider = new ethers.providers.JsonRpcProvider(rpcUrl);
-      
-      // Quick test with timeout to avoid 429 errors
-      const timeoutPromise = new Promise<never>((_, reject) => {
-        setTimeout(() => reject(new Error('Timeout')), 3000);
-      });
-      
-      await RpcRateLimit.execute(async () => {
-        return Promise.race([
-          provider.getBlockNumber(),
-          timeoutPromise
-        ]);
-      }, `Cache loader RPC test for ${rpcUrl}`);
-      
-      return provider;
-      
-    } catch (error) {
-      
-      // Auto-rotate to next provider
-      currentRpcIndex = (currentRpcIndex + 1) % WORKING_RPC_ENDPOINTS.length;
-      
-      // Add delay before trying next provider to avoid rapid requests
-      await new Promise(resolve => setTimeout(resolve, 1000));
-    }
-  }
-  
-  throw new Error('All RPC providers failed');
-}
+// In-browser RPC removed: the frontend is cache-only and the backend cron is the
+// single source of truth. This drops ethers + incrementalUpdater from the bundle.
 
 export interface CachedData {
   lastUpdated: string;
@@ -162,8 +112,10 @@ export async function loadCachedData(): Promise<CachedData | null> {
     for (const source of sources) {
       
       try {
-        response = await fetch(`${source.url}?t=${Date.now()}`, {
-          cache: 'no-cache', // Always get fresh data
+        // Stable URL (no cache-buster) so the CDN/browser can revalidate with a
+        // conditional request and return 304 when unchanged instead of re-downloading.
+        response = await fetch(source.url, {
+          cache: 'no-cache', // Always revalidate freshness (304 if unchanged)
           headers: {
             'Cache-Control': 'no-cache',
           },
@@ -336,32 +288,10 @@ export async function getMainDashboardDataWithCache(
   
   if (cachedData && cachedData.stakingData) {
     
-    // Check if incremental updates are available
-    let finalData = cachedData;
-    let source: 'cache' | 'cache+incremental' = 'cache';
-    
-    // Re-enabled: Fixed RPC issues with getLogs and retry logic
-    const ENABLE_INCREMENTAL_UPDATES = true;
-    
-    if (ENABLE_INCREMENTAL_UPDATES) {
-      try {
-        // Try to get incremental updates using working RPC providers with auto-rotation
-        const provider = await getWorkingProviderWithRotation();
-        
-        const shouldUpdate = await shouldUpdateIncrementally(cachedData, provider);
-        
-        if (shouldUpdate) {
-          const updates = await getIncrementalUpdates(cachedData, provider);
-          
-          if (updates.updated) {
-            finalData = mergeIncrementalUpdates(cachedData, updates);
-            source = 'cache+incremental';
-          }
-        }
-      } catch (error) {
-      }
-    } else {
-    }
+    // Frontend is cache-only: the backend cron is the single source of truth.
+    // (In-browser RPC incremental updates removed — see note at top of file.)
+    const finalData = cachedData;
+    const source = 'cache' as const;
     
     // Convert string dates back to Date objects for cached data
     const stakeEvents = (finalData.stakingData.stakeEvents || []).map((event: any) => ({

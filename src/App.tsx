@@ -114,7 +114,7 @@ function App() {
   useEffect(() => {
     const loadCachedTitanXData = async () => {
       try {
-        const response = await fetch(`/data/cached-data.json?t=${Date.now()}`, { cache: 'no-cache' });
+        const response = await fetch('/data/cached-data.json', { cache: 'no-cache' });
         const data = await response.json();
         setCachedTitanXData({
           totalTitanXBurnt: data.totalTitanXBurnt || "0",
@@ -131,7 +131,7 @@ function App() {
   useEffect(() => {
     const loadBuyProcessData = async () => {
       try {
-        const response = await fetch(`/data/buy-process-data.json?t=${Date.now()}`, { cache: 'no-cache' });
+        const response = await fetch('/data/buy-process-data.json', { cache: 'no-cache' });
         const data = await response.json();
         setBuyProcessData(data);
       } catch (error) {
@@ -144,7 +144,7 @@ function App() {
   useEffect(() => {
     const loadLpFeeBurnsData = async () => {
       try {
-        const response = await fetch(`/data/buy-process-burns.json?t=${Date.now()}`, { cache: 'no-cache' });
+        const response = await fetch('/data/buy-process-burns.json', { cache: 'no-cache' });
         const data = await response.json();
         setLpFeeBurnsData(data);
       } catch (error) {
