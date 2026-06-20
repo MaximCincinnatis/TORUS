@@ -90113,18 +90113,43 @@
         "claimedAt": "0",
         "isCreate": false,
         "type": "stake"
+      },
+      {
+        "user": "0x39564f3c28Bf154E1B2AB6aC489F1a86b4549181",
+        "id": "12",
+        "principal": "18580000000000000000000",
+        "shares": "143883520000000000000000000",
+        "duration": "88",
+        "timestamp": "1781978039",
+        "blockNumber": 25360421,
+        "stakingDays": 88,
+        "maturityDate": "2026-09-16T17:53:59.000Z",
+        "startDate": "2026-06-20T17:53:59.000Z",
+        "protocolDay": 345,
+        "power": "0",
+        "claimedCreate": false,
+        "claimedStake": false,
+        "costETH": "0",
+        "costTitanX": "12237628877.10122",
+        "rawCostETH": "0",
+        "rawCostTitanX": "12237628877101218401900000000",
+        "rewards": "0",
+        "penalties": "0",
+        "claimedAt": "0",
+        "isCreate": false,
+        "type": "stake"
       }
     ],
-    "totalSupply": 13671894.687913727,
-    "currentProtocolDay": 345,
+    "totalSupply": 13696367.352350425,
+    "currentProtocolDay": 346,
     "metadata": {
       "dailySupplySnapshot": {
-        "day": 345,
-        "totalSupply": 13671894.687913727,
+        "day": 346,
+        "totalSupply": 13696367.352350425,
         "burnedSupply": 0,
-        "timestamp": "2026-06-20T17:25:08.042Z"
+        "timestamp": "2026-06-20T21:30:09.219Z"
       },
-      "currentBlock": 25360277,
+      "currentBlock": 25361495,
       "lastDeduplication": "2025-08-02T21:51:40.056Z",
       "duplicatesRemoved": 0
     },
@@ -94142,17 +94167,26 @@
         "penaltiesInPool": 0,
         "calculated": true,
         "lastUpdated": "2026-06-19T18:05:09.224Z"
+      },
+      {
+        "day": 434,
+        "date": "2026-09-16T18:00:00.000Z",
+        "rewardPool": 70713.14994814635,
+        "totalShares": 0,
+        "penaltiesInPool": 0,
+        "calculated": true,
+        "lastUpdated": "2026-06-20T18:05:07.909Z"
       }
     ],
-    "totalStakedInContract": 1659954.707,
-    "lastBlock": 25360277
+    "totalStakedInContract": 1668534.707,
+    "lastBlock": 25361495
   },
-  "lastUpdated": "2026-06-20T17:26:47.040Z",
+  "lastUpdated": "2026-06-20T21:31:44.117Z",
   "lastProcessedBlock": 23450736,
-  "currentProtocolDay": 345,
-  "totalSupply": 13671894.687913727,
+  "currentProtocolDay": 346,
+  "totalSupply": 13696367.352350425,
   "titanxTotalSupply": "99088774371642055852687577963331",
-  "totalTitanXBurnt": "432251389267457474552238555996",
+  "totalTitanXBurnt": "432778831072060537065360445996",
   "lastBlock": 23056089,
   "contractData": {
     "torusToken": {
@@ -94174,14 +94208,14 @@
     {
       "tokenId": "1029195",
       "owner": "0xAa390a37006E22b5775A34f2147F81eBD6a63641",
-      "liquidity": "1273974317806584086788790829",
+      "liquidity": "1274088824703860209907936805",
       "tickLower": -887200,
       "tickUpper": 887200,
-      "claimableTorus": 1657.3310486598941,
-      "claimableTitanX": 774658903.3620682,
-      "tokensOwed0": "1657331048659894075152",
-      "tokensOwed1": "774658903362068205503227895",
-      "lastChecked": "2026-06-20T15:50:07.616Z",
+      "claimableTorus": 1968.5036962954741,
+      "claimableTitanX": 809106197.9792492,
+      "tokensOwed0": "1968503696295474183075",
+      "tokensOwed1": "809106197979249213350279269",
+      "lastChecked": "2026-06-20T21:15:05.587Z",
       "isProtocolPosition": true,
       "torusAmount": 1096190.1906362185,
       "titanxAmount": 1084288466365.7351,
@@ -94198,8 +94232,8 @@
     "thirtyDay": []
   },
   "poolData": {
-    "sqrtPriceX96": "43772904920948244089022864719191",
-    "currentTick": 126295,
+    "sqrtPriceX96": "43213263962417187906920504282400",
+    "currentTick": 126037,
     "token0": "",
     "token1": "",
     "liquidity": "0",
@@ -94209,8 +94243,8 @@
   },
   "tokenPrices": {
     "torus": {
-      "usd": 3.049376658829782,
-      "lastUpdated": "2026-06-20T16:45:08.218Z"
+      "usd": 2.9715670960090206,
+      "lastUpdated": "2026-06-20T20:35:05.325Z"
     },
     "titanx": {
       "usd": 0,
