@@ -1,12 +1,12 @@
 {
-  "lastUpdated": "2026-06-27T23:36:50.674Z",
+  "lastUpdated": "2026-06-28T00:36:58.464Z",
   "currentDay": 353,
   "totals": {
-    "torusBurnt": "13552097.268862750304772548",
+    "torusBurnt": "13554680.10817096450810775",
     "titanXBurnt": "0.0",
-    "ethBurn": "2.58685110652195035",
-    "titanXUsedForBurns": "4086147536061.440775492253949977",
-    "ethUsedForBurns": "97.283685438729868772",
+    "ethBurn": "2.58146557506782244",
+    "titanXUsedForBurns": "4086582111617.28028168105573673",
+    "ethUsedForBurns": "97.288990187212184765",
     "ethUsedForBuilds": "12.867578057484900356"
   },
   "dailyData": [
@@ -5997,27 +5997,44 @@
     {
       "date": "2026-06-27",
       "protocolDay": 353,
-      "buyAndBurnCount": 140,
+      "buyAndBurnCount": 144,
       "buyAndBuildCount": 8,
       "fractalCount": 0,
-      "torusBurned": 53001.478809040265,
-      "titanXUsed": 9548677296.013136,
+      "torusBurned": 54021.337237346735,
+      "titanXUsed": 9734975702.778278,
       "ethUsed": 0.03056064200967733,
-      "titanXUsedForBurns": 8844691213.676414,
+      "titanXUsedForBurns": 9030989620.441557,
       "ethUsedForBurns": 0.026480318464996738,
       "titanXUsedForBuilds": 703986082.3367227,
       "ethUsedForBuilds": 0.0040803235446805995,
       "torusPurchased": 1643.6587356012342,
       "fractalTitanX": 0,
       "fractalETH": 0
+    },
+    {
+      "date": "2026-06-28",
+      "protocolDay": 354,
+      "buyAndBurnCount": 6,
+      "buyAndBuildCount": 0,
+      "fractalCount": 0,
+      "torusBurned": 1562.9808799077382,
+      "titanXUsed": 248277149.0796669,
+      "ethUsed": 0,
+      "titanXUsedForBurns": 248277149.0796669,
+      "ethUsedForBurns": 0,
+      "titanXUsedForBuilds": 0,
+      "ethUsedForBuilds": 0,
+      "torusPurchased": 0,
+      "fractalTitanX": 0,
+      "fractalETH": 0
     }
   ],
   "eventCounts": {
-    "buyAndBurn": 51714,
+    "buyAndBurn": 51724,
     "buyAndBuild": 13922,
     "fractal": 3
   },
   "metadata": {
-    "lastBlock": 25412299
+    "lastBlock": 25412598
   }
 }
