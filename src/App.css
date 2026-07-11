@@ -1267,6 +1267,26 @@ html {
   color: rgba(255, 255, 255, 0.5);
 }
 
+/* Related tools cross-links (SEO/UX) */
+.footer-related-tools {
+  max-width: 1400px;
+  margin: 16px auto 0;
+  padding: 0 32px;
+  text-align: center;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.footer-related-tools a {
+  color: rgba(255, 255, 255, 0.6);
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.footer-related-tools a:hover {
+  color: #fbbf24;
+}
+
 .footer-social-links {
   display: flex;
   gap: 16px;

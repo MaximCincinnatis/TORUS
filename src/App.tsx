@@ -3602,6 +3602,13 @@ function App() {
               © 2025 TORUS Community Dashboard.
             </div>
           </div>
+          {/* Related tools: cross-links to sister analytics sites (SEO/UX) */}
+          <div className="footer-related-tools">
+            Related tools:{' '}
+            <a href="https://www.tincburn.fyi/" rel="noopener">TINC Burn Tracker</a>
+            {' · '}
+            <a href="https://www.pulsechain.fyi/" rel="noopener">PulseChain Privacy Trace</a>
+          </div>
         </div>
       </footer>
       
