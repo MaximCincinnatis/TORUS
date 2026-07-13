@@ -55,7 +55,19 @@
   </head>
   <body>
     <noscript>You need to enable JavaScript to run this app.</noscript>
-    <div id="root"></div>
+    <div id="root">
+      <!--
+        SEO/crawler content shell (v1, 2026-07-13): real crawlable content in the initial HTML
+        so non-JS crawlers (Bing, social, LLM bots) and slow first-paints get actual content
+        instead of an empty #root. React's createRoot() replaces this on mount.
+        Descriptive text only — NO dynamic/mock data.
+      -->
+      <div style="min-height:100vh;display:flex;flex-direction:column;align-items:center;justify-content:center;background:#000;color:#fff;font-family:system-ui,-apple-system,sans-serif;text-align:center;padding:2rem;box-sizing:border-box;">
+        <img src="/favicon.svg" alt="TORUS logo" width="72" height="72" style="opacity:.9" />
+        <h1 style="font-size:1.75rem;margin:1.25rem 0 .5rem;font-weight:700;">TORUS Dashboard — Staking, Burns, LP &amp; TitanX Analytics</h1>
+        <p style="max-width:38rem;color:rgba(255,255,255,.6);line-height:1.55;margin:0;">TORUS analytics dashboard: track staking metrics, token burns, liquidity provider positions, reward pools, and TitanX usage on Ethereum. Loading live data…</p>
+      </div>
+    </div>
     <!--
       This HTML file is a template.
       If you open it directly in the browser, you will see an empty page.
