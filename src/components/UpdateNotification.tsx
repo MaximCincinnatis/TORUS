@@ -50,7 +50,10 @@ const UpdateNotification: React.FC<UpdateNotificationProps> = ({ lastUpdated, on
     checkingRef.current = true;
     setIsChecking(true);
     try {
-      const response = await fetch(`/data/cached-data.json?t=${Date.now()}`, {
+      // Stable URL (no cache-buster) so this 30s poll revalidates via ETag and the
+      // server answers 304/0-bytes until the file actually changes — the old
+      // `?t=Date.now()` param forced a full re-download of the ~3MB JSON every poll.
+      const response = await fetch('/data/cached-data.json', {
         cache: 'no-cache'
       });
       const data = await response.json();

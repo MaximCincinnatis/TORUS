@@ -15,7 +15,7 @@ import DateRangeButtons from './components/charts/DateRangeButtons';
 import UpdateNotification from './components/UpdateNotification';
 import { RewardPoolData } from './utils/maxSupplyProjection';
 import { getTokenInfo, SimpleLPPosition } from './utils/lpTypes';
-import { getMainDashboardDataWithCache, getLPPositionsWithCache } from './utils/cacheDataLoader';
+import { getMainDashboardDataWithCache, getLPPositionsWithCache, loadCachedData } from './utils/cacheDataLoader';
 import { updateDailySnapshot } from './utils/historicalSupplyTracker';
 import MaintenancePage from './MaintenancePage';
 import './App.css';
@@ -84,25 +84,27 @@ function App() {
   const [buyProcessData, setBuyProcessData] = useState<any>(null);
   const [lpFeeBurnsData, setLpFeeBurnsData] = useState<any>(null);
   
-  // Date range states for charts (default to ALL)
-  const [stakeMaturityDays, setStakeMaturityDays] = useState<number>(9999);
-  const [torusReleasesDays, setTorusReleasesDays] = useState<number>(9999);
-  const [titanXUsageDays, setTitanXUsageDays] = useState<number>(9999);
-  const [sharesReleasesDays, setSharesReleasesDays] = useState<number>(9999);
+  // Date range states for charts. Default 88d (one full protocol stake cycle) for
+  // clarity now that the protocol is past day 371 — ALL squeezes every protocol day
+  // into the axis. Users can still select ALL via DateRangeButtons.
+  const [stakeMaturityDays, setStakeMaturityDays] = useState<number>(88);
+  const [torusReleasesDays, setTorusReleasesDays] = useState<number>(88);
+  const [titanXUsageDays, setTitanXUsageDays] = useState<number>(88);
+  const [sharesReleasesDays, setSharesReleasesDays] = useState<number>(88);
   const [positionsEndingDays, setPositionsEndingDays] = useState<number>(88);
-  const [dailyTitanXUsageDays, setDailyTitanXUsageDays] = useState<number>(9999);
-  const [dailyETHUsageDays, setDailyETHUsageDays] = useState<number>(9999);
+  const [dailyTitanXUsageDays, setDailyTitanXUsageDays] = useState<number>(88);
+  const [dailyETHUsageDays, setDailyETHUsageDays] = useState<number>(88);
   const [futureMaxSupplyDays, setFutureMaxSupplyDays] = useState<number>(30);
-  const [torusStakedDays, setTorusStakedDays] = useState<number>(9999);
+  const [torusStakedDays, setTorusStakedDays] = useState<number>(88);
   const [torusRewardsDays, setTorusRewardsDays] = useState<number>(30);
-  const [supplyProjectionDays, setSupplyProjectionDays] = useState<number>(9999);
-  const [torusBurnedDays, setTorusBurnedDays] = useState<number>(9999);
-  const [cumulativeTorusBurnedDays, setCumulativeTorusBurnedDays] = useState<number>(9999);
-  const [buyBurnActivityDays, setBuyBurnActivityDays] = useState<number>(9999);
-  const [titanXEthUsageDays, setTitanXEthUsageDays] = useState<number>(9999);
-  const [titanXEthBuildUsageDays, setTitanXEthBuildUsageDays] = useState<number>(9999);
-  const [lpFeeBurnsDays, setLpFeeBurnsDays] = useState<number>(9999);
-  const [dailyCreatesStakesDays, setDailyCreatesStakesDays] = useState<number>(9999);
+  const [supplyProjectionDays, setSupplyProjectionDays] = useState<number>(88);
+  const [torusBurnedDays, setTorusBurnedDays] = useState<number>(88);
+  const [cumulativeTorusBurnedDays, setCumulativeTorusBurnedDays] = useState<number>(88);
+  const [buyBurnActivityDays, setBuyBurnActivityDays] = useState<number>(88);
+  const [titanXEthUsageDays, setTitanXEthUsageDays] = useState<number>(88);
+  const [titanXEthBuildUsageDays, setTitanXEthBuildUsageDays] = useState<number>(88);
+  const [lpFeeBurnsDays, setLpFeeBurnsDays] = useState<number>(88);
+  const [dailyCreatesStakesDays, setDailyCreatesStakesDays] = useState<number>(88);
   const [preCalculatedProjection, setPreCalculatedProjection] = useState<any[]>([]);
 
   useEffect(() => {
@@ -113,15 +115,15 @@ function App() {
   // Load TitanX burn data directly from JSON
   useEffect(() => {
     const loadCachedTitanXData = async () => {
-      try {
-        const response = await fetch('/data/cached-data.json', { cache: 'no-cache' });
-        const data = await response.json();
+      // Reuse the shared memoized fetch (see cacheDataLoader) instead of a separate
+      // download of the same ~3MB JSON.
+      const data = await loadCachedData();
+      if (data) {
         setCachedTitanXData({
           totalTitanXBurnt: data.totalTitanXBurnt || "0",
           titanxTotalSupply: data.titanxTotalSupply || "0"
         });
         setLastUpdatedTime(data.lastUpdated || null);
-      } catch (error) {
       }
     };
     loadCachedTitanXData();

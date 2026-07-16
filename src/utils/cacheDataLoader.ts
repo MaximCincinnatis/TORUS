@@ -93,10 +93,30 @@ export interface CachedData {
   };
 }
 
+// Page-lifetime memo: the *WithCache helpers below each call loadCachedData, and
+// without this the same ~3MB JSON was fetched 4+ times per page load. All callers
+// share one in-flight/settled promise. Data only changes via redeploy and
+// UpdateNotification's refresh does window.location.reload(), which resets module
+// state — so the memo can never serve stale data past a refresh. A total failure
+// (null) clears the memo so the next caller retries the source fallback chain.
+let cachedDataPromise: Promise<CachedData | null> | null = null;
+
+export function loadCachedData(): Promise<CachedData | null> {
+  if (!cachedDataPromise) {
+    cachedDataPromise = fetchCachedData().then(result => {
+      if (result === null) {
+        cachedDataPromise = null;
+      }
+      return result;
+    });
+  }
+  return cachedDataPromise;
+}
+
 /**
  * Load cached data from JSON file
  */
-export async function loadCachedData(): Promise<CachedData | null> {
+async function fetchCachedData(): Promise<CachedData | null> {
   try {
     
     // Try multiple sources in order
