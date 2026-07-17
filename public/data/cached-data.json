@@ -90988,18 +90988,43 @@
         "claimedAt": "0",
         "isCreate": false,
         "type": "stake"
+      },
+      {
+        "user": "0x2C624FFD76572eDF296c0A36447331c396Ab7e7F",
+        "id": "4",
+        "principal": "5000000000000000000000",
+        "shares": "38720000000000000000000000",
+        "duration": "88",
+        "timestamp": "1784298335",
+        "blockNumber": 25552991,
+        "stakingDays": 88,
+        "maturityDate": "2026-10-13T14:25:35.000Z",
+        "startDate": "2026-07-17T14:25:35.000Z",
+        "protocolDay": 372,
+        "power": "0",
+        "claimedCreate": false,
+        "claimedStake": false,
+        "costETH": "0",
+        "costTitanX": "3365233351.0542316",
+        "rawCostETH": "0",
+        "rawCostTitanX": "3365233351054231632500000000",
+        "rewards": "0",
+        "penalties": "0",
+        "claimedAt": "0",
+        "isCreate": false,
+        "type": "stake"
       }
     ],
-    "totalSupply": 13699985.669280987,
+    "totalSupply": 13730780.928390283,
     "currentProtocolDay": 372,
     "metadata": {
       "dailySupplySnapshot": {
         "day": 372,
-        "totalSupply": 13699985.669280987,
+        "totalSupply": 13730780.928390283,
         "burnedSupply": 0,
-        "timestamp": "2026-07-17T14:15:05.054Z"
+        "timestamp": "2026-07-17T15:20:08.980Z"
       },
-      "currentBlock": 25552938,
+      "currentBlock": 25553263,
       "lastDeduplication": "2025-08-02T21:51:40.056Z",
       "duplicatesRemoved": 0
     },
@@ -95262,15 +95287,15 @@
         "lastUpdated": "2026-07-16T18:05:09.525Z"
       }
     ],
-    "totalStakedInContract": 1707197.475,
-    "lastBlock": 25552938
+    "totalStakedInContract": 1703442.67,
+    "lastBlock": 25553263
   },
-  "lastUpdated": "2026-07-17T14:16:51.376Z",
+  "lastUpdated": "2026-07-17T15:21:56.848Z",
   "lastProcessedBlock": 23450736,
   "currentProtocolDay": 372,
-  "totalSupply": 13699985.669280987,
+  "totalSupply": 13730780.928390283,
   "titanxTotalSupply": "99194463748520451972457790256752",
-  "totalTitanXBurnt": "447623273440980720989756793034",
+  "totalTitanXBurnt": "447768314998411158373117543034",
   "lastBlock": 23056089,
   "contractData": {
     "torusToken": {
@@ -95316,8 +95341,8 @@
     "thirtyDay": []
   },
   "poolData": {
-    "sqrtPriceX96": "36609795738949587501145637234261",
-    "currentTick": 122720,
+    "sqrtPriceX96": "36176401109886238200435602056717",
+    "currentTick": 122482,
     "token0": "",
     "token1": "",
     "liquidity": "0",
@@ -95327,8 +95352,8 @@
   },
   "tokenPrices": {
     "torus": {
-      "usd": 2.1333526829985434,
-      "lastUpdated": "2026-07-17T13:30:07.768Z"
+      "usd": 2.091224717960965,
+      "lastUpdated": "2026-07-17T14:30:08.260Z"
     },
     "titanx": {
       "usd": 0,
@@ -95339,23 +95364,10 @@
   "chartData": {
     "futureSupplyProjection": [
       {
-        "day": 372,
-        "date": "2026-07-16",
-        "totalMaxSupply": 13754021.33241816,
-        "activePositions": 115,
-        "dailyRewardPool": 74310.43623541255,
-        "totalShares": 0,
-        "breakdown": {
-          "fromStakes": 0,
-          "fromCreates": 0,
-          "fromExisting": 0
-        }
-      },
-      {
         "day": 373,
         "date": "2026-07-17",
-        "totalMaxSupply": 13754021.33241816,
-        "activePositions": 115,
+        "totalMaxSupply": 13730780.928390283,
+        "activePositions": 117,
         "dailyRewardPool": 74250.98788642422,
         "totalShares": 0,
         "breakdown": {
@@ -95367,8 +95379,8 @@
       {
         "day": 374,
         "date": "2026-07-18",
-        "totalMaxSupply": 13784521.33241816,
-        "activePositions": 115,
+        "totalMaxSupply": 13761280.928390283,
+        "activePositions": 117,
         "dailyRewardPool": 74191.58709611508,
         "totalShares": 0,
         "breakdown": {
@@ -95380,8 +95392,8 @@
       {
         "day": 375,
         "date": "2026-07-19",
-        "totalMaxSupply": 13860711.074418161,
-        "activePositions": 112,
+        "totalMaxSupply": 13837470.670390284,
+        "activePositions": 114,
         "dailyRewardPool": 74132.23382643818,
         "totalShares": 0,
         "breakdown": {
@@ -95393,8 +95405,8 @@
       {
         "day": 376,
         "date": "2026-07-20",
-        "totalMaxSupply": 13915711.074418161,
-        "activePositions": 109,
+        "totalMaxSupply": 13892470.670390284,
+        "activePositions": 111,
         "dailyRewardPool": 74072.92803937703,
         "totalShares": 0,
         "breakdown": {
@@ -95406,8 +95418,8 @@
       {
         "day": 377,
         "date": "2026-07-21",
-        "totalMaxSupply": 13977711.074418161,
-        "activePositions": 108,
+        "totalMaxSupply": 13954470.670390284,
+        "activePositions": 110,
         "dailyRewardPool": 74013.66969694552,
         "totalShares": 0,
         "breakdown": {
@@ -95419,8 +95431,8 @@
       {
         "day": 378,
         "date": "2026-07-22",
-        "totalMaxSupply": 13995012.50541816,
-        "activePositions": 106,
+        "totalMaxSupply": 13971772.101390284,
+        "activePositions": 108,
         "dailyRewardPool": 73954.45876118797,
         "totalShares": 0,
         "breakdown": {
@@ -95432,8 +95444,8 @@
       {
         "day": 379,
         "date": "2026-07-23",
-        "totalMaxSupply": 13996512.50541816,
-        "activePositions": 105,
+        "totalMaxSupply": 13973272.101390284,
+        "activePositions": 107,
         "dailyRewardPool": 73895.29519417902,
         "totalShares": 0,
         "breakdown": {
@@ -95445,8 +95457,8 @@
       {
         "day": 380,
         "date": "2026-07-24",
-        "totalMaxSupply": 13996512.50541816,
-        "activePositions": 103,
+        "totalMaxSupply": 13973272.101390284,
+        "activePositions": 105,
         "dailyRewardPool": 73836.17895802368,
         "totalShares": 0,
         "breakdown": {
@@ -95458,8 +95470,8 @@
       {
         "day": 381,
         "date": "2026-07-25",
-        "totalMaxSupply": 13996512.50541816,
-        "activePositions": 103,
+        "totalMaxSupply": 13973272.101390284,
+        "activePositions": 105,
         "dailyRewardPool": 73777.11001485726,
         "totalShares": 0,
         "breakdown": {
@@ -95471,8 +95483,8 @@
       {
         "day": 382,
         "date": "2026-07-26",
-        "totalMaxSupply": 13996512.50541816,
-        "activePositions": 103,
+        "totalMaxSupply": 13973272.101390284,
+        "activePositions": 105,
         "dailyRewardPool": 73718.08832684538,
         "totalShares": 0,
         "breakdown": {
@@ -95484,8 +95496,8 @@
       {
         "day": 383,
         "date": "2026-07-27",
-        "totalMaxSupply": 13996512.50541816,
-        "activePositions": 103,
+        "totalMaxSupply": 13973272.101390284,
+        "activePositions": 105,
         "dailyRewardPool": 73659.1138561839,
         "totalShares": 0,
         "breakdown": {
@@ -95497,8 +95509,8 @@
       {
         "day": 384,
         "date": "2026-07-28",
-        "totalMaxSupply": 13996512.50541816,
-        "activePositions": 103,
+        "totalMaxSupply": 13973272.101390284,
+        "activePositions": 105,
         "dailyRewardPool": 73600.18656509895,
         "totalShares": 0,
         "breakdown": {
@@ -95510,8 +95522,8 @@
       {
         "day": 385,
         "date": "2026-07-29",
-        "totalMaxSupply": 13996512.50541816,
-        "activePositions": 103,
+        "totalMaxSupply": 13973272.101390284,
+        "activePositions": 105,
         "dailyRewardPool": 73541.30641584686,
         "totalShares": 0,
         "breakdown": {
@@ -95523,8 +95535,8 @@
       {
         "day": 386,
         "date": "2026-07-30",
-        "totalMaxSupply": 13996512.50541816,
-        "activePositions": 103,
+        "totalMaxSupply": 13973272.101390284,
+        "activePositions": 105,
         "dailyRewardPool": 73482.47337071419,
         "totalShares": 0,
         "breakdown": {
@@ -95536,8 +95548,8 @@
       {
         "day": 387,
         "date": "2026-07-31",
-        "totalMaxSupply": 13999515.24841816,
-        "activePositions": 103,
+        "totalMaxSupply": 13976274.844390282,
+        "activePositions": 105,
         "dailyRewardPool": 73423.68739201761,
         "totalShares": 0,
         "breakdown": {
@@ -95549,8 +95561,8 @@
       {
         "day": 388,
         "date": "2026-08-01",
-        "totalMaxSupply": 13999515.24841816,
-        "activePositions": 102,
+        "totalMaxSupply": 13976274.844390282,
+        "activePositions": 104,
         "dailyRewardPool": 73364.948442104,
         "totalShares": 0,
         "breakdown": {
@@ -95562,8 +95574,8 @@
       {
         "day": 389,
         "date": "2026-08-02",
-        "totalMaxSupply": 13999515.24841816,
-        "activePositions": 102,
+        "totalMaxSupply": 13976274.844390282,
+        "activePositions": 104,
         "dailyRewardPool": 73306.25648335031,
         "totalShares": 0,
         "breakdown": {
@@ -95575,8 +95587,8 @@
       {
         "day": 390,
         "date": "2026-08-03",
-        "totalMaxSupply": 14009992.644418161,
-        "activePositions": 102,
+        "totalMaxSupply": 13986752.240390284,
+        "activePositions": 104,
         "dailyRewardPool": 73247.61147816363,
         "totalShares": 0,
         "breakdown": {
@@ -95588,8 +95600,8 @@
       {
         "day": 391,
         "date": "2026-08-04",
-        "totalMaxSupply": 14116669.58041816,
-        "activePositions": 100,
+        "totalMaxSupply": 14093429.176390283,
+        "activePositions": 102,
         "dailyRewardPool": 73189.0133889811,
         "totalShares": 0,
         "breakdown": {
@@ -95601,8 +95613,8 @@
       {
         "day": 392,
         "date": "2026-08-05",
-        "totalMaxSupply": 14116669.58041816,
-        "activePositions": 95,
+        "totalMaxSupply": 14093429.176390283,
+        "activePositions": 97,
         "dailyRewardPool": 73130.46217826991,
         "totalShares": 0,
         "breakdown": {
@@ -95614,8 +95626,8 @@
       {
         "day": 393,
         "date": "2026-08-06",
-        "totalMaxSupply": 14116669.58041816,
-        "activePositions": 95,
+        "totalMaxSupply": 14093429.176390283,
+        "activePositions": 97,
         "dailyRewardPool": 73071.9578085273,
         "totalShares": 0,
         "breakdown": {
@@ -95627,8 +95639,8 @@
       {
         "day": 394,
         "date": "2026-08-07",
-        "totalMaxSupply": 14116669.58041816,
-        "activePositions": 95,
+        "totalMaxSupply": 14093429.176390283,
+        "activePositions": 97,
         "dailyRewardPool": 73013.50024228047,
         "totalShares": 0,
         "breakdown": {
@@ -95640,8 +95652,8 @@
       {
         "day": 395,
         "date": "2026-08-08",
-        "totalMaxSupply": 14116669.58041816,
-        "activePositions": 95,
+        "totalMaxSupply": 14093429.176390283,
+        "activePositions": 97,
         "dailyRewardPool": 72955.08944208664,
         "totalShares": 0,
         "breakdown": {
@@ -95653,8 +95665,8 @@
       {
         "day": 396,
         "date": "2026-08-09",
-        "totalMaxSupply": 14120969.58041816,
-        "activePositions": 95,
+        "totalMaxSupply": 14097729.176390283,
+        "activePositions": 97,
         "dailyRewardPool": 72896.72537053296,
         "totalShares": 0,
         "breakdown": {
@@ -95666,8 +95678,8 @@
       {
         "day": 397,
         "date": "2026-08-10",
-        "totalMaxSupply": 14129249.58041816,
-        "activePositions": 94,
+        "totalMaxSupply": 14106009.176390283,
+        "activePositions": 96,
         "dailyRewardPool": 72838.40799023653,
         "totalShares": 0,
         "breakdown": {
@@ -95679,8 +95691,8 @@
       {
         "day": 398,
         "date": "2026-08-11",
-        "totalMaxSupply": 14129249.58041816,
-        "activePositions": 93,
+        "totalMaxSupply": 14106009.176390283,
+        "activePositions": 95,
         "dailyRewardPool": 72780.13726384434,
         "totalShares": 0,
         "breakdown": {
@@ -95692,8 +95704,8 @@
       {
         "day": 399,
         "date": "2026-08-12",
-        "totalMaxSupply": 14129249.58041816,
-        "activePositions": 93,
+        "totalMaxSupply": 14106009.176390283,
+        "activePositions": 95,
         "dailyRewardPool": 72721.91315403326,
         "totalShares": 0,
         "breakdown": {
@@ -95705,8 +95717,8 @@
       {
         "day": 400,
         "date": "2026-08-13",
-        "totalMaxSupply": 14129249.58041816,
-        "activePositions": 93,
+        "totalMaxSupply": 14106009.176390283,
+        "activePositions": 95,
         "dailyRewardPool": 72663.73562351003,
         "totalShares": 0,
         "breakdown": {
@@ -95718,8 +95730,8 @@
       {
         "day": 401,
         "date": "2026-08-14",
-        "totalMaxSupply": 14172364.17341816,
-        "activePositions": 93,
+        "totalMaxSupply": 14149123.769390283,
+        "activePositions": 95,
         "dailyRewardPool": 72605.60463501122,
         "totalShares": 0,
         "breakdown": {
@@ -95731,8 +95743,8 @@
       {
         "day": 402,
         "date": "2026-08-15",
-        "totalMaxSupply": 14179464.17341816,
-        "activePositions": 89,
+        "totalMaxSupply": 14156223.769390283,
+        "activePositions": 91,
         "dailyRewardPool": 72547.52015130321,
         "totalShares": 0,
         "breakdown": {
@@ -95744,8 +95756,8 @@
       {
         "day": 403,
         "date": "2026-08-16",
-        "totalMaxSupply": 14187339.17341816,
-        "activePositions": 87,
+        "totalMaxSupply": 14164098.769390283,
+        "activePositions": 89,
         "dailyRewardPool": 72489.48213518216,
         "totalShares": 0,
         "breakdown": {
@@ -95757,8 +95769,8 @@
       {
         "day": 404,
         "date": "2026-08-17",
-        "totalMaxSupply": 14193699.17341816,
-        "activePositions": 84,
+        "totalMaxSupply": 14170458.769390283,
+        "activePositions": 86,
         "dailyRewardPool": 72431.49054947401,
         "totalShares": 0,
         "breakdown": {
@@ -95770,8 +95782,8 @@
       {
         "day": 405,
         "date": "2026-08-18",
-        "totalMaxSupply": 14193699.17341816,
-        "activePositions": 82,
+        "totalMaxSupply": 14170458.769390283,
+        "activePositions": 84,
         "dailyRewardPool": 72373.54535703443,
         "totalShares": 0,
         "breakdown": {
@@ -95783,8 +95795,8 @@
       {
         "day": 406,
         "date": "2026-08-19",
-        "totalMaxSupply": 14203419.17341816,
-        "activePositions": 82,
+        "totalMaxSupply": 14180178.769390283,
+        "activePositions": 84,
         "dailyRewardPool": 72315.64652074879,
         "totalShares": 0,
         "breakdown": {
@@ -95796,8 +95808,8 @@
       {
         "day": 407,
         "date": "2026-08-20",
-        "totalMaxSupply": 14203419.17341816,
-        "activePositions": 81,
+        "totalMaxSupply": 14180178.769390283,
+        "activePositions": 83,
         "dailyRewardPool": 72257.7940035322,
         "totalShares": 0,
         "breakdown": {
@@ -95809,8 +95821,8 @@
       {
         "day": 408,
         "date": "2026-08-21",
-        "totalMaxSupply": 14203919.17341816,
-        "activePositions": 81,
+        "totalMaxSupply": 14180678.769390283,
+        "activePositions": 83,
         "dailyRewardPool": 72199.98776832937,
         "totalShares": 0,
         "breakdown": {
@@ -95822,8 +95834,8 @@
       {
         "day": 409,
         "date": "2026-08-22",
-        "totalMaxSupply": 14210694.17341816,
-        "activePositions": 79,
+        "totalMaxSupply": 14187453.769390283,
+        "activePositions": 81,
         "dailyRewardPool": 72142.22777811471,
         "totalShares": 0,
         "breakdown": {
@@ -95835,8 +95847,8 @@
       {
         "day": 410,
         "date": "2026-08-23",
-        "totalMaxSupply": 14210694.17341816,
-        "activePositions": 78,
+        "totalMaxSupply": 14187453.769390283,
+        "activePositions": 80,
         "dailyRewardPool": 72084.51399589222,
         "totalShares": 0,
         "breakdown": {
@@ -95848,8 +95860,8 @@
       {
         "day": 411,
         "date": "2026-08-24",
-        "totalMaxSupply": 14231315.144418161,
-        "activePositions": 78,
+        "totalMaxSupply": 14208074.740390284,
+        "activePositions": 80,
         "dailyRewardPool": 72026.84638469551,
         "totalShares": 0,
         "breakdown": {
@@ -95861,8 +95873,8 @@
       {
         "day": 412,
         "date": "2026-08-25",
-        "totalMaxSupply": 14260900.81741816,
-        "activePositions": 74,
+        "totalMaxSupply": 14237660.413390283,
+        "activePositions": 76,
         "dailyRewardPool": 71969.22490758775,
         "totalShares": 0,
         "breakdown": {
@@ -95874,8 +95886,8 @@
       {
         "day": 413,
         "date": "2026-08-26",
-        "totalMaxSupply": 14285172.20741816,
-        "activePositions": 69,
+        "totalMaxSupply": 14261931.803390283,
+        "activePositions": 71,
         "dailyRewardPool": 71911.64952766168,
         "totalShares": 0,
         "breakdown": {
@@ -95887,8 +95899,8 @@
       {
         "day": 414,
         "date": "2026-08-27",
-        "totalMaxSupply": 14293672.20741816,
-        "activePositions": 67,
+        "totalMaxSupply": 14270431.803390283,
+        "activePositions": 69,
         "dailyRewardPool": 71854.12020803955,
         "totalShares": 0,
         "breakdown": {
@@ -95900,8 +95912,8 @@
       {
         "day": 415,
         "date": "2026-08-28",
-        "totalMaxSupply": 14298672.20741816,
-        "activePositions": 66,
+        "totalMaxSupply": 14275431.803390283,
+        "activePositions": 68,
         "dailyRewardPool": 71796.63691187311,
         "totalShares": 0,
         "breakdown": {
@@ -95913,8 +95925,8 @@
       {
         "day": 416,
         "date": "2026-08-29",
-        "totalMaxSupply": 14298672.20741816,
-        "activePositions": 65,
+        "totalMaxSupply": 14275431.803390283,
+        "activePositions": 67,
         "dailyRewardPool": 71739.19960234361,
         "totalShares": 0,
         "breakdown": {
@@ -95926,8 +95938,8 @@
       {
         "day": 417,
         "date": "2026-08-30",
-        "totalMaxSupply": 14298672.20741816,
-        "activePositions": 65,
+        "totalMaxSupply": 14275431.803390283,
+        "activePositions": 67,
         "dailyRewardPool": 71681.80824266173,
         "totalShares": 0,
         "breakdown": {
@@ -95939,8 +95951,8 @@
       {
         "day": 418,
         "date": "2026-08-31",
-        "totalMaxSupply": 14298672.20741816,
-        "activePositions": 65,
+        "totalMaxSupply": 14275431.803390283,
+        "activePositions": 67,
         "dailyRewardPool": 71624.4627960676,
         "totalShares": 0,
         "breakdown": {
@@ -95952,8 +95964,8 @@
       {
         "day": 419,
         "date": "2026-09-01",
-        "totalMaxSupply": 14298672.20741816,
-        "activePositions": 65,
+        "totalMaxSupply": 14275431.803390283,
+        "activePositions": 67,
         "dailyRewardPool": 71567.16322583075,
         "totalShares": 0,
         "breakdown": {
@@ -95965,8 +95977,8 @@
       {
         "day": 420,
         "date": "2026-09-02",
-        "totalMaxSupply": 14298672.20741816,
-        "activePositions": 65,
+        "totalMaxSupply": 14275431.803390283,
+        "activePositions": 67,
         "dailyRewardPool": 71509.90949525009,
         "totalShares": 0,
         "breakdown": {
@@ -95978,8 +95990,8 @@
       {
         "day": 421,
         "date": "2026-09-03",
-        "totalMaxSupply": 14298672.20741816,
-        "activePositions": 65,
+        "totalMaxSupply": 14275431.803390283,
+        "activePositions": 67,
         "dailyRewardPool": 71452.70156765389,
         "totalShares": 0,
         "breakdown": {
@@ -95991,8 +96003,8 @@
       {
         "day": 422,
         "date": "2026-09-04",
-        "totalMaxSupply": 14307743.20741816,
-        "activePositions": 65,
+        "totalMaxSupply": 14284502.803390283,
+        "activePositions": 67,
         "dailyRewardPool": 71395.53940639977,
         "totalShares": 0,
         "breakdown": {
@@ -96004,8 +96016,8 @@
       {
         "day": 423,
         "date": "2026-09-05",
-        "totalMaxSupply": 14312743.20741816,
-        "activePositions": 64,
+        "totalMaxSupply": 14289502.803390283,
+        "activePositions": 66,
         "dailyRewardPool": 71338.42297487464,
         "totalShares": 0,
         "breakdown": {
@@ -96017,8 +96029,8 @@
       {
         "day": 424,
         "date": "2026-09-06",
-        "totalMaxSupply": 14345922.72441816,
-        "activePositions": 63,
+        "totalMaxSupply": 14322682.320390284,
+        "activePositions": 65,
         "dailyRewardPool": 71281.35223649474,
         "totalShares": 0,
         "breakdown": {
@@ -96030,8 +96042,8 @@
       {
         "day": 425,
         "date": "2026-09-07",
-        "totalMaxSupply": 14374342.72441816,
-        "activePositions": 60,
+        "totalMaxSupply": 14351102.320390284,
+        "activePositions": 62,
         "dailyRewardPool": 71224.32715470555,
         "totalShares": 0,
         "breakdown": {
@@ -96043,8 +96055,8 @@
       {
         "day": 426,
         "date": "2026-09-08",
-        "totalMaxSupply": 14388542.72441816,
-        "activePositions": 55,
+        "totalMaxSupply": 14365302.320390284,
+        "activePositions": 57,
         "dailyRewardPool": 71167.34769298178,
         "totalShares": 0,
         "breakdown": {
@@ -96056,8 +96068,8 @@
       {
         "day": 427,
         "date": "2026-09-09",
-        "totalMaxSupply": 14401342.72441816,
-        "activePositions": 53,
+        "totalMaxSupply": 14378102.320390284,
+        "activePositions": 55,
         "dailyRewardPool": 71110.41381482739,
         "totalShares": 0,
         "breakdown": {
@@ -96069,8 +96081,8 @@
       {
         "day": 428,
         "date": "2026-09-10",
-        "totalMaxSupply": 14407342.72441816,
-        "activePositions": 51,
+        "totalMaxSupply": 14384102.320390284,
+        "activePositions": 53,
         "dailyRewardPool": 71053.52548377553,
         "totalShares": 0,
         "breakdown": {
@@ -96082,8 +96094,8 @@
       {
         "day": 429,
         "date": "2026-09-11",
-        "totalMaxSupply": 14439424.50941816,
-        "activePositions": 49,
+        "totalMaxSupply": 14416184.105390282,
+        "activePositions": 51,
         "dailyRewardPool": 70996.6826633885,
         "totalShares": 0,
         "breakdown": {
@@ -96095,8 +96107,8 @@
       {
         "day": 430,
         "date": "2026-09-12",
-        "totalMaxSupply": 14453824.50941816,
-        "activePositions": 43,
+        "totalMaxSupply": 14430584.105390282,
+        "activePositions": 45,
         "dailyRewardPool": 70939.8853172578,
         "totalShares": 0,
         "breakdown": {
@@ -96108,8 +96120,8 @@
       {
         "day": 431,
         "date": "2026-09-13",
-        "totalMaxSupply": 14484624.50941816,
-        "activePositions": 41,
+        "totalMaxSupply": 14461384.105390282,
+        "activePositions": 43,
         "dailyRewardPool": 70883.13340900399,
         "totalShares": 0,
         "breakdown": {
@@ -96121,8 +96133,8 @@
       {
         "day": 432,
         "date": "2026-09-14",
-        "totalMaxSupply": 14493755.50941816,
-        "activePositions": 39,
+        "totalMaxSupply": 14470515.105390282,
+        "activePositions": 41,
         "dailyRewardPool": 70826.42690227678,
         "totalShares": 0,
         "breakdown": {
@@ -96134,8 +96146,8 @@
       {
         "day": 433,
         "date": "2026-09-15",
-        "totalMaxSupply": 14505169.903418161,
-        "activePositions": 37,
+        "totalMaxSupply": 14481929.499390284,
+        "activePositions": 39,
         "dailyRewardPool": 70769.76576075496,
         "totalShares": 0,
         "breakdown": {
@@ -96147,8 +96159,8 @@
       {
         "day": 434,
         "date": "2026-09-16",
-        "totalMaxSupply": 14561249.903418161,
-        "activePositions": 35,
+        "totalMaxSupply": 14538009.499390284,
+        "activePositions": 37,
         "dailyRewardPool": 70713.14994814635,
         "totalShares": 0,
         "breakdown": {
@@ -96160,8 +96172,8 @@
       {
         "day": 435,
         "date": "2026-09-17",
-        "totalMaxSupply": 14578850.80741816,
-        "activePositions": 30,
+        "totalMaxSupply": 14555610.403390283,
+        "activePositions": 32,
         "dailyRewardPool": 70656.57942818783,
         "totalShares": 0,
         "breakdown": {
@@ -96173,8 +96185,8 @@
       {
         "day": 436,
         "date": "2026-09-18",
-        "totalMaxSupply": 14583200.80741816,
-        "activePositions": 26,
+        "totalMaxSupply": 14559960.403390283,
+        "activePositions": 28,
         "dailyRewardPool": 70600.05416464528,
         "totalShares": 0,
         "breakdown": {
@@ -96186,8 +96198,8 @@
       {
         "day": 437,
         "date": "2026-09-19",
-        "totalMaxSupply": 14600938.268418161,
-        "activePositions": 24,
+        "totalMaxSupply": 14577697.864390284,
+        "activePositions": 26,
         "dailyRewardPool": 70543.57412131356,
         "totalShares": 0,
         "breakdown": {
@@ -96199,8 +96211,8 @@
       {
         "day": 438,
         "date": "2026-09-20",
-        "totalMaxSupply": 14610795.27341816,
-        "activePositions": 21,
+        "totalMaxSupply": 14587554.869390283,
+        "activePositions": 23,
         "dailyRewardPool": 70487.13926201651,
         "totalShares": 0,
         "breakdown": {
@@ -96212,8 +96224,8 @@
       {
         "day": 439,
         "date": "2026-09-21",
-        "totalMaxSupply": 14618295.27341816,
-        "activePositions": 20,
+        "totalMaxSupply": 14595054.869390283,
+        "activePositions": 22,
         "dailyRewardPool": 70430.7495506069,
         "totalShares": 0,
         "breakdown": {
@@ -96225,8 +96237,8 @@
       {
         "day": 440,
         "date": "2026-09-22",
-        "totalMaxSupply": 14626956.27341816,
-        "activePositions": 18,
+        "totalMaxSupply": 14603715.869390283,
+        "activePositions": 20,
         "dailyRewardPool": 70374.4049509664,
         "totalShares": 0,
         "breakdown": {
@@ -96238,8 +96250,8 @@
       {
         "day": 441,
         "date": "2026-09-23",
-        "totalMaxSupply": 14644056.27341816,
-        "activePositions": 16,
+        "totalMaxSupply": 14620815.869390283,
+        "activePositions": 18,
         "dailyRewardPool": 70318.10542700563,
         "totalShares": 0,
         "breakdown": {
@@ -96251,8 +96263,8 @@
       {
         "day": 442,
         "date": "2026-09-24",
-        "totalMaxSupply": 14745195.84341816,
-        "activePositions": 15,
+        "totalMaxSupply": 14721955.439390283,
+        "activePositions": 17,
         "dailyRewardPool": 70261.85094266402,
         "totalShares": 0,
         "breakdown": {
@@ -96264,8 +96276,8 @@
       {
         "day": 443,
         "date": "2026-09-25",
-        "totalMaxSupply": 14765195.84341816,
-        "activePositions": 12,
+        "totalMaxSupply": 14741955.439390283,
+        "activePositions": 14,
         "dailyRewardPool": 70205.6414619099,
         "totalShares": 0,
         "breakdown": {
@@ -96277,8 +96289,8 @@
       {
         "day": 444,
         "date": "2026-09-26",
-        "totalMaxSupply": 14765195.84341816,
-        "activePositions": 11,
+        "totalMaxSupply": 14741955.439390283,
+        "activePositions": 13,
         "dailyRewardPool": 70149.47694874037,
         "totalShares": 0,
         "breakdown": {
@@ -96290,8 +96302,8 @@
       {
         "day": 445,
         "date": "2026-09-27",
-        "totalMaxSupply": 14765195.84341816,
-        "activePositions": 11,
+        "totalMaxSupply": 14741955.439390283,
+        "activePositions": 13,
         "dailyRewardPool": 70093.35736718138,
         "totalShares": 0,
         "breakdown": {
@@ -96303,8 +96315,8 @@
       {
         "day": 446,
         "date": "2026-09-28",
-        "totalMaxSupply": 14765195.84341816,
-        "activePositions": 11,
+        "totalMaxSupply": 14741955.439390283,
+        "activePositions": 13,
         "dailyRewardPool": 70037.28268128763,
         "totalShares": 0,
         "breakdown": {
@@ -96316,8 +96328,8 @@
       {
         "day": 447,
         "date": "2026-09-29",
-        "totalMaxSupply": 14765195.84341816,
-        "activePositions": 11,
+        "totalMaxSupply": 14741955.439390283,
+        "activePositions": 13,
         "dailyRewardPool": 69981.2528551426,
         "totalShares": 0,
         "breakdown": {
@@ -96329,8 +96341,8 @@
       {
         "day": 448,
         "date": "2026-09-30",
-        "totalMaxSupply": 14765195.84341816,
-        "activePositions": 11,
+        "totalMaxSupply": 14741955.439390283,
+        "activePositions": 13,
         "dailyRewardPool": 69925.26785285848,
         "totalShares": 0,
         "breakdown": {
@@ -96342,8 +96354,8 @@
       {
         "day": 449,
         "date": "2026-10-01",
-        "totalMaxSupply": 14765195.84341816,
-        "activePositions": 11,
+        "totalMaxSupply": 14741955.439390283,
+        "activePositions": 13,
         "dailyRewardPool": 69869.32763857619,
         "totalShares": 0,
         "breakdown": {
@@ -96355,8 +96367,8 @@
       {
         "day": 450,
         "date": "2026-10-02",
-        "totalMaxSupply": 14765195.84341816,
-        "activePositions": 11,
+        "totalMaxSupply": 14741955.439390283,
+        "activePositions": 13,
         "dailyRewardPool": 69813.43217646533,
         "totalShares": 0,
         "breakdown": {
@@ -96368,8 +96380,8 @@
       {
         "day": 451,
         "date": "2026-10-03",
-        "totalMaxSupply": 14765195.84341816,
-        "activePositions": 11,
+        "totalMaxSupply": 14741955.439390283,
+        "activePositions": 13,
         "dailyRewardPool": 69757.58143072415,
         "totalShares": 0,
         "breakdown": {
@@ -96381,8 +96393,8 @@
       {
         "day": 452,
         "date": "2026-10-04",
-        "totalMaxSupply": 14765195.84341816,
-        "activePositions": 11,
+        "totalMaxSupply": 14741955.439390283,
+        "activePositions": 13,
         "dailyRewardPool": 69701.77536557957,
         "totalShares": 0,
         "breakdown": {
@@ -96394,8 +96406,8 @@
       {
         "day": 453,
         "date": "2026-10-05",
-        "totalMaxSupply": 14778455.84341816,
-        "activePositions": 11,
+        "totalMaxSupply": 14755215.439390283,
+        "activePositions": 13,
         "dailyRewardPool": 69646.01394528711,
         "totalShares": 0,
         "breakdown": {
@@ -96407,8 +96419,8 @@
       {
         "day": 454,
         "date": "2026-10-06",
-        "totalMaxSupply": 14788455.84241816,
-        "activePositions": 7,
+        "totalMaxSupply": 14765215.438390283,
+        "activePositions": 9,
         "dailyRewardPool": 69590.29713413087,
         "totalShares": 0,
         "breakdown": {
@@ -96420,8 +96432,8 @@
       {
         "day": 455,
         "date": "2026-10-07",
-        "totalMaxSupply": 14792655.84241816,
-        "activePositions": 5,
+        "totalMaxSupply": 14769415.438390283,
+        "activePositions": 7,
         "dailyRewardPool": 69534.62489642357,
         "totalShares": 0,
         "breakdown": {
@@ -96433,8 +96445,8 @@
       {
         "day": 456,
         "date": "2026-10-08",
-        "totalMaxSupply": 14792655.84241816,
-        "activePositions": 4,
+        "totalMaxSupply": 14769415.438390283,
+        "activePositions": 6,
         "dailyRewardPool": 69478.99719650643,
         "totalShares": 0,
         "breakdown": {
@@ -96446,8 +96458,8 @@
       {
         "day": 457,
         "date": "2026-10-09",
-        "totalMaxSupply": 14796855.84241816,
-        "activePositions": 4,
+        "totalMaxSupply": 14773615.438390283,
+        "activePositions": 6,
         "dailyRewardPool": 69423.41399874922,
         "totalShares": 0,
         "breakdown": {
@@ -96459,8 +96471,8 @@
       {
         "day": 458,
         "date": "2026-10-10",
-        "totalMaxSupply": 14804555.84241816,
-        "activePositions": 3,
+        "totalMaxSupply": 14781315.438390283,
+        "activePositions": 5,
         "dailyRewardPool": 69367.87526755022,
         "totalShares": 0,
         "breakdown": {
@@ -96472,8 +96484,8 @@
       {
         "day": 459,
         "date": "2026-10-11",
-        "totalMaxSupply": 14808755.84241816,
-        "activePositions": 1,
+        "totalMaxSupply": 14785515.438390283,
+        "activePositions": 3,
         "dailyRewardPool": 69312.38096733618,
         "totalShares": 0,
         "breakdown": {
@@ -96481,11 +96493,24 @@
           "fromCreates": 0,
           "fromExisting": 0
         }
+      },
+      {
+        "day": 460,
+        "date": "2026-10-12",
+        "totalMaxSupply": 14794715.438390283,
+        "activePositions": 2,
+        "dailyRewardPool": 69256.93106256232,
+        "totalShares": 0,
+        "breakdown": {
+          "fromStakes": 1063934.5099999998,
+          "fromCreates": 0,
+          "fromExisting": 0
+        }
       }
     ],
     "futureSupplyProjectionLastUpdate": {
-      "timestamp": "2026-07-16T15:01:54.111Z",
-      "protocolDay": 372,
+      "timestamp": "2026-07-17T15:01:58.166Z",
+      "protocolDay": 373,
       "fixed": true
     }
   }
