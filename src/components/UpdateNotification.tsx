@@ -97,8 +97,11 @@ const UpdateNotification: React.FC<UpdateNotificationProps> = ({ lastUpdated, on
     return '#ef4444'; // Red - stale data
   };
 
-  // Only show when new data is available or checking
-  if (!hasNewData && !isChecking) {
+  // Only show when new data is available. The transient isChecking state used to
+  // mount this fixed overlay too — after the 30s poll became a ~150ms 304 check,
+  // that read as a blur-flash in the corner every poll. Checking needs no UI;
+  // the spinner/indicator still show while the widget is up for hasNewData.
+  if (!hasNewData) {
     return null;
   }
 
