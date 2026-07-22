@@ -173,6 +173,17 @@ const PannableBarChart: React.FC<PannableBarChartProps> = ({
     yAxisID: dataset.yAxisID // Explicitly preserve yAxisID
   }));
 
+  // v1.1.0 (2026-07-22): detect an all-empty VISIBLE window so we can show a
+  // "No data in this range" note instead of a bare axis (reads as broken).
+  // Window-aware (checks the raw slice, not the whole dataset) because pannable
+  // charts like "TitanX Amounts From Creates Ending" legitimately have historical
+  // data but an empty FUTURE window (e.g. no new creates on-chain). Guarded by
+  // labels.length so it never flashes during the initial (labels-empty) load.
+  const hasVisibleData = datasets.some(ds =>
+    ds.data.slice(startIndex, endIndex).some(v => typeof v === 'number' && v > 0)
+  );
+  const showEmptyState = labels.length > 0 && !hasVisibleData;
+
   // Calculate max index for bounds checking
   const maxStartIndex = Math.max(0, labels.length - currentWindowSize);
 
@@ -497,6 +508,21 @@ const PannableBarChart: React.FC<PannableBarChartProps> = ({
 
   return (
     <div style={{ position: 'relative' }}>
+      {/* v1.1.0 (2026-07-22): window-aware empty-state overlay. pointerEvents:none
+          keeps the chart draggable underneath so users can pan back to periods
+          that DO have data (e.g. historical creates). */}
+      {showEmptyState && (
+        <div style={{
+          position: 'absolute', top: 0, left: 0, right: 0, bottom: 0,
+          display: 'flex', alignItems: 'center', justifyContent: 'center',
+          pointerEvents: 'none', zIndex: 2, textAlign: 'center', padding: '0 16px',
+        }}>
+          <div style={{ color: '#9ca3af' }}>
+            <div style={{ fontSize: '1.05rem', fontWeight: 500, marginBottom: '4px' }}>No data in this range</div>
+            <div style={{ fontSize: '0.85rem', opacity: 0.85 }}>Drag the chart or pick a wider range to view periods with activity</div>
+          </div>
+        </div>
+      )}
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '8px' }}>
         <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
           {labels.length > currentWindowSize && (
