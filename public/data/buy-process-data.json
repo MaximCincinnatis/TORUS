@@ -1,12 +1,12 @@
 {
-  "lastUpdated": "2026-07-21T23:36:50.698Z",
+  "lastUpdated": "2026-07-22T00:41:41.756Z",
   "currentDay": 377,
   "totals": {
-    "torusBurnt": "15082059.411213344891376511",
+    "torusBurnt": "15084235.46285046203201233",
     "titanXBurnt": "0.0",
-    "ethBurn": "1.659618426793666519",
-    "titanXUsedForBurns": "4283925373943.185989707573100087",
-    "ethUsedForBurns": "100.142064514358406707",
+    "ethBurn": "1.655011577032562963",
+    "titanXUsedForBurns": "4284340999951.938812967812952973",
+    "ethUsedForBurns": "100.146602261373093711",
     "ethUsedForBuilds": "13.113971241250204969"
   },
   "dailyData": [
@@ -6405,27 +6405,44 @@
     {
       "date": "2026-07-21",
       "protocolDay": 377,
-      "buyAndBurnCount": 113,
+      "buyAndBurnCount": 114,
       "buyAndBuildCount": 6,
       "fractalCount": 0,
-      "torusBurned": 55795.61265770737,
-      "titanXUsed": 7962080900.301386,
+      "torusBurned": 56340.910741892374,
+      "titanXUsed": 8066030706.8887415,
       "ethUsed": 0.008852488549115297,
-      "titanXUsedForBurns": 7332310461.229574,
+      "titanXUsedForBurns": 7436260267.81693,
       "ethUsedForBurns": 0.008852488549115297,
       "titanXUsedForBuilds": 629770439.0718108,
       "ethUsedForBuilds": 0,
       "torusPurchased": 1801.0430834101505,
       "fractalTitanX": 0,
       "fractalETH": 0
+    },
+    {
+      "date": "2026-07-22",
+      "protocolDay": 378,
+      "buyAndBurnCount": 3,
+      "buyAndBuildCount": 0,
+      "fractalCount": 0,
+      "torusBurned": 1630.7535529321303,
+      "titanXUsed": 207812996.35897768,
+      "ethUsed": 0,
+      "titanXUsedForBurns": 207812996.35897768,
+      "ethUsedForBurns": 0,
+      "titanXUsedForBuilds": 0,
+      "ethUsedForBuilds": 0,
+      "torusPurchased": 0,
+      "fractalTitanX": 0,
+      "fractalETH": 0
     }
   ],
   "eventCounts": {
-    "buyAndBurn": 55230,
+    "buyAndBurn": 55234,
     "buyAndBuild": 14170,
     "fractal": 3
   },
   "metadata": {
-    "lastBlock": 25584420
+    "lastBlock": 25584745
   }
 }
