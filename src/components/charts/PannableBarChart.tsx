@@ -90,6 +90,7 @@ const PannableBarChart: React.FC<PannableBarChartProps> = ({
   chartType = 'future', // Default to future behavior for backward compatibility
 }) => {
   const chartRef = useRef<ChartJSOrUndefined<'bar'>>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
   const [startIndex, setStartIndex] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
   const [dragStartX, setDragStartX] = useState(0);
@@ -248,9 +249,11 @@ const PannableBarChart: React.FC<PannableBarChartProps> = ({
   };
 
   // Mouse wheel zoom handler
-  const handleWheel = useCallback((e: React.WheelEvent<HTMLDivElement>) => {
+  // Typed as native WheelEvent — attached via addEventListener { passive: false }
+  // (effect below) so preventDefault() works; React's onWheel is passive.
+  const handleWheel = useCallback((e: WheelEvent) => {
     e.preventDefault();
-    
+
     const zoomSpeed = 0.1;
     const delta = e.deltaY > 0 ? 1 + zoomSpeed : 1 - zoomSpeed;
     
@@ -269,6 +272,15 @@ const PannableBarChart: React.FC<PannableBarChartProps> = ({
       setStartIndex(clampedStartIndex);
     }
   }, [currentWindowSize, startIndex, labels.length]);
+
+  // Non-passive native wheel listener so preventDefault() works (React onWheel is passive,
+  // which logged the "Unable to preventDefault inside passive event listener" warnings).
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+    el.addEventListener('wheel', handleWheel, { passive: false });
+    return () => el.removeEventListener('wheel', handleWheel);
+  }, [handleWheel]);
 
   // Navigation functions
   const canGoBack = startIndex > 0;
@@ -551,10 +563,11 @@ const PannableBarChart: React.FC<PannableBarChartProps> = ({
           )}
         </div>
       </div>
-      <div 
+      <div
+        ref={containerRef}
         className="pannable-bar-chart-container"
-        style={{ 
-          height: `${height}px`, 
+        style={{
+          height: `${height}px`,
           cursor: isDragging ? 'grabbing' : 'grab',
           position: 'relative',
           userSelect: 'none',
@@ -568,7 +581,6 @@ const PannableBarChart: React.FC<PannableBarChartProps> = ({
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
-        onWheel={handleWheel}
       >
         <div style={{ pointerEvents: isDragging ? 'none' : 'auto', height: '100%' }}>
           <Bar ref={chartRef} options={options} data={data} plugins={(showDataLabels || showTotals) ? [ChartDataLabels] : []} />

@@ -257,6 +257,7 @@ body {
     radial-gradient(circle at 50% 50%, rgba(236, 72, 153, 0.2) 0%, transparent 50%);
   animation: aurora 101.25s ease-in-out infinite, breathe 8.4s ease-in-out infinite;
   filter: blur(40px);
+  will-change: transform; /* keep this layer GPU-composited; only transform animates now */
   pointer-events: none;
   z-index: 1;
 }
@@ -275,6 +276,7 @@ body {
     radial-gradient(ellipse 700px 200px at 20% 80%, rgba(236, 72, 153, 0.45) 0%, transparent 100%);
   animation: aurora 118.125s ease-in-out infinite reverse, breathe 10.5s ease-in-out infinite;
   filter: blur(60px);
+  will-change: transform; /* keep this layer GPU-composited; only transform animates now */
   pointer-events: none;
   z-index: 2;
 }
@@ -301,22 +303,15 @@ body {
 }
 
 @keyframes aurora {
-  0%, 100% { 
-    transform: translate(0, 0) scale(1) rotate(0deg);
-    filter: blur(40px) brightness(1);
-  }
-  25% { 
-    transform: translate(-10%, 5%) scale(1.1) rotate(5deg);
-    filter: blur(50px) brightness(1.1);
-  }
-  50% { 
-    transform: translate(5%, -10%) scale(0.9) rotate(-5deg);
-    filter: blur(30px) brightness(0.9);
-  }
-  75% { 
-    transform: translate(10%, 10%) scale(1.05) rotate(3deg);
-    filter: blur(45px) brightness(1.05);
-  }
+  /* Animate ONLY transform (compositor-cheap). Animating filter: blur()/brightness()
+     here forced the GPU to re-rasterize these two full-viewport (200%x200%) blurred
+     layers every frame, thrashing the compositor and causing random flickering of the
+     header, cards, and background. The static blur on the element is kept; the layer
+     now rasterizes once and is merely transformed. */
+  0%, 100% { transform: translate(0, 0) scale(1) rotate(0deg); }
+  25% { transform: translate(-10%, 5%) scale(1.1) rotate(5deg); }
+  50% { transform: translate(5%, -10%) scale(0.9) rotate(-5deg); }
+  75% { transform: translate(10%, 10%) scale(1.05) rotate(3deg); }
 }
 
 @keyframes breathe {

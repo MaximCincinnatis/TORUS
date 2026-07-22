@@ -69,6 +69,7 @@ const PannableLineChart: React.FC<PannableLineChartProps> = ({
   chartType = 'future', // Default to future behavior for backward compatibility
 }) => {
   const chartRef = useRef<ChartJSOrUndefined<'line'>>(null);
+  const containerRef = useRef<HTMLDivElement>(null);
   const [startIndex, setStartIndex] = useState(0);
   const [isDragging, setIsDragging] = useState(false);
   const [dragStartX, setDragStartX] = useState(0);
@@ -212,8 +213,9 @@ const PannableLineChart: React.FC<PannableLineChartProps> = ({
     setIsDragging(false);
   };
 
-  // Mouse wheel zoom handler
-  const handleWheel = useCallback((e: React.WheelEvent<HTMLDivElement>) => {
+  // Mouse wheel zoom handler. Typed as the native WheelEvent because it is attached
+  // via addEventListener with { passive: false } (see effect below), not React's onWheel.
+  const handleWheel = useCallback((e: WheelEvent) => {
     e.preventDefault();
     
     const zoomSpeed = 0.1;
@@ -234,6 +236,16 @@ const PannableLineChart: React.FC<PannableLineChartProps> = ({
       setStartIndex(clampedStartIndex);
     }
   }, [currentWindowSize, startIndex, labels.length]);
+
+  // Attach wheel as a NON-passive native listener so preventDefault() works — React's
+  // onWheel is passive, which logged "Unable to preventDefault inside passive event
+  // listener invocation" and let the page scroll while the chart zoomed.
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+    el.addEventListener('wheel', handleWheel, { passive: false });
+    return () => el.removeEventListener('wheel', handleWheel);
+  }, [handleWheel]);
 
   // Navigation buttons
   const canGoBack = startIndex > 0;
@@ -466,10 +478,11 @@ const PannableLineChart: React.FC<PannableLineChartProps> = ({
           </div>
         )}
       </div>
-      <div 
+      <div
+        ref={containerRef}
         className="pannable-chart-container"
-        style={{ 
-          height: `${height}px`, 
+        style={{
+          height: `${height}px`,
           cursor: isDragging ? 'grabbing' : 'grab',
           position: 'relative',
           userSelect: 'none',
@@ -484,7 +497,6 @@ const PannableLineChart: React.FC<PannableLineChartProps> = ({
         onTouchStart={handleTouchStart}
         onTouchMove={handleTouchMove}
         onTouchEnd={handleTouchEnd}
-        onWheel={handleWheel}
       >
         <div style={{ pointerEvents: isDragging ? 'none' : 'auto', height: '100%' }}>
           <Line ref={chartRef} options={options} data={data} />
