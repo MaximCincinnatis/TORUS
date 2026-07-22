@@ -3007,6 +3007,11 @@ function App() {
           selectedDays={cumulativeTorusBurnedDays}
           onDaysChange={setCumulativeTorusBurnedDays}
         />
+        {/* chartType="historical" (below) is required: this is a cumulative chart
+            whose last point is the current protocol day. Without it, PannableLineChart
+            defaults to 'future' and positions the window AT the current day, so only
+            the single last point renders (a dot, no line). 'historical' shows the
+            trailing windowSize days as a proper line. */}
         <PannableLineChart
           key="cumulative-torus-burned-chart"
           title={<>Cumulative <span className="torus-text">TORUS</span> <span style={{color: '#f97316'}}>Burned</span></>}
@@ -3027,6 +3032,7 @@ function App() {
           xAxisLabel="Date"
           windowSize={cumulativeTorusBurnedDays}
           initialStartDay={currentProtocolDay}
+          chartType="historical"
           formatTooltip={(value: number) => `${value.toFixed(2)} TORUS total`}
         />
         <div className="chart-note">
