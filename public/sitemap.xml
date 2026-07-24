@@ -1,10 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!--
-  2026-07-24 SEO: dropped <changefreq> and <priority> — Google ignores both.
-  <lastmod> is maintained BY HAND = date of the last real content change. Do NOT auto-stamp it:
-  this repo auto-commits data hourly and every push redeploys, so an auto date would churn hourly
-  while the indexable content stood still, and Google discounts inaccurate lastmod.
-  <loc> keeps its trailing slash to match the canonical/og:url/JSON-LD in public/index.html.
+  2026-07-24 SEO: removed the changefreq and priority elements - Google ignores both.
+  The lastmod value is maintained BY HAND = date of the last real content change. Do NOT
+  auto-stamp it: this repo auto-commits data every 5 minutes and every push redeploys, so
+  an auto date would churn constantly while the indexable content stood still, and Google
+  discounts inaccurate lastmod. The loc value keeps its trailing slash to match the
+  canonical, og:url and JSON-LD in public/index.html.
+  NB: element names are written bare here on purpose - angle brackets inside this comment
+  break regex-based sitemap tooling even though conforming XML parsers ignore comments.
 -->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
