@@ -1,8 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!--
+  2026-07-24 SEO: dropped <changefreq> and <priority> — Google ignores both.
+  <lastmod> is maintained BY HAND = date of the last real content change. Do NOT auto-stamp it:
+  this repo auto-commits data hourly and every push redeploys, so an auto date would churn hourly
+  while the indexable content stood still, and Google discounts inaccurate lastmod.
+  <loc> keeps its trailing slash to match the canonical/og:url/JSON-LD in public/index.html.
+-->
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://www.torusinfo.fyi/</loc>
-    <changefreq>hourly</changefreq>
-    <priority>1.0</priority>
+    <lastmod>2026-07-22</lastmod>
   </url>
 </urlset>
