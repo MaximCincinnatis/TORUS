@@ -148,9 +148,25 @@ async function main() {
     }
     // ----------------------------------------------------------------------
 
+    // 3.5 TRUNCATION GUARD (2026-07-25) — must run BEFORE the rebuild trigger and staging.
+    // The dashboard's chart history is CUMULATIVE inside public/data/*.json (469 reward-pool
+    // days, ~4,000 stake/create events, 381 buy-process days, back to 2025-07-10). The earliest
+    // days predate every backup AND every git commit of the file — they survive only because each
+    // update carries them forward. A write that silently drops records therefore destroys chart
+    // history permanently and would surface only when someone noticed a chart looked wrong.
+    // This compares the working tree against HEAD and aborts if an append-only series shrank.
+    // Fail-fast by design: better to skip one update than to publish truncated history.
+    if (!execCommand('node scripts/verify-data-invariants.js', 'Verifying data invariants')) {
+      log('❌ ABORT: data invariant check failed — refusing to publish truncated data.', 'red');
+      log('   Nothing was staged, committed or pushed. Inspect the update that produced this.', 'red');
+      log('   Recover the last good copy with:', 'red');
+      log('     git show HEAD:public/data/cached-data.json > /tmp/good.json', 'red');
+      process.exit(1);
+    }
+
     // 4. Force Vercel rebuild
     execCommand('node force-vercel-rebuild.js', 'Forcing Vercel rebuild');
-    
+
     // 5. Add and commit
     // NOTE: buy-process-burns.json added 2026-01-12 - was being updated by update-lp-fee-burns.js but never staged
     execCommand('git add public/data/cached-data.json public/data/buy-process-data.json public/data/buy-process-burns.json update-log.json src/constants/buildTimestamp.ts', 'Staging changes');
@@ -188,6 +204,22 @@ async function main() {
 
     // Record successful push time so the next push waits the full 3h interval.
     fs.writeFileSync(lastPushFile, String(Date.now()));
+
+    // Housekeeping (2026-07-25): prune routine data snapshots. public/data/backups/ had reached
+    // 77,306 files / 138GB — a ~3MB snapshot every ~5 min since 2025-07-16 with no cleanup at all.
+    // Runs post-push so it never delays or endangers a data update, and only every ~3h thanks to
+    // the throttle above. Everything here is gitignored, so this touches nothing that ships.
+    // Conservative by construction: pinned filenames and every "before-*" pre-repair snapshot are
+    // kept forever; only routine snapshots outside the retention window are removed.
+    // Fail-soft — housekeeping must never break the pipeline.
+    try {
+      const out = execSync('node scripts/prune-data-backups.js', {
+        cwd: __dirname, encoding: 'utf8'
+      }).trim();
+      if (out) log(`🧹 ${out.split('\n').pop()}`, 'cyan');
+    } catch (pruneErr) {
+      log(`⚠️ Backup prune failed (continuing): ${pruneErr.message}`, 'yellow');
+    }
 
     log('🎉 Update complete! Vercel will deploy automatically.', 'green');
     
