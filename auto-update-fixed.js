@@ -118,7 +118,36 @@ async function main() {
     
     log('📝 Git changes detected:', 'cyan');
     console.log(gitStatus);
-    
+
+    // --- 3-hour git push throttle -----------------------------------------
+    // Scans run every 5 min and write fresh JSON locally, but we only push to
+    // GitHub (which triggers a Vercel deploy) every 3 hours. Keeps data current
+    // locally while cutting Vercel deploys from ~288/day to ~8/day. Last-push
+    // time is stored in .last-push-time (gitignored, epoch ms).
+    //
+    // 2026-07-25 COST: raised 1h -> 3h. Measured build spend was ~185 min/day across
+    // all three Vercel projects; PULSE was fixed via an Ignored Build Step (256 deploys/day
+    // -> 0 builds), leaving TORUS as ~72% of what remained at 24 builds/day x ~1.15 min
+    // = ~28 min/day. 3h takes that to ~8 builds/day (~9 min/day). Trade-off accepted by
+    // the owner: dashboard data can now be up to 3h stale instead of 1h.
+    // NB: TORUS builds are NOT wasted the way PULSE's were - public/data/*.json is baked
+    // into the bundle and genuinely must redeploy to reach the CDN, so an ignore-step
+    // cannot be used here. The structural fix is to serve that 3.2MB cached-data.json
+    // from an API/blob instead of baking it in, which would remove the rebuild entirely.
+    const PUSH_INTERVAL_MS = 3 * 60 * 60 * 1000; // 3 hours
+    const lastPushFile = '.last-push-time';
+    let lastPush = 0;
+    if (fs.existsSync(lastPushFile)) {
+      lastPush = parseInt(fs.readFileSync(lastPushFile, 'utf8').trim(), 10) || 0;
+    }
+    const sinceLastPush = Date.now() - lastPush;
+    if (sinceLastPush < PUSH_INTERVAL_MS) {
+      const minsLeft = Math.ceil((PUSH_INTERVAL_MS - sinceLastPush) / 60000);
+      log(`⏳ Scanned & saved locally. Next git push in ~${minsLeft} min (3h throttle).`, 'yellow');
+      return;
+    }
+    // ----------------------------------------------------------------------
+
     // 4. Force Vercel rebuild
     execCommand('node force-vercel-rebuild.js', 'Forcing Vercel rebuild');
     
@@ -156,7 +185,10 @@ async function main() {
     if (!execCommand(pushCommand, 'Pushing to GitHub')) {
       process.exit(1);
     }
-    
+
+    // Record successful push time so the next push waits the full 3h interval.
+    fs.writeFileSync(lastPushFile, String(Date.now()));
+
     log('🎉 Update complete! Vercel will deploy automatically.', 'green');
     
   } catch (error) {
