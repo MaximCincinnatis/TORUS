@@ -1,12 +1,12 @@
 {
-  "lastUpdated": "2026-07-25T23:31:35.464Z",
+  "lastUpdated": "2026-07-26T02:37:12.657Z",
   "currentDay": 381,
   "totals": {
-    "torusBurnt": "15309331.196106130920687798",
+    "torusBurnt": "15315933.075607316623403242",
     "titanXBurnt": "0.0",
-    "ethBurn": "1.358540007023519413",
-    "titanXUsedForBurns": "4312839408872.467997807399934922",
-    "ethUsedForBurns": "100.438626757832001676",
+    "ethBurn": "1.350072190692563007",
+    "titanXUsedForBurns": "4313657811910.166165469651374738",
+    "ethUsedForBurns": "100.44696755691799374",
     "ethUsedForBuilds": "13.119151279042835512"
   },
   "dailyData": [
@@ -6473,27 +6473,44 @@
     {
       "date": "2026-07-25",
       "protocolDay": 381,
-      "buyAndBurnCount": 108,
+      "buyAndBurnCount": 112,
       "buyAndBuildCount": 6,
       "fractalCount": 0,
-      "torusBurned": 53704.251980598754,
-      "titanXUsed": 7430750095.218946,
+      "torusBurned": 54691.175439603474,
+      "titanXUsed": 7575332339.518802,
       "ethUsed": 0.01057149007216112,
-      "titanXUsedForBurns": 6913454437.214995,
+      "titanXUsedForBurns": 7058036681.514851,
       "ethUsedForBurns": 0.01057149007216112,
       "titanXUsedForBuilds": 517295658.00395083,
       "ethUsedForBuilds": 0,
       "torusPurchased": 1931.551212819179,
       "fractalTitanX": 0,
       "fractalETH": 0
+    },
+    {
+      "date": "2026-07-26",
+      "protocolDay": 382,
+      "buyAndBurnCount": 20,
+      "buyAndBuildCount": 2,
+      "fractalCount": 0,
+      "torusBurned": 5614.956042180976,
+      "titanXUsed": 787494435.4129896,
+      "ethUsed": 0,
+      "titanXUsedForBurns": 722021569.0818727,
+      "ethUsedForBurns": 0,
+      "titanXUsedForBuilds": 65472866.331116885,
+      "ethUsedForBuilds": 0,
+      "torusPurchased": 320.12293167179297,
+      "fractalTitanX": 0,
+      "fractalETH": 0
     }
   ],
   "eventCounts": {
-    "buyAndBurn": 55633,
-    "buyAndBuild": 14198,
+    "buyAndBurn": 55657,
+    "buyAndBuild": 14200,
     "fractal": 3
   },
   "metadata": {
-    "lastBlock": 25613083
+    "lastBlock": 25614006
   }
 }
