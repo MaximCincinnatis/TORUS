@@ -91390,66 +91390,52 @@
         "type": "stake"
       },
       {
-        "user": "0x41F56bBdC88BfB38CDe51a4FBFE0569434D421ae",
-        "id": "27",
+        "user": "0x41f56bbdc88bfb38cde51a4fbfe0569434d421ae",
+        "stakeIndex": "27",
         "principal": "27000000000000000000000",
+        "stakingDays": "88",
         "shares": "209088000000000000000000000",
-        "duration": "88",
-        "timestamp": "1785315623",
-        "blockNumber": 25637453,
-        "stakingDays": 88,
         "maturityDate": "2026-10-25T09:00:23.000Z",
-        "startDate": "2026-07-29T09:00:23.000Z",
+        "blockNumber": 25637453,
+        "transactionHash": "0x407a8c85b8c58a809e9b8a5def51aa1d16ebddd8421ab073fa3a994ef1cb2229",
+        "timestamp": "1785315623",
         "protocolDay": 384,
-        "power": "0",
-        "claimedCreate": false,
-        "claimedStake": false,
         "costETH": "0.39047317209240945",
-        "costTitanX": "0",
         "rawCostETH": "390473172092409450",
-        "rawCostTitanX": "0",
-        "rewards": "0",
-        "penalties": "0",
-        "claimedAt": "0",
-        "isCreate": false,
+        "rawCostTitanX": "0x00000000000000000000000000000000000000000288d2d9b10ff6e5709a160c",
+        "costTitanX": "784379643.773834060338173452",
+        "titanAmount": "0x00000000000000000000000000000000000000000288d2d9b10ff6e5709a160c",
         "type": "stake"
       },
       {
-        "user": "0x9331fEBE7545ba66FDDe303068598897fe8cef36",
-        "id": "26",
+        "user": "0x9331febe7545ba66fdde303068598897fe8cef36",
+        "stakeIndex": "26",
         "principal": "3670000000000000000000",
+        "stakingDays": "88",
         "shares": "28420480000000000000000000",
-        "duration": "88",
-        "timestamp": "1785330251",
-        "blockNumber": 25638670,
-        "stakingDays": 88,
         "maturityDate": "2026-10-25T13:04:11.000Z",
-        "startDate": "2026-07-29T13:04:11.000Z",
+        "blockNumber": 25638670,
+        "transactionHash": "0x8f4c78ad857593d6d64393ac6a00d6e8713d0449787cff31f2bcb63d4a6a52df",
+        "timestamp": "1785330251",
         "protocolDay": 384,
-        "power": "0",
-        "claimedCreate": false,
-        "claimedStake": false,
-        "costETH": "0",
-        "costTitanX": "2493941043.2254224",
+        "costETH": "0.0",
         "rawCostETH": "0",
-        "rawCostTitanX": "2493941043225422515790000000",
-        "rewards": "0",
-        "penalties": "0",
-        "claimedAt": "0",
-        "isCreate": false,
+        "rawCostTitanX": "0x0000000000000000000000000000000000000000080ef08edb14f32ebef5af80",
+        "costTitanX": "2493941043.22542251579",
+        "titanAmount": "0x0000000000000000000000000000000000000000080ef08edb14f32ebef5af80",
         "type": "stake"
       }
     ],
-    "totalSupply": 14708176.224904388,
+    "totalSupply": 14701322.982664775,
     "currentProtocolDay": 385,
     "metadata": {
       "dailySupplySnapshot": {
-        "day": 384,
-        "totalSupply": 14708176.224904388,
+        "day": 385,
+        "totalSupply": 14701322.982664775,
         "burnedSupply": 0,
-        "timestamp": "2026-07-29T23:45:02.984Z"
+        "timestamp": "2026-07-30T02:50:08.697Z"
       },
-      "currentBlock": 25641863,
+      "currentBlock": 25642786,
       "lastDeduplication": "2025-08-02T21:51:40.056Z",
       "duplicatesRemoved": 0
     },
@@ -92248,3576 +92234,3576 @@
         "day": 80,
         "date": "2025-09-27T18:00:00.000Z",
         "rewardPool": 93873.19596635779,
-        "totalShares": 4907972142.123077,
+        "totalShares": 4955249262.123077,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-09-27T00:22:26.606Z",
+        "lastUpdated": "2026-07-29T23:50:06.991Z",
         "calculatedFromPositions": true
       },
       {
         "day": 81,
         "date": "2025-09-28T18:00:00.000Z",
         "rewardPool": 93798.0974095847,
-        "totalShares": 4882266370.414673,
+        "totalShares": 5049078895.526692,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-09-27T00:22:26.606Z",
+        "lastUpdated": "2026-07-29T23:50:06.993Z",
         "calculatedFromPositions": true
       },
       {
         "day": 82,
         "date": "2025-09-29T18:00:00.000Z",
         "rewardPool": 93723.05893165704,
-        "totalShares": 4860613921.994132,
+        "totalShares": 5087214923.106152,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-09-27T00:22:26.607Z",
+        "lastUpdated": "2026-07-29T23:50:06.994Z",
         "calculatedFromPositions": true
       },
       {
         "day": 83,
         "date": "2025-09-30T18:00:00.000Z",
         "rewardPool": 93648.08048451171,
-        "totalShares": 4842822216.218897,
+        "totalShares": 5226665265.330915,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-09-27T00:22:26.609Z",
+        "lastUpdated": "2026-07-29T23:50:06.995Z",
         "calculatedFromPositions": true
       },
       {
         "day": 84,
         "date": "2025-10-01T18:00:00.000Z",
         "rewardPool": 93573.1620201241,
-        "totalShares": 4804658344.085915,
+        "totalShares": 5266145989.677933,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-09-27T00:22:26.610Z",
+        "lastUpdated": "2026-07-29T23:50:06.996Z",
         "calculatedFromPositions": true
       },
       {
         "day": 85,
         "date": "2025-10-02T18:00:00.000Z",
         "rewardPool": 93498.303490508,
-        "totalShares": 4781019573.691356,
+        "totalShares": 5697815867.283375,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-09-27T00:22:26.611Z",
+        "lastUpdated": "2026-07-29T23:50:06.996Z",
         "calculatedFromPositions": true
       },
       {
         "day": 86,
         "date": "2025-10-03T18:00:00.000Z",
         "rewardPool": 93423.5048477156,
-        "totalShares": 4750093508.719544,
+        "totalShares": 5705532362.3115635,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-09-27T00:22:26.611Z",
+        "lastUpdated": "2026-07-29T23:50:06.997Z",
         "calculatedFromPositions": true
       },
       {
         "day": 87,
         "date": "2025-10-04T18:00:00.000Z",
         "rewardPool": 93348.76604383742,
-        "totalShares": 4697098119.043606,
+        "totalShares": 5948953985.635626,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-09-27T00:22:26.612Z",
+        "lastUpdated": "2026-07-29T23:50:06.998Z",
         "calculatedFromPositions": true
       },
       {
         "day": 88,
         "date": "2025-10-05T18:00:00.000Z",
         "rewardPool": 93274.08703100235,
-        "totalShares": 4602868833.725149,
+        "totalShares": 6151586081.317169,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-09-27T00:22:26.612Z",
+        "lastUpdated": "2026-07-29T23:50:06.999Z",
         "calculatedFromPositions": true
       },
       {
         "day": 89,
         "date": "2025-10-06T18:00:00.000Z",
         "rewardPool": 93199.46776137754,
-        "totalShares": 4549451089.660547,
+        "totalShares": 6407655707.172565,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-09-27T00:22:26.613Z",
+        "lastUpdated": "2026-07-29T23:50:07.000Z",
         "calculatedFromPositions": true
       },
       {
         "day": 90,
         "date": "2025-10-07T18:00:00.000Z",
         "rewardPool": 93124.90818716843,
-        "totalShares": 4041918163.714531,
+        "totalShares": 6850910240.8265505,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-09-27T00:22:26.614Z",
+        "lastUpdated": "2026-07-29T23:50:07.001Z",
         "calculatedFromPositions": true
       },
       {
         "day": 91,
         "date": "2025-10-08T18:00:00.000Z",
         "rewardPool": 93050.4082606187,
-        "totalShares": 3842092931.455771,
+        "totalShares": 7516853576.567791,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-09-27T00:22:26.614Z",
+        "lastUpdated": "2026-07-29T23:50:07.002Z",
         "calculatedFromPositions": true
       },
       {
         "day": 92,
         "date": "2025-10-09T18:00:00.000Z",
         "rewardPool": 92975.9679340102,
-        "totalShares": 3750694884.634712,
+        "totalShares": 7942599233.746733,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-09-27T00:22:26.615Z",
+        "lastUpdated": "2026-07-29T23:50:07.003Z",
         "calculatedFromPositions": true
       },
       {
         "day": 93,
         "date": "2025-10-10T18:00:00.000Z",
         "rewardPool": 92901.58715966299,
-        "totalShares": 3638089158.845205,
+        "totalShares": 8590482883.317223,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-09-27T00:22:26.616Z",
+        "lastUpdated": "2026-07-29T23:50:07.004Z",
         "calculatedFromPositions": true
       },
       {
         "day": 94,
         "date": "2025-10-11T18:00:00.000Z",
         "rewardPool": 92827.26588993525,
-        "totalShares": 3567510539.0342574,
+        "totalShares": 8992975480.306276,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-09-27T00:22:26.617Z",
+        "lastUpdated": "2026-07-29T23:50:07.005Z",
         "calculatedFromPositions": true
       },
       {
         "day": 95,
         "date": "2025-10-12T18:00:00.000Z",
         "rewardPool": 92753.0040772233,
-        "totalShares": 3431264537.7709937,
+        "totalShares": 9220589063.043015,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-09-27T00:22:26.619Z",
+        "lastUpdated": "2026-07-29T23:50:07.006Z",
         "calculatedFromPositions": true
       },
       {
         "day": 96,
         "date": "2025-10-13T18:00:00.000Z",
         "rewardPool": 92678.80167396153,
-        "totalShares": 3369238986.646832,
+        "totalShares": 9491052151.918852,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-09-27T00:22:26.626Z",
+        "lastUpdated": "2026-07-29T23:50:07.007Z",
         "calculatedFromPositions": true
       },
       {
         "day": 97,
         "date": "2025-10-14T18:00:00.000Z",
         "rewardPool": 92604.65863262236,
-        "totalShares": 3296178191.3430386,
+        "totalShares": 10083745937.36258,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-09-27T00:22:26.630Z",
+        "lastUpdated": "2026-07-29T23:50:07.008Z",
         "calculatedFromPositions": true
       },
       {
         "day": 98,
         "date": "2025-10-15T18:00:00.000Z",
         "rewardPool": 92530.57490571626,
-        "totalShares": 3254363575.394542,
+        "totalShares": 10627095137.414082,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-09-27T00:22:26.632Z",
+        "lastUpdated": "2026-07-29T23:50:07.010Z",
         "calculatedFromPositions": true
       },
       {
         "day": 99,
         "date": "2025-10-16T18:00:00.000Z",
         "rewardPool": 92456.55044579168,
-        "totalShares": 3216892682.79464,
+        "totalShares": 10867114996.81418,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-09-27T00:22:26.634Z",
+        "lastUpdated": "2026-07-29T23:50:07.011Z",
         "calculatedFromPositions": true
       },
       {
         "day": 100,
         "date": "2025-10-17T18:00:00.000Z",
         "rewardPool": 92382.58520543505,
-        "totalShares": 3139646447.3160424,
+        "totalShares": 11216752889.335583,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-09-27T00:22:26.635Z",
+        "lastUpdated": "2026-07-29T23:50:07.012Z",
         "calculatedFromPositions": true
       },
       {
         "day": 101,
         "date": "2025-10-18T18:00:00.000Z",
         "rewardPool": 92308.67913727071,
-        "totalShares": 3071118279.7150574,
+        "totalShares": 11525895455.953144,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-09-27T00:22:26.641Z",
+        "lastUpdated": "2026-07-29T23:50:07.013Z",
         "calculatedFromPositions": true
       },
       {
         "day": 102,
         "date": "2025-10-19T18:00:00.000Z",
         "rewardPool": 92234.83219396089,
-        "totalShares": 3012894191.2357965,
+        "totalShares": 11962745287.473885,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-09-27T00:22:26.642Z",
+        "lastUpdated": "2026-07-29T23:50:07.014Z",
         "calculatedFromPositions": true
       },
       {
         "day": 103,
         "date": "2025-10-20T18:00:00.000Z",
         "rewardPool": 92161.04432820571,
-        "totalShares": 2952228354.6116285,
+        "totalShares": 12294769946.849716,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-09-27T00:22:26.642Z",
+        "lastUpdated": "2026-07-29T23:50:07.015Z",
         "calculatedFromPositions": true
       },
       {
         "day": 104,
         "date": "2025-10-21T18:00:00.000Z",
         "rewardPool": 92087.31549274315,
-        "totalShares": 2883486971.5250463,
+        "totalShares": 12908627625.523134,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-09-27T00:22:26.643Z",
+        "lastUpdated": "2026-07-29T23:50:07.015Z",
         "calculatedFromPositions": true
       },
       {
         "day": 105,
         "date": "2025-10-22T18:00:00.000Z",
         "rewardPool": 92013.64564034894,
-        "totalShares": 2833886522.869482,
+        "totalShares": 14022083048.867569,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-09-27T00:22:26.644Z",
+        "lastUpdated": "2026-07-29T23:50:07.016Z",
         "calculatedFromPositions": true
       },
       {
         "day": 106,
         "date": "2025-10-23T18:00:00.000Z",
         "rewardPool": 91940.03472383667,
-        "totalShares": 2798451837.7848625,
+        "totalShares": 14237453291.78295,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-09-27T00:22:26.645Z",
+        "lastUpdated": "2026-07-29T23:50:07.017Z",
         "calculatedFromPositions": true
       },
       {
         "day": 107,
         "date": "2025-10-24T18:00:00.000Z",
         "rewardPool": 91866.48269605759,
-        "totalShares": 2706663645.86081,
+        "totalShares": 14360509447.378899,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-09-27T00:22:26.646Z",
+        "lastUpdated": "2026-07-29T23:50:07.018Z",
         "calculatedFromPositions": true
       },
       {
         "day": 108,
         "date": "2025-10-25T18:00:00.000Z",
         "rewardPool": 91792.98950990074,
-        "totalShares": 2665929076.7793703,
+        "totalShares": 15725265382.297459,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-09-27T00:22:26.647Z",
+        "lastUpdated": "2026-07-29T23:50:07.019Z",
         "calculatedFromPositions": true
       },
       {
         "day": 109,
         "date": "2025-10-26T18:00:00.000Z",
         "rewardPool": 91719.55511829282,
-        "totalShares": 2594586097.386171,
+        "totalShares": 16700413746.648258,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-09-27T00:22:26.648Z",
+        "lastUpdated": "2026-07-29T23:50:07.019Z",
         "calculatedFromPositions": true
       },
       {
         "day": 110,
         "date": "2025-10-27T18:00:00.000Z",
         "rewardPool": 91646.17947419819,
-        "totalShares": 2489541883.5962954,
+        "totalShares": 16710935103.418385,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-09-27T00:22:26.649Z",
+        "lastUpdated": "2026-07-29T23:50:07.020Z",
         "calculatedFromPositions": true
       },
       {
         "day": 111,
         "date": "2025-10-28T18:00:00.000Z",
         "rewardPool": 91572.86253061883,
-        "totalShares": 2408937669.542794,
+        "totalShares": 16810958187.028883,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-09-27T00:22:26.651Z",
+        "lastUpdated": "2026-07-29T23:50:07.021Z",
         "calculatedFromPositions": true
       },
       {
         "day": 112,
         "date": "2025-10-29T18:00:00.000Z",
         "rewardPool": 91499.60424059433,
-        "totalShares": 2279620404.0383143,
+        "totalShares": 16896915781.236403,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-09-27T00:22:26.652Z",
+        "lastUpdated": "2026-07-29T23:50:07.022Z",
         "calculatedFromPositions": true
       },
       {
         "day": 113,
         "date": "2025-10-30T18:00:00.000Z",
         "rewardPool": 91426.40455720185,
-        "totalShares": 2169051811.1241302,
+        "totalShares": 17066058609.762218,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-09-27T00:22:26.653Z",
+        "lastUpdated": "2026-07-29T23:50:07.022Z",
         "calculatedFromPositions": true
       },
       {
         "day": 114,
         "date": "2025-10-31T18:00:00.000Z",
         "rewardPool": 91353.26343355609,
-        "totalShares": 2116225830.5930548,
+        "totalShares": 17721934322.095146,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-09-27T00:22:26.657Z",
+        "lastUpdated": "2026-07-29T23:50:07.023Z",
         "calculatedFromPositions": true
       },
       {
         "day": 115,
         "date": "2025-11-01T18:00:00.000Z",
         "rewardPool": 91280.18082280924,
-        "totalShares": 2095481391.0423398,
+        "totalShares": 18004609319.920425,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-09-27T00:22:26.661Z",
+        "lastUpdated": "2026-07-29T23:50:07.024Z",
         "calculatedFromPositions": true
       },
       {
         "day": 116,
         "date": "2025-11-02T18:00:00.000Z",
         "rewardPool": 91207.15667815099,
-        "totalShares": 2020366786.6249585,
+        "totalShares": 18256884798.831043,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-09-27T00:22:26.662Z",
+        "lastUpdated": "2026-07-29T23:50:07.025Z",
         "calculatedFromPositions": true
       },
       {
         "day": 117,
         "date": "2025-11-03T18:00:00.000Z",
         "rewardPool": 91134.19095280847,
-        "totalShares": 2002540683.859131,
+        "totalShares": 18343732315.13722,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-09-27T00:22:26.665Z",
+        "lastUpdated": "2026-07-29T23:50:07.026Z",
         "calculatedFromPositions": true
       },
       {
         "day": 118,
         "date": "2025-11-04T18:00:00.000Z",
         "rewardPool": 91061.28360004621,
-        "totalShares": 1970851325.1793818,
+        "totalShares": 18624277063.78547,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-09-27T00:22:26.667Z"
+        "lastUpdated": "2026-07-29T23:50:07.026Z"
       },
       {
         "day": 119,
         "date": "2025-11-05T18:00:00.000Z",
         "rewardPool": 90988.43457316617,
-        "totalShares": 1944461295.3737862,
+        "totalShares": 18687436466.171875,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-09-27T00:22:26.669Z"
+        "lastUpdated": "2026-07-29T23:50:07.028Z"
       },
       {
         "day": 120,
         "date": "2025-11-06T18:00:00.000Z",
         "rewardPool": 90915.64382550764,
-        "totalShares": 1933321264.0124135,
+        "totalShares": 19766621293.8185,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-09-27T00:22:26.671Z"
+        "lastUpdated": "2026-07-29T23:50:07.029Z"
       },
       {
         "day": 121,
         "date": "2025-11-07T18:00:00.000Z",
         "rewardPool": 90842.91131044723,
-        "totalShares": 1883844780.9254088,
+        "totalShares": 19799474821.483494,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-09-27T00:22:26.672Z"
+        "lastUpdated": "2026-07-29T23:50:07.030Z"
       },
       {
         "day": 122,
         "date": "2025-11-08T18:00:00.000Z",
         "rewardPool": 90770.23698139888,
-        "totalShares": 1874576240.1659856,
+        "totalShares": 20264139080.72407,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-09-27T00:22:26.674Z"
+        "lastUpdated": "2026-07-29T23:50:07.031Z"
       },
       {
         "day": 123,
         "date": "2025-11-09T18:00:00.000Z",
         "rewardPool": 90697.62079181375,
-        "totalShares": 1852815100.5767043,
+        "totalShares": 20472630060.81479,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-09-27T00:22:26.675Z"
+        "lastUpdated": "2026-07-29T23:50:07.033Z"
       },
       {
         "day": 124,
         "date": "2025-11-10T18:00:00.000Z",
         "rewardPool": 90625.0626951803,
-        "totalShares": 1846339908.9753048,
+        "totalShares": 20567833898.97339,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-09-27T00:22:26.677Z"
+        "lastUpdated": "2026-07-29T23:50:07.034Z"
       },
       {
         "day": 125,
         "date": "2025-11-11T18:00:00.000Z",
         "rewardPool": 90552.56264502415,
-        "totalShares": 1827981213.741043,
+        "totalShares": 20980032272.219128,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-09-27T00:22:26.678Z"
+        "lastUpdated": "2026-07-29T23:50:07.034Z"
       },
       {
         "day": 126,
         "date": "2025-11-12T18:00:00.000Z",
         "rewardPool": 90480.12059490813,
-        "totalShares": 1814705854.446899,
+        "totalShares": 21063825800.092983,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-09-27T00:22:26.679Z"
+        "lastUpdated": "2026-07-29T23:50:07.035Z"
       },
       {
         "day": 127,
         "date": "2025-11-13T18:00:00.000Z",
         "rewardPool": 90407.7364984322,
-        "totalShares": 1809309788.909439,
+        "totalShares": 21147644424.603523,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-09-27T00:22:26.680Z"
+        "lastUpdated": "2026-07-29T23:50:07.036Z"
       },
       {
         "day": 128,
         "date": "2025-11-14T18:00:00.000Z",
         "rewardPool": 90335.41030923346,
-        "totalShares": 1804417196.1144278,
+        "totalShares": 21220191831.80851,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-09-27T00:22:26.681Z"
+        "lastUpdated": "2026-07-29T23:50:07.037Z"
       },
       {
         "day": 129,
         "date": "2025-11-15T18:00:00.000Z",
         "rewardPool": 90263.14198098607,
-        "totalShares": 1776980676.5572643,
+        "totalShares": 21591462896.251347,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-09-27T00:22:26.682Z"
+        "lastUpdated": "2026-07-29T23:50:07.037Z"
       },
       {
         "day": 130,
         "date": "2025-11-16T18:00:00.000Z",
         "rewardPool": 90190.93146740127,
-        "totalShares": 1767833770.817482,
+        "totalShares": 21831299862.703568,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-09-27T00:22:26.682Z"
+        "lastUpdated": "2026-07-29T23:50:07.038Z"
       },
       {
         "day": 131,
         "date": "2025-11-17T18:00:00.000Z",
         "rewardPool": 90118.77872222735,
-        "totalShares": 1759317084.0847886,
+        "totalShares": 22095635878.95598,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-09-27T00:22:26.683Z"
+        "lastUpdated": "2026-07-29T23:50:07.039Z"
       },
       {
         "day": 132,
         "date": "2025-11-18T18:00:00.000Z",
         "rewardPool": 90046.68369924957,
-        "totalShares": 1751905634.2685895,
+        "totalShares": 22273360237.139782,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-09-27T00:22:26.683Z"
+        "lastUpdated": "2026-07-29T23:50:07.039Z"
       },
       {
         "day": 133,
         "date": "2025-11-19T18:00:00.000Z",
         "rewardPool": 89974.64635229016,
-        "totalShares": 1746224715.9019923,
+        "totalShares": 22370288464.88518,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-09-27T00:22:26.684Z"
+        "lastUpdated": "2026-07-29T23:50:07.040Z"
       },
       {
         "day": 134,
         "date": "2025-11-20T18:00:00.000Z",
         "rewardPool": 89902.66663520833,
-        "totalShares": 1728810720.0293913,
+        "totalShares": 22828743269.01258,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-09-27T00:22:26.685Z"
+        "lastUpdated": "2026-07-29T23:50:07.041Z"
       },
       {
         "day": 135,
         "date": "2025-11-21T18:00:00.000Z",
         "rewardPool": 89830.74450190016,
-        "totalShares": 1722686427.9883852,
+        "totalShares": 23870009953.867577,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-09-27T00:22:26.685Z"
+        "lastUpdated": "2026-07-29T23:50:07.041Z"
       },
       {
         "day": 136,
         "date": "2025-11-22T18:00:00.000Z",
         "rewardPool": 89758.87990629864,
-        "totalShares": 1717455270.741755,
+        "totalShares": 23984415852.620945,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-09-27T00:22:26.686Z"
+        "lastUpdated": "2026-07-29T23:50:07.042Z"
       },
       {
         "day": 137,
         "date": "2025-11-23T18:00:00.000Z",
         "rewardPool": 89687.0728023736,
-        "totalShares": 1705049310.471201,
+        "totalShares": 24100168151.67839,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-09-27T00:22:26.686Z"
+        "lastUpdated": "2026-07-29T23:50:07.043Z"
       },
       {
         "day": 138,
         "date": "2025-11-24T18:00:00.000Z",
         "rewardPool": 89615.3231441317,
-        "totalShares": 1696590623.1534362,
+        "totalShares": 24225257516.712624,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-09-27T00:22:26.687Z"
+        "lastUpdated": "2026-07-29T23:50:07.044Z"
       },
       {
         "day": 139,
         "date": "2025-11-25T18:00:00.000Z",
         "rewardPool": 89543.6308856164,
-        "totalShares": 1674723308.7847357,
+        "totalShares": 24325292602.919926,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-09-27T00:22:26.688Z"
+        "lastUpdated": "2026-07-29T23:50:07.045Z"
       },
       {
         "day": 140,
         "date": "2025-11-26T18:00:00.000Z",
         "rewardPool": 89471.9959809079,
-        "totalShares": 1639583710.1381392,
+        "totalShares": 24453948555.31333,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-09-27T00:22:26.690Z"
+        "lastUpdated": "2026-07-29T23:50:07.045Z"
       },
       {
         "day": 141,
         "date": "2025-11-27T18:00:00.000Z",
         "rewardPool": 89400.41838412317,
-        "totalShares": 1606810491.5538607,
+        "totalShares": 24613770978.64905,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-09-27T00:22:26.691Z"
+        "lastUpdated": "2026-07-29T23:50:07.046Z"
       },
       {
         "day": 142,
         "date": "2025-11-28T18:00:00.000Z",
         "rewardPool": 89328.89804941587,
-        "totalShares": 1596345463.987933,
+        "totalShares": 24733774013.291122,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-09-27T00:22:26.692Z"
+        "lastUpdated": "2026-07-29T23:50:07.047Z"
       },
       {
         "day": 143,
         "date": "2025-11-29T18:00:00.000Z",
         "rewardPool": 89257.43493097633,
-        "totalShares": 1569792768.0627887,
+        "totalShares": 24816712757.621983,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-09-27T00:22:26.694Z"
+        "lastUpdated": "2026-07-29T23:50:07.048Z"
       },
       {
         "day": 144,
         "date": "2025-11-30T18:00:00.000Z",
         "rewardPool": 89186.02898303155,
-        "totalShares": 1558787153.6020827,
+        "totalShares": 24964879835.961277,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-09-27T00:22:26.695Z"
+        "lastUpdated": "2026-07-29T23:50:07.049Z"
       },
       {
         "day": 145,
         "date": "2025-12-01T18:00:00.000Z",
         "rewardPool": 89114.68015984511,
-        "totalShares": 1550424989.9914064,
+        "totalShares": 24976173067.2306,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-09-27T00:22:26.696Z"
+        "lastUpdated": "2026-07-29T23:50:07.049Z"
       },
       {
         "day": 146,
         "date": "2025-12-02T18:00:00.000Z",
         "rewardPool": 89043.38841571723,
-        "totalShares": 1510573395.3838325,
+        "totalShares": 24982099400.687023,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-09-27T00:22:26.697Z"
+        "lastUpdated": "2026-07-29T23:50:07.050Z"
       },
       {
         "day": 147,
         "date": "2025-12-03T18:00:00.000Z",
         "rewardPool": 88972.15370498465,
-        "totalShares": 1469073836.8164558,
+        "totalShares": 24951054242.119648,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-09-27T00:22:26.698Z"
+        "lastUpdated": "2026-07-29T23:50:07.052Z"
       },
       {
         "day": 148,
         "date": "2025-12-04T18:00:00.000Z",
         "rewardPool": 88900.97598202067,
-        "totalShares": 1440951729.7507122,
+        "totalShares": 25145835864.717907,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-09-27T00:22:26.699Z"
+        "lastUpdated": "2026-07-29T23:50:07.053Z"
       },
       {
         "day": 149,
         "date": "2025-12-05T18:00:00.000Z",
         "rewardPool": 88829.85520123506,
-        "totalShares": 1342303036.8673797,
+        "totalShares": 25348088302.394577,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-09-27T00:22:26.700Z"
+        "lastUpdated": "2026-07-29T23:50:07.053Z"
       },
       {
         "day": 150,
         "date": "2025-12-06T18:00:00.000Z",
         "rewardPool": 88758.79131707406,
-        "totalShares": 1298518460.8673797,
+        "totalShares": 25307666813.946575,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-09-27T00:22:26.701Z"
+        "lastUpdated": "2026-07-29T23:50:07.054Z"
       },
       {
         "day": 151,
         "date": "2025-12-07T18:00:00.000Z",
         "rewardPool": 88687.78428402041,
-        "totalShares": 1277862885.4115887,
+        "totalShares": 25500291615.514786,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-09-27T00:22:26.701Z"
+        "lastUpdated": "2026-07-29T23:50:07.055Z"
       },
       {
         "day": 152,
         "date": "2025-12-08T18:00:00.000Z",
         "rewardPool": 88616.83405659319,
-        "totalShares": 1258969178.0187674,
+        "totalShares": 25648804858.073967,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-09-27T00:22:26.702Z"
+        "lastUpdated": "2026-07-29T23:50:07.055Z"
       },
       {
         "day": 153,
         "date": "2025-12-09T18:00:00.000Z",
         "rewardPool": 88545.94058934791,
-        "totalShares": 1248479748.027776,
+        "totalShares": 25804515258.80298,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-09-27T00:22:26.702Z"
+        "lastUpdated": "2026-07-29T23:50:07.056Z"
       },
       {
         "day": 154,
         "date": "2025-12-10T18:00:00.000Z",
         "rewardPool": 88475.10383687643,
-        "totalShares": 1216529918.7319832,
+        "totalShares": 25933462904.707184,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-09-27T00:22:26.703Z"
+        "lastUpdated": "2026-07-29T23:50:07.057Z"
       },
       {
         "day": 155,
         "date": "2025-12-11T18:00:00.000Z",
         "rewardPool": 88404.32375380692,
-        "totalShares": 1184244260.2574573,
+        "totalShares": 25927468126.23266,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-09-27T00:22:26.703Z"
+        "lastUpdated": "2026-07-29T23:50:07.058Z"
       },
       {
         "day": 156,
         "date": "2025-12-12T18:00:00.000Z",
         "rewardPool": 88333.60029480388,
-        "totalShares": 1175635996.525856,
+        "totalShares": 25992396112.10106,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-09-27T00:22:26.704Z"
+        "lastUpdated": "2026-07-29T23:50:07.058Z"
       },
       {
         "day": 157,
         "date": "2025-12-13T18:00:00.000Z",
         "rewardPool": 88262.93341456803,
-        "totalShares": 1139517980.525856,
+        "totalShares": 26083450030.18106,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-09-27T00:22:26.706Z"
+        "lastUpdated": "2026-07-29T23:50:07.059Z"
       },
       {
         "day": 158,
         "date": "2025-12-14T18:00:00.000Z",
         "rewardPool": 88192.32306783638,
-        "totalShares": 1052261792.9501848,
+        "totalShares": 26053491698.60539,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-09-27T00:22:26.708Z"
+        "lastUpdated": "2026-07-29T23:50:07.060Z"
       },
       {
         "day": 159,
         "date": "2025-12-15T18:00:00.000Z",
         "rewardPool": 88121.76920938211,
-        "totalShares": 1025800544.9501848,
+        "totalShares": 26048427882.76539,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-09-27T00:22:26.710Z"
+        "lastUpdated": "2026-07-29T23:50:07.061Z"
       },
       {
         "day": 160,
         "date": "2025-12-16T18:00:00.000Z",
         "rewardPool": 88051.2717940146,
-        "totalShares": 949149627.5887055,
+        "totalShares": 26412468358.107914,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-09-27T00:22:26.710Z"
+        "lastUpdated": "2026-07-29T23:50:07.061Z"
       },
       {
         "day": 161,
         "date": "2025-12-17T18:00:00.000Z",
         "rewardPool": 87980.83077657939,
-        "totalShares": 884438253.276948,
+        "totalShares": 26433321494.860153,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-09-27T00:22:26.711Z"
+        "lastUpdated": "2026-07-29T23:50:07.062Z"
       },
       {
         "day": 162,
         "date": "2025-12-18T18:00:00.000Z",
         "rewardPool": 87910.44611195812,
-        "totalShares": 840286487.5477035,
+        "totalShares": 26443109692.714912,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-09-27T00:22:26.712Z"
+        "lastUpdated": "2026-07-29T23:50:07.063Z"
       },
       {
         "day": 163,
         "date": "2025-12-19T18:00:00.000Z",
         "rewardPool": 87840.11775506855,
-        "totalShares": 774983163,
+        "totalShares": 26388493206.69521,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-09-27T00:22:26.712Z"
+        "lastUpdated": "2026-07-29T23:50:07.064Z"
       },
       {
         "day": 164,
         "date": "2025-12-20T18:00:00.000Z",
         "rewardPool": 87769.84566086449,
-        "totalShares": 721160000,
+        "totalShares": 26387551419.95121,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-09-27T00:22:26.713Z"
+        "lastUpdated": "2026-07-29T23:50:07.064Z"
       },
       {
         "day": 165,
         "date": "2025-12-21T18:00:00.000Z",
         "rewardPool": 87699.6297843358,
-        "totalShares": 625467392,
+        "totalShares": 26625286038.735207,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-09-27T00:22:26.713Z"
+        "lastUpdated": "2026-07-29T23:50:07.065Z"
       },
       {
         "day": 166,
         "date": "2025-12-22T18:00:00.000Z",
         "rewardPool": 87629.47008050833,
-        "totalShares": 323358464,
+        "totalShares": 26467943905.9352,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-09-27T00:22:26.714Z"
+        "lastUpdated": "2026-07-29T23:50:07.066Z"
       },
       {
         "day": 167,
         "date": "2025-12-23T18:00:00.000Z",
         "rewardPool": 87559.36650444391,
-        "totalShares": 56174976,
+        "totalShares": 26366260128.8152,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-09-27T00:22:26.715Z"
+        "lastUpdated": "2026-07-29T23:50:07.067Z"
       },
       {
         "day": 168,
         "date": "2025-12-24T18:00:00.000Z",
         "rewardPool": 87489.31901124035,
-        "totalShares": 0,
+        "totalShares": 26466122701.167202,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-09-27T18:05:05.293Z"
+        "lastUpdated": "2026-07-29T23:50:07.067Z"
       },
       {
         "day": 169,
         "date": "2025-12-25T18:00:00.000Z",
         "rewardPool": 87419.32755603136,
-        "totalShares": 0,
+        "totalShares": 26359307442.29518,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-09-28T18:05:04.662Z"
+        "lastUpdated": "2026-07-29T23:50:07.068Z"
       },
       {
         "day": 170,
         "date": "2025-12-26T18:00:00.000Z",
         "rewardPool": 87349.39209398653,
-        "totalShares": 0,
+        "totalShares": 26346872946.29518,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-09-29T18:05:03.840Z"
+        "lastUpdated": "2026-07-29T23:50:07.069Z"
       },
       {
         "day": 171,
         "date": "2025-12-27T18:00:00.000Z",
         "rewardPool": 87279.51258031135,
-        "totalShares": 0,
+        "totalShares": 26462412664.31118,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-09-30T18:05:05.578Z"
+        "lastUpdated": "2026-07-29T23:50:07.070Z"
       },
       {
         "day": 172,
         "date": "2025-12-28T18:00:00.000Z",
         "rewardPool": 87209.6889702471,
-        "totalShares": 0,
+        "totalShares": 26308818433.39118,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-10-01T18:05:05.440Z"
+        "lastUpdated": "2026-07-29T23:50:07.070Z"
       },
       {
         "day": 173,
         "date": "2025-12-29T18:00:00.000Z",
         "rewardPool": 87139.9212190709,
-        "totalShares": 0,
+        "totalShares": 26351119841.455177,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-10-02T18:05:04.260Z"
+        "lastUpdated": "2026-07-29T23:50:07.071Z"
       },
       {
         "day": 174,
         "date": "2025-12-30T18:00:00.000Z",
         "rewardPool": 87070.20928209563,
-        "totalShares": 0,
+        "totalShares": 26745276845.295177,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-10-03T18:05:03.583Z"
+        "lastUpdated": "2026-07-29T23:50:07.072Z"
       },
       {
         "day": 175,
         "date": "2025-12-31T18:00:00.000Z",
         "rewardPool": 87000.55311466995,
-        "totalShares": 0,
+        "totalShares": 26564886928.73518,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-10-04T18:05:03.907Z"
+        "lastUpdated": "2026-07-29T23:50:07.072Z"
       },
       {
         "day": 176,
         "date": "2026-01-01T18:00:00.000Z",
         "rewardPool": 86930.95267217822,
-        "totalShares": 0,
+        "totalShares": 26531268114.33518,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-10-05T18:05:03.502Z"
+        "lastUpdated": "2026-07-29T23:50:07.073Z"
       },
       {
         "day": 177,
         "date": "2026-01-02T18:00:00.000Z",
         "rewardPool": 86861.40791004048,
-        "totalShares": 0,
+        "totalShares": 26746293152.607174,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-10-06T18:05:08.517Z"
+        "lastUpdated": "2026-07-29T23:50:07.074Z"
       },
       {
         "day": 178,
         "date": "2026-01-03T18:00:00.000Z",
         "rewardPool": 86791.91878371245,
-        "totalShares": 0,
+        "totalShares": 26822851986.07917,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-10-07T18:05:07.928Z"
+        "lastUpdated": "2026-07-29T23:50:07.074Z"
       },
       {
         "day": 179,
         "date": "2026-01-04T18:00:00.000Z",
         "rewardPool": 86722.48524868548,
-        "totalShares": 0,
+        "totalShares": 26772113248.42917,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-10-08T18:05:10.564Z"
+        "lastUpdated": "2026-07-29T23:50:07.075Z"
       },
       {
         "day": 180,
         "date": "2026-01-05T18:00:00.000Z",
         "rewardPool": 86653.10726048653,
-        "totalShares": 0,
+        "totalShares": 26803234061.229168,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-10-09T18:00:42.480Z"
+        "lastUpdated": "2026-07-29T23:50:07.076Z"
       },
       {
         "day": 181,
         "date": "2026-01-06T18:00:00.000Z",
         "rewardPool": 86583.78477467815,
-        "totalShares": 0,
+        "totalShares": 27019601312.813168,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-10-10T18:05:07.249Z"
+        "lastUpdated": "2026-07-29T23:50:07.077Z"
       },
       {
         "day": 182,
         "date": "2026-01-07T18:00:00.000Z",
         "rewardPool": 86514.5177468584,
-        "totalShares": 0,
+        "totalShares": 27308320570.54117,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-10-11T18:10:12.054Z"
+        "lastUpdated": "2026-07-29T23:50:07.078Z"
       },
       {
         "day": 183,
         "date": "2026-01-08T18:00:00.000Z",
         "rewardPool": 86445.30613266092,
-        "totalShares": 0,
+        "totalShares": 27154710586.54117,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-10-12T18:10:10.750Z"
+        "lastUpdated": "2026-07-29T23:50:07.078Z"
       },
       {
         "day": 184,
         "date": "2026-01-09T18:00:00.000Z",
         "rewardPool": 86376.14988775479,
-        "totalShares": 0,
+        "totalShares": 26845668470.829166,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-10-13T18:10:11.394Z"
+        "lastUpdated": "2026-07-29T23:50:07.079Z"
       },
       {
         "day": 185,
         "date": "2026-01-10T18:00:00.000Z",
         "rewardPool": 86307.04896784457,
-        "totalShares": 0,
+        "totalShares": 26408319530.401638,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-10-14T18:00:15.317Z"
+        "lastUpdated": "2026-07-29T23:50:07.080Z"
       },
       {
         "day": 186,
         "date": "2026-01-11T18:00:00.000Z",
         "rewardPool": 86238.0033286703,
-        "totalShares": 0,
+        "totalShares": 26029529514.40163,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-10-15T18:05:42.745Z"
+        "lastUpdated": "2026-07-29T23:50:07.081Z"
       },
       {
         "day": 187,
         "date": "2026-01-12T18:00:00.000Z",
         "rewardPool": 86169.01292600736,
-        "totalShares": 0,
+        "totalShares": 25948131919.96963,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-10-16T18:05:05.143Z"
+        "lastUpdated": "2026-07-29T23:50:07.081Z"
       },
       {
         "day": 188,
         "date": "2026-01-13T18:00:00.000Z",
         "rewardPool": 86100.07771566656,
-        "totalShares": 0,
+        "totalShares": 25559706692.632668,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-10-17T18:01:53.323Z"
+        "lastUpdated": "2026-07-29T23:50:07.082Z"
       },
       {
         "day": 189,
         "date": "2026-01-14T18:00:00.000Z",
         "rewardPool": 86031.19765349402,
-        "totalShares": 0,
+        "totalShares": 25515090483.470116,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-10-18T18:05:08.783Z"
+        "lastUpdated": "2026-07-29T23:50:07.083Z"
       },
       {
         "day": 190,
         "date": "2026-01-15T18:00:00.000Z",
         "rewardPool": 85962.37269537122,
-        "totalShares": 0,
+        "totalShares": 25102108810.19012,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-10-20T16:10:20.638Z"
+        "lastUpdated": "2026-07-29T23:50:07.083Z"
       },
       {
         "day": 191,
         "date": "2026-01-16T18:00:00.000Z",
         "rewardPool": 85893.60279721492,
-        "totalShares": 0,
+        "totalShares": 24928416280.014122,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-10-20T18:05:19.552Z"
+        "lastUpdated": "2026-07-29T23:50:07.084Z"
       },
       {
         "day": 192,
         "date": "2026-01-17T18:00:00.000Z",
         "rewardPool": 85824.88791497714,
-        "totalShares": 0,
+        "totalShares": 24515128354.766125,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-10-21T18:05:11.389Z"
+        "lastUpdated": "2026-07-29T23:50:07.085Z"
       },
       {
         "day": 193,
         "date": "2026-01-18T18:00:00.000Z",
         "rewardPool": 85756.22800464515,
-        "totalShares": 0,
+        "totalShares": 23640424860.750137,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-10-22T18:05:11.655Z"
+        "lastUpdated": "2026-07-29T23:50:07.085Z"
       },
       {
         "day": 194,
         "date": "2026-01-19T18:00:00.000Z",
         "rewardPool": 85687.62302224143,
-        "totalShares": 0,
+        "totalShares": 23389619932.750134,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-10-23T18:05:03.865Z"
+        "lastUpdated": "2026-07-29T23:50:07.086Z"
       },
       {
         "day": 195,
         "date": "2026-01-20T18:00:00.000Z",
         "rewardPool": 85619.07292382364,
-        "totalShares": 0,
+        "totalShares": 23174775585.230137,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-10-24T18:05:04.045Z"
+        "lastUpdated": "2026-07-29T23:50:07.087Z"
       },
       {
         "day": 196,
         "date": "2026-01-21T18:00:00.000Z",
         "rewardPool": 85550.57766548458,
-        "totalShares": 0,
+        "totalShares": 21923045840.91015,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-10-25T18:05:04.699Z"
+        "lastUpdated": "2026-07-29T23:50:07.088Z"
       },
       {
         "day": 197,
         "date": "2026-01-22T18:00:00.000Z",
         "rewardPool": 85482.13720335219,
-        "totalShares": 0,
+        "totalShares": 20998147969.16615,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-10-26T18:05:04.586Z"
+        "lastUpdated": "2026-07-29T23:50:07.089Z"
       },
       {
         "day": 198,
         "date": "2026-01-23T18:00:00.000Z",
         "rewardPool": 85413.7514935895,
-        "totalShares": 0,
+        "totalShares": 20891875198.60615,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-10-27T18:05:10.213Z"
+        "lastUpdated": "2026-07-29T23:50:07.089Z"
       },
       {
         "day": 199,
         "date": "2026-01-24T18:00:00.000Z",
         "rewardPool": 85345.42049239462,
-        "totalShares": 0,
+        "totalShares": 20833045532.94215,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-10-28T18:05:10.080Z"
+        "lastUpdated": "2026-07-29T23:50:07.090Z"
       },
       {
         "day": 200,
         "date": "2026-01-25T18:00:00.000Z",
         "rewardPool": 85277.14415600071,
-        "totalShares": 0,
+        "totalShares": 20648101148.878147,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-10-29T18:05:03.486Z"
+        "lastUpdated": "2026-07-29T23:50:07.090Z"
       },
       {
         "day": 201,
         "date": "2026-01-26T18:00:00.000Z",
         "rewardPool": 85208.9224406759,
-        "totalShares": 0,
+        "totalShares": 20429500210.190147,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-10-30T18:05:05.530Z"
+        "lastUpdated": "2026-07-29T23:50:07.091Z"
       },
       {
         "day": 202,
         "date": "2026-01-27T18:00:00.000Z",
         "rewardPool": 85140.75530272337,
-        "totalShares": 0,
+        "totalShares": 19919270561.998146,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-10-31T18:10:12.553Z"
+        "lastUpdated": "2026-07-29T23:50:07.092Z"
       },
       {
         "day": 203,
         "date": "2026-01-28T18:00:00.000Z",
         "rewardPool": 85072.64269848118,
-        "totalShares": 0,
+        "totalShares": 19691808040.20615,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-11-01T18:05:03.842Z"
+        "lastUpdated": "2026-07-29T23:50:07.093Z"
       },
       {
         "day": 204,
         "date": "2026-01-29T18:00:00.000Z",
         "rewardPool": 85004.5845843224,
-        "totalShares": 0,
+        "totalShares": 19441414303.11815,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-11-02T18:05:03.984Z"
+        "lastUpdated": "2026-07-29T23:50:07.094Z"
       },
       {
         "day": 205,
         "date": "2026-01-30T18:00:00.000Z",
         "rewardPool": 84936.58091665493,
-        "totalShares": 0,
+        "totalShares": 19466065484.04615,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-11-03T18:05:04.341Z"
+        "lastUpdated": "2026-07-29T23:50:07.094Z"
       },
       {
         "day": 206,
         "date": "2026-01-31T18:00:00.000Z",
         "rewardPool": 84868.6316519216,
-        "totalShares": 0,
+        "totalShares": 19511465086.73415,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-11-04T18:05:03.453Z"
+        "lastUpdated": "2026-07-29T23:50:07.095Z"
       },
       {
         "day": 207,
         "date": "2026-02-01T18:00:00.000Z",
         "rewardPool": 84800.73674660007,
-        "totalShares": 0,
+        "totalShares": 19492088222.656403,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-11-05T18:05:04.816Z"
+        "lastUpdated": "2026-07-29T23:50:07.096Z"
       },
       {
         "day": 208,
         "date": "2026-02-02T18:00:00.000Z",
         "rewardPool": 84732.89615720279,
-        "totalShares": 0,
+        "totalShares": 18645097771.008396,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-11-06T18:05:03.811Z"
+        "lastUpdated": "2026-07-29T23:50:07.096Z"
       },
       {
         "day": 209,
         "date": "2026-02-03T18:00:00.000Z",
         "rewardPool": 84665.10984027703,
-        "totalShares": 0,
+        "totalShares": 19049432091.200397,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-11-07T18:05:04.288Z"
+        "lastUpdated": "2026-07-29T23:50:07.097Z"
       },
       {
         "day": 210,
         "date": "2026-02-04T18:00:00.000Z",
         "rewardPool": 84597.3777524048,
-        "totalShares": 0,
+        "totalShares": 18583243291.200397,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-11-08T18:05:03.724Z"
+        "lastUpdated": "2026-07-29T23:50:07.098Z"
       },
       {
         "day": 211,
         "date": "2026-02-05T18:00:00.000Z",
         "rewardPool": 84529.69985020287,
-        "totalShares": 0,
+        "totalShares": 18352991171.520397,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-11-09T18:05:04.491Z"
+        "lastUpdated": "2026-07-29T23:50:07.098Z"
       },
       {
         "day": 212,
         "date": "2026-02-06T18:00:00.000Z",
         "rewardPool": 84462.0760903227,
-        "totalShares": 0,
+        "totalShares": 18379725612.352398,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-11-10T18:05:04.070Z"
+        "lastUpdated": "2026-07-29T23:50:07.099Z"
       },
       {
         "day": 213,
         "date": "2026-02-07T18:00:00.000Z",
         "rewardPool": 84394.50642945044,
-        "totalShares": 0,
+        "totalShares": 18076215949.632397,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-11-11T18:05:04.668Z"
+        "lastUpdated": "2026-07-29T23:50:07.100Z"
       },
       {
         "day": 214,
         "date": "2026-02-08T18:00:00.000Z",
         "rewardPool": 84326.99082430688,
-        "totalShares": 0,
+        "totalShares": 17979147062.464397,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-11-12T18:05:04.729Z"
+        "lastUpdated": "2026-07-29T23:50:07.101Z"
       },
       {
         "day": 215,
         "date": "2026-02-09T18:00:00.000Z",
         "rewardPool": 84259.52923164744,
-        "totalShares": 0,
+        "totalShares": 17942594716.4804,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-11-13T18:05:04.810Z"
+        "lastUpdated": "2026-07-29T23:50:07.101Z"
       },
       {
         "day": 216,
         "date": "2026-02-10T18:00:00.000Z",
         "rewardPool": 84192.12160826211,
-        "totalShares": 0,
+        "totalShares": 18052675676.4804,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-11-14T18:05:07.900Z"
+        "lastUpdated": "2026-07-29T23:50:07.102Z"
       },
       {
         "day": 217,
         "date": "2026-02-11T18:00:00.000Z",
         "rewardPool": 84124.7679109755,
-        "totalShares": 0,
+        "totalShares": 17653968092.4804,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-11-15T18:05:04.692Z"
+        "lastUpdated": "2026-07-29T23:50:07.103Z"
       },
       {
         "day": 218,
         "date": "2026-02-12T18:00:00.000Z",
         "rewardPool": 84057.46809664671,
-        "totalShares": 0,
+        "totalShares": 17457197861.5044,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-11-16T18:05:04.808Z"
+        "lastUpdated": "2026-07-29T23:50:07.103Z"
       },
       {
         "day": 219,
         "date": "2026-02-13T18:00:00.000Z",
         "rewardPool": 83990.22212216939,
-        "totalShares": 0,
+        "totalShares": 17301155995.25529,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-11-17T18:05:03.885Z"
+        "lastUpdated": "2026-07-29T23:50:07.104Z"
       },
       {
         "day": 220,
         "date": "2026-02-14T18:00:00.000Z",
         "rewardPool": 83923.02994447165,
-        "totalShares": 0,
+        "totalShares": 17488336219.255287,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-11-18T18:05:04.702Z"
+        "lastUpdated": "2026-07-29T23:50:07.105Z"
       },
       {
         "day": 221,
         "date": "2026-02-15T18:00:00.000Z",
         "rewardPool": 83855.89152051607,
-        "totalShares": 0,
+        "totalShares": 17385727073.143288,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-11-19T18:05:04.922Z"
+        "lastUpdated": "2026-07-29T23:50:07.106Z"
       },
       {
         "day": 222,
         "date": "2026-02-16T18:00:00.000Z",
         "rewardPool": 83788.80680729965,
-        "totalShares": 0,
+        "totalShares": 16929218273.143288,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-11-20T18:05:04.110Z"
+        "lastUpdated": "2026-07-29T23:50:07.107Z"
       },
       {
         "day": 223,
         "date": "2026-02-17T18:00:00.000Z",
         "rewardPool": 83721.77576185382,
-        "totalShares": 0,
+        "totalShares": 15948619296.247292,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-11-21T18:05:04.153Z"
+        "lastUpdated": "2026-07-29T23:50:07.107Z"
       },
       {
         "day": 224,
         "date": "2026-02-18T18:00:00.000Z",
         "rewardPool": 83654.79834124433,
-        "totalShares": 0,
+        "totalShares": 15878644512.24729,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-11-22T18:05:04.695Z"
+        "lastUpdated": "2026-07-29T23:50:07.108Z"
       },
       {
         "day": 225,
         "date": "2026-02-19T18:00:00.000Z",
         "rewardPool": 83587.87450257133,
-        "totalShares": 0,
+        "totalShares": 15903043052.91929,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-11-23T18:05:04.685Z"
+        "lastUpdated": "2026-07-29T23:50:07.109Z"
       },
       {
         "day": 226,
         "date": "2026-02-20T18:00:00.000Z",
         "rewardPool": 83521.00420296927,
-        "totalShares": 0,
+        "totalShares": 17312043230.647293,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-11-24T18:05:04.576Z"
+        "lastUpdated": "2026-07-29T23:50:07.110Z"
       },
       {
         "day": 227,
         "date": "2026-02-21T18:00:00.000Z",
         "rewardPool": 83454.18739960689,
-        "totalShares": 0,
+        "totalShares": 17259210743.159294,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-11-25T18:05:04.150Z"
+        "lastUpdated": "2026-07-29T23:50:07.111Z"
       },
       {
         "day": 228,
         "date": "2026-02-22T18:00:00.000Z",
         "rewardPool": 83387.42404968721,
-        "totalShares": 0,
+        "totalShares": 17111322343.86329,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-11-26T18:05:04.581Z"
+        "lastUpdated": "2026-07-29T23:50:07.111Z"
       },
       {
         "day": 229,
         "date": "2026-02-23T18:00:00.000Z",
         "rewardPool": 83320.71411044746,
-        "totalShares": 0,
+        "totalShares": 17044512672.055292,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-11-27T18:05:04.647Z"
+        "lastUpdated": "2026-07-29T23:50:07.112Z"
       },
       {
         "day": 230,
         "date": "2026-02-24T18:00:00.000Z",
         "rewardPool": 83254.0575391591,
-        "totalShares": 0,
+        "totalShares": 16914044609.847292,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-11-28T18:05:04.505Z"
+        "lastUpdated": "2026-07-29T23:50:07.113Z"
       },
       {
         "day": 231,
         "date": "2026-02-25T18:00:00.000Z",
         "rewardPool": 83187.45429312777,
-        "totalShares": 0,
+        "totalShares": 16844575354.167294,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-11-29T18:05:04.124Z"
+        "lastUpdated": "2026-07-29T23:50:07.113Z"
       },
       {
         "day": 232,
         "date": "2026-02-26T18:00:00.000Z",
         "rewardPool": 83120.90432969327,
-        "totalShares": 0,
+        "totalShares": 16715217061.367292,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-11-30T18:05:03.641Z"
+        "lastUpdated": "2026-07-29T23:50:07.114Z"
       },
       {
         "day": 233,
         "date": "2026-02-27T18:00:00.000Z",
         "rewardPool": 83054.4076062295,
-        "totalShares": 0,
+        "totalShares": 16745654675.255293,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-12-01T18:05:04.354Z"
+        "lastUpdated": "2026-07-29T23:50:07.115Z"
       },
       {
         "day": 234,
         "date": "2026-02-28T18:00:00.000Z",
         "rewardPool": 82987.96408014452,
-        "totalShares": 0,
+        "totalShares": 16715976523.191294,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-12-02T18:05:04.503Z"
+        "lastUpdated": "2026-07-29T23:50:07.116Z"
       },
       {
         "day": 235,
         "date": "2026-03-01T18:00:00.000Z",
         "rewardPool": 82921.5737088804,
-        "totalShares": 0,
+        "totalShares": 16852820747.191294,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-12-03T18:05:04.071Z"
+        "lastUpdated": "2026-07-29T23:50:07.117Z"
       },
       {
         "day": 236,
         "date": "2026-03-02T18:00:00.000Z",
         "rewardPool": 82855.2364499133,
-        "totalShares": 0,
+        "totalShares": 17139898137.527294,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-12-04T18:05:04.831Z"
+        "lastUpdated": "2026-07-29T23:50:07.117Z"
       },
       {
         "day": 237,
         "date": "2026-03-03T18:00:00.000Z",
         "rewardPool": 82788.95226075336,
-        "totalShares": 0,
+        "totalShares": 17100947908.407293,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-12-05T18:10:05.246Z"
+        "lastUpdated": "2026-07-29T23:50:07.118Z"
       },
       {
         "day": 238,
         "date": "2026-03-04T18:00:00.000Z",
         "rewardPool": 82722.72109894475,
-        "totalShares": 0,
+        "totalShares": 17255035828.855293,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-12-06T18:15:07.368Z"
+        "lastUpdated": "2026-07-29T23:50:07.119Z"
       },
       {
         "day": 239,
         "date": "2026-03-05T18:00:00.000Z",
         "rewardPool": 82656.5429220656,
-        "totalShares": 0,
+        "totalShares": 17423799086.19929,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-12-07T18:05:05.009Z"
+        "lastUpdated": "2026-07-29T23:50:07.120Z"
       },
       {
         "day": 240,
         "date": "2026-03-06T18:00:00.000Z",
         "rewardPool": 82590.41768772794,
-        "totalShares": 0,
+        "totalShares": 18110818221.815292,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-12-08T18:05:11.465Z"
+        "lastUpdated": "2026-07-29T23:50:07.120Z"
       },
       {
         "day": 241,
         "date": "2026-03-07T18:00:00.000Z",
         "rewardPool": 82524.34535357775,
-        "totalShares": 0,
+        "totalShares": 17948490391.09529,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-12-09T18:05:04.241Z"
+        "lastUpdated": "2026-07-29T23:50:07.121Z"
       },
       {
         "day": 242,
         "date": "2026-03-08T18:00:00.000Z",
         "rewardPool": 82458.32587729489,
-        "totalShares": 0,
+        "totalShares": 17934875641.463295,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-12-10T18:05:04.150Z"
+        "lastUpdated": "2026-07-29T23:50:07.122Z"
       },
       {
         "day": 243,
         "date": "2026-03-09T18:00:00.000Z",
         "rewardPool": 82392.35921659305,
-        "totalShares": 0,
+        "totalShares": 18303892729.463295,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-12-11T18:05:04.424Z"
+        "lastUpdated": "2026-07-29T23:50:07.122Z"
       },
       {
         "day": 244,
         "date": "2026-03-10T18:00:00.000Z",
         "rewardPool": 82326.44532921977,
-        "totalShares": 0,
+        "totalShares": 18982895167.863293,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-12-12T18:05:04.271Z"
+        "lastUpdated": "2026-07-29T23:50:07.123Z"
       },
       {
         "day": 245,
         "date": "2026-03-11T18:00:00.000Z",
         "rewardPool": 82260.5841729564,
-        "totalShares": 0,
+        "totalShares": 19068600377.783295,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-12-13T18:05:05.305Z"
+        "lastUpdated": "2026-07-29T23:50:07.124Z"
       },
       {
         "day": 246,
         "date": "2026-03-12T18:00:00.000Z",
         "rewardPool": 82194.77570561803,
-        "totalShares": 0,
+        "totalShares": 19022858908.471294,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-12-14T18:05:05.247Z"
+        "lastUpdated": "2026-07-29T23:50:07.125Z"
       },
       {
         "day": 247,
         "date": "2026-03-13T18:00:00.000Z",
         "rewardPool": 82129.01988505354,
-        "totalShares": 0,
+        "totalShares": 19224822598.839294,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-12-15T18:05:04.954Z"
+        "lastUpdated": "2026-07-29T23:50:07.126Z"
       },
       {
         "day": 248,
         "date": "2026-03-14T18:00:00.000Z",
         "rewardPool": 82063.3166691455,
-        "totalShares": 0,
+        "totalShares": 18921101393.27129,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-12-16T18:05:03.902Z"
+        "lastUpdated": "2026-07-29T23:50:07.127Z"
       },
       {
         "day": 249,
         "date": "2026-03-15T18:00:00.000Z",
         "rewardPool": 81997.66601581017,
-        "totalShares": 0,
+        "totalShares": 18867993436.215294,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-12-18T04:48:37.892Z"
+        "lastUpdated": "2026-07-29T23:50:07.127Z"
       },
       {
         "day": 250,
         "date": "2026-03-16T18:00:00.000Z",
         "rewardPool": 81932.06788299752,
-        "totalShares": 0,
+        "totalShares": 18966898905.911293,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-12-18T19:15:08.699Z"
+        "lastUpdated": "2026-07-29T23:50:07.128Z"
       },
       {
         "day": 251,
         "date": "2026-03-17T18:00:00.000Z",
         "rewardPool": 81866.52222869112,
-        "totalShares": 0,
+        "totalShares": 19236921321.07929,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-12-19T18:01:33.891Z"
+        "lastUpdated": "2026-07-29T23:50:07.129Z"
       },
       {
         "day": 252,
         "date": "2026-03-18T18:00:00.000Z",
         "rewardPool": 81801.02901090815,
-        "totalShares": 0,
+        "totalShares": 19490244621.11129,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-12-20T18:05:10.956Z"
+        "lastUpdated": "2026-07-29T23:50:07.130Z"
       },
       {
         "day": 253,
         "date": "2026-03-19T18:00:00.000Z",
         "rewardPool": 81735.58818769942,
-        "totalShares": 0,
+        "totalShares": 19705090083.76729,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-12-21T18:00:10.520Z"
+        "lastUpdated": "2026-07-29T23:50:07.131Z"
       },
       {
         "day": 254,
         "date": "2026-03-20T18:00:00.000Z",
         "rewardPool": 81670.19971714927,
-        "totalShares": 0,
+        "totalShares": 19756044248.56729,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-12-22T18:05:09.872Z"
+        "lastUpdated": "2026-07-29T23:50:07.132Z"
       },
       {
         "day": 255,
         "date": "2026-03-21T18:00:00.000Z",
         "rewardPool": 81604.86355737555,
-        "totalShares": 0,
+        "totalShares": 19589822037.68729,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-12-24T21:51:17.591Z"
+        "lastUpdated": "2026-07-29T23:50:07.132Z"
       },
       {
         "day": 256,
         "date": "2026-03-22T18:00:00.000Z",
         "rewardPool": 81539.57966652964,
-        "totalShares": 0,
+        "totalShares": 19385767769.33529,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-12-24T21:51:17.591Z"
+        "lastUpdated": "2026-07-29T23:50:07.133Z"
       },
       {
         "day": 257,
         "date": "2026-03-23T18:00:00.000Z",
         "rewardPool": 81474.34800279641,
-        "totalShares": 0,
+        "totalShares": 19324550791.09529,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-12-25T18:05:04.286Z"
+        "lastUpdated": "2026-07-29T23:50:07.134Z"
       },
       {
         "day": 258,
         "date": "2026-03-24T18:00:00.000Z",
         "rewardPool": 81409.16852439418,
-        "totalShares": 0,
+        "totalShares": 19184810311.09529,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-12-26T18:02:54.847Z"
+        "lastUpdated": "2026-07-29T23:50:07.135Z"
       },
       {
         "day": 259,
         "date": "2026-03-25T18:00:00.000Z",
         "rewardPool": 81344.04118957467,
-        "totalShares": 0,
+        "totalShares": 18910998625.07929,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-12-27T18:05:04.559Z"
+        "lastUpdated": "2026-07-29T23:50:07.135Z"
       },
       {
         "day": 260,
         "date": "2026-03-26T18:00:00.000Z",
         "rewardPool": 81278.96595662301,
-        "totalShares": 0,
+        "totalShares": 18791048014.519287,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-12-28T18:05:04.317Z"
+        "lastUpdated": "2026-07-29T23:50:07.136Z"
       },
       {
         "day": 261,
         "date": "2026-03-27T18:00:00.000Z",
         "rewardPool": 81213.94278385771,
-        "totalShares": 0,
+        "totalShares": 18296437526.45529,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-12-29T18:05:03.976Z"
+        "lastUpdated": "2026-07-29T23:50:07.137Z"
       },
       {
         "day": 262,
         "date": "2026-03-28T18:00:00.000Z",
         "rewardPool": 81148.97162963063,
-        "totalShares": 0,
+        "totalShares": 17906556282.615295,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-12-30T18:05:03.137Z"
+        "lastUpdated": "2026-07-29T23:50:07.137Z"
       },
       {
         "day": 263,
         "date": "2026-03-29T18:00:00.000Z",
         "rewardPool": 81084.05245232693,
-        "totalShares": 0,
+        "totalShares": 18215344333.175293,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2025-12-31T18:05:01.914Z"
+        "lastUpdated": "2026-07-29T23:50:07.138Z"
       },
       {
         "day": 264,
         "date": "2026-03-30T18:00:00.000Z",
         "rewardPool": 81019.18521036506,
-        "totalShares": 0,
+        "totalShares": 18166360435.575294,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-01-01T18:05:02.296Z"
+        "lastUpdated": "2026-07-29T23:50:07.139Z"
       },
       {
         "day": 265,
         "date": "2026-03-31T18:00:00.000Z",
         "rewardPool": 80954.36986219676,
-        "totalShares": 0,
+        "totalShares": 17746315475.383293,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-01-02T18:05:02.431Z"
+        "lastUpdated": "2026-07-29T23:50:07.140Z"
       },
       {
         "day": 266,
         "date": "2026-04-01T18:00:00.000Z",
         "rewardPool": 80889.60636630701,
-        "totalShares": 0,
+        "totalShares": 17468348842.281296,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-01-03T18:05:01.943Z"
+        "lastUpdated": "2026-07-29T23:50:07.141Z"
       },
       {
         "day": 267,
         "date": "2026-04-02T18:00:00.000Z",
         "rewardPool": 80824.89468121396,
-        "totalShares": 0,
+        "totalShares": 18071734597.73729,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-01-04T18:04:21.163Z"
+        "lastUpdated": "2026-07-29T23:50:07.142Z"
       },
       {
         "day": 268,
         "date": "2026-04-03T18:00:00.000Z",
         "rewardPool": 80760.234765469,
-        "totalShares": 0,
+        "totalShares": 17555328280.937294,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-01-05T18:05:02.529Z"
+        "lastUpdated": "2026-07-29T23:50:07.142Z"
       },
       {
         "day": 269,
         "date": "2026-04-04T18:00:00.000Z",
         "rewardPool": 80695.62657765661,
-        "totalShares": 0,
+        "totalShares": 17028052485.737293,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-01-06T18:05:02.794Z"
+        "lastUpdated": "2026-07-29T23:50:07.143Z"
       },
       {
         "day": 270,
         "date": "2026-04-05T18:00:00.000Z",
         "rewardPool": 80631.07007639449,
-        "totalShares": 0,
+        "totalShares": 16423036626.025293,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-01-07T18:04:59.583Z"
+        "lastUpdated": "2026-07-29T23:50:07.144Z"
       },
       {
         "day": 271,
         "date": "2026-04-06T18:00:00.000Z",
         "rewardPool": 80566.56522033337,
-        "totalShares": 0,
+        "totalShares": 16335116601.129295,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-01-08T18:05:02.185Z"
+        "lastUpdated": "2026-07-29T23:50:07.145Z"
       },
       {
         "day": 272,
         "date": "2026-04-07T18:00:00.000Z",
         "rewardPool": 80502.1119681571,
-        "totalShares": 0,
+        "totalShares": 16429146417.449293,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-01-09T18:05:02.562Z"
+        "lastUpdated": "2026-07-29T23:50:07.145Z"
       },
       {
         "day": 273,
         "date": "2026-04-08T18:00:00.000Z",
         "rewardPool": 80437.71027858257,
-        "totalShares": 0,
+        "totalShares": 16660948034.089294,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-01-10T18:05:05.299Z"
+        "lastUpdated": "2026-07-29T23:50:07.146Z"
       },
       {
         "day": 274,
         "date": "2026-04-09T18:00:00.000Z",
         "rewardPool": 80373.3601103597,
-        "totalShares": 0,
+        "totalShares": 16487602140.841297,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-01-12T17:05:02.314Z"
+        "lastUpdated": "2026-07-29T23:50:07.147Z"
       },
       {
         "day": 275,
         "date": "2026-04-10T18:00:00.000Z",
         "rewardPool": 80309.0614222714,
-        "totalShares": 0,
+        "totalShares": 16343006583.273296,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-01-14T14:40:02.406Z"
+        "lastUpdated": "2026-07-29T23:50:07.147Z"
       },
       {
         "day": 276,
         "date": "2026-04-11T18:00:00.000Z",
         "rewardPool": 80244.81417313359,
-        "totalShares": 0,
+        "totalShares": 16513635682.610256,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-01-14T14:40:02.406Z"
+        "lastUpdated": "2026-07-29T23:50:07.148Z"
       },
       {
         "day": 277,
         "date": "2026-04-12T18:00:00.000Z",
         "rewardPool": 80180.61832179509,
-        "totalShares": 0,
+        "totalShares": 16222088997.554256,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-01-14T18:05:01.268Z"
+        "lastUpdated": "2026-07-29T23:50:07.149Z"
       },
       {
         "day": 278,
         "date": "2026-04-13T18:00:00.000Z",
         "rewardPool": 80116.47382713766,
-        "totalShares": 0,
+        "totalShares": 16147740750.834255,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-01-15T18:05:02.454Z"
+        "lastUpdated": "2026-07-29T23:50:07.149Z"
       },
       {
         "day": 279,
         "date": "2026-04-14T18:00:00.000Z",
         "rewardPool": 80052.38064807594,
-        "totalShares": 0,
+        "totalShares": 15928742785.010254,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-01-16T18:05:02.157Z"
+        "lastUpdated": "2026-07-29T23:50:07.150Z"
       },
       {
         "day": 280,
         "date": "2026-04-15T18:00:00.000Z",
         "rewardPool": 79988.33874355747,
-        "totalShares": 0,
+        "totalShares": 15659431648.498255,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-01-17T18:05:02.474Z"
+        "lastUpdated": "2026-07-29T23:50:07.151Z"
       },
       {
         "day": 281,
         "date": "2026-04-16T18:00:00.000Z",
         "rewardPool": 79924.34807256263,
-        "totalShares": 0,
+        "totalShares": 15371079270.514254,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-01-18T18:05:01.844Z"
+        "lastUpdated": "2026-07-29T23:50:07.152Z"
       },
       {
         "day": 282,
         "date": "2026-04-17T18:00:00.000Z",
         "rewardPool": 79860.40859410458,
-        "totalShares": 0,
+        "totalShares": 15371079270.514254,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-01-19T18:05:01.775Z"
+        "lastUpdated": "2026-07-29T23:50:07.152Z"
       },
       {
         "day": 283,
         "date": "2026-04-18T18:00:00.000Z",
         "rewardPool": 79796.5202672293,
-        "totalShares": 0,
+        "totalShares": 15371079270.514254,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-01-20T18:05:02.117Z"
+        "lastUpdated": "2026-07-29T23:50:07.153Z"
       },
       {
         "day": 284,
         "date": "2026-04-19T18:00:00.000Z",
         "rewardPool": 79732.68305101551,
-        "totalShares": 0,
+        "totalShares": 15217318510.834253,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-01-21T18:05:02.315Z"
+        "lastUpdated": "2026-07-29T23:50:07.154Z"
       },
       {
         "day": 285,
         "date": "2026-04-20T18:00:00.000Z",
         "rewardPool": 79668.89690457469,
-        "totalShares": 0,
+        "totalShares": 15115639790.834255,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-01-22T18:05:00.660Z"
+        "lastUpdated": "2026-07-29T23:50:07.155Z"
       },
       {
         "day": 286,
         "date": "2026-04-21T18:00:00.000Z",
         "rewardPool": 79605.16178705104,
-        "totalShares": 0,
+        "totalShares": 15106346990.834255,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-01-23T18:05:02.663Z"
+        "lastUpdated": "2026-07-29T23:50:07.155Z"
       },
       {
         "day": 287,
         "date": "2026-04-22T18:00:00.000Z",
         "rewardPool": 79541.47765762139,
-        "totalShares": 0,
+        "totalShares": 15250803319.026253,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-01-24T18:05:02.012Z"
+        "lastUpdated": "2026-07-29T23:50:07.156Z"
       },
       {
         "day": 288,
         "date": "2026-04-23T18:00:00.000Z",
         "rewardPool": 79477.8444754953,
-        "totalShares": 0,
+        "totalShares": 16206344245.234255,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-01-25T18:05:02.449Z"
+        "lastUpdated": "2026-07-29T23:50:07.157Z"
       },
       {
         "day": 289,
         "date": "2026-04-24T18:00:00.000Z",
         "rewardPool": 79414.2621999149,
-        "totalShares": 0,
+        "totalShares": 16160721762.482256,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-01-26T18:05:02.429Z"
+        "lastUpdated": "2026-07-29T23:50:07.157Z"
       },
       {
         "day": 290,
         "date": "2026-04-25T18:00:00.000Z",
         "rewardPool": 79350.73079015496,
-        "totalShares": 0,
+        "totalShares": 16426889717.810255,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-01-27T18:05:02.606Z"
+        "lastUpdated": "2026-07-29T23:50:07.158Z"
       },
       {
         "day": 291,
         "date": "2026-04-26T18:00:00.000Z",
         "rewardPool": 79287.25020552284,
-        "totalShares": 0,
+        "totalShares": 16484915083.890255,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-01-28T18:05:02.217Z"
+        "lastUpdated": "2026-07-29T23:50:07.159Z"
       },
       {
         "day": 292,
         "date": "2026-04-27T18:00:00.000Z",
         "rewardPool": 79223.82040535842,
-        "totalShares": 0,
+        "totalShares": 16419534737.650253,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-01-29T18:05:01.995Z"
+        "lastUpdated": "2026-07-29T23:50:07.160Z"
       },
       {
         "day": 293,
         "date": "2026-04-28T18:00:00.000Z",
         "rewardPool": 79160.44134903412,
-        "totalShares": 0,
+        "totalShares": 16290209937.650257,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-01-30T18:05:02.351Z"
+        "lastUpdated": "2026-07-29T23:50:07.160Z"
       },
       {
         "day": 294,
         "date": "2026-04-29T18:00:00.000Z",
         "rewardPool": 79097.1129959549,
-        "totalShares": 0,
+        "totalShares": 15932576227.63425,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-01-31T18:05:02.822Z"
+        "lastUpdated": "2026-07-29T23:50:07.161Z"
       },
       {
         "day": 295,
         "date": "2026-04-30T18:00:00.000Z",
         "rewardPool": 79033.83530555814,
-        "totalShares": 0,
+        "totalShares": 15862403659.519999,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-02-01T18:05:09.093Z"
+        "lastUpdated": "2026-07-29T23:50:07.162Z"
       },
       {
         "day": 296,
         "date": "2026-05-01T18:00:00.000Z",
         "rewardPool": 78970.60823731369,
-        "totalShares": 0,
+        "totalShares": 15619069252.159998,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-02-02T18:05:09.046Z"
+        "lastUpdated": "2026-07-29T23:50:07.163Z"
       },
       {
         "day": 297,
         "date": "2026-05-02T18:00:00.000Z",
         "rewardPool": 78907.43175072383,
-        "totalShares": 0,
+        "totalShares": 15132404921.215998,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-02-03T18:05:07.902Z"
+        "lastUpdated": "2026-07-29T23:50:07.163Z"
       },
       {
         "day": 298,
         "date": "2026-05-03T18:00:00.000Z",
         "rewardPool": 78844.30580532325,
-        "totalShares": 0,
+        "totalShares": 15124660921.215998,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-02-04T18:05:05.583Z"
+        "lastUpdated": "2026-07-29T23:50:07.164Z"
       },
       {
         "day": 299,
         "date": "2026-05-04T18:00:00.000Z",
         "rewardPool": 78781.230360679,
-        "totalShares": 0,
+        "totalShares": 15124660921.215998,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-02-05T18:05:09.784Z"
+        "lastUpdated": "2026-07-29T23:50:07.165Z"
       },
       {
         "day": 300,
         "date": "2026-05-05T18:00:00.000Z",
         "rewardPool": 78718.20537639046,
-        "totalShares": 0,
+        "totalShares": 15019500692.415997,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-02-06T18:05:10.754Z"
+        "lastUpdated": "2026-07-29T23:50:07.165Z"
       },
       {
         "day": 301,
         "date": "2026-05-06T18:00:00.000Z",
         "rewardPool": 78655.23081208934,
-        "totalShares": 0,
+        "totalShares": 14892453286.655996,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-02-07T18:05:09.327Z"
+        "lastUpdated": "2026-07-29T23:50:07.166Z"
       },
       {
         "day": 302,
         "date": "2026-05-07T18:00:00.000Z",
         "rewardPool": 78592.30662743967,
-        "totalShares": 0,
+        "totalShares": 14892453286.655996,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-02-08T18:05:08.821Z"
+        "lastUpdated": "2026-07-29T23:50:07.167Z"
       },
       {
         "day": 303,
         "date": "2026-05-08T18:00:00.000Z",
         "rewardPool": 78529.43278213772,
-        "totalShares": 0,
+        "totalShares": 14920927897.215998,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-02-09T18:05:05.245Z"
+        "lastUpdated": "2026-07-29T23:50:07.167Z"
       },
       {
         "day": 304,
         "date": "2026-05-09T18:00:00.000Z",
         "rewardPool": 78466.60923591201,
-        "totalShares": 0,
+        "totalShares": 15559513129.599998,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-02-11T02:50:04.974Z"
+        "lastUpdated": "2026-07-29T23:50:07.168Z"
       },
       {
         "day": 305,
         "date": "2026-05-10T18:00:00.000Z",
         "rewardPool": 78403.83594852328,
-        "totalShares": 0,
+        "totalShares": 15559513129.599998,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-02-13T00:05:28.777Z"
+        "lastUpdated": "2026-07-29T23:50:07.169Z"
       },
       {
         "day": 306,
         "date": "2026-05-11T18:00:00.000Z",
         "rewardPool": 78341.11287976446,
-        "totalShares": 0,
+        "totalShares": 15507299488.383999,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-02-13T00:05:28.777Z"
+        "lastUpdated": "2026-07-29T23:50:07.169Z"
       },
       {
         "day": 307,
         "date": "2026-05-12T18:00:00.000Z",
         "rewardPool": 78278.43998946065,
-        "totalShares": 0,
+        "totalShares": 15390488651.647999,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-02-13T18:05:09.254Z"
+        "lastUpdated": "2026-07-29T23:50:07.170Z"
       },
       {
         "day": 308,
         "date": "2026-05-13T18:00:00.000Z",
         "rewardPool": 78215.81723746908,
-        "totalShares": 0,
+        "totalShares": 15018172619.647999,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-02-14T18:05:06.073Z"
+        "lastUpdated": "2026-07-29T23:50:07.171Z"
       },
       {
         "day": 309,
         "date": "2026-05-14T18:00:00.000Z",
         "rewardPool": 78153.2445836791,
-        "totalShares": 0,
+        "totalShares": 15115592139.647999,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-02-15T18:05:08.870Z"
+        "lastUpdated": "2026-07-29T23:50:07.172Z"
       },
       {
         "day": 310,
         "date": "2026-05-15T18:00:00.000Z",
         "rewardPool": 78090.72198801216,
-        "totalShares": 0,
+        "totalShares": 15096232139.647999,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-02-16T18:05:07.769Z"
+        "lastUpdated": "2026-07-29T23:50:07.172Z"
       },
       {
         "day": 311,
         "date": "2026-05-16T18:00:00.000Z",
         "rewardPool": 78028.24941042175,
-        "totalShares": 0,
+        "totalShares": 15029440139.647999,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-02-18T21:30:08.585Z"
+        "lastUpdated": "2026-07-29T23:50:07.173Z"
       },
       {
         "day": 312,
         "date": "2026-05-17T18:00:00.000Z",
         "rewardPool": 77965.82681089341,
-        "totalShares": 0,
+        "totalShares": 14979777867.647999,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-02-18T21:30:08.585Z"
+        "lastUpdated": "2026-07-29T23:50:07.174Z"
       },
       {
         "day": 313,
         "date": "2026-05-18T18:00:00.000Z",
         "rewardPool": 77903.4541494447,
-        "totalShares": 0,
+        "totalShares": 14827221067.647999,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-02-19T18:05:05.369Z"
+        "lastUpdated": "2026-07-29T23:50:07.174Z"
       },
       {
         "day": 314,
         "date": "2026-05-19T18:00:00.000Z",
         "rewardPool": 77841.13138612514,
-        "totalShares": 0,
+        "totalShares": 13618552245.759998,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-02-20T18:05:04.659Z"
+        "lastUpdated": "2026-07-29T23:50:07.175Z"
       },
       {
         "day": 315,
         "date": "2026-05-20T18:00:00.000Z",
         "rewardPool": 77778.85848101624,
-        "totalShares": 0,
+        "totalShares": 13605239132.671997,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-02-22T20:45:01.848Z"
+        "lastUpdated": "2026-07-29T23:50:07.176Z"
       },
       {
         "day": 316,
         "date": "2026-05-21T18:00:00.000Z",
         "rewardPool": 77716.63539423143,
-        "totalShares": 0,
+        "totalShares": 13688261580.927998,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-02-22T20:45:01.849Z"
+        "lastUpdated": "2026-07-29T23:50:07.176Z"
       },
       {
         "day": 317,
         "date": "2026-05-22T18:00:00.000Z",
         "rewardPool": 77654.46208591605,
-        "totalShares": 0,
+        "totalShares": 13573007450.815996,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-02-23T18:05:09.420Z"
+        "lastUpdated": "2026-07-29T23:50:07.177Z"
       },
       {
         "day": 318,
         "date": "2026-05-23T18:00:00.000Z",
         "rewardPool": 77592.33851624731,
-        "totalShares": 0,
+        "totalShares": 13573007450.815996,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-02-24T18:05:04.525Z"
+        "lastUpdated": "2026-07-29T23:50:07.178Z"
       },
       {
         "day": 319,
         "date": "2026-05-24T18:00:00.000Z",
         "rewardPool": 77530.26464543432,
-        "totalShares": 0,
+        "totalShares": 13608256946.239998,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-02-25T18:05:09.435Z"
+        "lastUpdated": "2026-07-29T23:50:07.179Z"
       },
       {
         "day": 320,
         "date": "2026-05-25T18:00:00.000Z",
         "rewardPool": 77468.24043371798,
-        "totalShares": 0,
+        "totalShares": 13580765746.239998,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-02-26T18:05:05.396Z"
+        "lastUpdated": "2026-07-29T23:50:07.179Z"
       },
       {
         "day": 321,
         "date": "2026-05-26T18:00:00.000Z",
         "rewardPool": 77406.265841371,
-        "totalShares": 0,
+        "totalShares": 13584687137.472,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-02-27T18:05:09.739Z"
+        "lastUpdated": "2026-07-29T23:50:07.180Z"
       },
       {
         "day": 322,
         "date": "2026-05-27T18:00:00.000Z",
         "rewardPool": 77344.3408286979,
-        "totalShares": 0,
+        "totalShares": 13568587361.472,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-02-28T18:05:09.675Z"
+        "lastUpdated": "2026-07-29T23:50:07.181Z"
       },
       {
         "day": 323,
         "date": "2026-05-28T18:00:00.000Z",
         "rewardPool": 77282.46535603494,
-        "totalShares": 0,
+        "totalShares": 13421288737.472,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-03-01T18:05:09.290Z"
+        "lastUpdated": "2026-07-29T23:50:07.181Z"
       },
       {
         "day": 324,
         "date": "2026-05-29T18:00:00.000Z",
         "rewardPool": 77220.63938375011,
-        "totalShares": 0,
+        "totalShares": 13131073579.008001,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-03-02T18:05:08.178Z"
+        "lastUpdated": "2026-07-29T23:50:07.182Z"
       },
       {
         "day": 325,
         "date": "2026-05-30T18:00:00.000Z",
         "rewardPool": 77158.8628722431,
-        "totalShares": 0,
+        "totalShares": 13034799319.168003,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-03-03T18:05:06.392Z"
+        "lastUpdated": "2026-07-29T23:50:07.183Z"
       },
       {
         "day": 326,
         "date": "2026-05-31T18:00:00.000Z",
         "rewardPool": 77097.13578194531,
-        "totalShares": 0,
+        "totalShares": 13065305955.328003,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-03-04T18:05:07.899Z"
+        "lastUpdated": "2026-07-29T23:50:07.184Z"
       },
       {
         "day": 327,
         "date": "2026-06-01T18:00:00.000Z",
         "rewardPool": 77035.45807331975,
-        "totalShares": 0,
+        "totalShares": 12749086320.960003,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-03-05T18:05:09.427Z"
+        "lastUpdated": "2026-07-29T23:50:07.184Z"
       },
       {
         "day": 328,
         "date": "2026-06-02T18:00:00.000Z",
         "rewardPool": 76973.8297068611,
-        "totalShares": 0,
+        "totalShares": 11933380235.392002,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-03-06T18:05:07.883Z"
+        "lastUpdated": "2026-07-29T23:50:07.185Z"
       },
       {
         "day": 329,
         "date": "2026-06-03T18:00:00.000Z",
         "rewardPool": 76912.25064309561,
-        "totalShares": 0,
+        "totalShares": 11929508235.392002,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-03-07T18:05:09.564Z"
+        "lastUpdated": "2026-07-29T23:50:07.186Z"
       },
       {
         "day": 330,
         "date": "2026-06-04T18:00:00.000Z",
         "rewardPool": 76850.72084258114,
-        "totalShares": 0,
+        "totalShares": 11782225509.824001,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-03-08T18:05:05.286Z"
+        "lastUpdated": "2026-07-29T23:50:07.187Z"
       },
       {
         "day": 331,
         "date": "2026-06-05T18:00:00.000Z",
         "rewardPool": 76789.24026590708,
-        "totalShares": 0,
+        "totalShares": 11386917541.824001,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-03-09T18:05:08.970Z"
+        "lastUpdated": "2026-07-29T23:50:07.187Z"
       },
       {
         "day": 332,
         "date": "2026-06-06T18:00:00.000Z",
         "rewardPool": 76727.80887369435,
-        "totalShares": 0,
+        "totalShares": 10634378853.824,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-03-16T18:20:06.377Z"
+        "lastUpdated": "2026-07-29T23:50:07.188Z"
       },
       {
         "day": 333,
         "date": "2026-06-07T18:00:00.000Z",
         "rewardPool": 76666.42662659539,
-        "totalShares": 0,
+        "totalShares": 10403987109.824,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-03-16T18:20:06.377Z"
+        "lastUpdated": "2026-07-29T23:50:07.189Z"
       },
       {
         "day": 334,
         "date": "2026-06-08T18:00:00.000Z",
         "rewardPool": 76605.09348529411,
-        "totalShares": 0,
+        "totalShares": 10392430723.136,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-03-16T18:20:06.377Z"
+        "lastUpdated": "2026-07-29T23:50:07.189Z"
       },
       {
         "day": 335,
         "date": "2026-06-09T18:00:00.000Z",
         "rewardPool": 76543.80941050587,
-        "totalShares": 0,
+        "totalShares": 10237202924.608,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-03-16T18:20:06.377Z"
+        "lastUpdated": "2026-07-29T23:50:07.190Z"
       },
       {
         "day": 336,
         "date": "2026-06-10T18:00:00.000Z",
         "rewardPool": 76482.57436297747,
-        "totalShares": 0,
+        "totalShares": 10128515737.471998,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-03-16T18:20:06.377Z"
+        "lastUpdated": "2026-07-29T23:50:07.191Z"
       },
       {
         "day": 337,
         "date": "2026-06-11T18:00:00.000Z",
         "rewardPool": 76421.38830348708,
-        "totalShares": 0,
+        "totalShares": 10305621482.112,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-03-16T18:20:06.377Z"
+        "lastUpdated": "2026-07-29T23:50:07.191Z"
       },
       {
         "day": 338,
         "date": "2026-06-12T18:00:00.000Z",
         "rewardPool": 76360.25119284428,
-        "totalShares": 0,
+        "totalShares": 10359738528.832,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-03-16T18:20:06.377Z"
+        "lastUpdated": "2026-07-29T23:50:07.192Z"
       },
       {
         "day": 339,
         "date": "2026-06-13T18:00:00.000Z",
         "rewardPool": 76299.16299189,
-        "totalShares": 0,
+        "totalShares": 10172528227.136,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-03-17T18:05:07.890Z"
+        "lastUpdated": "2026-07-29T23:50:07.193Z"
       },
       {
         "day": 340,
         "date": "2026-06-14T18:00:00.000Z",
         "rewardPool": 76238.12366149649,
-        "totalShares": 0,
+        "totalShares": 9976449550.848,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-03-18T18:05:09.616Z"
+        "lastUpdated": "2026-07-29T23:50:07.194Z"
       },
       {
         "day": 341,
         "date": "2026-06-15T18:00:00.000Z",
         "rewardPool": 76177.13316256729,
-        "totalShares": 0,
+        "totalShares": 9449171161.407999,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-03-19T18:05:06.097Z"
+        "lastUpdated": "2026-07-29T23:50:07.194Z"
       },
       {
         "day": 342,
         "date": "2026-06-16T18:00:00.000Z",
         "rewardPool": 76116.19145603724,
-        "totalShares": 0,
+        "totalShares": 9501185944.447996,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-03-30T17:40:08.962Z"
+        "lastUpdated": "2026-07-29T23:50:07.195Z"
       },
       {
         "day": 343,
         "date": "2026-06-17T18:00:00.000Z",
         "rewardPool": 76055.2985028724,
-        "totalShares": 0,
+        "totalShares": 9612699544.447996,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-03-30T17:40:08.962Z"
+        "lastUpdated": "2026-07-29T23:50:07.196Z"
       },
       {
         "day": 344,
         "date": "2026-06-18T18:00:00.000Z",
         "rewardPool": 75994.45426407011,
-        "totalShares": 0,
+        "totalShares": 9851214744.447996,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-03-30T17:40:08.962Z"
+        "lastUpdated": "2026-07-29T23:50:07.196Z"
       },
       {
         "day": 345,
         "date": "2026-06-19T18:00:00.000Z",
         "rewardPool": 75933.65870065885,
-        "totalShares": 0,
+        "totalShares": 9921925208.447996,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-03-30T17:40:08.962Z"
+        "lastUpdated": "2026-07-29T23:50:07.197Z"
       },
       {
         "day": 346,
         "date": "2026-06-20T18:00:00.000Z",
         "rewardPool": 75872.91177369832,
-        "totalShares": 0,
+        "totalShares": 10192921795.583996,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-03-30T17:40:08.962Z"
+        "lastUpdated": "2026-07-29T23:50:07.198Z"
       },
       {
         "day": 347,
         "date": "2026-06-21T18:00:00.000Z",
         "rewardPool": 75812.21344427936,
-        "totalShares": 0,
+        "totalShares": 10498035395.583996,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-03-30T17:40:08.962Z"
+        "lastUpdated": "2026-07-29T23:50:07.198Z"
       },
       {
         "day": 348,
         "date": "2026-06-22T18:00:00.000Z",
         "rewardPool": 75751.56367352394,
-        "totalShares": 0,
+        "totalShares": 10580903196.159996,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-03-30T17:40:08.962Z"
+        "lastUpdated": "2026-07-29T23:50:07.199Z"
       },
       {
         "day": 349,
         "date": "2026-06-23T18:00:00.000Z",
         "rewardPool": 75690.96242258511,
-        "totalShares": 0,
+        "totalShares": 10614589596.159996,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-03-30T17:40:08.962Z"
+        "lastUpdated": "2026-07-29T23:50:07.200Z"
       },
       {
         "day": 350,
         "date": "2026-06-24T18:00:00.000Z",
         "rewardPool": 75630.40965264704,
-        "totalShares": 0,
+        "totalShares": 10698685262.143995,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-03-30T17:40:08.962Z"
+        "lastUpdated": "2026-07-29T23:50:07.201Z"
       },
       {
         "day": 351,
         "date": "2026-06-25T18:00:00.000Z",
         "rewardPool": 75569.90532492491,
-        "totalShares": 0,
+        "totalShares": 10375365556.863995,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-03-30T17:40:08.962Z"
+        "lastUpdated": "2026-07-29T23:50:07.201Z"
       },
       {
         "day": 352,
         "date": "2026-06-26T18:00:00.000Z",
         "rewardPool": 75509.44940066498,
-        "totalShares": 0,
+        "totalShares": 10402608948.863995,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-03-30T18:05:04.957Z"
+        "lastUpdated": "2026-07-29T23:50:07.202Z"
       },
       {
         "day": 353,
         "date": "2026-06-27T18:00:00.000Z",
         "rewardPool": 75449.04184114444,
-        "totalShares": 0,
+        "totalShares": 10511110132.863995,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-03-31T18:05:08.637Z"
+        "lastUpdated": "2026-07-29T23:50:07.203Z"
       },
       {
         "day": 354,
         "date": "2026-06-28T18:00:00.000Z",
         "rewardPool": 75388.68260767152,
-        "totalShares": 0,
+        "totalShares": 9821731508.863997,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-04-01T18:05:09.003Z"
+        "lastUpdated": "2026-07-29T23:50:07.204Z"
       },
       {
         "day": 355,
         "date": "2026-06-29T18:00:00.000Z",
         "rewardPool": 75328.37166158538,
-        "totalShares": 0,
+        "totalShares": 9336719879.168001,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-04-02T22:15:03.279Z"
+        "lastUpdated": "2026-07-29T23:50:07.204Z"
       },
       {
         "day": 356,
         "date": "2026-06-30T18:00:00.000Z",
         "rewardPool": 75268.10896425611,
-        "totalShares": 0,
+        "totalShares": 9474175879.168001,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-04-03T18:05:10.028Z"
+        "lastUpdated": "2026-07-29T23:50:07.205Z"
       },
       {
         "day": 357,
         "date": "2026-07-01T18:00:00.000Z",
         "rewardPool": 75207.8944770847,
-        "totalShares": 0,
+        "totalShares": 9024595047.424,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-04-04T18:05:04.726Z"
+        "lastUpdated": "2026-07-29T23:50:07.206Z"
       },
       {
         "day": 358,
         "date": "2026-07-02T18:00:00.000Z",
         "rewardPool": 75147.72816150304,
-        "totalShares": 0,
+        "totalShares": 8869932932.608,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-04-05T18:05:09.442Z"
+        "lastUpdated": "2026-07-29T23:50:07.206Z"
       },
       {
         "day": 359,
         "date": "2026-07-03T18:00:00.000Z",
         "rewardPool": 75087.60997897384,
-        "totalShares": 0,
+        "totalShares": 8747603357.504,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-04-10T21:30:02.961Z"
+        "lastUpdated": "2026-07-29T23:50:07.207Z"
       },
       {
         "day": 360,
         "date": "2026-07-04T18:00:00.000Z",
         "rewardPool": 75027.53989099065,
-        "totalShares": 0,
+        "totalShares": 8630127016.896,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-04-10T21:30:02.961Z"
+        "lastUpdated": "2026-07-29T23:50:07.208Z"
       },
       {
         "day": 361,
         "date": "2026-07-05T18:00:00.000Z",
         "rewardPool": 74967.51785907785,
-        "totalShares": 0,
+        "totalShares": 8169919759.935999,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-04-10T21:30:02.961Z"
+        "lastUpdated": "2026-07-29T23:50:07.208Z"
       },
       {
         "day": 362,
         "date": "2026-07-06T18:00:00.000Z",
         "rewardPool": 74907.54384479059,
-        "totalShares": 0,
+        "totalShares": 8140372853.184,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-04-10T21:30:02.961Z"
+        "lastUpdated": "2026-07-29T23:50:07.209Z"
       },
       {
         "day": 363,
         "date": "2026-07-07T18:00:00.000Z",
         "rewardPool": 74847.61780971475,
-        "totalShares": 0,
+        "totalShares": 8088875253.184,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-04-10T21:30:02.961Z"
+        "lastUpdated": "2026-07-29T23:50:07.209Z"
       },
       {
         "day": 364,
         "date": "2026-07-08T18:00:00.000Z",
         "rewardPool": 74787.73971546697,
-        "totalShares": 0,
+        "totalShares": 7879787253.184,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-04-13T23:30:02.323Z"
+        "lastUpdated": "2026-07-29T23:50:07.210Z"
       },
       {
         "day": 365,
         "date": "2026-07-09T18:00:00.000Z",
         "rewardPool": 74727.9095236946,
-        "totalShares": 0,
+        "totalShares": 7838279413.184,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-04-13T23:30:02.323Z"
+        "lastUpdated": "2026-07-29T23:50:07.211Z"
       },
       {
         "day": 366,
         "date": "2026-07-10T18:00:00.000Z",
         "rewardPool": 74668.12719607564,
-        "totalShares": 0,
+        "totalShares": 7933220853.184,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-04-13T23:30:02.323Z"
+        "lastUpdated": "2026-07-29T23:50:07.211Z"
       },
       {
         "day": 367,
         "date": "2026-07-11T18:00:00.000Z",
         "rewardPool": 74608.39269431878,
-        "totalShares": 0,
+        "totalShares": 8010660845.44,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-04-24T18:25:03.468Z"
+        "lastUpdated": "2026-07-29T23:50:07.212Z"
       },
       {
         "day": 368,
         "date": "2026-07-12T18:00:00.000Z",
         "rewardPool": 74548.70598016333,
-        "totalShares": 0,
+        "totalShares": 8043185645.44,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-04-24T18:25:03.468Z"
+        "lastUpdated": "2026-07-29T23:50:07.213Z"
       },
       {
         "day": 369,
         "date": "2026-07-13T18:00:00.000Z",
         "rewardPool": 74489.0670153792,
-        "totalShares": 0,
+        "totalShares": 8043185645.44,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-04-24T18:25:03.468Z"
+        "lastUpdated": "2026-07-29T23:50:07.213Z"
       },
       {
         "day": 370,
         "date": "2026-07-14T18:00:00.000Z",
         "rewardPool": 74429.4757617669,
-        "totalShares": 0,
+        "totalShares": 8075710445.44,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-04-24T18:25:03.468Z"
+        "lastUpdated": "2026-07-29T23:50:07.214Z"
       },
       {
         "day": 371,
         "date": "2026-07-15T18:00:00.000Z",
         "rewardPool": 74369.93218115748,
-        "totalShares": 0,
+        "totalShares": 8135339245.44,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-04-24T18:25:03.468Z"
+        "lastUpdated": "2026-07-29T23:50:07.214Z"
       },
       {
         "day": 372,
         "date": "2026-07-16T18:00:00.000Z",
         "rewardPool": 74310.43623541255,
-        "totalShares": 0,
+        "totalShares": 8167864045.44,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-04-24T18:25:03.468Z"
+        "lastUpdated": "2026-07-29T23:50:07.215Z"
       },
       {
         "day": 373,
         "date": "2026-07-17T18:00:00.000Z",
         "rewardPool": 74250.98788642422,
-        "totalShares": 0,
+        "totalShares": 8239108845.44,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-04-24T18:25:03.468Z"
+        "lastUpdated": "2026-07-29T23:50:07.217Z"
       },
       {
         "day": 374,
         "date": "2026-07-18T18:00:00.000Z",
         "rewardPool": 74191.58709611508,
-        "totalShares": 0,
+        "totalShares": 8301060845.44,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-04-24T18:25:03.468Z"
+        "lastUpdated": "2026-07-29T23:50:07.219Z"
       },
       {
         "day": 375,
         "date": "2026-07-19T18:00:00.000Z",
         "rewardPool": 74132.23382643818,
-        "totalShares": 0,
+        "totalShares": 8150367879.103999,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-04-24T18:25:03.468Z"
+        "lastUpdated": "2026-07-29T23:50:07.221Z"
       },
       {
         "day": 376,
         "date": "2026-07-20T18:00:00.000Z",
         "rewardPool": 74072.92803937703,
-        "totalShares": 0,
+        "totalShares": 7711597524.223999,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-04-24T18:25:03.468Z"
+        "lastUpdated": "2026-07-29T23:50:07.222Z"
       },
       {
         "day": 377,
         "date": "2026-07-21T18:00:00.000Z",
         "rewardPool": 74013.66969694552,
-        "totalShares": 0,
+        "totalShares": 7803751124.223999,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-04-24T18:25:03.468Z"
+        "lastUpdated": "2026-07-29T23:50:07.223Z"
       },
       {
         "day": 378,
         "date": "2026-07-22T18:00:00.000Z",
         "rewardPool": 73954.45876118797,
-        "totalShares": 0,
+        "totalShares": 7359632724.223999,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-04-25T18:05:05.376Z"
+        "lastUpdated": "2026-07-29T23:50:07.224Z"
       },
       {
         "day": 379,
         "date": "2026-07-23T18:00:00.000Z",
         "rewardPool": 73895.29519417902,
-        "totalShares": 0,
+        "totalShares": 7258175242.559999,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-04-26T18:05:09.626Z"
+        "lastUpdated": "2026-07-29T23:50:07.225Z"
       },
       {
         "day": 380,
         "date": "2026-07-24T18:00:00.000Z",
         "rewardPool": 73836.17895802368,
-        "totalShares": 0,
+        "totalShares": 7246559242.559999,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-04-27T18:05:05.901Z"
+        "lastUpdated": "2026-07-29T23:50:07.226Z"
       },
       {
         "day": 381,
         "date": "2026-07-25T18:00:00.000Z",
         "rewardPool": 73777.11001485726,
-        "totalShares": 0,
+        "totalShares": 7246559242.559999,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-05-05T16:30:03.962Z"
+        "lastUpdated": "2026-07-29T23:50:07.226Z"
       },
       {
         "day": 382,
         "date": "2026-07-26T18:00:00.000Z",
         "rewardPool": 73718.08832684538,
-        "totalShares": 0,
+        "totalShares": 7283722698.559999,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-05-05T16:30:03.962Z"
+        "lastUpdated": "2026-07-29T23:50:07.227Z"
       },
       {
         "day": 383,
         "date": "2026-07-27T18:00:00.000Z",
         "rewardPool": 73659.1138561839,
-        "totalShares": 0,
+        "totalShares": 7441885217.535999,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-05-05T16:30:03.962Z"
+        "lastUpdated": "2026-07-29T23:50:07.228Z"
       },
       {
         "day": 384,
         "date": "2026-07-28T18:00:00.000Z",
         "rewardPool": 73600.18656509895,
-        "totalShares": 0,
+        "totalShares": 7592506017.535999,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-05-05T16:30:03.962Z"
+        "lastUpdated": "2026-07-29T23:50:07.229Z"
       },
       {
         "day": 385,
         "date": "2026-07-29T18:00:00.000Z",
         "rewardPool": 73541.30641584686,
-        "totalShares": 0,
+        "totalShares": 7876478497.535999,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-05-05T16:30:03.962Z"
+        "lastUpdated": "2026-07-29T23:50:07.230Z"
       },
       {
         "day": 386,
         "date": "2026-07-30T18:00:00.000Z",
         "rewardPool": 73482.47337071419,
-        "totalShares": 0,
+        "totalShares": 7876478497.535999,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-05-05T16:30:03.962Z"
+        "lastUpdated": "2026-07-29T23:50:07.231Z"
       },
       {
         "day": 387,
         "date": "2026-07-31T18:00:00.000Z",
         "rewardPool": 73423.68739201761,
-        "totalShares": 0,
+        "totalShares": 7876478497.535999,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-05-05T16:30:03.962Z"
+        "lastUpdated": "2026-07-29T23:50:07.233Z"
       },
       {
         "day": 388,
         "date": "2026-08-01T18:00:00.000Z",
         "rewardPool": 73364.948442104,
-        "totalShares": 0,
+        "totalShares": 7853225255.7439995,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-05-11T03:00:02.691Z"
+        "lastUpdated": "2026-07-29T23:50:07.234Z"
       },
       {
         "day": 389,
         "date": "2026-08-02T18:00:00.000Z",
         "rewardPool": 73306.25648335031,
-        "totalShares": 0,
+        "totalShares": 7853225255.7439995,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-05-11T03:00:02.691Z"
+        "lastUpdated": "2026-07-29T23:50:07.235Z"
       },
       {
         "day": 390,
         "date": "2026-08-03T18:00:00.000Z",
         "rewardPool": 73247.61147816363,
-        "totalShares": 0,
+        "totalShares": 7853225255.7439995,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-05-11T03:00:02.691Z"
+        "lastUpdated": "2026-07-29T23:50:07.236Z"
       },
       {
         "day": 391,
         "date": "2026-08-04T18:00:00.000Z",
         "rewardPool": 73189.0133889811,
-        "totalShares": 0,
+        "totalShares": 7772088301.12,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-05-11T03:00:02.691Z"
+        "lastUpdated": "2026-07-29T23:50:07.238Z"
       },
       {
         "day": 392,
         "date": "2026-08-05T18:00:00.000Z",
         "rewardPool": 73130.46217826991,
-        "totalShares": 0,
+        "totalShares": 6945982108.736,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-05-11T03:00:02.691Z"
+        "lastUpdated": "2026-07-29T23:50:07.239Z"
       },
       {
         "day": 393,
         "date": "2026-08-06T18:00:00.000Z",
         "rewardPool": 73071.9578085273,
-        "totalShares": 0,
+        "totalShares": 6945982108.736,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-05-11T03:00:02.691Z"
+        "lastUpdated": "2026-07-29T23:50:07.240Z"
       },
       {
         "day": 394,
         "date": "2026-08-07T18:00:00.000Z",
         "rewardPool": 73013.50024228047,
-        "totalShares": 0,
+        "totalShares": 6945982108.736,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-05-11T18:00:02.312Z"
+        "lastUpdated": "2026-07-29T23:50:07.241Z"
       },
       {
         "day": 395,
         "date": "2026-08-08T18:00:00.000Z",
         "rewardPool": 72955.08944208664,
-        "totalShares": 0,
+        "totalShares": 6945982108.736,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-05-12T18:05:05.469Z"
+        "lastUpdated": "2026-07-29T23:50:07.242Z"
       },
       {
         "day": 396,
         "date": "2026-08-09T18:00:00.000Z",
         "rewardPool": 72896.72537053296,
-        "totalShares": 0,
+        "totalShares": 6945982108.736,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-05-13T18:05:10.117Z"
+        "lastUpdated": "2026-07-29T23:50:07.243Z"
       },
       {
         "day": 397,
         "date": "2026-08-10T18:00:00.000Z",
         "rewardPool": 72838.40799023653,
-        "totalShares": 0,
+        "totalShares": 6848562588.735999,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-05-16T18:15:28.088Z"
+        "lastUpdated": "2026-07-29T23:50:07.246Z"
       },
       {
         "day": 398,
         "date": "2026-08-11T18:00:00.000Z",
         "rewardPool": 72780.13726384434,
-        "totalShares": 0,
+        "totalShares": 6848562588.735999,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-05-16T18:15:28.088Z"
+        "lastUpdated": "2026-07-29T23:50:07.248Z"
       },
       {
         "day": 399,
         "date": "2026-08-12T18:00:00.000Z",
         "rewardPool": 72721.91315403326,
-        "totalShares": 0,
+        "totalShares": 6848562588.735999,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-05-16T18:15:28.088Z"
+        "lastUpdated": "2026-07-29T23:50:07.250Z"
       },
       {
         "day": 400,
         "date": "2026-08-13T18:00:00.000Z",
         "rewardPool": 72663.73562351003,
-        "totalShares": 0,
+        "totalShares": 6848562588.735999,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-05-17T18:05:05.585Z"
+        "lastUpdated": "2026-07-29T23:50:07.253Z"
       },
       {
         "day": 401,
         "date": "2026-08-14T18:00:00.000Z",
         "rewardPool": 72605.60463501122,
-        "totalShares": 0,
+        "totalShares": 6848562588.735999,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-05-18T18:05:05.276Z"
+        "lastUpdated": "2026-07-29T23:50:07.255Z"
       },
       {
         "day": 402,
         "date": "2026-08-15T18:00:00.000Z",
         "rewardPool": 72547.52015130321,
-        "totalShares": 0,
+        "totalShares": 6514683180.544,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-05-19T18:05:09.499Z"
+        "lastUpdated": "2026-07-29T23:50:07.257Z"
       },
       {
         "day": 403,
         "date": "2026-08-16T18:00:00.000Z",
         "rewardPool": 72489.48213518216,
-        "totalShares": 0,
+        "totalShares": 6458926380.544,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-05-26T00:35:08.629Z"
+        "lastUpdated": "2026-07-29T23:50:07.258Z"
       },
       {
         "day": 404,
         "date": "2026-08-17T18:00:00.000Z",
         "rewardPool": 72431.49054947401,
-        "totalShares": 0,
+        "totalShares": 6359996780.544,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-05-26T00:35:08.629Z"
+        "lastUpdated": "2026-07-29T23:50:07.259Z"
       },
       {
         "day": 405,
         "date": "2026-08-18T18:00:00.000Z",
         "rewardPool": 72373.54535703443,
-        "totalShares": 0,
+        "totalShares": 6349464940.544,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-05-26T00:35:08.629Z"
+        "lastUpdated": "2026-07-29T23:50:07.260Z"
       },
       {
         "day": 406,
         "date": "2026-08-19T18:00:00.000Z",
         "rewardPool": 72315.64652074879,
-        "totalShares": 0,
+        "totalShares": 6349464940.544,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-05-26T00:35:08.629Z"
+        "lastUpdated": "2026-07-29T23:50:07.261Z"
       },
       {
         "day": 407,
         "date": "2026-08-20T18:00:00.000Z",
         "rewardPool": 72257.7940035322,
-        "totalShares": 0,
+        "totalShares": 6274193260.544,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-05-26T00:35:08.629Z"
+        "lastUpdated": "2026-07-29T23:50:07.262Z"
       },
       {
         "day": 408,
         "date": "2026-08-21T18:00:00.000Z",
         "rewardPool": 72199.98776832937,
-        "totalShares": 0,
+        "totalShares": 6271870060.544,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-05-26T00:35:08.629Z"
+        "lastUpdated": "2026-07-29T23:50:07.262Z"
       },
       {
         "day": 409,
         "date": "2026-08-22T18:00:00.000Z",
         "rewardPool": 72142.22777811471,
-        "totalShares": 0,
+        "totalShares": 6217855660.544,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-05-26T18:05:09.716Z"
+        "lastUpdated": "2026-07-29T23:50:07.263Z"
       },
       {
         "day": 410,
         "date": "2026-08-23T18:00:00.000Z",
         "rewardPool": 72084.51399589222,
-        "totalShares": 0,
+        "totalShares": 6217855660.544,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-06-01T20:15:34.346Z"
+        "lastUpdated": "2026-07-29T23:50:07.264Z"
       },
       {
         "day": 411,
         "date": "2026-08-24T18:00:00.000Z",
         "rewardPool": 72026.84638469551,
-        "totalShares": 0,
+        "totalShares": 6217855660.544,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-06-01T20:15:34.346Z"
+        "lastUpdated": "2026-07-29T23:50:07.265Z"
       },
       {
         "day": 412,
         "date": "2026-08-25T18:00:00.000Z",
         "rewardPool": 71969.22490758775,
-        "totalShares": 0,
+        "totalShares": 5998089699.008,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-06-01T20:15:34.346Z"
+        "lastUpdated": "2026-07-29T23:50:07.266Z"
       },
       {
         "day": 413,
         "date": "2026-08-26T18:00:00.000Z",
         "rewardPool": 71911.64952766168,
-        "totalShares": 0,
+        "totalShares": 5829055409.408,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-06-01T20:15:34.346Z"
+        "lastUpdated": "2026-07-29T23:50:07.266Z"
       },
       {
         "day": 414,
         "date": "2026-08-27T18:00:00.000Z",
         "rewardPool": 71854.12020803955,
-        "totalShares": 0,
+        "totalShares": 5641097765.247999,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-06-01T20:15:34.346Z"
+        "lastUpdated": "2026-07-29T23:50:07.267Z"
       },
       {
         "day": 415,
         "date": "2026-08-28T18:00:00.000Z",
         "rewardPool": 71796.63691187311,
-        "totalShares": 0,
+        "totalShares": 5575273765.247999,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-06-01T20:15:34.346Z"
+        "lastUpdated": "2026-07-29T23:50:07.268Z"
       },
       {
         "day": 416,
         "date": "2026-08-29T18:00:00.000Z",
         "rewardPool": 71739.19960234361,
-        "totalShares": 0,
+        "totalShares": 5536553765.247999,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-06-02T18:05:09.423Z"
+        "lastUpdated": "2026-07-29T23:50:07.268Z"
       },
       {
         "day": 417,
         "date": "2026-08-30T18:00:00.000Z",
         "rewardPool": 71681.80824266173,
-        "totalShares": 0,
+        "totalShares": 5536553765.247999,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-06-11T20:05:06.465Z"
+        "lastUpdated": "2026-07-29T23:50:07.269Z"
       },
       {
         "day": 418,
         "date": "2026-08-31T18:00:00.000Z",
         "rewardPool": 71624.4627960676,
-        "totalShares": 0,
+        "totalShares": 5536553765.247999,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-06-11T20:05:06.465Z"
+        "lastUpdated": "2026-07-29T23:50:07.270Z"
       },
       {
         "day": 419,
         "date": "2026-09-01T18:00:00.000Z",
         "rewardPool": 71567.16322583075,
-        "totalShares": 0,
+        "totalShares": 5536553765.247999,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-06-11T20:05:06.465Z"
+        "lastUpdated": "2026-07-29T23:50:07.271Z"
       },
       {
         "day": 420,
         "date": "2026-09-02T18:00:00.000Z",
         "rewardPool": 71509.90949525009,
-        "totalShares": 0,
+        "totalShares": 5536553765.247999,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-06-11T20:05:06.465Z"
+        "lastUpdated": "2026-07-29T23:50:07.272Z"
       },
       {
         "day": 421,
         "date": "2026-09-03T18:00:00.000Z",
         "rewardPool": 71452.70156765389,
-        "totalShares": 0,
+        "totalShares": 5536553765.247999,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-06-11T20:05:06.465Z"
+        "lastUpdated": "2026-07-29T23:50:07.273Z"
       },
       {
         "day": 422,
         "date": "2026-09-04T18:00:00.000Z",
         "rewardPool": 71395.53940639977,
-        "totalShares": 0,
+        "totalShares": 5536553765.247999,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-06-11T20:05:06.465Z"
+        "lastUpdated": "2026-07-29T23:50:07.274Z"
       },
       {
         "day": 423,
         "date": "2026-09-05T18:00:00.000Z",
         "rewardPool": 71338.42297487464,
-        "totalShares": 0,
+        "totalShares": 5466307941.247999,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-06-11T20:05:06.465Z"
+        "lastUpdated": "2026-07-29T23:50:07.275Z"
       },
       {
         "day": 424,
         "date": "2026-09-06T18:00:00.000Z",
         "rewardPool": 71281.35223649474,
-        "totalShares": 0,
+        "totalShares": 5427587941.247999,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-06-11T20:05:06.465Z"
+        "lastUpdated": "2026-07-29T23:50:07.276Z"
       },
       {
         "day": 425,
         "date": "2026-09-07T18:00:00.000Z",
         "rewardPool": 71224.32715470555,
-        "totalShares": 0,
+        "totalShares": 5170645761.6,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-06-11T20:05:06.465Z"
+        "lastUpdated": "2026-07-29T23:50:07.277Z"
       },
       {
         "day": 426,
         "date": "2026-09-08T18:00:00.000Z",
         "rewardPool": 71167.34769298178,
-        "totalShares": 0,
+        "totalShares": 4950561281.6,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-06-15T16:55:03.849Z"
+        "lastUpdated": "2026-07-29T23:50:07.278Z"
       },
       {
         "day": 427,
         "date": "2026-09-09T18:00:00.000Z",
         "rewardPool": 71110.41381482739,
-        "totalShares": 0,
+        "totalShares": 4840596481.6,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-06-15T16:55:03.849Z"
+        "lastUpdated": "2026-07-29T23:50:07.278Z"
       },
       {
         "day": 428,
         "date": "2026-09-10T18:00:00.000Z",
         "rewardPool": 71053.52548377553,
-        "totalShares": 0,
+        "totalShares": 4716692481.6,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-06-15T16:55:03.849Z"
+        "lastUpdated": "2026-07-29T23:50:07.279Z"
       },
       {
         "day": 429,
         "date": "2026-09-11T18:00:00.000Z",
         "rewardPool": 70996.6826633885,
-        "totalShares": 0,
+        "totalShares": 4695009281.6,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-06-15T18:05:09.252Z"
+        "lastUpdated": "2026-07-29T23:50:07.280Z"
       },
       {
         "day": 430,
         "date": "2026-09-12T18:00:00.000Z",
         "rewardPool": 70939.8853172578,
-        "totalShares": 0,
+        "totalShares": 4446567938.559999,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-06-16T18:05:09.286Z"
+        "lastUpdated": "2026-07-29T23:50:07.281Z"
       },
       {
         "day": 431,
         "date": "2026-09-13T18:00:00.000Z",
         "rewardPool": 70883.13340900399,
-        "totalShares": 0,
+        "totalShares": 4335054338.559999,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-06-17T18:05:07.979Z"
+        "lastUpdated": "2026-07-29T23:50:07.281Z"
       },
       {
         "day": 432,
         "date": "2026-09-14T18:00:00.000Z",
         "rewardPool": 70826.42690227678,
-        "totalShares": 0,
+        "totalShares": 4096539138.5599995,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-06-18T18:05:05.922Z"
+        "lastUpdated": "2026-07-29T23:50:07.282Z"
       },
       {
         "day": 433,
         "date": "2026-09-15T18:00:00.000Z",
         "rewardPool": 70769.76576075496,
-        "totalShares": 0,
+        "totalShares": 4025828674.5599995,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-06-19T18:05:09.224Z"
+        "lastUpdated": "2026-07-29T23:50:07.283Z"
       },
       {
         "day": 434,
         "date": "2026-09-16T18:00:00.000Z",
         "rewardPool": 70713.14994814635,
-        "totalShares": 0,
+        "totalShares": 3754832087.424,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-06-20T18:05:07.909Z"
+        "lastUpdated": "2026-07-29T23:50:07.284Z"
       },
       {
         "day": 435,
         "date": "2026-09-17T18:00:00.000Z",
         "rewardPool": 70656.57942818783,
-        "totalShares": 0,
+        "totalShares": 3449718487.424,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-06-21T18:05:09.849Z"
+        "lastUpdated": "2026-07-29T23:50:07.285Z"
       },
       {
         "day": 436,
         "date": "2026-09-18T18:00:00.000Z",
         "rewardPool": 70600.05416464528,
-        "totalShares": 0,
+        "totalShares": 3366850686.8479996,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-06-22T18:05:06.681Z"
+        "lastUpdated": "2026-07-29T23:50:07.285Z"
       },
       {
         "day": 437,
         "date": "2026-09-19T18:00:00.000Z",
         "rewardPool": 70543.57412131356,
-        "totalShares": 0,
+        "totalShares": 3333164286.8479996,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-06-23T18:05:06.196Z"
+        "lastUpdated": "2026-07-29T23:50:07.286Z"
       },
       {
         "day": 438,
         "date": "2026-09-20T18:00:00.000Z",
         "rewardPool": 70487.13926201651,
-        "totalShares": 0,
+        "totalShares": 3195805388.864,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-06-24T18:05:08.939Z"
+        "lastUpdated": "2026-07-29T23:50:07.287Z"
       },
       {
         "day": 439,
         "date": "2026-09-21T18:00:00.000Z",
         "rewardPool": 70430.7495506069,
-        "totalShares": 0,
+        "totalShares": 3119472742.1439996,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-06-25T18:05:08.891Z"
+        "lastUpdated": "2026-07-29T23:50:07.288Z"
       },
       {
         "day": 440,
         "date": "2026-09-22T18:00:00.000Z",
         "rewardPool": 70374.4049509664,
-        "totalShares": 0,
+        "totalShares": 3061392742.1439996,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-06-26T18:05:09.349Z"
+        "lastUpdated": "2026-07-29T23:50:07.288Z"
       },
       {
         "day": 441,
         "date": "2026-09-23T18:00:00.000Z",
         "rewardPool": 70318.10542700563,
-        "totalShares": 0,
+        "totalShares": 2861899558.1439996,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-06-27T18:05:09.377Z"
+        "lastUpdated": "2026-07-29T23:50:07.289Z"
       },
       {
         "day": 442,
         "date": "2026-09-24T18:00:00.000Z",
         "rewardPool": 70261.85094266402,
-        "totalShares": 0,
+        "totalShares": 2861899558.1439996,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-06-28T18:05:05.421Z"
+        "lastUpdated": "2026-07-29T23:50:07.289Z"
       },
       {
         "day": 443,
         "date": "2026-09-25T18:00:00.000Z",
         "rewardPool": 70205.6414619099,
-        "totalShares": 0,
+        "totalShares": 2078674728.064,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-06-29T18:00:10.777Z"
+        "lastUpdated": "2026-07-29T23:50:07.290Z"
       },
       {
         "day": 444,
         "date": "2026-09-26T18:00:00.000Z",
         "rewardPool": 70149.47694874037,
-        "totalShares": 0,
+        "totalShares": 1923794728.064,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-07-11T18:00:08.881Z"
+        "lastUpdated": "2026-07-29T23:50:07.291Z"
       },
       {
         "day": 445,
         "date": "2026-09-27T18:00:00.000Z",
         "rewardPool": 70093.35736718138,
-        "totalShares": 0,
+        "totalShares": 1923794728.064,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-07-11T18:00:08.881Z"
+        "lastUpdated": "2026-07-29T23:50:07.292Z"
       },
       {
         "day": 446,
         "date": "2026-09-28T18:00:00.000Z",
         "rewardPool": 70037.28268128763,
-        "totalShares": 0,
+        "totalShares": 1923794728.064,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-07-11T18:00:08.881Z"
+        "lastUpdated": "2026-07-29T23:50:07.292Z"
       },
       {
         "day": 447,
         "date": "2026-09-29T18:00:00.000Z",
         "rewardPool": 69981.2528551426,
-        "totalShares": 0,
+        "totalShares": 1923794728.064,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-07-11T18:00:08.881Z"
+        "lastUpdated": "2026-07-29T23:50:07.293Z"
       },
       {
         "day": 448,
         "date": "2026-09-30T18:00:00.000Z",
         "rewardPool": 69925.26785285848,
-        "totalShares": 0,
+        "totalShares": 1923794728.064,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-07-11T18:00:08.881Z"
+        "lastUpdated": "2026-07-29T23:50:07.293Z"
       },
       {
         "day": 449,
         "date": "2026-10-01T18:00:00.000Z",
         "rewardPool": 69869.32763857619,
-        "totalShares": 0,
+        "totalShares": 1923794728.064,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-07-11T18:00:08.881Z"
+        "lastUpdated": "2026-07-29T23:50:07.294Z"
       },
       {
         "day": 450,
         "date": "2026-10-02T18:00:00.000Z",
         "rewardPool": 69813.43217646533,
-        "totalShares": 0,
+        "totalShares": 1923794728.064,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-07-11T18:00:08.881Z"
+        "lastUpdated": "2026-07-29T23:50:07.295Z"
       },
       {
         "day": 451,
         "date": "2026-10-03T18:00:00.000Z",
         "rewardPool": 69757.58143072415,
-        "totalShares": 0,
+        "totalShares": 1923794728.064,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-07-11T18:00:08.881Z"
+        "lastUpdated": "2026-07-29T23:50:07.296Z"
       },
       {
         "day": 452,
         "date": "2026-10-04T18:00:00.000Z",
         "rewardPool": 69701.77536557957,
-        "totalShares": 0,
+        "totalShares": 1923794728.064,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-07-11T18:00:08.881Z"
+        "lastUpdated": "2026-07-29T23:50:07.297Z"
       },
       {
         "day": 453,
         "date": "2026-10-05T18:00:00.000Z",
         "rewardPool": 69646.01394528711,
-        "totalShares": 0,
+        "totalShares": 1923794728.064,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-07-11T18:00:08.881Z"
+        "lastUpdated": "2026-07-29T23:50:07.297Z"
       },
       {
         "day": 454,
         "date": "2026-10-06T18:00:00.000Z",
         "rewardPool": 69590.29713413087,
-        "totalShares": 0,
+        "totalShares": 1821109288.064,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-07-11T18:00:08.881Z"
+        "lastUpdated": "2026-07-29T23:50:07.298Z"
       },
       {
         "day": 455,
         "date": "2026-10-07T18:00:00.000Z",
         "rewardPool": 69534.62489642357,
-        "totalShares": 0,
+        "totalShares": 1743669295.8079998,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-07-11T18:05:05.484Z"
+        "lastUpdated": "2026-07-29T23:50:07.299Z"
       },
       {
         "day": 456,
         "date": "2026-10-08T18:00:00.000Z",
         "rewardPool": 69478.99719650643,
-        "totalShares": 0,
+        "totalShares": 1711144495.8079998,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-07-12T18:05:09.173Z"
+        "lastUpdated": "2026-07-29T23:50:07.299Z"
       },
       {
         "day": 457,
         "date": "2026-10-09T18:00:00.000Z",
         "rewardPool": 69423.41399874922,
-        "totalShares": 0,
+        "totalShares": 1711144495.8079998,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-07-13T18:05:09.444Z"
+        "lastUpdated": "2026-07-29T23:50:07.300Z"
       },
       {
         "day": 458,
         "date": "2026-10-10T18:00:00.000Z",
         "rewardPool": 69367.87526755022,
-        "totalShares": 0,
+        "totalShares": 1678619695.8079998,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-07-14T18:05:06.552Z"
+        "lastUpdated": "2026-07-29T23:50:07.301Z"
       },
       {
         "day": 459,
         "date": "2026-10-11T18:00:00.000Z",
         "rewardPool": 69312.38096733618,
-        "totalShares": 0,
+        "totalShares": 1618990895.808,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-07-15T18:05:07.835Z"
+        "lastUpdated": "2026-07-29T23:50:07.301Z"
       },
       {
         "day": 460,
         "date": "2026-10-12T18:00:00.000Z",
         "rewardPool": 69256.93106256232,
-        "totalShares": 0,
+        "totalShares": 1586466095.808,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-07-16T18:05:09.525Z"
+        "lastUpdated": "2026-07-29T23:50:07.302Z"
       },
       {
         "day": 461,
         "date": "2026-10-13T18:00:00.000Z",
         "rewardPool": 69201.52551771226,
-        "totalShares": 0,
+        "totalShares": 1515221295.808,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-07-17T18:05:09.468Z"
+        "lastUpdated": "2026-07-29T23:50:07.303Z"
       },
       {
         "day": 462,
         "date": "2026-10-14T18:00:00.000Z",
         "rewardPool": 69146.16429729809,
-        "totalShares": 0,
+        "totalShares": 1453269295.808,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-07-18T18:05:08.366Z"
+        "lastUpdated": "2026-07-29T23:50:07.304Z"
       },
       {
         "day": 463,
         "date": "2026-10-15T18:00:00.000Z",
         "rewardPool": 69090.84736586025,
-        "totalShares": 0,
+        "totalShares": 1337708301.952,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-07-19T18:05:05.421Z"
+        "lastUpdated": "2026-07-29T23:50:07.304Z"
       },
       {
         "day": 464,
         "date": "2026-10-16T18:00:00.000Z",
         "rewardPool": 69035.57468796756,
-        "totalShares": 0,
+        "totalShares": 790607254.976,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-07-20T18:05:08.819Z"
+        "lastUpdated": "2026-07-29T23:50:07.305Z"
       },
       {
         "day": 465,
         "date": "2026-10-17T18:00:00.000Z",
         "rewardPool": 68980.34622821718,
-        "totalShares": 0,
+        "totalShares": 682965654.976,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-07-21T18:05:08.156Z"
+        "lastUpdated": "2026-07-29T23:50:07.306Z"
       },
       {
         "day": 466,
         "date": "2026-10-18T18:00:00.000Z",
         "rewardPool": 68925.16195123461,
-        "totalShares": 0,
+        "totalShares": 662444054.976,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-07-22T18:05:05.809Z"
+        "lastUpdated": "2026-07-29T23:50:07.306Z"
       },
       {
         "day": 467,
         "date": "2026-10-19T18:00:00.000Z",
         "rewardPool": 68870.02182167362,
-        "totalShares": 0,
+        "totalShares": 629919254.976,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-07-23T18:05:09.814Z"
+        "lastUpdated": "2026-07-29T23:50:07.307Z"
       },
       {
         "day": 468,
         "date": "2026-10-20T18:00:00.000Z",
         "rewardPool": 68814.92580421628,
-        "totalShares": 0,
+        "totalShares": 629919254.976,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-07-24T18:05:08.286Z"
+        "lastUpdated": "2026-07-29T23:50:07.308Z"
       },
       {
         "day": 469,
         "date": "2026-10-21T18:00:00.000Z",
         "rewardPool": 68759.87386357291,
-        "totalShares": 0,
+        "totalShares": 629919254.976,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-07-25T18:05:08.248Z"
+        "lastUpdated": "2026-07-29T23:50:07.308Z"
       },
       {
         "day": 470,
         "date": "2026-10-22T18:00:00.000Z",
         "rewardPool": 68704.86596448204,
-        "totalShares": 0,
+        "totalShares": 592755798.976,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-07-26T18:05:05.372Z"
+        "lastUpdated": "2026-07-29T23:50:07.309Z"
       },
       {
         "day": 471,
         "date": "2026-10-23T18:00:00.000Z",
         "rewardPool": 68649.90207171046,
-        "totalShares": 0,
+        "totalShares": 434593280,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-07-28T17:35:07.604Z"
+        "lastUpdated": "2026-07-29T23:50:07.310Z"
       },
       {
         "day": 472,
         "date": "2026-10-24T18:00:00.000Z",
         "rewardPool": 68594.98215005308,
-        "totalShares": 0,
+        "totalShares": 283972480,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-07-28T18:05:07.997Z"
+        "lastUpdated": "2026-07-29T23:50:07.310Z"
       },
       {
         "day": 473,
@@ -95826,17 +95812,17 @@
         "totalShares": 0,
         "penaltiesInPool": 0,
         "calculated": true,
-        "lastUpdated": "2026-07-29T23:45:03.089Z"
+        "lastUpdated": "2026-07-29T23:50:08.196Z"
       }
     ],
     "totalStakedInContract": 1456096.57,
-    "lastBlock": 25641863
+    "lastBlock": 25642786
   },
-  "lastUpdated": "2026-07-29T23:50:08.790Z",
-  "lastProcessedBlock": 23450736,
+  "lastUpdated": "2026-07-30T02:52:06.343Z",
+  "lastProcessedBlock": 25641888,
   "currentProtocolDay": 385,
-  "totalSupply": 14708176.224904388,
-  "titanxTotalSupply": "99193657926775672553537805442197",
+  "totalSupply": 14701322.982664775,
+  "titanxTotalSupply": "99194157926775672553544449219733",
   "totalTitanXBurnt": "453455200101398605744264795162",
   "lastBlock": 23056089,
   "contractData": {
@@ -95859,14 +95845,14 @@
     {
       "tokenId": "1029195",
       "owner": "0xAa390a37006E22b5775A34f2147F81eBD6a63641",
-      "liquidity": "1316913347520318824984870253",
+      "liquidity": "1317078874239454148180499804",
       "tickLower": -887200,
       "tickUpper": 887200,
       "claimableTorus": 23162.065099853942,
-      "claimableTitanX": 4276655603.363693,
+      "claimableTitanX": 4277266245.175978,
       "tokensOwed0": "23162065099853940679317",
-      "tokensOwed1": "4276092221164569988413412989",
-      "lastChecked": "2026-07-29T23:45:03.059Z",
+      "tokensOwed1": "4277187336771275151438687048",
+      "lastChecked": "2026-07-30T01:35:09.025Z",
       "isProtocolPosition": true,
       "torusAmount": 1096190.1906362185,
       "titanxAmount": 1084288466365.7351,
@@ -95883,8 +95869,8 @@
     "thirtyDay": []
   },
   "poolData": {
-    "sqrtPriceX96": "34732715787041256776440634823641",
-    "currentTick": 121668,
+    "sqrtPriceX96": "34739423796437464578149176755032",
+    "currentTick": 121672,
     "token0": "",
     "token1": "",
     "liquidity": "0",
@@ -95908,10 +95894,10 @@
       {
         "day": 385,
         "date": "2026-07-29",
-        "totalMaxSupply": 14718094.51577021,
+        "totalMaxSupply": 14708176.224904388,
         "activePositions": 122,
         "dailyRewardPool": 73541.30641584686,
-        "totalShares": 7876478497.535999,
+        "totalShares": 0,
         "breakdown": {
           "fromStakes": 0,
           "fromCreates": 0,
@@ -95921,10 +95907,10 @@
       {
         "day": 386,
         "date": "2026-07-30",
-        "totalMaxSupply": 14718094.51577021,
+        "totalMaxSupply": 14708176.224904388,
         "activePositions": 122,
         "dailyRewardPool": 73482.47337071419,
-        "totalShares": 7876478497.535999,
+        "totalShares": 0,
         "breakdown": {
           "fromStakes": 0,
           "fromCreates": 0,
@@ -95934,12 +95920,12 @@
       {
         "day": 387,
         "date": "2026-07-31",
-        "totalMaxSupply": 14736497.665826343,
+        "totalMaxSupply": 14711178.967904389,
         "activePositions": 122,
         "dailyRewardPool": 73423.68739201761,
-        "totalShares": 7876478497.535999,
+        "totalShares": 0,
         "breakdown": {
-          "fromStakes": 18403.150056132326,
+          "fromStakes": 3002.743,
           "fromCreates": 0,
           "fromExisting": 0
         }
@@ -95947,12 +95933,12 @@
       {
         "day": 388,
         "date": "2026-08-01",
-        "totalMaxSupply": 14736497.665826343,
+        "totalMaxSupply": 14711178.967904389,
         "activePositions": 121,
         "dailyRewardPool": 73364.948442104,
-        "totalShares": 7853225255.7439995,
+        "totalShares": 0,
         "breakdown": {
-          "fromStakes": 18403.150056132326,
+          "fromStakes": 3002.743,
           "fromCreates": 0,
           "fromExisting": 0
         }
@@ -95960,12 +95946,12 @@
       {
         "day": 389,
         "date": "2026-08-02",
-        "totalMaxSupply": 14736497.665826343,
+        "totalMaxSupply": 14711178.967904389,
         "activePositions": 121,
         "dailyRewardPool": 73306.25648335031,
-        "totalShares": 7853225255.7439995,
+        "totalShares": 0,
         "breakdown": {
-          "fromStakes": 18403.150056132326,
+          "fromStakes": 3002.743,
           "fromCreates": 0,
           "fromExisting": 0
         }
@@ -95973,12 +95959,12 @@
       {
         "day": 390,
         "date": "2026-08-03",
-        "totalMaxSupply": 14801707.047359081,
+        "totalMaxSupply": 14721656.363904389,
         "activePositions": 121,
         "dailyRewardPool": 73247.61147816363,
-        "totalShares": 7853225255.7439995,
+        "totalShares": 0,
         "breakdown": {
-          "fromStakes": 83612.53158887042,
+          "fromStakes": 13480.139000000001,
           "fromCreates": 0,
           "fromExisting": 0
         }
@@ -95986,12 +95972,12 @@
       {
         "day": 391,
         "date": "2026-08-04",
-        "totalMaxSupply": 15469064.367348742,
+        "totalMaxSupply": 14828333.299904387,
         "activePositions": 119,
         "dailyRewardPool": 73189.0133889811,
-        "totalShares": 7772088301.12,
+        "totalShares": 0,
         "breakdown": {
-          "fromStakes": 750969.8515785317,
+          "fromStakes": 120157.07500000001,
           "fromCreates": 0,
           "fromExisting": 0
         }
@@ -95999,12 +95985,12 @@
       {
         "day": 392,
         "date": "2026-08-05",
-        "totalMaxSupply": 15469064.367348742,
+        "totalMaxSupply": 14828333.299904387,
         "activePositions": 114,
         "dailyRewardPool": 73130.46217826991,
-        "totalShares": 6945982108.736,
+        "totalShares": 0,
         "breakdown": {
-          "fromStakes": 750969.8515785317,
+          "fromStakes": 120157.07500000001,
           "fromCreates": 0,
           "fromExisting": 0
         }
@@ -96012,12 +95998,12 @@
       {
         "day": 393,
         "date": "2026-08-06",
-        "totalMaxSupply": 15469064.367348742,
+        "totalMaxSupply": 14828333.299904387,
         "activePositions": 114,
         "dailyRewardPool": 73071.9578085273,
-        "totalShares": 6945982108.736,
+        "totalShares": 0,
         "breakdown": {
-          "fromStakes": 750969.8515785317,
+          "fromStakes": 120157.07500000001,
           "fromCreates": 0,
           "fromExisting": 0
         }
@@ -96025,12 +96011,12 @@
       {
         "day": 394,
         "date": "2026-08-07",
-        "totalMaxSupply": 15469064.367348742,
+        "totalMaxSupply": 14828333.299904387,
         "activePositions": 114,
         "dailyRewardPool": 73013.50024228047,
-        "totalShares": 6945982108.736,
+        "totalShares": 0,
         "breakdown": {
-          "fromStakes": 750969.8515785317,
+          "fromStakes": 120157.07500000001,
           "fromCreates": 0,
           "fromExisting": 0
         }
@@ -96038,12 +96024,12 @@
       {
         "day": 395,
         "date": "2026-08-08",
-        "totalMaxSupply": 15469064.367348742,
+        "totalMaxSupply": 14828333.299904387,
         "activePositions": 114,
         "dailyRewardPool": 72955.08944208664,
-        "totalShares": 6945982108.736,
+        "totalShares": 0,
         "breakdown": {
-          "fromStakes": 750969.8515785317,
+          "fromStakes": 120157.07500000001,
           "fromCreates": 0,
           "fromExisting": 0
         }
@@ -96051,12 +96037,12 @@
       {
         "day": 396,
         "date": "2026-08-09",
-        "totalMaxSupply": 15496866.197659915,
+        "totalMaxSupply": 14832633.299904387,
         "activePositions": 114,
         "dailyRewardPool": 72896.72537053296,
-        "totalShares": 6945982108.736,
+        "totalShares": 0,
         "breakdown": {
-          "fromStakes": 778771.6818897054,
+          "fromStakes": 124457.07500000001,
           "fromCreates": 0,
           "fromExisting": 0
         }
@@ -96064,12 +96050,12 @@
       {
         "day": 397,
         "date": "2026-08-10",
-        "totalMaxSupply": 15551082.841401076,
+        "totalMaxSupply": 14840913.299904387,
         "activePositions": 113,
         "dailyRewardPool": 72838.40799023653,
-        "totalShares": 6848562588.735999,
+        "totalShares": 0,
         "breakdown": {
-          "fromStakes": 832988.3256308655,
+          "fromStakes": 132737.075,
           "fromCreates": 0,
           "fromExisting": 0
         }
@@ -96077,12 +96063,12 @@
       {
         "day": 398,
         "date": "2026-08-11",
-        "totalMaxSupply": 15551082.841401076,
+        "totalMaxSupply": 14840913.299904387,
         "activePositions": 112,
         "dailyRewardPool": 72780.13726384434,
-        "totalShares": 6848562588.735999,
+        "totalShares": 0,
         "breakdown": {
-          "fromStakes": 832988.3256308655,
+          "fromStakes": 132737.075,
           "fromCreates": 0,
           "fromExisting": 0
         }
@@ -96090,12 +96076,12 @@
       {
         "day": 399,
         "date": "2026-08-12",
-        "totalMaxSupply": 15551082.841401076,
+        "totalMaxSupply": 14840913.299904387,
         "activePositions": 112,
         "dailyRewardPool": 72721.91315403326,
-        "totalShares": 6848562588.735999,
+        "totalShares": 0,
         "breakdown": {
-          "fromStakes": 832988.3256308655,
+          "fromStakes": 132737.075,
           "fromCreates": 0,
           "fromExisting": 0
         }
@@ -96103,12 +96089,12 @@
       {
         "day": 400,
         "date": "2026-08-13",
-        "totalMaxSupply": 15551082.841401076,
+        "totalMaxSupply": 14840913.299904387,
         "activePositions": 112,
         "dailyRewardPool": 72663.73562351003,
-        "totalShares": 6848562588.735999,
+        "totalShares": 0,
         "breakdown": {
-          "fromStakes": 832988.3256308655,
+          "fromStakes": 132737.075,
           "fromCreates": 0,
           "fromExisting": 0
         }
@@ -96116,12 +96102,12 @@
       {
         "day": 401,
         "date": "2026-08-14",
-        "totalMaxSupply": 15838905.246517548,
+        "totalMaxSupply": 14884027.892904388,
         "activePositions": 112,
         "dailyRewardPool": 72605.60463501122,
-        "totalShares": 6848562588.735999,
+        "totalShares": 0,
         "breakdown": {
-          "fromStakes": 1120810.7307473384,
+          "fromStakes": 175851.668,
           "fromCreates": 0,
           "fromExisting": 0
         }
@@ -96129,12 +96115,12 @@
       {
         "day": 402,
         "date": "2026-08-15",
-        "totalMaxSupply": 15886626.499981683,
+        "totalMaxSupply": 14891127.892904388,
         "activePositions": 108,
         "dailyRewardPool": 72547.52015130321,
-        "totalShares": 6514683180.544,
+        "totalShares": 0,
         "breakdown": {
-          "fromStakes": 1168531.9842114728,
+          "fromStakes": 182951.668,
           "fromCreates": 0,
           "fromExisting": 0
         }
@@ -96142,12 +96128,12 @@
       {
         "day": 403,
         "date": "2026-08-16",
-        "totalMaxSupply": 15939897.048959516,
+        "totalMaxSupply": 14899002.892904388,
         "activePositions": 106,
         "dailyRewardPool": 72489.48213518216,
-        "totalShares": 6458926380.544,
+        "totalShares": 0,
         "breakdown": {
-          "fromStakes": 1221802.5331893063,
+          "fromStakes": 190826.668,
           "fromCreates": 0,
           "fromExisting": 0
         }
@@ -96155,12 +96141,12 @@
       {
         "day": 404,
         "date": "2026-08-17",
-        "totalMaxSupply": 15983416.485197728,
+        "totalMaxSupply": 14905362.892904388,
         "activePositions": 103,
         "dailyRewardPool": 72431.49054947401,
-        "totalShares": 6359996780.544,
+        "totalShares": 0,
         "breakdown": {
-          "fromStakes": 1265321.969427519,
+          "fromStakes": 197186.668,
           "fromCreates": 0,
           "fromExisting": 0
         }
@@ -96168,12 +96154,12 @@
       {
         "day": 405,
         "date": "2026-08-18",
-        "totalMaxSupply": 15983416.485197728,
+        "totalMaxSupply": 14905362.892904388,
         "activePositions": 101,
         "dailyRewardPool": 72373.54535703443,
-        "totalShares": 6349464940.544,
+        "totalShares": 0,
         "breakdown": {
-          "fromStakes": 1265321.969427519,
+          "fromStakes": 197186.668,
           "fromCreates": 0,
           "fromExisting": 0
         }
@@ -96181,12 +96167,12 @@
       {
         "day": 406,
         "date": "2026-08-19",
-        "totalMaxSupply": 16050446.274887001,
+        "totalMaxSupply": 14915082.892904388,
         "activePositions": 101,
         "dailyRewardPool": 72315.64652074879,
-        "totalShares": 6349464940.544,
+        "totalShares": 0,
         "breakdown": {
-          "fromStakes": 1332351.7591167905,
+          "fromStakes": 206906.668,
           "fromCreates": 0,
           "fromExisting": 0
         }
@@ -96194,12 +96180,12 @@
       {
         "day": 407,
         "date": "2026-08-20",
-        "totalMaxSupply": 16050446.274887001,
+        "totalMaxSupply": 14915082.892904388,
         "activePositions": 100,
         "dailyRewardPool": 72257.7940035322,
-        "totalShares": 6274193260.544,
+        "totalShares": 0,
         "breakdown": {
-          "fromStakes": 1332351.7591167905,
+          "fromStakes": 206906.668,
           "fromCreates": 0,
           "fromExisting": 0
         }
@@ -96207,12 +96193,12 @@
       {
         "day": 408,
         "date": "2026-08-21",
-        "totalMaxSupply": 16053952.516336149,
+        "totalMaxSupply": 14915582.892904388,
         "activePositions": 100,
         "dailyRewardPool": 72199.98776832937,
-        "totalShares": 6271870060.544,
+        "totalShares": 0,
         "breakdown": {
-          "fromStakes": 1335858.0005659382,
+          "fromStakes": 207406.668,
           "fromCreates": 0,
           "fromExisting": 0
         }
@@ -96220,12 +96206,12 @@
       {
         "day": 409,
         "date": "2026-08-22",
-        "totalMaxSupply": 16101891.469137777,
+        "totalMaxSupply": 14922357.892904388,
         "activePositions": 98,
         "dailyRewardPool": 72142.22777811471,
-        "totalShares": 6217855660.544,
+        "totalShares": 0,
         "breakdown": {
-          "fromStakes": 1383796.9533675674,
+          "fromStakes": 214181.668,
           "fromCreates": 0,
           "fromExisting": 0
         }
@@ -96233,12 +96219,12 @@
       {
         "day": 410,
         "date": "2026-08-23",
-        "totalMaxSupply": 16101891.469137777,
+        "totalMaxSupply": 14922357.892904388,
         "activePositions": 97,
         "dailyRewardPool": 72084.51399589222,
-        "totalShares": 6217855660.544,
+        "totalShares": 0,
         "breakdown": {
-          "fromStakes": 1383796.9533675674,
+          "fromStakes": 214181.668,
           "fromCreates": 0,
           "fromExisting": 0
         }
@@ -96246,12 +96232,12 @@
       {
         "day": 411,
         "date": "2026-08-24",
-        "totalMaxSupply": 16248772.599340826,
+        "totalMaxSupply": 14942978.863904389,
         "activePositions": 97,
         "dailyRewardPool": 72026.84638469551,
-        "totalShares": 6217855660.544,
+        "totalShares": 0,
         "breakdown": {
-          "fromStakes": 1530678.083570617,
+          "fromStakes": 234802.639,
           "fromCreates": 0,
           "fromExisting": 0
         }
@@ -96259,12 +96245,12 @@
       {
         "day": 412,
         "date": "2026-08-25",
-        "totalMaxSupply": 16461284.116578817,
+        "totalMaxSupply": 14972564.536904389,
         "activePositions": 93,
         "dailyRewardPool": 71969.22490758775,
-        "totalShares": 5998089699.008,
+        "totalShares": 0,
         "breakdown": {
-          "fromStakes": 1743189.6008086065,
+          "fromStakes": 264388.312,
           "fromCreates": 0,
           "fromExisting": 0
         }
@@ -96272,12 +96258,12 @@
       {
         "day": 413,
         "date": "2026-08-26",
-        "totalMaxSupply": 16636553.222112397,
+        "totalMaxSupply": 14996835.926904388,
         "activePositions": 88,
         "dailyRewardPool": 71911.64952766168,
-        "totalShares": 5829055409.408,
+        "totalShares": 0,
         "breakdown": {
-          "fromStakes": 1918458.7063421875,
+          "fromStakes": 288659.702,
           "fromCreates": 0,
           "fromExisting": 0
         }
@@ -96285,12 +96271,12 @@
       {
         "day": 414,
         "date": "2026-08-27",
-        "totalMaxSupply": 16698382.41130759,
+        "totalMaxSupply": 15005335.926904388,
         "activePositions": 86,
         "dailyRewardPool": 71854.12020803955,
-        "totalShares": 5641097765.247999,
+        "totalShares": 0,
         "breakdown": {
-          "fromStakes": 1980287.8955373804,
+          "fromStakes": 297159.702,
           "fromCreates": 0,
           "fromExisting": 0
         }
@@ -96298,12 +96284,12 @@
       {
         "day": 415,
         "date": "2026-08-28",
-        "totalMaxSupply": 16735022.66362314,
+        "totalMaxSupply": 15010335.926904388,
         "activePositions": 85,
         "dailyRewardPool": 71796.63691187311,
-        "totalShares": 5575273765.247999,
+        "totalShares": 0,
         "breakdown": {
-          "fromStakes": 2016928.14785293,
+          "fromStakes": 302159.702,
           "fromCreates": 0,
           "fromExisting": 0
         }
@@ -96311,12 +96297,12 @@
       {
         "day": 416,
         "date": "2026-08-29",
-        "totalMaxSupply": 16735022.66362314,
+        "totalMaxSupply": 15010335.926904388,
         "activePositions": 84,
         "dailyRewardPool": 71739.19960234361,
-        "totalShares": 5536553765.247999,
+        "totalShares": 0,
         "breakdown": {
-          "fromStakes": 2016928.14785293,
+          "fromStakes": 302159.702,
           "fromCreates": 0,
           "fromExisting": 0
         }
@@ -96324,12 +96310,12 @@
       {
         "day": 417,
         "date": "2026-08-30",
-        "totalMaxSupply": 16735022.66362314,
+        "totalMaxSupply": 15010335.926904388,
         "activePositions": 84,
         "dailyRewardPool": 71681.80824266173,
-        "totalShares": 5536553765.247999,
+        "totalShares": 0,
         "breakdown": {
-          "fromStakes": 2016928.14785293,
+          "fromStakes": 302159.702,
           "fromCreates": 0,
           "fromExisting": 0
         }
@@ -96337,12 +96323,12 @@
       {
         "day": 418,
         "date": "2026-08-31",
-        "totalMaxSupply": 16735022.66362314,
+        "totalMaxSupply": 15010335.926904388,
         "activePositions": 84,
         "dailyRewardPool": 71624.4627960676,
-        "totalShares": 5536553765.247999,
+        "totalShares": 0,
         "breakdown": {
-          "fromStakes": 2016928.14785293,
+          "fromStakes": 302159.702,
           "fromCreates": 0,
           "fromExisting": 0
         }
@@ -96350,12 +96336,12 @@
       {
         "day": 419,
         "date": "2026-09-01",
-        "totalMaxSupply": 16735022.66362314,
+        "totalMaxSupply": 15010335.926904388,
         "activePositions": 84,
         "dailyRewardPool": 71567.16322583075,
-        "totalShares": 5536553765.247999,
+        "totalShares": 0,
         "breakdown": {
-          "fromStakes": 2016928.14785293,
+          "fromStakes": 302159.702,
           "fromCreates": 0,
           "fromExisting": 0
         }
@@ -96363,12 +96349,12 @@
       {
         "day": 420,
         "date": "2026-09-02",
-        "totalMaxSupply": 16735022.66362314,
+        "totalMaxSupply": 15010335.926904388,
         "activePositions": 84,
         "dailyRewardPool": 71509.90949525009,
-        "totalShares": 5536553765.247999,
+        "totalShares": 0,
         "breakdown": {
-          "fromStakes": 2016928.14785293,
+          "fromStakes": 302159.702,
           "fromCreates": 0,
           "fromExisting": 0
         }
@@ -96376,12 +96362,12 @@
       {
         "day": 421,
         "date": "2026-09-03",
-        "totalMaxSupply": 16735022.66362314,
+        "totalMaxSupply": 15010335.926904388,
         "activePositions": 84,
         "dailyRewardPool": 71452.70156765389,
-        "totalShares": 5536553765.247999,
+        "totalShares": 0,
         "breakdown": {
-          "fromStakes": 2016928.14785293,
+          "fromStakes": 302159.702,
           "fromCreates": 0,
           "fromExisting": 0
         }
@@ -96389,12 +96375,12 @@
       {
         "day": 422,
         "date": "2026-09-04",
-        "totalMaxSupply": 16804564.73181061,
+        "totalMaxSupply": 15019406.926904388,
         "activePositions": 84,
         "dailyRewardPool": 71395.53940639977,
-        "totalShares": 5536553765.247999,
+        "totalShares": 0,
         "breakdown": {
-          "fromStakes": 2086470.2160404006,
+          "fromStakes": 311230.702,
           "fromCreates": 0,
           "fromExisting": 0
         }
@@ -96402,12 +96388,12 @@
       {
         "day": 423,
         "date": "2026-09-05",
-        "totalMaxSupply": 16843116.72018399,
+        "totalMaxSupply": 15024406.926904388,
         "activePositions": 83,
         "dailyRewardPool": 71338.42297487464,
-        "totalShares": 5466307941.247999,
+        "totalShares": 0,
         "breakdown": {
-          "fromStakes": 2125022.204413781,
+          "fromStakes": 316230.702,
           "fromCreates": 0,
           "fromExisting": 0
         }
@@ -96415,12 +96401,12 @@
       {
         "day": 424,
         "date": "2026-09-06",
-        "totalMaxSupply": 17100397.289529487,
+        "totalMaxSupply": 15057586.443904389,
         "activePositions": 82,
         "dailyRewardPool": 71281.35223649474,
-        "totalShares": 5427587941.247999,
+        "totalShares": 0,
         "breakdown": {
-          "fromStakes": 2382302.7737592775,
+          "fromStakes": 349410.219,
           "fromCreates": 0,
           "fromExisting": 0
         }
@@ -96428,12 +96414,12 @@
       {
         "day": 425,
         "date": "2026-09-07",
-        "totalMaxSupply": 17322141.321021877,
+        "totalMaxSupply": 15086006.443904389,
         "activePositions": 79,
         "dailyRewardPool": 71224.32715470555,
-        "totalShares": 5170645761.6,
+        "totalShares": 0,
         "breakdown": {
-          "fromStakes": 2604046.8052516687,
+          "fromStakes": 377830.219,
           "fromCreates": 0,
           "fromExisting": 0
         }
@@ -96441,12 +96427,12 @@
       {
         "day": 426,
         "date": "2026-09-08",
-        "totalMaxSupply": 17433700.679586697,
+        "totalMaxSupply": 15100206.443904389,
         "activePositions": 74,
         "dailyRewardPool": 71167.34769298178,
-        "totalShares": 4950561281.6,
+        "totalShares": 0,
         "breakdown": {
-          "fromStakes": 2715606.1638164865,
+          "fromStakes": 392030.219,
           "fromCreates": 0,
           "fromExisting": 0
         }
@@ -96454,12 +96440,12 @@
       {
         "day": 427,
         "date": "2026-09-09",
-        "totalMaxSupply": 17534986.766080897,
+        "totalMaxSupply": 15113006.443904389,
         "activePositions": 72,
         "dailyRewardPool": 71110.41381482739,
-        "totalShares": 4840596481.6,
+        "totalShares": 0,
         "breakdown": {
-          "fromStakes": 2816892.2503106864,
+          "fromStakes": 404830.219,
           "fromCreates": 0,
           "fromExisting": 0
         }
@@ -96467,12 +96453,12 @@
       {
         "day": 428,
         "date": "2026-09-10",
-        "totalMaxSupply": 17583001.930244423,
+        "totalMaxSupply": 15119006.443904389,
         "activePositions": 70,
         "dailyRewardPool": 71053.52548377553,
-        "totalShares": 4716692481.6,
+        "totalShares": 0,
         "breakdown": {
-          "fromStakes": 2864907.4144742144,
+          "fromStakes": 410830.219,
           "fromCreates": 0,
           "fromExisting": 0
         }
@@ -96480,12 +96466,12 @@
       {
         "day": 429,
         "date": "2026-09-11",
-        "totalMaxSupply": 17840601.78199502,
+        "totalMaxSupply": 15151088.228904389,
         "activePositions": 68,
         "dailyRewardPool": 70996.6826633885,
-        "totalShares": 4695009281.6,
+        "totalShares": 0,
         "breakdown": {
-          "fromStakes": 3122507.2662248095,
+          "fromStakes": 442912.00399999996,
           "fromCreates": 0,
           "fromExisting": 0
         }
@@ -96493,12 +96479,12 @@
       {
         "day": 430,
         "date": "2026-09-12",
-        "totalMaxSupply": 17957106.277944475,
+        "totalMaxSupply": 15165488.228904389,
         "activePositions": 62,
         "dailyRewardPool": 70939.8853172578,
-        "totalShares": 4446567938.559999,
+        "totalShares": 0,
         "breakdown": {
-          "fromStakes": 3239011.7621742664,
+          "fromStakes": 457312.00399999996,
           "fromCreates": 0,
           "fromExisting": 0
         }
@@ -96506,12 +96492,12 @@
       {
         "day": 431,
         "date": "2026-09-13",
-        "totalMaxSupply": 18208285.64791457,
+        "totalMaxSupply": 15196288.228904389,
         "activePositions": 60,
         "dailyRewardPool": 70883.13340900399,
-        "totalShares": 4335054338.559999,
+        "totalShares": 0,
         "breakdown": {
-          "fromStakes": 3490191.1321443603,
+          "fromStakes": 488112.00399999996,
           "fromCreates": 0,
           "fromExisting": 0
         }
@@ -96519,12 +96505,12 @@
       {
         "day": 432,
         "date": "2026-09-14",
-        "totalMaxSupply": 18283413.623224776,
+        "totalMaxSupply": 15205419.228904389,
         "activePositions": 58,
         "dailyRewardPool": 70826.42690227678,
-        "totalShares": 4096539138.5599995,
+        "totalShares": 0,
         "breakdown": {
-          "fromStakes": 3565319.1074545677,
+          "fromStakes": 497243.00399999996,
           "fromCreates": 0,
           "fromExisting": 0
         }
@@ -96532,12 +96518,12 @@
       {
         "day": 433,
         "date": "2026-09-15",
-        "totalMaxSupply": 18378200.86300302,
+        "totalMaxSupply": 15216833.622904388,
         "activePositions": 56,
         "dailyRewardPool": 70769.76576075496,
-        "totalShares": 4025828674.5599995,
+        "totalShares": 0,
         "breakdown": {
-          "fromStakes": 3660106.347232809,
+          "fromStakes": 508657.3979999999,
           "fromCreates": 0,
           "fromExisting": 0
         }
@@ -96545,12 +96531,12 @@
       {
         "day": 434,
         "date": "2026-09-16",
-        "totalMaxSupply": 18850152.09903455,
+        "totalMaxSupply": 15272913.622904388,
         "activePositions": 54,
         "dailyRewardPool": 70713.14994814635,
-        "totalShares": 3754832087.424,
+        "totalShares": 0,
         "breakdown": {
-          "fromStakes": 4132057.583264341,
+          "fromStakes": 564737.3979999999,
           "fromCreates": 0,
           "fromExisting": 0
         }
@@ -96558,12 +96544,12 @@
       {
         "day": 435,
         "date": "2026-09-17",
-        "totalMaxSupply": 19000011.899479203,
+        "totalMaxSupply": 15290514.526904387,
         "activePositions": 49,
         "dailyRewardPool": 70656.57942818783,
-        "totalShares": 3449718487.424,
+        "totalShares": 0,
         "breakdown": {
-          "fromStakes": 4281917.383708991,
+          "fromStakes": 582338.3019999999,
           "fromCreates": 0,
           "fromExisting": 0
         }
@@ -96571,12 +96557,12 @@
       {
         "day": 436,
         "date": "2026-09-18",
-        "totalMaxSupply": 19037414.015732013,
+        "totalMaxSupply": 15294864.526904387,
         "activePositions": 45,
         "dailyRewardPool": 70600.05416464528,
-        "totalShares": 3366850686.8479996,
+        "totalShares": 0,
         "breakdown": {
-          "fromStakes": 4319319.499961804,
+          "fromStakes": 586688.3019999999,
           "fromCreates": 0,
           "fromExisting": 0
         }
@@ -96584,12 +96570,12 @@
       {
         "day": 437,
         "date": "2026-09-19",
-        "totalMaxSupply": 19191847.72774572,
+        "totalMaxSupply": 15312601.987904388,
         "activePositions": 43,
         "dailyRewardPool": 70543.57412131356,
-        "totalShares": 3333164286.8479996,
+        "totalShares": 0,
         "breakdown": {
-          "fromStakes": 4473753.211975507,
+          "fromStakes": 604425.7629999999,
           "fromCreates": 0,
           "fromExisting": 0
         }
@@ -96597,12 +96583,12 @@
       {
         "day": 438,
         "date": "2026-09-20",
-        "totalMaxSupply": 19278808.423101425,
+        "totalMaxSupply": 15322458.992904387,
         "activePositions": 40,
         "dailyRewardPool": 70487.13926201651,
-        "totalShares": 3195805388.864,
+        "totalShares": 0,
         "breakdown": {
-          "fromStakes": 4560713.907331217,
+          "fromStakes": 614282.7679999999,
           "fromCreates": 0,
           "fromExisting": 0
         }
@@ -96610,12 +96596,12 @@
       {
         "day": 439,
         "date": "2026-09-21",
-        "totalMaxSupply": 19345875.83689774,
+        "totalMaxSupply": 15329958.992904387,
         "activePositions": 39,
         "dailyRewardPool": 70430.7495506069,
-        "totalShares": 3119472742.1439996,
+        "totalShares": 0,
         "breakdown": {
-          "fromStakes": 4627781.321127528,
+          "fromStakes": 621782.7679999999,
           "fromCreates": 0,
           "fromExisting": 0
         }
@@ -96623,12 +96609,12 @@
       {
         "day": 440,
         "date": "2026-09-22",
-        "totalMaxSupply": 19424378.573933814,
+        "totalMaxSupply": 15338619.992904387,
         "activePositions": 37,
         "dailyRewardPool": 70374.4049509664,
-        "totalShares": 3061392742.1439996,
+        "totalShares": 0,
         "breakdown": {
-          "fromStakes": 4706284.058163604,
+          "fromStakes": 630443.7679999999,
           "fromCreates": 0,
           "fromExisting": 0
         }
@@ -96636,12 +96622,12 @@
       {
         "day": 441,
         "date": "2026-09-23",
-        "totalMaxSupply": 19582625.529971484,
+        "totalMaxSupply": 15355719.992904387,
         "activePositions": 35,
         "dailyRewardPool": 70318.10542700563,
-        "totalShares": 2861899558.1439996,
+        "totalShares": 0,
         "breakdown": {
-          "fromStakes": 4864531.014201274,
+          "fromStakes": 647543.7679999999,
           "fromCreates": 0,
           "fromExisting": 0
         }
@@ -96649,12 +96635,12 @@
       {
         "day": 442,
         "date": "2026-09-24",
-        "totalMaxSupply": 20526513.71337146,
+        "totalMaxSupply": 15456859.562904388,
         "activePositions": 34,
         "dailyRewardPool": 70261.85094266402,
-        "totalShares": 2861899558.1439996,
+        "totalShares": 0,
         "breakdown": {
-          "fromStakes": 5808419.197601249,
+          "fromStakes": 748683.3379999999,
           "fromCreates": 0,
           "fromExisting": 0
         }
@@ -96662,12 +96648,12 @@
       {
         "day": 443,
         "date": "2026-09-25",
-        "totalMaxSupply": 20717206.47582881,
+        "totalMaxSupply": 15476859.562904388,
         "activePositions": 31,
         "dailyRewardPool": 70205.6414619099,
-        "totalShares": 2078674728.064,
+        "totalShares": 0,
         "breakdown": {
-          "fromStakes": 5999111.9600586025,
+          "fromStakes": 768683.3379999999,
           "fromCreates": 0,
           "fromExisting": 0
         }
@@ -96675,12 +96661,12 @@
       {
         "day": 444,
         "date": "2026-09-26",
-        "totalMaxSupply": 20717206.47582881,
+        "totalMaxSupply": 15476859.562904388,
         "activePositions": 30,
         "dailyRewardPool": 70149.47694874037,
-        "totalShares": 1923794728.064,
+        "totalShares": 0,
         "breakdown": {
-          "fromStakes": 5999111.9600586025,
+          "fromStakes": 768683.3379999999,
           "fromCreates": 0,
           "fromExisting": 0
         }
@@ -96688,12 +96674,12 @@
       {
         "day": 445,
         "date": "2026-09-27",
-        "totalMaxSupply": 20717206.47582881,
+        "totalMaxSupply": 15476859.562904388,
         "activePositions": 30,
         "dailyRewardPool": 70093.35736718138,
-        "totalShares": 1923794728.064,
+        "totalShares": 0,
         "breakdown": {
-          "fromStakes": 5999111.9600586025,
+          "fromStakes": 768683.3379999999,
           "fromCreates": 0,
           "fromExisting": 0
         }
@@ -96701,12 +96687,12 @@
       {
         "day": 446,
         "date": "2026-09-28",
-        "totalMaxSupply": 20717206.47582881,
+        "totalMaxSupply": 15476859.562904388,
         "activePositions": 30,
         "dailyRewardPool": 70037.28268128763,
-        "totalShares": 1923794728.064,
+        "totalShares": 0,
         "breakdown": {
-          "fromStakes": 5999111.9600586025,
+          "fromStakes": 768683.3379999999,
           "fromCreates": 0,
           "fromExisting": 0
         }
@@ -96714,12 +96700,12 @@
       {
         "day": 447,
         "date": "2026-09-29",
-        "totalMaxSupply": 20717206.47582881,
+        "totalMaxSupply": 15476859.562904388,
         "activePositions": 30,
         "dailyRewardPool": 69981.2528551426,
-        "totalShares": 1923794728.064,
+        "totalShares": 0,
         "breakdown": {
-          "fromStakes": 5999111.9600586025,
+          "fromStakes": 768683.3379999999,
           "fromCreates": 0,
           "fromExisting": 0
         }
@@ -96727,12 +96713,12 @@
       {
         "day": 448,
         "date": "2026-09-30",
-        "totalMaxSupply": 20717206.47582881,
+        "totalMaxSupply": 15476859.562904388,
         "activePositions": 30,
         "dailyRewardPool": 69925.26785285848,
-        "totalShares": 1923794728.064,
+        "totalShares": 0,
         "breakdown": {
-          "fromStakes": 5999111.9600586025,
+          "fromStakes": 768683.3379999999,
           "fromCreates": 0,
           "fromExisting": 0
         }
@@ -96740,12 +96726,12 @@
       {
         "day": 449,
         "date": "2026-10-01",
-        "totalMaxSupply": 20717206.47582881,
+        "totalMaxSupply": 15476859.562904388,
         "activePositions": 30,
         "dailyRewardPool": 69869.32763857619,
-        "totalShares": 1923794728.064,
+        "totalShares": 0,
         "breakdown": {
-          "fromStakes": 5999111.9600586025,
+          "fromStakes": 768683.3379999999,
           "fromCreates": 0,
           "fromExisting": 0
         }
@@ -96753,12 +96739,12 @@
       {
         "day": 450,
         "date": "2026-10-02",
-        "totalMaxSupply": 20717206.47582881,
+        "totalMaxSupply": 15476859.562904388,
         "activePositions": 30,
         "dailyRewardPool": 69813.43217646533,
-        "totalShares": 1923794728.064,
+        "totalShares": 0,
         "breakdown": {
-          "fromStakes": 5999111.9600586025,
+          "fromStakes": 768683.3379999999,
           "fromCreates": 0,
           "fromExisting": 0
         }
@@ -96766,12 +96752,12 @@
       {
         "day": 451,
         "date": "2026-10-03",
-        "totalMaxSupply": 20717206.47582881,
+        "totalMaxSupply": 15476859.562904388,
         "activePositions": 30,
         "dailyRewardPool": 69757.58143072415,
-        "totalShares": 1923794728.064,
+        "totalShares": 0,
         "breakdown": {
-          "fromStakes": 5999111.9600586025,
+          "fromStakes": 768683.3379999999,
           "fromCreates": 0,
           "fromExisting": 0
         }
@@ -96779,12 +96765,12 @@
       {
         "day": 452,
         "date": "2026-10-04",
-        "totalMaxSupply": 20717206.47582881,
+        "totalMaxSupply": 15476859.562904388,
         "activePositions": 30,
         "dailyRewardPool": 69701.77536557957,
-        "totalShares": 1923794728.064,
+        "totalShares": 0,
         "breakdown": {
-          "fromStakes": 5999111.9600586025,
+          "fromStakes": 768683.3379999999,
           "fromCreates": 0,
           "fromExisting": 0
         }
@@ -96792,12 +96778,12 @@
       {
         "day": 453,
         "date": "2026-10-05",
-        "totalMaxSupply": 20871988.578867856,
+        "totalMaxSupply": 15490119.562904388,
         "activePositions": 30,
         "dailyRewardPool": 69646.01394528711,
-        "totalShares": 1923794728.064,
+        "totalShares": 0,
         "breakdown": {
-          "fromStakes": 6153894.063097647,
+          "fromStakes": 781943.3379999999,
           "fromCreates": 0,
           "fromExisting": 0
         }
@@ -96805,12 +96791,12 @@
       {
         "day": 454,
         "date": "2026-10-06",
-        "totalMaxSupply": 20990938.085962705,
+        "totalMaxSupply": 15500119.561904388,
         "activePositions": 26,
         "dailyRewardPool": 69590.29713413087,
-        "totalShares": 1821109288.064,
+        "totalShares": 0,
         "breakdown": {
-          "fromStakes": 6272843.570192494,
+          "fromStakes": 791943.3369999998,
           "fromCreates": 0,
           "fromExisting": 0
         }
@@ -96818,12 +96804,12 @@
       {
         "day": 455,
         "date": "2026-10-07",
-        "totalMaxSupply": 21041887.79265216,
+        "totalMaxSupply": 15504319.561904388,
         "activePositions": 24,
         "dailyRewardPool": 69534.62489642357,
-        "totalShares": 1743669295.8079998,
+        "totalShares": 0,
         "breakdown": {
-          "fromStakes": 6323793.276881951,
+          "fromStakes": 796143.3369999998,
           "fromCreates": 0,
           "fromExisting": 0
         }
@@ -96831,12 +96817,12 @@
       {
         "day": 456,
         "date": "2026-10-08",
-        "totalMaxSupply": 21041887.79265216,
+        "totalMaxSupply": 15504319.561904388,
         "activePositions": 23,
         "dailyRewardPool": 69478.99719650643,
-        "totalShares": 1711144495.8079998,
+        "totalShares": 0,
         "breakdown": {
-          "fromStakes": 6323793.276881951,
+          "fromStakes": 796143.3369999998,
           "fromCreates": 0,
           "fromExisting": 0
         }
@@ -96844,12 +96830,12 @@
       {
         "day": 457,
         "date": "2026-10-09",
-        "totalMaxSupply": 21094873.322771613,
+        "totalMaxSupply": 15508519.561904388,
         "activePositions": 23,
         "dailyRewardPool": 69423.41399874922,
-        "totalShares": 1711144495.8079998,
+        "totalShares": 0,
         "breakdown": {
-          "fromStakes": 6376778.807001402,
+          "fromStakes": 800343.3369999998,
           "fromCreates": 0,
           "fromExisting": 0
         }
@@ -96857,12 +96843,12 @@
       {
         "day": 458,
         "date": "2026-10-10",
-        "totalMaxSupply": 21193925.3523343,
+        "totalMaxSupply": 15516219.561904388,
         "activePositions": 22,
         "dailyRewardPool": 69367.87526755022,
-        "totalShares": 1678619695.8079998,
+        "totalShares": 0,
         "breakdown": {
-          "fromStakes": 6475830.836564088,
+          "fromStakes": 808043.3369999998,
           "fromCreates": 0,
           "fromExisting": 0
         }
@@ -96870,12 +96856,12 @@
       {
         "day": 459,
         "date": "2026-10-11",
-        "totalMaxSupply": 21249046.423128407,
+        "totalMaxSupply": 15520419.561904388,
         "activePositions": 20,
         "dailyRewardPool": 69312.38096733618,
-        "totalShares": 1618990895.808,
+        "totalShares": 0,
         "breakdown": {
-          "fromStakes": 6530951.907358198,
+          "fromStakes": 812243.3369999998,
           "fromCreates": 0,
           "fromExisting": 0
         }
@@ -96883,12 +96869,12 @@
       {
         "day": 460,
         "date": "2026-10-12",
-        "totalMaxSupply": 21372246.70625868,
+        "totalMaxSupply": 15529619.561904388,
         "activePositions": 19,
         "dailyRewardPool": 69256.93106256232,
-        "totalShares": 1586466095.808,
+        "totalShares": 0,
         "breakdown": {
-          "fromStakes": 6654152.190488472,
+          "fromStakes": 821443.3369999998,
           "fromCreates": 0,
           "fromExisting": 0
         }
@@ -96896,12 +96882,12 @@
       {
         "day": 461,
         "date": "2026-10-13",
-        "totalMaxSupply": 21481643.15775501,
+        "totalMaxSupply": 15537619.561904388,
         "activePositions": 17,
         "dailyRewardPool": 69201.52551771226,
-        "totalShares": 1515221295.808,
+        "totalShares": 0,
         "breakdown": {
-          "fromStakes": 6763548.641984798,
+          "fromStakes": 829443.3369999998,
           "fromCreates": 0,
           "fromExisting": 0
         }
@@ -96909,12 +96895,12 @@
       {
         "day": 462,
         "date": "2026-10-14",
-        "totalMaxSupply": 21690160.687241137,
+        "totalMaxSupply": 15552542.210904388,
         "activePositions": 16,
         "dailyRewardPool": 69146.16429729809,
-        "totalShares": 1453269295.808,
+        "totalShares": 0,
         "breakdown": {
-          "fromStakes": 6972066.171470929,
+          "fromStakes": 844365.9859999998,
           "fromCreates": 0,
           "fromExisting": 0
         }
@@ -96922,12 +96908,12 @@
       {
         "day": 463,
         "date": "2026-10-15",
-        "totalMaxSupply": 22700713.63709142,
+        "totalMaxSupply": 15623190.589904388,
         "activePositions": 14,
         "dailyRewardPool": 69090.84736586025,
-        "totalShares": 1337708301.952,
+        "totalShares": 0,
         "breakdown": {
-          "fromStakes": 7982619.121321211,
+          "fromStakes": 915014.3649999998,
           "fromCreates": 0,
           "fromExisting": 0
         }
@@ -96935,12 +96921,12 @@
       {
         "day": 464,
         "date": "2026-10-16",
-        "totalMaxSupply": 22875157.67492243,
+        "totalMaxSupply": 15634890.589904388,
         "activePositions": 12,
         "dailyRewardPool": 69035.57468796756,
-        "totalShares": 790607254.976,
+        "totalShares": 0,
         "breakdown": {
-          "fromStakes": 8157063.15915222,
+          "fromStakes": 926714.3649999998,
           "fromCreates": 0,
           "fromExisting": 0
         }
@@ -96948,12 +96934,12 @@
       {
         "day": 465,
         "date": "2026-10-17",
-        "totalMaxSupply": 22951066.272196908,
+        "totalMaxSupply": 15639740.589904388,
         "activePositions": 10,
         "dailyRewardPool": 68980.34622821718,
-        "totalShares": 682965654.976,
+        "totalShares": 0,
         "breakdown": {
-          "fromStakes": 8232971.756426698,
+          "fromStakes": 931564.3649999998,
           "fromCreates": 0,
           "fromExisting": 0
         }
@@ -96961,12 +96947,12 @@
       {
         "day": 466,
         "date": "2026-10-18",
-        "totalMaxSupply": 23019735.461979005,
+        "totalMaxSupply": 15643940.589904388,
         "activePositions": 8,
         "dailyRewardPool": 68925.16195123461,
-        "totalShares": 662444054.976,
+        "totalShares": 0,
         "breakdown": {
-          "fromStakes": 8301640.946208795,
+          "fromStakes": 935764.3649999998,
           "fromCreates": 0,
           "fromExisting": 0
         }
@@ -96974,12 +96960,12 @@
       {
         "day": 467,
         "date": "2026-10-19",
-        "totalMaxSupply": 23019735.461979005,
+        "totalMaxSupply": 15643940.589904388,
         "activePositions": 7,
         "dailyRewardPool": 68870.02182167362,
-        "totalShares": 629919254.976,
+        "totalShares": 0,
         "breakdown": {
-          "fromStakes": 8301640.946208795,
+          "fromStakes": 935764.3649999998,
           "fromCreates": 0,
           "fromExisting": 0
         }
@@ -96987,12 +96973,12 @@
       {
         "day": 468,
         "date": "2026-10-20",
-        "totalMaxSupply": 23019735.461979005,
+        "totalMaxSupply": 15643940.589904388,
         "activePositions": 7,
         "dailyRewardPool": 68814.92580421628,
-        "totalShares": 629919254.976,
+        "totalShares": 0,
         "breakdown": {
-          "fromStakes": 8301640.946208795,
+          "fromStakes": 935764.3649999998,
           "fromCreates": 0,
           "fromExisting": 0
         }
@@ -97000,12 +96986,12 @@
       {
         "day": 469,
         "date": "2026-10-21",
-        "totalMaxSupply": 23109247.380603164,
+        "totalMaxSupply": 15648739.589904388,
         "activePositions": 7,
         "dailyRewardPool": 68759.87386357291,
-        "totalShares": 629919254.976,
+        "totalShares": 0,
         "breakdown": {
-          "fromStakes": 8391152.864832954,
+          "fromStakes": 940563.3649999998,
           "fromCreates": 0,
           "fromExisting": 0
         }
@@ -97013,12 +96999,12 @@
       {
         "day": 470,
         "date": "2026-10-22",
-        "totalMaxSupply": 23506919.68069739,
+        "totalMaxSupply": 15669163.468904387,
         "activePositions": 6,
         "dailyRewardPool": 68704.86596448204,
-        "totalShares": 592755798.976,
+        "totalShares": 0,
         "breakdown": {
-          "fromStakes": 8788825.16492718,
+          "fromStakes": 960987.2439999997,
           "fromCreates": 0,
           "fromExisting": 0
         }
@@ -97026,12 +97012,12 @@
       {
         "day": 471,
         "date": "2026-10-23",
-        "totalMaxSupply": 23907897.807255015,
+        "totalMaxSupply": 15688613.468904387,
         "activePositions": 5,
         "dailyRewardPool": 68649.90207171046,
-        "totalShares": 434593280,
+        "totalShares": 0,
         "breakdown": {
-          "fromStakes": 9189803.291484803,
+          "fromStakes": 980437.2439999997,
           "fromCreates": 0,
           "fromExisting": 0
         }
@@ -97039,19 +97025,32 @@
       {
         "day": 472,
         "date": "2026-10-24",
-        "totalMaxSupply": 24729664.980707232,
+        "totalMaxSupply": 15725283.468904387,
         "activePositions": 3,
         "dailyRewardPool": 68594.98215005308,
-        "totalShares": 283972480,
+        "totalShares": 0,
         "breakdown": {
-          "fromStakes": 10011570.464937022,
+          "fromStakes": 1017107.2439999997,
+          "fromCreates": 0,
+          "fromExisting": 0
+        }
+      },
+      {
+        "day": 473,
+        "date": "2026-10-25",
+        "totalMaxSupply": 15725283.468904387,
+        "activePositions": 0,
+        "dailyRewardPool": 68540.10616433303,
+        "totalShares": 0,
+        "breakdown": {
+          "fromStakes": 1017107.2439999997,
           "fromCreates": 0,
           "fromExisting": 0
         }
       }
     ],
     "futureSupplyProjectionLastUpdate": {
-      "timestamp": "2026-07-29T23:50:08.758Z",
+      "timestamp": "2026-07-29T23:52:29.691Z",
       "protocolDay": 385,
       "fixed": true
     }
