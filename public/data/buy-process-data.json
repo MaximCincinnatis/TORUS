@@ -1,12 +1,12 @@
 {
-  "lastUpdated": "2026-08-14T22:36:57.777Z",
+  "lastUpdated": "2026-08-15T01:41:33.337Z",
   "currentDay": 401,
   "totals": {
-    "torusBurnt": "16229305.453505575541609386",
+    "torusBurnt": "16233991.499951880765930421",
     "titanXBurnt": "0.0",
-    "ethBurn": "0.726265545008479436",
-    "titanXUsedForBurns": "4441218013382.494601037501127184",
-    "ethUsedForBurns": "101.562012557419072978",
+    "ethBurn": "0.72223808716686495",
+    "titanXUsedForBurns": "4441925031354.619163156743426363",
+    "ethUsedForBurns": "101.565979603393063249",
     "ethUsedForBuilds": "13.142343016275768619"
   },
   "dailyData": [
@@ -6813,27 +6813,44 @@
     {
       "date": "2026-08-14",
       "protocolDay": 401,
-      "buyAndBurnCount": 86,
-      "buyAndBuildCount": 3,
+      "buyAndBurnCount": 91,
+      "buyAndBuildCount": 5,
       "fractalCount": 0,
-      "torusBurned": 37553.97652018224,
-      "titanXUsed": 5694290460.870777,
+      "torusBurned": 39571.1444060136,
+      "titanXUsed": 6111227177.064385,
       "ethUsed": 0.0060973973160589195,
-      "titanXUsedForBurns": 5399580624.661524,
+      "titanXUsedForBurns": 5714029090.310255,
       "ethUsedForBurns": 0.0060973973160589195,
-      "titanXUsedForBuilds": 294709836.2092539,
+      "titanXUsedForBuilds": 397198086.7541305,
       "ethUsedForBuilds": 0,
-      "torusPurchased": 779.8174705916665,
+      "torusPurchased": 1312.0165288353428,
+      "fractalTitanX": 0,
+      "fractalETH": 0
+    },
+    {
+      "date": "2026-08-15",
+      "protocolDay": 402,
+      "buyAndBurnCount": 7,
+      "buyAndBuildCount": 0,
+      "fractalCount": 0,
+      "torusBurned": 2668.8785604738623,
+      "titanXUsed": 392569506.47979677,
+      "ethUsed": 0.000989436044310655,
+      "titanXUsedForBurns": 392569506.47979677,
+      "ethUsedForBurns": 0.000989436044310655,
+      "titanXUsedForBuilds": 0,
+      "ethUsedForBuilds": 0,
+      "torusPurchased": 0,
       "fractalTitanX": 0,
       "fractalETH": 0
     }
   ],
   "eventCounts": {
-    "buyAndBurn": 57852,
-    "buyAndBuild": 14347,
+    "buyAndBurn": 57864,
+    "buyAndBuild": 14349,
     "fractal": 3
   },
   "metadata": {
-    "lastBlock": 25756297
+    "lastBlock": 25757217
   }
 }
