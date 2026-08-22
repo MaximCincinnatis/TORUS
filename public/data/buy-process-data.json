@@ -1,12 +1,12 @@
 {
-  "lastUpdated": "2026-08-21T22:56:38.724Z",
+  "lastUpdated": "2026-08-22T02:01:37.901Z",
   "currentDay": 408,
   "totals": {
-    "torusBurnt": "16477858.32685299735234245",
+    "torusBurnt": "16482539.513052769747637878",
     "titanXBurnt": "0.0",
-    "ethBurn": "0.673761548798939558",
-    "titanXUsedForBurns": "4479701659018.053021845341253703",
-    "ethUsedForBurns": "101.777790714513354327",
+    "ethBurn": "0.66745884353137232",
+    "titanXUsedForBurns": "4480319703955.738851809596944615",
+    "ethUsedForBurns": "101.783998879201908058",
     "ethUsedForBuilds": "13.142343016275768619"
   },
   "dailyData": [
@@ -6932,27 +6932,44 @@
     {
       "date": "2026-08-21",
       "protocolDay": 408,
-      "buyAndBurnCount": 38,
+      "buyAndBurnCount": 40,
       "buyAndBuildCount": 2,
       "fractalCount": 0,
-      "torusBurned": 31845.024845994933,
-      "titanXUsed": 5448205712.339271,
+      "torusBurned": 33483.76013385991,
+      "titanXUsed": 5593764745.612789,
       "ethUsed": 0,
-      "titanXUsedForBurns": 5110115686.279784,
+      "titanXUsedForBurns": 5255674719.553303,
       "ethUsedForBurns": 0,
       "titanXUsedForBuilds": 338090026.05948544,
       "ethUsedForBuilds": 0,
       "torusPurchased": 893.826577632972,
       "fractalTitanX": 0,
       "fractalETH": 0
+    },
+    {
+      "date": "2026-08-22",
+      "protocolDay": 409,
+      "buyAndBurnCount": 5,
+      "buyAndBuildCount": 0,
+      "fractalCount": 0,
+      "torusBurned": 3042.4509119074155,
+      "titanXUsed": 472485904.4185195,
+      "ethUsed": 0.002290755961248785,
+      "titanXUsedForBurns": 472485904.4185195,
+      "ethUsedForBurns": 0.002290755961248785,
+      "titanXUsedForBuilds": 0,
+      "ethUsedForBuilds": 0,
+      "torusPurchased": 0,
+      "fractalTitanX": 0,
+      "fractalETH": 0
     }
   ],
   "eventCounts": {
-    "buyAndBurn": 58504,
+    "buyAndBurn": 58511,
     "buyAndBuild": 14384,
     "fractal": 3
   },
   "metadata": {
-    "lastBlock": 25806633
+    "lastBlock": 25807554
   }
 }
