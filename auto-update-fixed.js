@@ -204,6 +204,9 @@ async function main() {
 
     // Record successful push time so the next push waits the full 3h interval.
     fs.writeFileSync(lastPushFile, String(Date.now()));
+    // 2026-09-01: the token-URL push does not move refs/remotes/origin/master, so `git status`
+    // showed a phantom "ahead 280+". The push just succeeded, so origin IS at HEAD.
+    execCommand('git update-ref refs/remotes/origin/master HEAD', 'Marking origin/master as pushed');
 
     // Housekeeping (2026-07-25): prune routine data snapshots. public/data/backups/ had reached
     // 77,306 files / 138GB — a ~3MB snapshot every ~5 min since 2025-07-16 with no cleanup at all.
