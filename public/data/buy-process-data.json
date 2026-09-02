@@ -1,12 +1,12 @@
 {
-  "lastUpdated": "2026-09-01T21:18:33.952Z",
+  "lastUpdated": "2026-09-02T00:21:46.957Z",
   "currentDay": 419,
   "totals": {
-    "torusBurnt": "16885059.864835978328042773",
+    "torusBurnt": "16889688.825844785097074249",
     "titanXBurnt": "0.0",
-    "ethBurn": "0.601211009180402113",
-    "titanXUsedForBurns": "4531748091389.293202291688862644",
-    "ethUsedForBurns": "102.097057059760252356",
+    "ethBurn": "0.597670014815716522",
+    "titanXUsedForBurns": "4532321797327.703282792088758644",
+    "ethUsedForBurns": "102.100544939209467665",
     "ethUsedForBuilds": "13.142343016275768619"
   },
   "dailyData": [
@@ -7119,27 +7119,44 @@
     {
       "date": "2026-09-01",
       "protocolDay": 419,
-      "buyAndBurnCount": 63,
+      "buyAndBurnCount": 77,
       "buyAndBuildCount": 1,
       "fractalCount": 0,
-      "torusBurned": 31842.41116826482,
-      "titanXUsed": 3852452955.180276,
+      "torusBurned": 36038.81714256044,
+      "titanXUsed": 4305502285.960616,
       "ethUsed": 0.003339242734056029,
-      "titanXUsedForBurns": 3794477514.2912874,
+      "titanXUsedForBurns": 4247526845.071628,
       "ethUsedForBurns": 0.003339242734056029,
       "titanXUsedForBuilds": 57975440.88898852,
       "ethUsedForBuilds": 0,
       "torusPurchased": 196.2604274331935,
       "fractalTitanX": 0,
       "fractalETH": 0
+    },
+    {
+      "date": "2026-09-02",
+      "protocolDay": 420,
+      "buyAndBurnCount": 1,
+      "buyAndBuildCount": 0,
+      "fractalCount": 0,
+      "torusBurned": 432.55503451115067,
+      "titanXUsed": 60336683.91160157,
+      "ethUsed": 0,
+      "titanXUsedForBurns": 60336683.91160157,
+      "ethUsedForBurns": 0,
+      "titanXUsedForBuilds": 0,
+      "ethUsedForBuilds": 0,
+      "torusPurchased": 0,
+      "fractalTitanX": 0,
+      "fractalETH": 0
     }
   ],
   "eventCounts": {
-    "buyAndBurn": 59491,
+    "buyAndBurn": 59506,
     "buyAndBuild": 14431,
     "fractal": 3
   },
   "metadata": {
-    "lastBlock": 25885057
+    "lastBlock": 25885977
   }
 }
